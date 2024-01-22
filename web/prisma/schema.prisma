@@ -1,0 +1,91 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("MONGO_URL")
+}
+
+model ContactForm {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  email     String
+  subject   String
+  message   String
+  createdAt DateTime  @default(now())
+  settled   Boolean   @default(false)
+  settledAt DateTime?
+}
+
+model ContactFormOption {
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  index  Int    @unique
+  value  String
+  option String
+}
+
+model Model {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  title        String
+  dimensions   Float[]
+  thickness    Float?
+  filament     Int
+  layerHeight  String?
+  support      Boolean?
+  printTime    Int
+  stl          String?
+  coverImageId String
+  media_rels   String[] @db.ObjectId
+  media        Media[]  @relation(fields: [media_rels], references: [id])
+}
+
+model Media {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  title         String
+  description   String?
+  url           String
+  placeholder   String?
+  type          String
+  model_rels    String[] @db.ObjectId
+  usedby_models Model[]  @relation(fields: [model_rels], references: [id])
+  thumbnail_rel String?  @db.ObjectId
+  thumbnail     Media?   @relation("Thumbnails", fields: [thumbnail_rel], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  usedby_medias Media[]  @relation("Thumbnails")
+}
+
+model Faq {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  question String
+  answer   String
+}
+
+model PriceTier {
+  id          String             @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  price       String
+  description String
+  includes    PriceTierFeature[]
+  optional    PriceTierFeature[]
+  position    Int
+}
+
+type PriceTierFeature {
+  feature     String
+  description String?
+}
+
+model HomePage {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  component String
+  props     Json
+  position  Int
+}
+
+model Page {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  slug        String @unique
+  description String
+  content     String
+}

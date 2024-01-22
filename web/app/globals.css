@@ -1,0 +1,73 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-hex: #ebebeb;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 0, 0, 0;
+    --background-hex: #ebebeb;
+  }
+}
+
+@layer base {
+  h1,
+  h2,
+  h3,
+  p,
+  ul,
+  table {
+    @apply mb-4;
+  }
+  h1,
+  h2,
+  h3,
+  a {
+    @apply font-semibold;
+  }
+  h1 {
+    @apply text-2xl uppercase;
+  }
+  h2 {
+    @apply text-xl;
+  }
+  h3 {
+    @apply text-base;
+  }
+  p,
+  ul,
+  table {
+    @apply ms-8;
+  }
+  a {
+    @apply text-primary border-transparent uppercase duration-300 hover:border-current;
+  }
+  table {
+    @apply border border-gray-light w-full;
+  }
+  td {
+    @apply px-2 py-1;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: var(--background-hex);
+}
+
+.underline {
+  width: 100%;
+  height: 0.25rem;
+  border-radius: 2px;
+  position: absolute;
+  bottom: -0.3rem;
+  background-color: #fff;
+}
