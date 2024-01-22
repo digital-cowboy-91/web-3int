@@ -26,15 +26,16 @@ ENV KEY $KEY \
     ADMIN_EMAIL $ADMIN_EMAIL \
     ADMIN_PASSWORD $ADMIN_PASSWORD \
 
-USER root
-RUN corepack enable &&\
-    corepack prepare pnpm@8.7.6 --activate &&\
-    chown node:node /directus
+EXPOSE 8055
 
 WORKDIR /directus
 COPY ./cms/ .
 
-EXPOSE 8055
-USER node
+# USER root
+RUN corepack enable &&\
+    corepack prepare pnpm@8.7.6 --activate &&\
+    chown node:node /directus
+
+# USER node
 CMD node /directus/cli.js bootstrap &&\
     node /directus/cli.js start
