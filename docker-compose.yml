@@ -1,22 +1,21 @@
 version: "3.8"
-name: web-3int
+name: web3int
 services:
   cms:
     container_name: cms
-    build:
-      dockerfile: ./cms/.dockerfile
+    image: directus/directus:10.8.3
     environment:
       KEY: ${KEY}
       SECRET: ${SECRET}
 
-      DB_CLIENT: ${DB_CLIENT}
-      DB_HOST: ${DB_HOST}
-      DB_PORT: ${DB_PORT}
-      DB_DATABASE: ${DB_DATABASE}
-      DB_USER: ${DB_USER}
-      DB_PASSWORD: ${DB_PASSWORD}
-      DB_SSL: ${DB_SSL}
-      DB_SSL__CA: ${DB_SSL__CA}
+      # DB_CLIENT: ${DB_CLIENT}
+      # DB_HOST: ${DB_HOST}
+      # DB_PORT: ${DB_PORT}
+      # DB_DATABASE: ${DB_DATABASE}
+      # DB_USER: ${DB_USER}
+      # DB_PASSWORD: ${DB_PASSWORD}
+      # DB_SSL: ${DB_SSL}
+      # DB_SSL__CA: ${DB_SSL__CA}
       # Uncomment to connect from local to DO
       # NODE_TLS_REJECT_UNAUTHORIZED: ${NODE_TLS_REJECT_UNAUTHORIZED}
 
@@ -24,11 +23,15 @@ services:
       ADMIN_PASSWORD: ${ADMIN_PASSWORD}
 
       EXTENSIONS_AUTO_RELOAD: "true"
+    ports:
+      - 8010:8055
+    volumes:
+      - share:/directus/extensions
 
   web:
     container_name: web
     build:
-      dockerfile: ./web/.dockerfile
+      dockerfile: .dockerfile
     depends_on:
       - cms
     environment:
@@ -36,3 +39,15 @@ services:
       RECAPTCHA_SITE_KEY: ${RECAPTCHA_SITE_KEY}
       RECAPTCHA_SECRET_KEY: ${RECAPTCHA_SECRET_KEY}
       NODE_OPTIONS: ${NODE_OPTIONS}
+    ports:
+      - 8011:3000
+    volumes:
+      - share:/app/cms:ro
+
+volumes:
+  share:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /temp/web3int-share

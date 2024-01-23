@@ -7,8 +7,8 @@ from base as deps
 RUN apk add --no-cache libc6-compat
 
 WORKDIR /app
-COPY ./web/package.json .
-COPY ./web/package-lock.json .
+COPY package.json .
+COPY package-lock.json .
 
 RUN npm ci
 
@@ -28,7 +28,7 @@ ENV NODE_OPTIONS $NODE_OPTIONS \
 
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
-COPY ./web/ .
+COPY ./ .
 
 RUN npx prisma generate &&\
     npm run build
@@ -44,6 +44,7 @@ WORKDIR /app
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
 COPY --from=builder /app/public ./public
+COPY --from=builder /app/cms ./cms
 
 RUN rm -rf ./cache
 
