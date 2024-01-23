@@ -13,7 +13,7 @@ on:
         required: true
 # 2
 env:
-  REGISTRY: "registry.digitalocean.com/uniss"
+  REGISTRY: "uniss"
   IMAGE_NAME: "web3int"
 
 # 3
