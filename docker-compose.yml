@@ -15,6 +15,10 @@ services:
       DB_DATABASE: ${DB_DATABASE}
       DB_USER: ${DB_USER}
       DB_PASSWORD: ${DB_PASSWORD}
+      DB_SSL: ${DB_SSL}
+      DB_SSL__CA: ${DB_SSL__CA}
+      # Uncomment to connect from local to DO
+      # NODE_TLS_REJECT_UNAUTHORIZED: ${NODE_TLS_REJECT_UNAUTHORIZED}
 
       ADMIN_EMAIL: ${ADMIN_EMAIL}
       ADMIN_PASSWORD: ${ADMIN_PASSWORD}
