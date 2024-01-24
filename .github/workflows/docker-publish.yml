@@ -8,7 +8,7 @@ on:
 env:
   REG: ${{ secrets.DO_REGISTRY }}
   IMG: ${{ vars.IMAGE_NAME }}
-  VPS_WORKDIR: /sources/$IMG
+  WORKDIR: /sources/$IMG
 
 jobs:
   deploy:
@@ -24,7 +24,7 @@ jobs:
           username: ${{ secrets.DO_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           source: "docker-compose.yml"
-          target: $VPS_WORKDIR
+          target: ${{ env.WORKDIR }}
       - name: Deploy to Digital Ocean droplet via SSH action
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -32,5 +32,5 @@ jobs:
           username: ${{ secrets.DO_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            cd $VPS_WORKDIR
+            cd ${{ env.WORKDIR }}
             ls -l
