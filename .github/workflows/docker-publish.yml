@@ -1,7 +1,17 @@
-name: CD
+name: CI/CD
 
 on:
+  # Auto trigger
+  # push:
+  #   branches: [ main ]
+
+  # Manual trigger
   workflow_dispatch:
+    inputs:
+        jobToRun:
+          description: 'Run specific job'
+          required: true
+          default: 'build_and_push'
 
 env:
   REGISTRY: ${{ secrets.DO_REGISTRY }}
@@ -12,9 +22,38 @@ env:
   SSH_CONN: '${{ secrets.DO_USERNAME }}@${{ secrets.DO_HOST }}'
 
 jobs:
-  deploy:
+  build_and_push:
+    if: github.event_name == 'push' || github.event.inputs.jobToRun == 'build_and_push'
     runs-on: ubuntu-latest
+    steps:
+      - name: Compute additional env variables
+        run: |
+          echo "COMMIT=$(echo $GITHUB_SHA | head -c7)" >> $GITHUB_ENV
+      - name: Checkout the repo 
+        uses: actions/checkout@v4
+        
+      - name: Build container image
+        run: docker build -t ${{ env.DO_REG_IMAGE }}:${{ env.COMMIT }} .
 
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DO_API_TOKEN }}
+    
+      - name: Log in to DigitalOcean Container Registry with short-lived credentials
+        run: doctl registry login --expiry-seconds 600
+      
+      # - name: Remove all old images
+      #   run: if [ ! -z "$(doctl registry repository list | grep "$(echo $IMAGE_NAME)")" ]; then doctl registry repository delete-manifest $(echo $IMAGE_NAME) $(doctl registry repository list-tags $(echo $IMAGE_NAME) | grep -o "sha.*") --force; else echo "No repository"; fi
+
+      - name: Push image to DigitalOcean Container Registry
+        run: |
+          docker push ${{ env.DO_REG_IMAGE }}:${{ env.COMMIT }}
+          docker push ${{ env.DO_REG_IMAGE }}:latest
+
+  deploy:
+    if: github.event_name == 'push' || github.event.inputs.jobToRun == 'deploy'
+    runs-on: ubuntu-latest
     steps:
       - name: Compute additional env variables
         run: |
