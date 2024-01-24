@@ -53,6 +53,7 @@ jobs:
           docker push ${{ env.DO_REG_IMAGE }}:latest
 
   deploy:
+    needs: build_and_push
     if: github.event_name == 'push' || github.event.inputs.jobToRun == 'all' || github.event.inputs.jobToRun == 'deploy'
     runs-on: ubuntu-latest
     steps:
