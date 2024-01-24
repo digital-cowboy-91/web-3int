@@ -49,9 +49,9 @@ jobs:
     steps:
       - name: Compute additional env variables
         run: |
-          echo "REPO_NAME=$(echo $GITHUB_REPOSITORY | cut -d '/' -f 2)" >> $GITHUB_ENV &&
-          echo "DO_REG_IMAGE=${{ secrets.DO_REGISTRY }}/$(echo $GITHUB_REPOSITORY | cut -d '/' -f 2)" >> $GITHUB_ENV &&
-          echo "WORKDIR=/sources/$REPO_NAME" >> $GITHUB_ENV
+          echo "REPO_NAME=$(echo $GITHUB_REPOSITORY | cut -d '/' -f 2)" >> $GITHUB_ENV
+          echo "DO_REG_IMAGE=${{ secrets.DO_REGISTRY }}/$(echo $GITHUB_REPOSITORY | cut -d '/' -f 2)" >> $GITHUB_ENV
+          echo "WORKDIR=/sources/$(echo $GITHUB_REPOSITORY | cut -d '/' -f 2)" >> $GITHUB_ENV
       - name: (debug) List env var
         run: printenv
       # - name: Checkout the repo 
