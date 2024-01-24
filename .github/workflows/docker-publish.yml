@@ -31,27 +31,48 @@ jobs:
           eval `ssh-agent`
           ssh-add ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.DO_HOST }} >> ~/.ssh/known_hosts
-      - name: Establish connection and recreate workdir
-        run: ssh ${{ env.SSH_CONN }} 'rm -rv ${{ env.WORKDIR }} && mkdir ${{ env.WORKDIR }}'
-      - name: Transfer docker compose
-        run: scp ./dc.prod.yml ${{ env.SSH_CONN }}:${{ env.WORKDIR }}
-      - name: Generate .env file
+      # - name: Establish connection and recreate workdir
+      #   run: ssh ${{ env.SSH_CONN }} 'rm -rv ${{ env.WORKDIR }} && mkdir ${{ env.WORKDIR }}'
+      # - name: Transfer docker compose
+      #   run: scp ./dc.prod.yml ${{ env.SSH_CONN }}:${{ env.WORKDIR }}
+      # - name: Generate .env file
+      #   run: |
+      #     ssh ${{ env.SSH_CONN }} << EOF
+          
+      #     cd ${{ env.WORKDIR }}
+
+      #     echo PROJECT_NAME=${{ env.REPO_NAME }} >> .env
+      #     echo KEY=${{ secrets.CMS_KEY }} >> .env
+      #     echo SECRET=${{ secrets.CMS_SECRET }} >> .env
+          
+      #     echo ADMIN_EMAIL=${{ secrets.CMS_ADMIN_EMAIL }} >> .env
+      #     echo ADMIN_PASSWORD=${{ secrets.CMS_ADMIN_PASSWORD }} >> .env
+
+      #     echo MONGO_URL=${{ secrets.WEB_MONGO_URL }} >> .env
+      #     echo RECAPTCHA_SITE_KEY=${{ secrets.WEB_RECAPTCHA_SITE_KEY }} >> .env
+      #     echo RECAPTCHA_SECRET_KEY=${{ secrets.WEB_RECAPTCHA_SECRET_KEY }} >> .env
+          
+      #     echo NODE_OPTIONS="--max-old-space-size=512" >> .env
+          
+      #     EOF
+      - name: Add var to .env
         run: |
           ssh ${{ env.SSH_CONN }} << EOF
           
           cd ${{ env.WORKDIR }}
-
-          echo PROJECT_NAME=${{ env.REPO_NAME }} >> .env
-          echo KEY=${{ secrets.CMS_KEY }} >> .env
-          echo SECRET=${{ secrets.CMS_SECRET }} >> .env
           
-          echo ADMIN_EMAIL=${{ secrets.CMS_ADMIN_EMAIL }} >> .env
-          echo ADMIN_PASSWORD=${{ secrets.CMS_ADMIN_PASSWORD }} >> .env
-
-          echo MONGO_URL=${{ secrets.WEB_MONGO_URL }} >> .env
-          echo RECAPTCHA_SITE_KEY=${{ secrets.WEB_RECAPTCHA_SITE_KEY }} >> .env
-          echo RECAPTCHA_SECRET_KEY=${{ secrets.WEB_RECAPTCHA_SECRET_KEY }} >> .env
+          echo DO_REG_IMAGE=${{ env.DO_REG_IMAGE }} >> .env
           
-          echo NODE_OPTIONS="--max-old-space-size=512" >> .env
-          
+          EOF
+      - name: Stop existing compose
+        run: |
+          ssh ${{ env.SSH_CONN }} << EOF
+          cd ${{ env.WORKDIR }}
+          docker compose -f dc.prod.yml down -v
+          EOF
+      - name: Run new compose
+        run: |
+          ssh ${{ env.SSH_CONN }} << EOF
+          cd ${{ env.WORKDIR }}
+          docker compose -f dc.prod.yml down -v
           EOF
