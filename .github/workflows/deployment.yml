@@ -75,7 +75,13 @@ jobs:
           fi
           EOF
       - name: Recreate workdir
-        run: ssh ${{ env.SSH_CONN }} 'rm -rv ${{ env.WORKDIR }} && mkdir ${{ env.WORKDIR }}'
+        run: |
+          ssh ${{ env.SSH_CONN }} << EOF
+          if [ -d "${{ env.WORKDIR }}" ]; then
+            rm -rv ${{ env.WORKDIR }}
+            mkdir ${{ env.WORKDIR }}
+          fi
+          EOF
       - name: Transfer docker compose file
         run: scp ./dc.prod.yml ${{ env.SSH_CONN }}:${{ env.WORKDIR }}
       - name: Generate .env file
