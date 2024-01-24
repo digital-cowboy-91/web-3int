@@ -67,7 +67,13 @@ jobs:
       - name: Establish connection
         run: ssh ${{ env.SSH_CONN }} 'echo "Connected successfully"'
       - name: Stop existing docker compose
-        run: ssh ${{ env.SSH_CONN }} 'cd ${{ env.WORKDIR }} && docker compose -f dc.prod.yml down'
+        run: |
+          ssh ${{ env.SSH_CONN }} << EOF
+          if [ -d "${{ env.WORKDIR }}" ] && [ -f "${{ env.WORKDIR }}/dc.prod.yml" ]; then
+            cd ${{ env.WORKDIR }}
+            docker-compose -f dc.prod.yml down
+          fi
+          EOF
       - name: Recreate workdir
         run: ssh ${{ env.SSH_CONN }} 'rm -rv ${{ env.WORKDIR }} && mkdir ${{ env.WORKDIR }}'
       - name: Transfer docker compose file
