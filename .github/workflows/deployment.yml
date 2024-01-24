@@ -12,6 +12,10 @@ on:
           description: 'Run specific job'
           required: true
           default: 'build_and_push'
+          type: choice
+          options:
+            - 'build_and_push'
+            - 'deploy'
 
 env:
   REGISTRY: ${{ secrets.DO_REGISTRY }}
