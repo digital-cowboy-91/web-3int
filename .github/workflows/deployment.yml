@@ -2,8 +2,8 @@ name: CI/CD
 
 on:
   # Auto trigger
-  # push:
-  #   branches: [ main ]
+  push:
+    branches: [ main ]
 
   # Manual trigger
   workflow_dispatch:
@@ -101,4 +101,4 @@ jobs:
           
           EOF
       - name: Run docker compose
-        run: ssh ${{ env.SSH_CONN }} 'cd ${{ env.WORKDIR }} && doctl registry login && docker compose -f dc.prod.yml up'
+        run: ssh ${{ env.SSH_CONN }} 'cd ${{ env.WORKDIR }} && doctl registry login && docker compose -f dc.prod.yml up -f'
