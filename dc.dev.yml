@@ -1,5 +1,5 @@
 version: "3.8"
-name: web3int
+name: ${PROJECT_NAME}
 services:
   cms:
     container_name: cms
@@ -8,6 +8,7 @@ services:
       KEY: ${KEY}
       SECRET: ${SECRET}
 
+      # Uncomment to connect from local to DO else SQLite will be used
       # DB_CLIENT: ${DB_CLIENT}
       # DB_HOST: ${DB_HOST}
       # DB_PORT: ${DB_PORT}
@@ -16,7 +17,6 @@ services:
       # DB_PASSWORD: ${DB_PASSWORD}
       # DB_SSL: ${DB_SSL}
       # DB_SSL__CA: ${DB_SSL__CA}
-      # Uncomment to connect from local to DO
       # NODE_TLS_REJECT_UNAUTHORIZED: ${NODE_TLS_REJECT_UNAUTHORIZED}
 
       ADMIN_EMAIL: ${ADMIN_EMAIL}
@@ -30,8 +30,7 @@ services:
 
   web:
     container_name: web
-    build:
-      dockerfile: .dockerfile
+    build: Dockerfile
     depends_on:
       - cms
     environment:
@@ -50,4 +49,4 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: /temp/web3int-share
+      device: /temp/${PROJECT_NAME}-share
