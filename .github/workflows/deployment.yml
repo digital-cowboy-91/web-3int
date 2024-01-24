@@ -22,6 +22,7 @@ env:
   SSH_CONN: '${{ secrets.DO_USERNAME }}@${{ secrets.DO_HOST }}'
 
 jobs:
+
   build_and_push:
     if: github.event_name == 'push' || github.event.inputs.jobToRun == 'build_and_push'
     runs-on: ubuntu-latest
