@@ -86,6 +86,7 @@ jobs:
           cd ${{ env.WORKDIR }}
 
           echo PROJECT_NAME=${{ env.REPO_NAME }} >> .env
+          echo WORKDIR=${{ env.WORKDIR }} >> .env
           echo KEY=${{ secrets.CMS_KEY }} >> .env
           echo SECRET=${{ secrets.CMS_SECRET }} >> .env
           
