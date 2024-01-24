@@ -29,13 +29,12 @@ jobs:
       #     ssh ${{ env.SSH_CONN }} 'cd / && ls -l'
       - name: Checkout the repo 
         uses: actions/checkout@v2
-      - name: Recreate workdir and transfer docker-compose
-        run: |
-          ssh ${{ env.SSH_CONN }} 'rm -r ${{ env.WORKDIR }} && mkdir ${{ env.WORKDIR }}'
-          scp docker-compose.yml ${{ env.SSH_CONN }}${{ env.WORKDIR }}
+      - name: Recreate workdir
+        run: ssh ${{ env.SSH_CONN }} 'rm -r ${{ env.WORKDIR }} && mkdir ${{ env.WORKDIR }}'
+      - name: Transfer docker-compose
+        run: scp docker-compose.yml ${{ env.SSH_CONN }}${{ env.WORKDIR }}
       - name: Check existence of file
-        run: |
-          ssh ${{ env.SSH_CONN }} 'ls -l ${{ env.WORKDIR }}'
+        run: ssh ${{ env.SSH_CONN }} 'ls -l ${{ env.WORKDIR }}'
       # - name: Copy docker-compose file to VPS
       #   uses: appleboy/scp-action@v0.1.7
       #   with:
