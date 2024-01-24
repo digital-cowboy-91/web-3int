@@ -41,7 +41,8 @@ jobs:
         run: scp ./dc.prod.yml ${{ env.SSH_CONN }}:${{ env.WORKDIR }}
       - name: Generate .env file
         run: ssh ${{ env.SSH_CONN }} << EOF
-          echo PROJECT_NAME=${{ env. }} >> .env
+          cd ${{ env.WORKDIR }}
+          echo PROJECT_NAME=${{ env.REPO_NAME }} >> .env
           echo KEY=${{ secrets.CMS_KEY }} >> .env
           echo SECRET=${{ secrets.CMS_SECRET }} >> .env
           EOF
