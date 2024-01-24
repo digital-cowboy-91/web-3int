@@ -11,9 +11,10 @@ on:
         jobToRun:
           description: 'Run specific job'
           required: true
-          default: 'build_and_push'
+          default: 'all'
           type: choice
           options:
+            - 'all'
             - 'build_and_push'
             - 'deploy'
 
@@ -28,7 +29,7 @@ env:
 jobs:
 
   build_and_push:
-    if: github.event_name == 'push' || github.event.inputs.jobToRun == 'build_and_push'
+    if: github.event_name == 'push' || github.event.inputs.jobToRun == 'all' || github.event.inputs.jobToRun == 'build_and_push'
     runs-on: ubuntu-latest
     steps:
       - name: Compute additional env variables
@@ -57,7 +58,7 @@ jobs:
           docker push ${{ env.DO_REG_IMAGE }}:latest
 
   deploy:
-    if: github.event_name == 'push' || github.event.inputs.jobToRun == 'deploy'
+    if: github.event_name == 'push' || github.event.inputs.jobToRun == 'all' || github.event.inputs.jobToRun == 'deploy'
     runs-on: ubuntu-latest
     steps:
       - name: Compute additional env variables
