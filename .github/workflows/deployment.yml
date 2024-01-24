@@ -34,7 +34,7 @@ jobs:
         uses: actions/checkout@v4
         
       - name: Build container image
-        run: docker build -t ${{ env.DO_REG_IMAGE }}:${{ env.COMMIT }} .
+        run: docker build -t ${{ env.DO_REG_IMAGE }}:${{ env.COMMIT }} -t ${{ env.DO_REG_IMAGE }}:latest .
 
       - name: Install doctl
         uses: digitalocean/action-doctl@v2
