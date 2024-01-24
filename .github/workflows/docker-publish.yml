@@ -18,7 +18,7 @@ jobs:
       - name: Checkout the repo 
         uses: actions/checkout@v2
       - name: Copy docker-compose file to VPS
-        uses: appleboy/scp-action@0.1.7
+        uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.DO_HOST }}
           username: ${{ secrets.DO_USERNAME }}
