@@ -16,6 +16,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout the repo 
+        uses: actions/checkout@v2
       - name: Setup SSH
         run: |
           mkdir -p ~/.ssh/
@@ -27,8 +29,8 @@ jobs:
       # - name: Test connection
       #   run: |
       #     ssh ${{ env.SSH_CONN }} 'cd / && ls -l'
-      - name: Checkout the repo 
-        uses: actions/checkout@v2
+      - name: Establish SSH connection
+        run: ssh ${{ env.SSH_CONN }}
       - name: Recreate workdir
         run: ssh ${{ env.SSH_CONN }} 'rm -rv ${{ env.WORKDIR }} && mkdir ${{ env.WORKDIR }}'
       - name: Check existence of directory
@@ -36,7 +38,7 @@ jobs:
       - name: Check existence of docker compose file
         run: ls -l
       - name: Transfer docker-compose
-        run: scp docker-compose.yml ${{ env.SSH_CONN }}${{ env.WORKDIR }}
+        run: scp ./docker-compose.yml ${{ env.SSH_CONN }}${{ env.WORKDIR }}
       - name: Check existence of file
         run: ssh ${{ env.SSH_CONN }} 'ls -l ${{ env.WORKDIR }}'
       # - name: Copy docker-compose file to VPS
