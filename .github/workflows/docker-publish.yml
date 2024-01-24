@@ -8,7 +8,7 @@ on:
 env:
   REG: ${{ secrets.DO_REGISTRY }}
   IMG: ${{ vars.IMAGE_NAME }}
-  WORKDIR: '/sources/${{ env.IMG }}'
+  WORKDIR: '/sources/${{ vars.IMAGE_NAME }}'
 
 jobs:
   deploy:
