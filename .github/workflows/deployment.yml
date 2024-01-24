@@ -15,35 +15,36 @@ env:
 
 jobs:
 
-  build_and_push:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Compute additional env variables
-        run: |
-          echo "REPO_NAME=$(echo $GITHUB_REPOSITORY | cut -d '/' -f 2)" >> $GITHUB_ENV
-          echo "COMMIT=$(echo $GITHUB_SHA | head -c7)" >> $GITHUB_ENV
-          echo "DO_REG_IMAGE=${{ secrets.DO_REGISTRY }}/$(echo $GITHUB_REPOSITORY | cut -d '/' -f 2)" >> $GITHUB_ENV
-          echo "WORKDIR=/sources/$(echo $REPO_NAME)" >> $GITHUB_ENV
-      - name: Checkout the repo 
-        uses: actions/checkout@v4
+  # build_and_push:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Compute additional env variables
+  #       run: |
+  #         echo "REPO_NAME=$(echo $GITHUB_REPOSITORY | cut -d '/' -f 2)" >> $GITHUB_ENV
+  #         echo "COMMIT=$(echo $GITHUB_SHA | head -c7)" >> $GITHUB_ENV
+  #         echo "DO_REG_IMAGE=${{ secrets.DO_REGISTRY }}/$(echo $GITHUB_REPOSITORY | cut -d '/' -f 2)" >> $GITHUB_ENV
+  #         echo "WORKDIR=/sources/$(echo $REPO_NAME)" >> $GITHUB_ENV
+  #     - name: Checkout the repo 
+  #       uses: actions/checkout@v4
         
-      - name: Build container image
-        run: docker build -t ${{ env.DO_REG_IMAGE }}:${{ env.COMMIT }} -t ${{ env.DO_REG_IMAGE }}:latest .
+  #     - name: Build container image
+  #       run: docker build -t ${{ env.DO_REG_IMAGE }}:${{ env.COMMIT }} -t ${{ env.DO_REG_IMAGE }}:latest .
 
-      - name: Install doctl
-        uses: digitalocean/action-doctl@v2
-        with:
-          token: ${{ secrets.DO_API_TOKEN }}
+  #     - name: Install doctl
+  #       uses: digitalocean/action-doctl@v2
+  #       with:
+  #         token: ${{ secrets.DO_API_TOKEN }}
     
-      - name: Log in to DigitalOcean Container Registry with short-lived credentials
-        run: doctl registry login --expiry-seconds 600
+  #     - name: Log in to DigitalOcean Container Registry with short-lived credentials
+  #       run: doctl registry login --expiry-seconds 600
 
-      - name: Push image to DigitalOcean Container Registry
-        run: |
-          docker push ${{ env.DO_REG_IMAGE }}:${{ env.COMMIT }}
-          docker push ${{ env.DO_REG_IMAGE }}:latest
+  #     - name: Push image to DigitalOcean Container Registry
+  #       run: |
+  #         docker push ${{ env.DO_REG_IMAGE }}:${{ env.COMMIT }}
+  #         docker push ${{ env.DO_REG_IMAGE }}:latest
 
   deploy:
+    # needs: build_and_push
     runs-on: ubuntu-latest
     steps:
       - name: Compute additional env variables
@@ -51,45 +52,47 @@ jobs:
           echo "REPO_NAME=$(echo $GITHUB_REPOSITORY | cut -d '/' -f 2)" >> $GITHUB_ENV
           echo "DO_REG_IMAGE=${{ secrets.DO_REGISTRY }}/$(echo $GITHUB_REPOSITORY | cut -d '/' -f 2)" >> $GITHUB_ENV
           echo "WORKDIR=/sources/$(echo $REPO_NAME)" >> $GITHUB_ENV
-      - name: Checkout the repo 
-        uses: actions/checkout@v2
-      - name: Setup SSH
-        run: |
-          mkdir -p ~/.ssh/
-          echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          eval `ssh-agent`
-          ssh-add ~/.ssh/id_rsa
-          ssh-keyscan -H ${{ secrets.DO_HOST }} >> ~/.ssh/known_hosts
-      - name: Establish connection
-        run: ssh ${{ env.SSH_CONN }} 'echo "Connected successfully"'
-      - name: Stop existing docker compose
-        run: ssh ${{ env.SSH_CONN }} 'cd ${{ env.WORKDIR }} && docker compose -f dc.prod.yml down'
-      - name: Recreate workdir
-        run: ssh ${{ env.SSH_CONN }} 'rm -rv ${{ env.WORKDIR }} && mkdir ${{ env.WORKDIR }}'
-      - name: Transfer docker compose file
-        run: scp ./dc.prod.yml ${{ env.SSH_CONN }}:${{ env.WORKDIR }}
-      - name: Generate .env file
-        run: |
-          ssh ${{ env.SSH_CONN }} << EOF
+      - name: (debug) List env var
+        run: printenv
+      # - name: Checkout the repo 
+      #   uses: actions/checkout@v2
+      # - name: Setup SSH
+      #   run: |
+      #     mkdir -p ~/.ssh/
+      #     echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_rsa
+      #     chmod 600 ~/.ssh/id_rsa
+      #     eval `ssh-agent`
+      #     ssh-add ~/.ssh/id_rsa
+      #     ssh-keyscan -H ${{ secrets.DO_HOST }} >> ~/.ssh/known_hosts
+      # - name: Establish connection
+      #   run: ssh ${{ env.SSH_CONN }} 'echo "Connected successfully"'
+      # - name: Stop existing docker compose
+      #   run: ssh ${{ env.SSH_CONN }} 'cd ${{ env.WORKDIR }} && docker compose -f dc.prod.yml down'
+      # - name: Recreate workdir
+      #   run: ssh ${{ env.SSH_CONN }} 'rm -rv ${{ env.WORKDIR }} && mkdir ${{ env.WORKDIR }}'
+      # - name: Transfer docker compose file
+      #   run: scp ./dc.prod.yml ${{ env.SSH_CONN }}:${{ env.WORKDIR }}
+      # - name: Generate .env file
+      #   run: |
+      #     ssh ${{ env.SSH_CONN }} << EOF
           
-          cd ${{ env.WORKDIR }}
+      #     cd ${{ env.WORKDIR }}
 
-          echo PROJECT_NAME=${{ env.REPO_NAME }} >> .env
-          echo WORKDIR=${{ env.WORKDIR }} >> .env
-          echo KEY=${{ secrets.CMS_KEY }} >> .env
-          echo SECRET=${{ secrets.CMS_SECRET }} >> .env
+      #     echo PROJECT_NAME=${{ env.REPO_NAME }} >> .env
+      #     echo WORKDIR=${{ env.WORKDIR }} >> .env
+      #     echo KEY=${{ secrets.CMS_KEY }} >> .env
+      #     echo SECRET=${{ secrets.CMS_SECRET }} >> .env
           
-          echo ADMIN_EMAIL=${{ secrets.CMS_ADMIN_EMAIL }} >> .env
-          echo ADMIN_PASSWORD=${{ secrets.CMS_ADMIN_PASSWORD }} >> .env
+      #     echo ADMIN_EMAIL=${{ secrets.CMS_ADMIN_EMAIL }} >> .env
+      #     echo ADMIN_PASSWORD=${{ secrets.CMS_ADMIN_PASSWORD }} >> .env
 
-          echo DO_REG_IMAGE=${{ env.DO_REG_IMAGE }} >> .env
-          echo MONGO_URL=${{ secrets.WEB_MONGO_URL }} >> .env
-          echo RECAPTCHA_SITE_KEY=${{ secrets.WEB_RECAPTCHA_SITE_KEY }} >> .env
-          echo RECAPTCHA_SECRET_KEY=${{ secrets.WEB_RECAPTCHA_SECRET_KEY }} >> .env
+      #     echo DO_REG_IMAGE=${{ env.DO_REG_IMAGE }} >> .env
+      #     echo MONGO_URL=${{ secrets.WEB_MONGO_URL }} >> .env
+      #     echo RECAPTCHA_SITE_KEY=${{ secrets.WEB_RECAPTCHA_SITE_KEY }} >> .env
+      #     echo RECAPTCHA_SECRET_KEY=${{ secrets.WEB_RECAPTCHA_SECRET_KEY }} >> .env
           
-          echo NODE_OPTIONS="--max-old-space-size=512" >> .env
+      #     echo NODE_OPTIONS="--max-old-space-size=512" >> .env
           
-          EOF
-      - name: Run docker compose
-        run: ssh ${{ env.SSH_CONN }} 'cd ${{ env.WORKDIR }} && doctl registry login && docker compose -f dc.prod.yml up -f'
+      #     EOF
+      # - name: Run docker compose
+      #   run: ssh ${{ env.SSH_CONN }} 'cd ${{ env.WORKDIR }} && doctl registry login && docker compose -f dc.prod.yml up -f'
