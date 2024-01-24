@@ -25,6 +25,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           source: "docker-compose.yml"
           target: ${{ env.WORKDIR }}
+          rm: true
       - name: Deploy to Digital Ocean droplet via SSH action
         uses: appleboy/ssh-action@v1.0.3
         with:
