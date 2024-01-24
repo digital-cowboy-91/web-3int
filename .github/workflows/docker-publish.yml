@@ -45,13 +45,13 @@ jobs:
           echo KEY=${{ secrets.CMS_KEY }} >> .env
           echo SECRET=${{ secrets.CMS_SECRET }} >> .env
           
-          echo ADMIN_EMAIL=${{ secrets.ADMIN_EMAIL }} >> .env
-          echo ADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }} >> .env
+          echo ADMIN_EMAIL=${{ secrets.CMS_ADMIN_EMAIL }} >> .env
+          echo ADMIN_PASSWORD=${{ secrets.CMS_ADMIN_PASSWORD }} >> .env
 
-          echo MONGO_URL=${{ secrets.MONGO_URL }} >> .env
-          echo RECAPTCHA_SITE_KEY=${{ secrets.RECAPTCHA_SITE_KEY }} >> .env
-          echo RECAPTCHA_SECRET_KEY=${{ secrets.RECAPTCHA_SECRET_KEY }} >> .env
+          echo MONGO_URL=${{ secrets.WEB_MONGO_URL }} >> .env
+          echo RECAPTCHA_SITE_KEY=${{ secrets.WEB_RECAPTCHA_SITE_KEY }} >> .env
+          echo RECAPTCHA_SECRET_KEY=${{ secrets.WEB_RECAPTCHA_SECRET_KEY }} >> .env
           
-          echo NODE_OPTIONS=${{ env.NODE_OPTIONS }} >> .env
+          echo NODE_OPTIONS="--max-old-space-size=512" >> .env
           
           EOF
