@@ -9,29 +9,43 @@ env:
   REG: ${{ secrets.DO_REGISTRY }}
   IMG: ${{ vars.IMAGE_NAME }}
   WORKDIR: '/sources/${{ vars.IMAGE_NAME }}'
+  SSH_CONN: '${{ secrets.DO_USERNAME }}@${{ secrets.DO_HOST }}'
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh/
+          echo -e "${{ secrets.SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.DO_HOST }} >> ~/.ssh/known_hosts
       - name: Checkout the repo 
         uses: actions/checkout@v2
-      - name: Copy docker-compose file to VPS
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.DO_HOST }}
-          username: ${{ secrets.DO_USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
-          source: "docker-compose.yml"
-          target: ${{ env.WORKDIR }}
-          rm: true
-      - name: Deploy to Digital Ocean droplet via SSH action
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.DO_HOST }}
-          username: ${{ secrets.DO_USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
-          script: |
-            cd ${{ env.WORKDIR }}
-            ls -l
+      - name: Recreate workdir and transfer docker-compose
+        run: |
+          ssh ${{ env.SSH_CONN }} 'rm -r ${{ env.WORKDIR }} && mkdir ${{ env.WORKDIR }}'
+          scp docker-compose.yml ${{ env.SSH_CONN }}/${{ env.WORKDIR }}
+      - name: Check existence of file
+        run: |
+          ssh ${{ env.SSH_CONN }} 'ls -l ${{ env.WORKDIR }}'
+      # - name: Copy docker-compose file to VPS
+      #   uses: appleboy/scp-action@v0.1.7
+      #   with:
+      #     host: ${{ secrets.DO_HOST }}
+      #     username: ${{ secrets.DO_USERNAME }}
+      #     key: ${{ secrets.SSH_KEY }}
+      #     source: "docker-compose.yml"
+      #     target: ${{ env.WORKDIR }}
+      #     rm: true
+      # - name: Deploy to Digital Ocean droplet via SSH action
+      #   uses: appleboy/ssh-action@v1.0.3
+      #   with:
+      #     host: ${{ secrets.DO_HOST }}
+      #     username: ${{ secrets.DO_USERNAME }}
+      #     key: ${{ secrets.SSH_KEY }}
+      #     script: |
+      #       cd ${{ env.WORKDIR }}
+      #       ls -l
