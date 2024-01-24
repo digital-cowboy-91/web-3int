@@ -2,15 +2,13 @@ name: CI/CD
 
 # 1
 on:
-  push:
-    branches: [ main ]
+  # Auto trigger
+  # push:
+  #   branches: [ main ]
 
-  # Allows you to run this workflow manually from the Actions tab
+  # Manual trigger
   workflow_dispatch:
-    inputs:
-      version:
-        description: 'Image version'
-        required: true
+
 # 2
 env:
   REGISTRY: "registry.digitalocean.com/uniss"
