@@ -18,8 +18,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Get repository name
-        run: echo "REPO_NAME=$(echo $GITHUB_REPOSITORY | cut -d '/' -f 2)" >> $GITHUB_ENV
+      - name: Compute additional env variables
+        run: |
+          echo "REPO_NAME=$(echo $GITHUB_REPOSITORY | cut -d '/' -f 2)" >> $GITHUB_ENV
       - name: (debug) List all env vars
         run: printenv
       - name: Checkout the repo 
@@ -37,10 +38,11 @@ jobs:
       #     ssh ${{ env.SSH_CONN }} 'cd / && ls -l'
       - name: Establish connection and recreate workdir
         run: ssh ${{ env.SSH_CONN }} 'rm -rv ${{ env.WORKDIR }} && mkdir ${{ env.WORKDIR }}'
-      - name: Transfer dc.prod
+      - name: Transfer docker compose
         run: scp ./dc.prod.yml ${{ env.SSH_CONN }}:${{ env.WORKDIR }}
       - name: Generate .env file
-        run: ssh ${{ env.SSH_CONN }} << EOF
+        run: |
+          ssh ${{ env.SSH_CONN }} << EOF
           cd ${{ env.WORKDIR }}
           echo PROJECT_NAME=${{ env.REPO_NAME }} >> .env
           echo KEY=${{ secrets.CMS_KEY }} >> .env
