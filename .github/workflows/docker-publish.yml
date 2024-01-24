@@ -1,0 +1,25 @@
+name: CD
+
+# 1
+on:
+  workflow_dispatch:
+
+# 2
+env:
+  REG: ${{ secrets.DO_REGISTRY }}
+  IMG: ${{ vars.IMAGE_NAME }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to Digital Ocean droplet via SSH action
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.DO_HOST }}
+          username: ${{ secrets.DO_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          scripts: |
+            cd / \
+            ls -l
