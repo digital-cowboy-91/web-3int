@@ -19,6 +19,7 @@ jobs:
       - name: Compute additional env variables
         run: |
           echo "REPO_NAME=$(echo $GITHUB_REPOSITORY | cut -d '/' -f 2)" >> $GITHUB_ENV
+          echo "DO_REG_IMAGE=${{ secrets.DO_REGISTRY }}/${{ vars.IMAGE_NAME }}:$(echo $GITHUB_SHA | head -c7)" >> $GITHUB_ENV
       - name: (debug) List all env vars
         run: printenv
       - name: Checkout the repo 
@@ -31,48 +32,34 @@ jobs:
           eval `ssh-agent`
           ssh-add ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.DO_HOST }} >> ~/.ssh/known_hosts
-      # - name: Establish connection and recreate workdir
-      #   run: ssh ${{ env.SSH_CONN }} 'rm -rv ${{ env.WORKDIR }} && mkdir ${{ env.WORKDIR }}'
-      # - name: Transfer docker compose
-      #   run: scp ./dc.prod.yml ${{ env.SSH_CONN }}:${{ env.WORKDIR }}
-      # - name: Generate .env file
-      #   run: |
-      #     ssh ${{ env.SSH_CONN }} << EOF
-          
-      #     cd ${{ env.WORKDIR }}
-
-      #     echo PROJECT_NAME=${{ env.REPO_NAME }} >> .env
-      #     echo KEY=${{ secrets.CMS_KEY }} >> .env
-      #     echo SECRET=${{ secrets.CMS_SECRET }} >> .env
-          
-      #     echo ADMIN_EMAIL=${{ secrets.CMS_ADMIN_EMAIL }} >> .env
-      #     echo ADMIN_PASSWORD=${{ secrets.CMS_ADMIN_PASSWORD }} >> .env
-
-      #     echo MONGO_URL=${{ secrets.WEB_MONGO_URL }} >> .env
-      #     echo RECAPTCHA_SITE_KEY=${{ secrets.WEB_RECAPTCHA_SITE_KEY }} >> .env
-      #     echo RECAPTCHA_SECRET_KEY=${{ secrets.WEB_RECAPTCHA_SECRET_KEY }} >> .env
-          
-      #     echo NODE_OPTIONS="--max-old-space-size=512" >> .env
-          
-      #     EOF
-      - name: Add var to .env
+      - name: Establish connection
+        run: ssh ${{ env.SSH_CONN }} ''
+      - name: Stop existing docker compose
+        run: ssh ${{ env.SSH_CONN }} 'cd ${{ env.WORKDIR }} && docker compose -f dc.prod.yml down -v'
+      - name: Recreate workdir
+        run: ssh ${{ env.SSH_CONN }} 'rm -rv ${{ env.WORKDIR }} && mkdir ${{ env.WORKDIR }}'
+      - name: Transfer docker compose file
+        run: scp ./dc.prod.yml ${{ env.SSH_CONN }}:${{ env.WORKDIR }}
+      - name: Generate .env file
         run: |
           ssh ${{ env.SSH_CONN }} << EOF
           
           cd ${{ env.WORKDIR }}
+
+          echo PROJECT_NAME=${{ env.REPO_NAME }} >> .env
+          echo KEY=${{ secrets.CMS_KEY }} >> .env
+          echo SECRET=${{ secrets.CMS_SECRET }} >> .env
           
+          echo ADMIN_EMAIL=${{ secrets.CMS_ADMIN_EMAIL }} >> .env
+          echo ADMIN_PASSWORD=${{ secrets.CMS_ADMIN_PASSWORD }} >> .env
+
           echo DO_REG_IMAGE=${{ env.DO_REG_IMAGE }} >> .env
+          echo MONGO_URL=${{ secrets.WEB_MONGO_URL }} >> .env
+          echo RECAPTCHA_SITE_KEY=${{ secrets.WEB_RECAPTCHA_SITE_KEY }} >> .env
+          echo RECAPTCHA_SECRET_KEY=${{ secrets.WEB_RECAPTCHA_SECRET_KEY }} >> .env
+          
+          echo NODE_OPTIONS="--max-old-space-size=512" >> .env
           
           EOF
-      - name: Stop existing compose
-        run: |
-          ssh ${{ env.SSH_CONN }} << EOF
-          cd ${{ env.WORKDIR }}
-          docker compose -f dc.prod.yml down -v
-          EOF
-      - name: Run new compose
-        run: |
-          ssh ${{ env.SSH_CONN }} << EOF
-          cd ${{ env.WORKDIR }}
-          docker compose -f dc.prod.yml down -v
-          EOF
+      - name: Run docker compose
+        run: ssh ${{ env.SSH_CONN }} 'cd ${{ env.WORKDIR }} && doctl registry login && docker compose -f dc.prod.yml up'
