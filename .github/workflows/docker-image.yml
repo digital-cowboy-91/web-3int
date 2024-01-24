@@ -1,6 +1,5 @@
 name: CI/CD
 
-# 1
 on:
   # Auto trigger
   # push:
@@ -9,12 +8,14 @@ on:
   # Manual trigger
   workflow_dispatch:
 
-# 2
 env:
-  REGISTRY: "registry.digitalocean.com/uniss"
-  IMAGE_NAME: "web3int"
+  REGISTRY: ${{ secrets.DO_REGISTRY }}
+  IMAGE_NAME: ${{ vars.IMAGE_NAME }}
+  DO_REG_IMAGE: '${{ secrets.DO_REGISTRY }}/${{ vars.IMAGE_NAME }}'
+  
+  WORKDIR: '/sources/${{ vars.IMAGE_NAME }}'
+  SSH_CONN: '${{ secrets.DO_USERNAME }}@${{ secrets.DO_HOST }}'
 
-# 3
 jobs:
   build_and_push:
     runs-on: ubuntu-latest
@@ -23,7 +24,7 @@ jobs:
         uses: actions/checkout@v4
         
       - name: Build container image
-        run: docker build -t $(echo $REGISTRY)/$(echo $IMAGE_NAME):$(echo $GITHUB_SHA | head -c7) .
+        run: docker build -t ${{ env.DO_REG_IMAGE }}:$(echo $GITHUB_SHA | head -c7) .
 
       - name: Install doctl
         uses: digitalocean/action-doctl@v2
@@ -33,11 +34,11 @@ jobs:
       - name: Log in to DigitalOcean Container Registry with short-lived credentials
         run: doctl registry login --expiry-seconds 600
       
-      - name: Remove all old images
-        run: if [ ! -z "$(doctl registry repository list | grep "$(echo $IMAGE_NAME)")" ]; then doctl registry repository delete-manifest $(echo $IMAGE_NAME) $(doctl registry repository list-tags $(echo $IMAGE_NAME) | grep -o "sha.*") --force; else echo "No repository"; fi
+      # - name: Remove all old images
+      #   run: if [ ! -z "$(doctl registry repository list | grep "$(echo $IMAGE_NAME)")" ]; then doctl registry repository delete-manifest $(echo $IMAGE_NAME) $(doctl registry repository list-tags $(echo $IMAGE_NAME) | grep -o "sha.*") --force; else echo "No repository"; fi
 
       - name: Push image to DigitalOcean Container Registry
-        run: docker push $(echo $REGISTRY)/$(echo $IMAGE_NAME):$(echo $GITHUB_SHA | head -c7)
+        run: docker push ${{ env.DO_REG_IMAGE }}:$(echo $GITHUB_SHA | head -c7)
         
   # deploy:
   #   runs-on: ubuntu-latest
