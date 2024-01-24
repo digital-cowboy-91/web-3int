@@ -4,8 +4,8 @@ on:
   # Auto trigger
   push:
     branches: [ main ]
-    paths-ignore:
-      - '.github/workflows/deployment.yml'
+    # paths-ignore:
+    #   - '.github/workflows/deployment.yml'
 
   # Manual trigger
   workflow_dispatch:
@@ -15,36 +15,35 @@ env:
 
 jobs:
 
-  # build_and_push:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Compute additional env variables
-  #       run: |
-  #         echo "REPO_NAME=$(echo $GITHUB_REPOSITORY | cut -d '/' -f 2)" >> $GITHUB_ENV
-  #         echo "COMMIT=$(echo $GITHUB_SHA | head -c7)" >> $GITHUB_ENV
-  #         echo "DO_REG_IMAGE=${{ secrets.DO_REGISTRY }}/$(echo $GITHUB_REPOSITORY | cut -d '/' -f 2)" >> $GITHUB_ENV
-  #         echo "WORKDIR=/sources/$(echo $REPO_NAME)" >> $GITHUB_ENV
-  #     - name: Checkout the repo 
-  #       uses: actions/checkout@v4
+  build_and_push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Compute additional env variables
+        run: |
+          echo "REPO_NAME=$(echo $GITHUB_REPOSITORY | cut -d '/' -f 2)" >> $GITHUB_ENV
+          echo "COMMIT=$(echo $GITHUB_SHA | head -c7)" >> $GITHUB_ENV
+          echo "DO_REG_IMAGE=${{ secrets.DO_REGISTRY }}/$(echo $GITHUB_REPOSITORY | cut -d '/' -f 2)" >> $GITHUB_ENV
+      - name: Checkout the repo 
+        uses: actions/checkout@v4
         
-  #     - name: Build container image
-  #       run: docker build -t ${{ env.DO_REG_IMAGE }}:${{ env.COMMIT }} -t ${{ env.DO_REG_IMAGE }}:latest .
+      - name: Build container image
+        run: docker build -t ${{ env.DO_REG_IMAGE }}:${{ env.COMMIT }} -t ${{ env.DO_REG_IMAGE }}:latest .
 
-  #     - name: Install doctl
-  #       uses: digitalocean/action-doctl@v2
-  #       with:
-  #         token: ${{ secrets.DO_API_TOKEN }}
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DO_API_TOKEN }}
     
-  #     - name: Log in to DigitalOcean Container Registry with short-lived credentials
-  #       run: doctl registry login --expiry-seconds 600
+      - name: Log in to DigitalOcean Container Registry with short-lived credentials
+        run: doctl registry login --expiry-seconds 600
 
-  #     - name: Push image to DigitalOcean Container Registry
-  #       run: |
-  #         docker push ${{ env.DO_REG_IMAGE }}:${{ env.COMMIT }}
-  #         docker push ${{ env.DO_REG_IMAGE }}:latest
+      - name: Push image to DigitalOcean Container Registry
+        run: |
+          docker push ${{ env.DO_REG_IMAGE }}:${{ env.COMMIT }}
+          docker push ${{ env.DO_REG_IMAGE }}:latest
 
   deploy:
-    # needs: build_and_push
+    needs: build_and_push
     runs-on: ubuntu-latest
     steps:
       - name: Compute additional env variables
@@ -65,7 +64,7 @@ jobs:
           ssh-add ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.DO_HOST }} >> ~/.ssh/known_hosts
       - name: Establish connection
-        run: ssh ${{ env.SSH_CONN }} 'echo "Connected successfully"'
+        run: ssh ${{ env.SSH_CONN }} 'date'
       - name: Stop existing docker compose
         run: |
           ssh ${{ env.SSH_CONN }} << EOF
@@ -79,8 +78,8 @@ jobs:
           ssh ${{ env.SSH_CONN }} << EOF
           if [ -d "${{ env.WORKDIR }}" ]; then
             rm -rv ${{ env.WORKDIR }}
-            mkdir ${{ env.WORKDIR }}
           fi
+            mkdir ${{ env.WORKDIR }}
           EOF
       - name: Transfer docker compose file
         run: scp ./dc.prod.yml ${{ env.SSH_CONN }}:${{ env.WORKDIR }}
@@ -107,4 +106,4 @@ jobs:
           
           EOF
       - name: Run docker compose
-        run: ssh ${{ env.SSH_CONN }} 'cd ${{ env.WORKDIR }} && doctl registry login && docker compose -f dc.prod.yml up -f'
+        run: ssh ${{ env.SSH_CONN }} 'cd ${{ env.WORKDIR }} && doctl registry login && docker compose -f dc.prod.yml up -d'
