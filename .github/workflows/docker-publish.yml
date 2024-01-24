@@ -27,10 +27,12 @@ jobs:
       # - name: Test connection
       #   run: |
       #     ssh ${{ env.SSH_CONN }} 'cd / && ls -l'
-      - name: Checkout the repo 
-        uses: actions/checkout@v2
+      # - name: Checkout the repo 
+      #   uses: actions/checkout@v2
       - name: Recreate workdir
-        run: ssh ${{ env.SSH_CONN }} 'rm -r ${{ env.WORKDIR }} && mkdir ${{ env.WORKDIR }}'
+        run: ssh ${{ env.SSH_CONN }} 'rm -rv ${{ env.WORKDIR }} && mkdir ${{ env.WORKDIR }}'
+      - name: Check existence of directory
+        run: ssh ${{ env.SSH_CONN }} 'ls -l /sources/'
       - name: Transfer docker-compose
         run: scp docker-compose.yml ${{ env.SSH_CONN }}${{ env.WORKDIR }}
       - name: Check existence of file
