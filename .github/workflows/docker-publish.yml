@@ -1,10 +1,8 @@
 name: CD
 
-# 1
 on:
   workflow_dispatch:
 
-# 2
 env:
   REGISTRY: ${{ secrets.DO_REGISTRY }}
   IMAGE_NAME: ${{ vars.IMAGE_NAME }}
@@ -33,9 +31,6 @@ jobs:
           eval `ssh-agent`
           ssh-add ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.DO_HOST }} >> ~/.ssh/known_hosts
-      # - name: Test connection
-      #   run: |
-      #     ssh ${{ env.SSH_CONN }} 'cd / && ls -l'
       - name: Establish connection and recreate workdir
         run: ssh ${{ env.SSH_CONN }} 'rm -rv ${{ env.WORKDIR }} && mkdir ${{ env.WORKDIR }}'
       - name: Transfer docker compose
@@ -43,27 +38,20 @@ jobs:
       - name: Generate .env file
         run: |
           ssh ${{ env.SSH_CONN }} << EOF
+          
           cd ${{ env.WORKDIR }}
+
           echo PROJECT_NAME=${{ env.REPO_NAME }} >> .env
           echo KEY=${{ secrets.CMS_KEY }} >> .env
           echo SECRET=${{ secrets.CMS_SECRET }} >> .env
+          
+          echo ADMIN_EMAIL=${{ secrets.ADMIN_EMAIL }} >> .env
+          echo ADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }} >> .env
+
+          echo MONGO_URL=${{ secrets.MONGO_URL }} >> .env
+          echo RECAPTCHA_SITE_KEY=${{ secrets.RECAPTCHA_SITE_KEY }} >> .env
+          echo RECAPTCHA_SECRET_KEY=${{ secrets.RECAPTCHA_SECRET_KEY }} >> .env
+          
+          echo NODE_OPTIONS=${{ env.NODE_OPTIONS }} >> .env
+          
           EOF
-      
-      # - name: Copy docker-compose file to VPS
-      #   uses: appleboy/scp-action@v0.1.7
-      #   with:
-      #     host: ${{ secrets.DO_HOST }}
-      #     username: ${{ secrets.DO_USERNAME }}
-      #     key: ${{ secrets.SSH_KEY }}
-      #     source: "docker-compose.yml"
-      #     target: ${{ env.WORKDIR }}
-      #     rm: true
-      # - name: Deploy to Digital Ocean droplet via SSH action
-      #   uses: appleboy/ssh-action@v1.0.3
-      #   with:
-      #     host: ${{ secrets.DO_HOST }}
-      #     username: ${{ secrets.DO_USERNAME }}
-      #     key: ${{ secrets.SSH_KEY }}
-      #     script: |
-      #       cd ${{ env.WORKDIR }}
-      #       ls -l
