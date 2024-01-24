@@ -4,6 +4,8 @@ on:
   # Auto trigger
   push:
     branches: [ main ]
+    paths-ignore:
+      - '.github/workflows/deployment.yml'
 
   # Manual trigger
   workflow_dispatch:
@@ -32,7 +34,7 @@ jobs:
           echo "REPO_NAME=$(echo $GITHUB_REPOSITORY | cut -d '/' -f 2)" >> $GITHUB_ENV
           echo "COMMIT=$(echo $GITHUB_SHA | head -c7)" >> $GITHUB_ENV
           echo "DO_REG_IMAGE=${{ secrets.DO_REGISTRY }}/$(echo $GITHUB_REPOSITORY | cut -d '/' -f 2)" >> $GITHUB_ENV
-          echo "WORKDIR=/sources/${{ env.REPO_NAME }}" >> $GITHUB_ENV
+          echo "WORKDIR=/sources/$(echo $REPO_NAME)" >> $GITHUB_ENV
       - name: Checkout the repo 
         uses: actions/checkout@v4
         
@@ -61,7 +63,7 @@ jobs:
         run: |
           echo "REPO_NAME=$(echo $GITHUB_REPOSITORY | cut -d '/' -f 2)" >> $GITHUB_ENV
           echo "DO_REG_IMAGE=${{ secrets.DO_REGISTRY }}/$(echo $GITHUB_REPOSITORY | cut -d '/' -f 2)" >> $GITHUB_ENV
-          echo "WORKDIR=/sources/${{ env.REPO_NAME }}" >> $GITHUB_ENV
+          echo "WORKDIR=/sources/$(echo $REPO_NAME)" >> $GITHUB_ENV
       - name: Checkout the repo 
         uses: actions/checkout@v2
       - name: Setup SSH
@@ -75,7 +77,7 @@ jobs:
       - name: Establish connection
         run: ssh ${{ env.SSH_CONN }} 'echo "Connected successfully"'
       - name: Stop existing docker compose
-        run: ssh ${{ env.SSH_CONN }} 'cd ${{ env.WORKDIR }} && docker compose -f dc.prod.yml down -v'
+        run: ssh ${{ env.SSH_CONN }} 'cd ${{ env.WORKDIR }} && docker compose -f dc.prod.yml down'
       - name: Recreate workdir
         run: ssh ${{ env.SSH_CONN }} 'rm -rv ${{ env.WORKDIR }} && mkdir ${{ env.WORKDIR }}'
       - name: Transfer docker compose file
