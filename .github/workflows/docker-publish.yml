@@ -6,8 +6,10 @@ on:
 
 # 2
 env:
-  REG: ${{ secrets.DO_REGISTRY }}
-  IMG: ${{ vars.IMAGE_NAME }}
+  REGISTRY: ${{ secrets.DO_REGISTRY }}
+  IMAGE_NAME: ${{ vars.IMAGE_NAME }}
+  DO_REG_IMAGE: '${{ secrets.DO_REGISTRY }}/${{ vars.IMAGE_NAME }}'
+  
   WORKDIR: '/sources/${{ vars.IMAGE_NAME }}'
   SSH_CONN: '${{ secrets.DO_USERNAME }}@${{ secrets.DO_HOST }}'
 
@@ -16,6 +18,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Get repository name
+        run: echo "REPO_NAME=$(echo $GITHUB_REPOSITORY | cut -d '/' -f 2)" >> $GITHUB_ENV
+      - name: (debug) List all env vars
+        run: printenv
       - name: Checkout the repo 
         uses: actions/checkout@v2
       - name: Setup SSH
@@ -29,18 +35,17 @@ jobs:
       # - name: Test connection
       #   run: |
       #     ssh ${{ env.SSH_CONN }} 'cd / && ls -l'
-      - name: Establish SSH connection
-        run: ssh ${{ env.SSH_CONN }}
-      - name: Recreate workdir
+      - name: Establish connection and recreate workdir
         run: ssh ${{ env.SSH_CONN }} 'rm -rv ${{ env.WORKDIR }} && mkdir ${{ env.WORKDIR }}'
-      - name: Check existence of directory
-        run: ssh ${{ env.SSH_CONN }} 'ls -l /sources/'
-      - name: Check existence of docker compose file
-        run: ls -l
-      - name: Transfer docker-compose
-        run: scp ./docker-compose.yml ${{ env.SSH_CONN }}:${{ env.WORKDIR }}
-      - name: Check existence of file
-        run: ssh ${{ env.SSH_CONN }} 'ls -l ${{ env.WORKDIR }}'
+      - name: Transfer dc.prod
+        run: scp ./dc.prod.yml ${{ env.SSH_CONN }}:${{ env.WORKDIR }}
+      - name: Generate .env file
+        run: ssh ${{ env.SSH_CONN }} << EOF
+          echo PROJECT_NAME=${{ env. }} >> .env
+          echo KEY=${{ secrets.CMS_KEY }} >> .env
+          echo SECRET=${{ secrets.CMS_SECRET }} >> .env
+          EOF
+      
       # - name: Copy docker-compose file to VPS
       #   uses: appleboy/scp-action@v0.1.7
       #   with:
