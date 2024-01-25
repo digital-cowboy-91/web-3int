@@ -29,7 +29,7 @@ services:
     volumes:
       - ${WORKDIR}/cms:/directus/extensions
     labels:
-      - traefik.http.routers.my-container.rule=Host(`example.com`)
+      - traefik.http.routers.${PROJECT_NAME}-cms.rule=Host(`cms.3int.uk`)
 
   web:
     container_name: ${PROJECT_NAME}-web
@@ -46,3 +46,5 @@ services:
       - 8011:3000
     volumes:
       - ${WORKDIR}/cms:/app/cms:ro
+    labels:
+      - traefik.http.routers.${PROJECT_NAME}-web.rule=Host(`3int.uk`)
