@@ -4,6 +4,7 @@ services:
   cms:
     container_name: cms
     image: directus/directus:10.8.3
+    restart: always
     environment:
       KEY: ${KEY}
       SECRET: ${SECRET}
@@ -31,6 +32,7 @@ services:
   web:
     container_name: web
     image: ${DO_REG_IMAGE}
+    restart: always
     depends_on:
       - cms
     environment:
