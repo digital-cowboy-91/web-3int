@@ -13,6 +13,7 @@ on:
       manual_trigger:
         description: 'Trigger job'
         default: 'build and deploy'
+        type: choice
         options:
           - 'build and deploy'
           - 'rebuild'
