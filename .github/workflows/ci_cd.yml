@@ -25,7 +25,7 @@ env:
 jobs:
 
   build_and_push:
-    if: github.event_name == 'push' || contains(fromJson(['build and deploy', 'rebuild']), github.event.inputs.manual_trigger )
+    if: github.event_name == 'push' || contains(fromJson('["build and deploy", "rebuild"]'), github.event.inputs.manual_trigger )
     # uses: ./.github/workflows/build_and_push.yml
     name: Build and push
     runs-on: ubuntu-latest
