@@ -29,6 +29,7 @@ services:
     # volumes:
     #   - ${WORKDIR}/cms:/directus/extensions
     labels:
+      - traefik.http.services.${PROJECT_NAME}-cms.loadbalancer.server.port=8010
       - traefik.http.routers.${PROJECT_NAME}-cms.rule=Host(`cms.3int.uk`)
 
   web:
@@ -47,4 +48,5 @@ services:
     # volumes:
     #   - ${WORKDIR}/cms:/app/cms:ro
     labels:
+      - traefik.http.services.${PROJECT_NAME}-web.loadbalancer.server.port=8011
       - traefik.http.routers.${PROJECT_NAME}-web.rule=Host(`3int.uk`)
