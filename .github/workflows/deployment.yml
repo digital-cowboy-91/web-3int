@@ -115,4 +115,4 @@ jobs:
           
           EOF
       - name: Run docker compose
-        run: ssh ${{ env.SSH_CONN }} 'cd ${{ env.WORKDIR }} && doctl registry login && docker compose -f dc.prod.yml up -d'
+        run: ssh ${{ env.SSH_CONN }} 'cd ${{ env.WORKDIR }} && doctl registry login --expiry-seconds 60 && docker compose -f dc.prod.yml up -d'
