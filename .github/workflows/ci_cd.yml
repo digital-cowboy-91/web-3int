@@ -10,6 +10,7 @@ on:
   # Manual trigger
   workflow_dispatch:
     inputs:
+      manual_trigger:
         description: 'Trigger job'
         default: 'build and deploy'
         options:
@@ -23,14 +24,23 @@ env:
 jobs:
 
   build_and_push:
-    if: github.event_name == 'push' || github.event.inputs == 'build and deploy' || github.event.inputs == 'rebuild'
-    uses: ./.github/workflows/build_and_push.yml
+    if: github.event_name == 'push' || contains(fromJson(['build and deploy', 'rebuild']), github.event.inputs.manual_trigger )
+    # uses: ./.github/workflows/build_and_push.yml
+    steps:
+      - name: (debug) Build and push
+        run: echo "Build and push"
     
   and_deploy:
-    if: github.event_name == 'push' || github.event.inputs == 'build and deploy'
+    if: github.event_name == 'push' || github.event.inputs.manual_trigger == 'build and deploy'
     needs: build_and_push
-    uses: ./.github/workflows/build_and_push.yml
+    # uses: ./.github/workflows/build_and_push.yml
+    steps:
+      - name: (debug) and Deploy
+        run: echo "and Deploy"
 
   deploy:
-    if: github.event.inputs == 'redeploy'
-    uses: ./.github/workflows/deploy.yml
+    if: github.event.inputs.manual_trigger == 'redeploy'
+    # uses: ./.github/workflows/deploy.yml
+    steps:
+      - name: (debug) Deploy
+        run: echo "Deploy"
