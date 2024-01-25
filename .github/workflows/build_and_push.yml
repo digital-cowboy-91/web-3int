@@ -1,0 +1,36 @@
+name: Build and Push
+
+on:
+  workflow_call:
+
+env:
+  SSH_CONN: '${{ secrets.DO_USERNAME }}@${{ secrets.DO_HOST }}'
+
+jobs:
+
+  build_and_push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Compute additional env variables
+        run: |
+          echo "REPO_NAME=$(echo $GITHUB_REPOSITORY | cut -d '/' -f 2)" >> $GITHUB_ENV
+          echo "COMMIT=$(echo $GITHUB_SHA | head -c7)" >> $GITHUB_ENV
+          echo "DO_REG_IMAGE=${{ secrets.DO_REGISTRY }}/$(echo $GITHUB_REPOSITORY | cut -d '/' -f 2)" >> $GITHUB_ENV
+      - name: Checkout the repo 
+        uses: actions/checkout@v4
+        
+      - name: Build container image
+        run: docker build -t ${{ env.DO_REG_IMAGE }}:${{ env.COMMIT }} -t ${{ env.DO_REG_IMAGE }}:latest .
+
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DO_API_TOKEN }}
+    
+      - name: Log in to DigitalOcean Container Registry with short-lived credentials
+        run: doctl registry login --expiry-seconds 600
+
+      - name: Push image to DigitalOcean Container Registry
+        run: |
+          docker push ${{ env.DO_REG_IMAGE }}:${{ env.COMMIT }}
+          docker push ${{ env.DO_REG_IMAGE }}:latest
