@@ -55,7 +55,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: build_and_push
-    if: github.event_name == 'push' || github.event.inputs.option == 'all' || (github.event.inputs.option == 'deploy' && always())
+    if: github.event_name == 'push' || github.event.inputs.option == 'all' || (github.event.inputs.option == 'deploy' && always() && !cancelled())
     steps:
       - name: Compute additional env variables
         run: |
