@@ -24,7 +24,7 @@ jobs:
   job2:
     runs-on: ubuntu-latest
     needs: job1
-    if: github.event_name == 'push' || github.event.inputs.option != 'A' || (github.event.inputs.option == 'C' && always())
+    if: github.event_name == 'push' || github.event.inputs.option == 'A' || (github.event.inputs.option == 'C' && always())
     steps:
       - name: Run Job2 tasks (same as job3)
         run: echo "Running Job2 tasks"
