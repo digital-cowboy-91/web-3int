@@ -73,7 +73,7 @@ jobs:
           ssh-add ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.DO_HOST }} >> ~/.ssh/known_hosts
       - name: Establish SSH connection
-        run: ssh ${{ env.SSH_CONN }} -vvv T
+        run: ssh ${{ env.SSH_CONN }} 'echo "SSH connection established."'
       - name: Stop existing docker compose
         run: |
           ssh ${{ env.SSH_CONN }} << EOF
