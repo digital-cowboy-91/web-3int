@@ -1,53 +1,29 @@
-name: CI/CD
+name: My Workflow
 
 on:
-  # Auto trigger
   # push:
-  #   branches: [ main ]
-  #   paths-ignore:
-  #     - '.github/workflows/deployment.yml'
-
-  # Manual trigger
+  #   branches: [main]
   workflow_dispatch:
     inputs:
-      manual_trigger:
-        description: 'Trigger job'
-        default: 'build and deploy'
+      option:
         type: choice
+        required: true
         options:
-          - 'build and deploy'
-          - 'rebuild'
-          - 'redeploy'
-
-env:
-  SSH_CONN: '${{ secrets.DO_USERNAME }}@${{ secrets.DO_HOST }}'
+          - A
+          - B
 
 jobs:
+  job1:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' || github.event.inputs.option == 'A'
+    steps:
+      - name: Run Job1 tasks
+        run: echo "Running Job1 tasks"
 
-  build_and_push:
-    name: Build and push
-    if: github.event_name == 'push' || contains(fromJson('["build and deploy", "rebuild"]'), github.event.inputs.manual_trigger )
-    uses: ./.github/workflows/build_and_push.yml
-    # runs-on: ubuntu-latest
-    # steps:
-    #   - name: (debug) Build and push
-    #     run: echo "Build and push"
-    
-  and_deploy:
-    name: + Deploy
-    if: github.event_name == 'push' || github.event.inputs.manual_trigger == 'build and deploy'
-    needs: build_and_push
-    uses: ./.github/workflows/build_and_push.yml
-    # runs-on: ubuntu-latest
-    # steps:
-    #   - name: (debug) and Deploy
-    #     run: echo "and Deploy"
-
-  deploy:
-    name: Redeploy
-    if: github.event.inputs.manual_trigger == 'redeploy'
-    uses: ./.github/workflows/deploy.yml
-    # runs-on: ubuntu-latest
-    # steps:
-    #   - name: (debug) Deploy
-    #     run: echo "Deploy"
+  job2:
+    runs-on: ubuntu-latest
+    needs: job1
+    if: github.event_name == 'push' || (github.event.inputs.option == 'B' && always())
+    steps:
+      - name: Run Job2 tasks (same as job3)
+        run: echo "Running Job2 tasks"
