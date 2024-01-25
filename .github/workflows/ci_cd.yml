@@ -1,0 +1,36 @@
+name: CI/CD
+
+on:
+  # Auto trigger
+  # push:
+  #   branches: [ main ]
+  #   paths-ignore:
+  #     - '.github/workflows/deployment.yml'
+
+  # Manual trigger
+  workflow_dispatch:
+    inputs:
+        description: 'Trigger job'
+        default: 'build and deploy'
+        options:
+          - 'build and deploy'
+          - 'rebuild'
+          - 'redeploy'
+
+env:
+  SSH_CONN: '${{ secrets.DO_USERNAME }}@${{ secrets.DO_HOST }}'
+
+jobs:
+
+  build_and_push:
+    if: github.event_name == 'push' || github.event.inputs == 'build and deploy' || github.event.inputs == 'rebuild'
+    uses: ./.github/workflows/build_and_push.yml
+    
+  and_deploy:
+    if: github.event_name == 'push' || github.event.inputs == 'build and deploy'
+    needs: build_and_push
+    uses: ./.github/workflows/build_and_push.yml
+
+  deploy:
+    if: github.event.inputs == 'redeploy'
+    uses: ./.github/workflows/deploy.yml
