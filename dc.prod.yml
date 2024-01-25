@@ -26,8 +26,8 @@ services:
       EXTENSIONS_AUTO_RELOAD: "true"
     ports:
       - 8010:8055
-    volumes:
-      - ${WORKDIR}/cms:/directus/extensions
+    # volumes:
+    #   - ${WORKDIR}/cms:/directus/extensions
     labels:
       - traefik.http.routers.${PROJECT_NAME}-cms.rule=Host(`cms.3int.uk`)
 
@@ -44,7 +44,7 @@ services:
       NODE_OPTIONS: ${NODE_OPTIONS}
     ports:
       - 8011:3000
-    volumes:
-      - ${WORKDIR}/cms:/app/cms:ro
+    # volumes:
+    #   - ${WORKDIR}/cms:/app/cms:ro
     labels:
       - traefik.http.routers.${PROJECT_NAME}-web.rule=Host(`3int.uk`)
