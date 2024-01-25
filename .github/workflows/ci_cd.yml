@@ -27,21 +27,27 @@ jobs:
   build_and_push:
     if: github.event_name == 'push' || contains(fromJson(['build and deploy', 'rebuild']), github.event.inputs.manual_trigger )
     # uses: ./.github/workflows/build_and_push.yml
+    name: Build and push
+    runs-on: ubuntu-latest
     steps:
       - name: (debug) Build and push
         run: echo "Build and push"
     
   and_deploy:
     if: github.event_name == 'push' || github.event.inputs.manual_trigger == 'build and deploy'
+    name: + Deploy
     needs: build_and_push
     # uses: ./.github/workflows/build_and_push.yml
+    runs-on: ubuntu-latest
     steps:
       - name: (debug) and Deploy
         run: echo "and Deploy"
 
   deploy:
     if: github.event.inputs.manual_trigger == 'redeploy'
+    name: Redeploy
     # uses: ./.github/workflows/deploy.yml
+    runs-on: ubuntu-latest
     steps:
       - name: (debug) Deploy
         run: echo "Deploy"
