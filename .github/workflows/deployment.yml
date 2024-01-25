@@ -6,6 +6,7 @@ on:
     branches: [main]
     paths-ignore:
       - ".github/workflows/**"
+      - "./dc.*"
 
   # Manual trigger
   workflow_dispatch:

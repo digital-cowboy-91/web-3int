@@ -2,7 +2,7 @@ version: "3.8"
 name: ${PROJECT_NAME}
 services:
   cms:
-    container_name: cms
+    container_name: ${PROJECT_NAME}-cms
     image: directus/directus:10.8.3
     restart: always
     environment:
@@ -28,9 +28,11 @@ services:
       - 8010:8055
     volumes:
       - ${WORKDIR}/cms:/directus/extensions
+    labels:
+      - traefik.http.routers.my-container.rule=Host(`example.com`)
 
   web:
-    container_name: web
+    container_name: ${PROJECT_NAME}-web
     image: ${DO_REG_IMAGE}
     restart: always
     depends_on:
