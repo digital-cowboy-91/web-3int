@@ -44,3 +44,6 @@ amplifyconfiguration*
 # do
 .appspec
 *.crt
+
+# private
+.notebook

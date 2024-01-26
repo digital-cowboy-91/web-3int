@@ -24,13 +24,14 @@ services:
       ADMIN_PASSWORD: ${ADMIN_PASSWORD}
 
       EXTENSIONS_AUTO_RELOAD: "true"
-    ports:
-      - 8010:8055
+    networks:
+      - traefik_proxy
     # volumes:
     #   - ${WORKDIR}/cms:/directus/extensions
     labels:
-      - traefik.http.services.${PROJECT_NAME}-cms.loadbalancer.server.port=8010
       - traefik.http.routers.${PROJECT_NAME}-cms.rule=Host(`cms.3int.uk`)
+      - traefik.http.routers.${PROJECT_NAME}-cms.entryPoints=websecure
+      - traefik.http.routers.${PROJECT_NAME}-cms.tls.certResolver=vps1-ssl
 
   web:
     container_name: ${PROJECT_NAME}-web
@@ -43,10 +44,15 @@ services:
       RECAPTCHA_SITE_KEY: ${RECAPTCHA_SITE_KEY}
       RECAPTCHA_SECRET_KEY: ${RECAPTCHA_SECRET_KEY}
       NODE_OPTIONS: ${NODE_OPTIONS}
-    ports:
-      - 8011:3000
+    networks:
+      - traefik_proxy
     # volumes:
     #   - ${WORKDIR}/cms:/app/cms:ro
     labels:
-      - traefik.http.services.${PROJECT_NAME}-web.loadbalancer.server.port=8011
       - traefik.http.routers.${PROJECT_NAME}-web.rule=Host(`3int.uk`)
+      - traefik.http.routers.${PROJECT_NAME}-web.entryPoints=websecure
+      - traefik.http.routers.${PROJECT_NAME}-web.tls.certResolver=vps1-ssl
+
+networks:
+  traefik_proxy:
+    external: true
