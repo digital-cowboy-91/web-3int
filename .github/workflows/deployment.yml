@@ -130,7 +130,7 @@ jobs:
 
           docker compose up --no-start
           chown -R 1000:1000 ${{ env.WORKDIR }}/persist ${{ env.WORKDIR }}/temp
-          docker compose start -d
+          docker compose start
 
           EOF
       - name: Remove SSH key
