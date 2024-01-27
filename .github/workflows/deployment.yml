@@ -89,11 +89,12 @@ jobs:
           if [ -d "${{ env.WORKDIR }}" ]; then
             cd ${{ env.WORKDIR }}
             find . -mindepth 1 -not -name 'persist' -not -path './persist/*' -exec rm -rf {} +
-          fi
+          else
             mkdir ${{ env.WORKDIR }}
             mkdir ${{ env.WORKDIR }}/persist
-          EOF
+          fi
             mkdir ${{ env.WORKDIR }}/temp
+          EOF
       - name: Transfer docker compose
         run: scp ./dc.prod.yml ${{ env.SSH_CONN }}:${{ env.WORKDIR }}/docker-compose.yml
       - name: Generate .env file
