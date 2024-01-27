@@ -15,18 +15,17 @@ RUN npm ci
 # IMG: Builder
 FROM base AS builder
 
-ARG LOCAL_HOST
-ARG NODE_OPTIONS
-ARG MONGO_URL
-ARG RECAPTCHA_SITE_KEY
-ARG RECAPTCHA_SECRET_KEY
+ARG WEB_NODE_OPTIONS
+ARG WEB_MONGO_URL
+ARG WEB_RECAPTCHA_SITE_KEY
+ARG WEB_RECAPTCHA_SECRET_KEY
 
-ENV LOCAL_HOST $LOCAL_HOST \
-    NODE_OPTIONS $NODE_OPTIONS \
-    MONGO_URL $MONGO_URL \
-    RECAPTCHA_SITE_KEY $RECAPTCHA_SITE_KEY \
-    RECAPTCHA_SECRET_KEY $RECAPTCHA_SECRET_KEY \
-    NEXT_TELEMETRY_DISABLED 1
+ENV LOCAL_HOST http://web \
+    NODE_OPTIONS $WEB_NODE_OPTIONS \
+    MONGO_URL $WEB_MONGO_URL \
+    RECAPTCHA_SITE_KEY $WEB_RECAPTCHA_SITE_KEY \
+    RECAPTCHA_SECRET_KEY $WEB_RECAPTCHA_SECRET_KEY \
+      NEXT_TELEMETRY_DISABLED 1
 
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
@@ -34,21 +33,6 @@ COPY ./ .
 
 RUN npx prisma generate &&\
     npm run build
-
-# IMG: Runner
-# FROM base AS runtime
-
-# ENV NODE_ENV production \
-#     NEXT_TELEMETRY_DISABLED 1
-
-# WORKDIR /app
-
-# COPY --from=builder /app/.next/standalone ./
-# COPY --from=builder /app/.next/static ./.next/static
-# COPY --from=builder /app/public ./public
-# COPY --from=builder /app/cms ./cms
-
-# RUN rm -rf ./cache
 
 EXPOSE 3000
 
