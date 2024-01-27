@@ -9,7 +9,6 @@ services:
       KEY: ${KEY}
       SECRET: ${SECRET}
 
-      # Uncomment to connect from local to DO else SQLite will be used
       # DB_CLIENT: ${DB_CLIENT}
       # DB_HOST: ${DB_HOST}
       # DB_PORT: ${DB_PORT}
@@ -23,15 +22,16 @@ services:
       ADMIN_EMAIL: ${ADMIN_EMAIL}
       ADMIN_PASSWORD: ${ADMIN_PASSWORD}
 
-      EXTENSIONS_AUTO_RELOAD: "true"
+      # EXTENSIONS_AUTO_RELOAD: "true"
     networks:
       - traefik_proxy
-    # volumes:
-    #   - ${WORKDIR}/cms:/directus/extensions
+    volumes:
+      # - ${WORKDIR}/temp/extensions:/directus/extensions
+      - ${WORKDIR}/persist/database:/directus/database
     labels:
       - traefik.http.routers.${PROJECT_NAME}-cms.rule=Host(`cms.3int.uk`)
       - traefik.http.routers.${PROJECT_NAME}-cms.entryPoints=websecure
-      - traefik.http.routers.${PROJECT_NAME}-cms.tls.certResolver=vps1-ssl
+      - traefik.http.routers.${PROJECT_NAME}-cms.tls.certResolver=vps1-ssl-2
 
   web:
     container_name: ${PROJECT_NAME}-web
@@ -47,11 +47,11 @@ services:
     networks:
       - traefik_proxy
     # volumes:
-    #   - ${WORKDIR}/cms:/app/cms:ro
+    #   - ${WORKDIR}/temp/extensions:/app/cms
     labels:
       - traefik.http.routers.${PROJECT_NAME}-web.rule=Host(`3int.uk`)
       - traefik.http.routers.${PROJECT_NAME}-web.entryPoints=websecure
-      - traefik.http.routers.${PROJECT_NAME}-web.tls.certResolver=vps1-ssl
+      - traefik.http.routers.${PROJECT_NAME}-web.tls.certResolver=vps1-ssl-2
 
 networks:
   traefik_proxy:

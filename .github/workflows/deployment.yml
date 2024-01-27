@@ -78,21 +78,24 @@ jobs:
       - name: Stop existing docker compose
         run: |
           ssh ${{ env.SSH_CONN }} << EOF
-          if [ -d "${{ env.WORKDIR }}" ] && [ -f "${{ env.WORKDIR }}/dc.prod.yml" ]; then
+          if [ -d "${{ env.WORKDIR }}" ] && [ -f "${{ env.WORKDIR }}/docker-compose.yml" ]; then
             cd ${{ env.WORKDIR }}
-            docker compose -f dc.prod.yml down
+            docker compose down
           fi
           EOF
-      - name: Recreate workdir
+      - name: Clear directory
         run: |
           ssh ${{ env.SSH_CONN }} << EOF
           if [ -d "${{ env.WORKDIR }}" ]; then
-            rm -rv ${{ env.WORKDIR }}
+            cd ${{ env.WORKDIR }}
+            find . -mindepth 1 -not -name 'persist' -not -path './persist/*' -exec rm -rf {} +
           fi
             mkdir ${{ env.WORKDIR }}
+            mkdir ${{ env.WORKDIR }}/persist
           EOF
+            mkdir ${{ env.WORKDIR }}/temp
       - name: Transfer docker compose
-        run: scp ./dc.prod.yml ${{ env.SSH_CONN }}:${{ env.WORKDIR }}
+        run: scp ./dc.prod.yml ${{ env.SSH_CONN }}:${{ env.WORKDIR }}/docker-compose.yml
       - name: Generate .env file
         run: |
           ssh ${{ env.SSH_CONN }} << EOF
@@ -123,6 +126,13 @@ jobs:
 
           doctl auth init -t ${{ secrets.DO_API_TOKEN }}
           doctl registry login --expiry-seconds 60
-          docker compose -f dc.prod.yml up -d
+
+          docker compose up --no-start
+          chown -R 1000:1000 ${{ env.WORKDIR }}/persist ${{ env.WORKDIR }}/temp
+          docker compose start -d
 
           EOF
+      - name: Remove SSH key
+        run: |
+          rm -rf ~/.ssh/id_rsa
+          rm -rf ~/.ssh/known_hosts

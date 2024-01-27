@@ -2,7 +2,7 @@
 FROM node:18.19.0-alpine AS base
 
 # IMG: Deps
-from base as deps
+FROM base as deps
 
 RUN apk add --no-cache libc6-compat
 
@@ -34,7 +34,9 @@ RUN npx prisma generate &&\
     npm run build
 
 # IMG: Runner
-FROM base AS runner
+FROM base AS runtime
+
+USER node
 
 ENV NODE_ENV production \
     NEXT_TELEMETRY_DISABLED 1
