@@ -25,7 +25,7 @@ const nextConfig = {
     // !! WARN !!
     ignoreBuildErrors: true,
   },
-  output: 'standalone',
+  // output: "standalone",
 };
 
 module.exports = nextConfig;

@@ -103,6 +103,7 @@ jobs:
 
           cd ${{ env.WORKDIR }}
 
+          echo LOCAL_HOST=http://web >> .env
           echo PROJECT_NAME=${{ env.REPO_NAME }} >> .env
           echo WORKDIR=${{ env.WORKDIR }} >> .env
           echo KEY=${{ secrets.CMS_KEY }} >> .env
@@ -128,7 +129,8 @@ jobs:
           doctl auth init -t ${{ secrets.DO_API_TOKEN }}
           doctl registry login --expiry-seconds 60
 
-          docker compose up -d
+          docker compose pull
+          docker compose up -d --build
           chown -R 1000:1000 ${{ env.WORKDIR }}/persist ${{ env.WORKDIR }}/temp
 
           EOF

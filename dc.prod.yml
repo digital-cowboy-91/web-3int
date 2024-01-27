@@ -40,6 +40,7 @@ services:
     depends_on:
       - cms
     environment:
+      LOCAL_HOST: ${LOCAL_HOST}
       MONGO_URL: ${MONGO_URL}
       RECAPTCHA_SITE_KEY: ${RECAPTCHA_SITE_KEY}
       RECAPTCHA_SECRET_KEY: ${RECAPTCHA_SECRET_KEY}

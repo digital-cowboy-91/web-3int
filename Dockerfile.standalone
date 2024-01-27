@@ -36,20 +36,20 @@ RUN npx prisma generate &&\
     npm run build
 
 # IMG: Runner
-# FROM base AS runtime
+FROM base AS runtime
 
-# ENV NODE_ENV production \
-#     NEXT_TELEMETRY_DISABLED 1
+ENV NODE_ENV production \
+    NEXT_TELEMETRY_DISABLED 1
 
-# WORKDIR /app
+WORKDIR /app
 
-# COPY --from=builder /app/.next/standalone ./
-# COPY --from=builder /app/.next/static ./.next/static
-# COPY --from=builder /app/public ./public
-# COPY --from=builder /app/cms ./cms
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/cms ./cms
 
-# RUN rm -rf ./cache
+RUN rm -rf ./cache
 
 EXPOSE 3000
 
-CMD ["npm", "start"]
+CMD ["node", "server.js"]
