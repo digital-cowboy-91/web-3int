@@ -128,9 +128,8 @@ jobs:
           doctl auth init -t ${{ secrets.DO_API_TOKEN }}
           doctl registry login --expiry-seconds 60
 
-          docker compose up --no-start
+          docker compose up -d
           chown -R 1000:1000 ${{ env.WORKDIR }}/persist ${{ env.WORKDIR }}/temp
-          docker compose start
 
           EOF
       - name: Remove SSH key
