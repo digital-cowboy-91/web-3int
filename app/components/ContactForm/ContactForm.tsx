@@ -41,6 +41,11 @@ export const ContactForm = ({ options }: { options: TContactFormOption[] }) => {
       }
 
       const res = await submitAction(data);
+
+      if (res != "success") {
+        throw new Error(res as string);
+      }
+
       setSubmitted(true);
     } catch (e) {
       console.log("ContactForm", e);
