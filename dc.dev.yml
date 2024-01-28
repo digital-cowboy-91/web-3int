@@ -36,7 +36,7 @@ services:
     depends_on:
       - cms
     # environment:
-    # LOCAL_HOST: http://localhost:8011
+    # WEB_HOST: http://localhost:8011
     #   MONGO_URL: ${MONGO_URL}
     #   RECAPTCHA_SITE_KEY: ${RECAPTCHA_SITE_KEY}
     #   RECAPTCHA_SECRET_KEY: ${RECAPTCHA_SECRET_KEY}

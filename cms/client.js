@@ -1,5 +1,5 @@
 import { createDirectus, rest } from "@directus/sdk";
 
-const cmsClient = createDirectus("https://cms.3int.uk").with(rest());
+const cmsClient = createDirectus(process.env.CMS_HOST).with(rest());
 
 export default cmsClient;
