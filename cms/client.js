@@ -1,5 +1,7 @@
 import { createDirectus, rest } from "@directus/sdk";
 
-const cmsClient = createDirectus(process.env.CMS_HOST).with(rest());
+const URL = process.env.CMS_HOST;
+
+const cmsClient = createDirectus(URL).with(rest());
 
 export default cmsClient;

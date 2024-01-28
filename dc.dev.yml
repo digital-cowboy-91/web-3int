@@ -25,8 +25,6 @@ services:
       EXTENSIONS_AUTO_RELOAD: "true"
     ports:
       - 8010:8055
-    volumes:
-      - share:/directus/extensions
     labels:
       - traefik.http.routers.${PROJECT_NAME}-cms.rule=Host(`cms.3int.uk`)
 
@@ -35,15 +33,16 @@ services:
     image: web3int:dev
     depends_on:
       - cms
-    # environment:
-    # WEB_HOST: http://localhost:8011
+    environment:
+      CMS_HOST: ${CMS_HOST}
+      WEB_HOST: ${WEB_HOST}
     #   MONGO_URL: ${MONGO_URL}
     #   RECAPTCHA_SITE_KEY: ${RECAPTCHA_SITE_KEY}
     #   RECAPTCHA_SECRET_KEY: ${RECAPTCHA_SECRET_KEY}
     # NODE_OPTIONS: ${NODE_OPTIONS}
     ports:
       - 8011:3000
-    command: sleep 3600 &
+    # command: sleep 3600 &
     # volumes:
     #   - share:/app/cms:ro
     labels:

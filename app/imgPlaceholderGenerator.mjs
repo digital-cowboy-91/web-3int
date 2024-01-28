@@ -8,7 +8,7 @@ export default async function imgPlaceholderGenerator(src) {
 
     const plaiceholder = await getPlaiceholder(buffer);
 
-    console.log(plaiceholder.base64);
+    // console.log(plaiceholder.base64);
     return;
   } catch (err) {
     err;
