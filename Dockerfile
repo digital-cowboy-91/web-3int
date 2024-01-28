@@ -13,25 +13,25 @@ COPY package-lock.json .
 RUN npm ci
 
 # IMG: Builder
-FROM base AS builder
+FROM base AS runner
 
-ARG WEB_NODE_OPTIONS
-ARG WEB_MONGO_URL
-ARG WEB_RECAPTCHA_SITE_KEY
-ARG WEB_RECAPTCHA_SECRET_KEY
+ARG MONGO_URL
+ARG RECAPTCHA_SITE_KEY
+ARG RECAPTCHA_SECRET_KEY
 
-ENV LOCAL_HOST http://web \
-    NODE_OPTIONS $WEB_NODE_OPTIONS \
-    MONGO_URL $WEB_MONGO_URL \
-    RECAPTCHA_SITE_KEY $WEB_RECAPTCHA_SITE_KEY \
-    RECAPTCHA_SECRET_KEY $WEB_RECAPTCHA_SECRET_KEY \
-    NEXT_TELEMETRY_DISABLED 1
+ENV MONGO_URL=$MONGO_URL \
+    RECAPTCHA_SITE_KEY=$RECAPTCHA_SITE_KEY \
+    RECAPTCHA_SECRET_KEY=$RECAPTCHA_SECRET_KEY \
+    LOCAL_HOST=http://0.0.0.0:3000 \
+    NODE_OPTIONS=--max-old-space-size=512 \
+    NEXT_TELEMETRY_DISABLED=1
 
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
-COPY ./ .
+COPY . .
 
-RUN npx prisma generate &&\
+RUN rm -rf .next .vscode .git* Dockerfile* dc.* README.md &&\
+    npx prisma generate &&\
     npm run build
 
 EXPOSE 3000

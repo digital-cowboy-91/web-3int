@@ -32,25 +32,19 @@ services:
 
   web:
     container_name: ${PROJECT_NAME}-web
-    build: Dockerfile
+    image: web3int:dev
     depends_on:
       - cms
-    environment:
-      MONGO_URL: ${MONGO_URL}
-      RECAPTCHA_SITE_KEY: ${RECAPTCHA_SITE_KEY}
-      RECAPTCHA_SECRET_KEY: ${RECAPTCHA_SECRET_KEY}
-      NODE_OPTIONS: ${NODE_OPTIONS}
+    # environment:
+    # LOCAL_HOST: http://localhost:8011
+    #   MONGO_URL: ${MONGO_URL}
+    #   RECAPTCHA_SITE_KEY: ${RECAPTCHA_SITE_KEY}
+    #   RECAPTCHA_SECRET_KEY: ${RECAPTCHA_SECRET_KEY}
+    # NODE_OPTIONS: ${NODE_OPTIONS}
     ports:
       - 8011:3000
-    volumes:
-      - share:/app/cms:ro
+    command: sleep 3600 &
+    # volumes:
+    #   - share:/app/cms:ro
     labels:
       - traefik.http.routers.${PROJECT_NAME}-web.rule=Host(`3int.uk`)
-
-volumes:
-  share:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: /temp/${PROJECT_NAME}-share

@@ -26,7 +26,6 @@ services:
     networks:
       - traefik_proxy
     volumes:
-      # - ${WORKDIR}/temp/extensions:/directus/extensions
       - ${WORKDIR}/persist/database:/directus/database
     labels:
       - traefik.http.routers.${PROJECT_NAME}-cms.rule=Host(`cms.3int.uk`)
@@ -39,16 +38,8 @@ services:
     restart: always
     depends_on:
       - cms
-    environment:
-      LOCAL_HOST: ${LOCAL_HOST}
-      MONGO_URL: ${MONGO_URL}
-      RECAPTCHA_SITE_KEY: ${RECAPTCHA_SITE_KEY}
-      RECAPTCHA_SECRET_KEY: ${RECAPTCHA_SECRET_KEY}
-      NODE_OPTIONS: ${NODE_OPTIONS}
     networks:
       - traefik_proxy
-    # volumes:
-    #   - ${WORKDIR}/temp/extensions:/app/cms
     labels:
       - traefik.http.routers.${PROJECT_NAME}-web.rule=Host(`3int.uk`)
       - traefik.http.routers.${PROJECT_NAME}-web.entryPoints=websecure
