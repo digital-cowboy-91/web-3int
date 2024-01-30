@@ -30,7 +30,7 @@ services:
     labels:
       - traefik.http.routers.${PROJECT_NAME}-cms.rule=Host(`cms.3int.uk`)
       - traefik.http.routers.${PROJECT_NAME}-cms.entryPoints=websecure
-      - traefik.http.routers.${PROJECT_NAME}-cms.tls.certResolver=vps1-ssl-2
+      - traefik.http.routers.${PROJECT_NAME}-cms.tls.certResolver=web3int
 
   web:
     container_name: ${PROJECT_NAME}-web
@@ -43,7 +43,7 @@ services:
     labels:
       - traefik.http.routers.${PROJECT_NAME}-web.rule=Host(`3int.uk`)
       - traefik.http.routers.${PROJECT_NAME}-web.entryPoints=websecure
-      - traefik.http.routers.${PROJECT_NAME}-web.tls.certResolver=vps1-ssl-2
+      - traefik.http.routers.${PROJECT_NAME}-web.tls.certResolver=web3int
 
 networks:
   traefik_proxy:
