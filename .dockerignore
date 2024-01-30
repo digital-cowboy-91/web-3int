@@ -1,0 +1,13 @@
+# Dirs
+.next
+.vscode
+.github
+node_modules
+
+# Files
+Dockerfile*
+dc.*
+*.md
+*.log
+*.gitignore
+.env
