@@ -32,12 +32,14 @@ pipeline {
     stages {
         stage('Setup environment') {
             steps {
-                echo 'Set COMMIT env variable'
                 script {
+                    echo 'Set COMMIT env variable'
+
                     env.COMMIT = sh(script: "echo $GIT_COMMIT | head -c7", returnStdout: true).trim()
                 }
-                echo 'Install doctl'
                 sh '''
+                    echo 'Install doctl'
+
                     apk add doctl
                     doctl auth init -t $DO_AUTH_TOKEN
                 '''
@@ -45,8 +47,9 @@ pipeline {
         }
         stage('Build') {
             steps {
-                echo 'Build docker image'
                 sh '''
+                    echo 'Build docker image'
+
                     docker build \
                         -t $DO_REG_IMAGE:$COMMIT \
                         -t $DO_REG_IMAGE:latest \
@@ -59,8 +62,9 @@ pipeline {
         }
         stage('Push') {
             steps {
-                echo 'Push image to DOCR'
                 sh '''
+                    echo 'Push image to DOCR'
+                    
                     doctl registry login --expiry-seconds 300
                     docker push $DO_REG_IMAGE:$COMMIT
                     docker push $DO_REG_IMAGE:latest
