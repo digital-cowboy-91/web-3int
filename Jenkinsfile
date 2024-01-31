@@ -19,21 +19,25 @@ pipeline {
             }
             }
         }
-        // stage('Test') {
-        //     steps {
-        //         echo "Testing.."
-        //         sh '''
-        //         echo "doing test stuff..."
-        //         '''
-        //     }
-        // }
-        // stage('Deliver') {
-        //     steps {
-        //         echo 'Deliver....'
-        //         sh '''
-        //         echo "doing delivery stuff.."
-        //         '''
-        //     }
-        // }
+        stage('Test') {
+            steps {
+            {
+                sh '''
+                    echo $CMS_ADMIN_EMAIL
+                    echo $CMS_ADMIN_PWD
+                '''
+            }
+            }
+        }
+        stage('Deliver') {
+            steps {
+            {
+                sh '''
+                    echo $CMS_ADMIN_EMAIL
+                    echo $CMS_ADMIN_PWD
+                '''
+            }
+            }
+        }
     }
 }
