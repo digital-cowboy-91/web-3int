@@ -79,6 +79,9 @@ jobs:
           mkdir -p ~/.ssh/
           echo "${{ secrets.SSH_KEY }}" > ~/.ssh/dovps
           chmod 600 ~/.ssh/dovps
+          eval `ssh-agent`
+          ssh-add ~/.ssh/dovps
+          ssh-keyscan -H ${{ secrets.DO_HOST }} >> ~/.ssh/known_hosts
 
           doctl compute ssh vps1 --ssh-key-path ~/.ssh/dovps
       # - name: Setup SSH
