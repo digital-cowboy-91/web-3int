@@ -1,39 +1,37 @@
 pipeline {
-    agent { 
+    agent {
         node {
             label 'docker-agent-alpine'
-            }
-      }
+        }
+    }
+    environment {
+        CMS_ADMIN_EMAIL = credentials('CMS_ADMIN_EMAIL')
+        CMS_ADMIN_PWD = credentials('CMS_ADMIN_PWD')
+    }
     stages {
         stage('Build') {
             steps {
-            withCredentials([
-                string(credentialsId: 'CMS_ADMIN_EMAIL', variable: 'CMS_ADMIN_EMAIL'),
-                string(credentialsId: 'CMS_ADMIN_PWD', variable: 'CMS_ADMIN_PWD'),
-                ])
-            {
                 sh '''
                     echo $CMS_ADMIN_EMAIL
                     echo $CMS_ADMIN_PWD
                 '''
             }
-            }
         }
-        stage('Test') {
+        stage('Push') {
             steps {
                 sh '''
                     echo $CMS_ADMIN_EMAIL
                     echo $CMS_ADMIN_PWD
                 '''
             }
-        }
-        stage('Deliver') {
+                }
+        stage('Deploy') {
             steps {
                 sh '''
                     echo $CMS_ADMIN_EMAIL
                     echo $CMS_ADMIN_PWD
                 '''
             }
-        }
+                }
     }
 }
