@@ -21,22 +21,18 @@ pipeline {
         }
         stage('Test') {
             steps {
-            {
                 sh '''
                     echo $CMS_ADMIN_EMAIL
                     echo $CMS_ADMIN_PWD
                 '''
-            }
             }
         }
         stage('Deliver') {
             steps {
-            {
                 sh '''
                     echo $CMS_ADMIN_EMAIL
                     echo $CMS_ADMIN_PWD
                 '''
-            }
             }
         }
     }
