@@ -131,9 +131,9 @@ jobs:
         run: |
           ssh -T ${{ env.SSH_CONN }} << EOF
 
-          w=${{ env.WORKDIR }}
+          w="${{ env.WORKDIR }}"
 
-          mkdir -p $w/extensions && cd $w/extensions
+          mkdir -p "$w/extensions" && cd "$w/extensions"
 
           git clone https://pticon91:${{ secrets.DO_GIT_PAT }}@github.com/pticon91/directus-extension-uniss-zeptomail.git
 
