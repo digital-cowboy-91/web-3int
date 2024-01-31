@@ -38,7 +38,7 @@ pipeline {
                 }
                 echo 'Install doctl'
                 sh '''
-                    sudo apk add doctl
+                    apk add doctl
                     doctl auth init -t $DO_AUTH_TOKEN
                 '''
             }
