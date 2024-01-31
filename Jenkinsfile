@@ -12,7 +12,7 @@ pipeline {
         // DO
         DO_AUTH_TOKEN = credentials('DO_AUTH_TOKEN')
         DO_CR = credentials('DO_CR')
-        DO_IMAGE_NAME = '${DO_CR}/${PROJECT_NAME}'
+        DO_CR_IMAGE = '${DO_CR}/${PROJECT_NAME}'
         
         // CMS
         KEY = credentials('CMS_KEY')
@@ -32,27 +32,25 @@ pipeline {
     stages {
         stage('Setup environment') {
             steps {
+                echo 'Set COMMIT env variable'
                 script {
-                    echo 'Set COMMIT env variable'
-
                     env.COMMIT = sh(script: "echo $GIT_COMMIT | head -c7", returnStdout: true).trim()
                 }
+                echo 'Install doctl'
                 sh '''
-                    echo 'Install doctl'
-
                     apk add doctl
                     doctl auth init -t $DO_AUTH_TOKEN
                 '''
+                sh 'printenv'
             }
         }
         stage('Build') {
             steps {
+                echo 'Build docker image'
                 sh '''
-                    echo 'Build docker image'
-
                     docker build \
-                        -t $DO_REG_IMAGE:$COMMIT \
-                        -t $DO_REG_IMAGE:latest \
+                        -t $DO_CR_IMAGE:$COMMIT \
+                        -t $DO_CR_IMAGE:latest \
                         --build-arg MONGO_URL="$WEB_MONGO_URL" \
                         --build-arg RECAPTCHA_SECRET_KEY="$WEB_RECAPTCHA_SECRET_KEY" \
                         --build-arg RECAPTCHA_SITE_KEY="$WEB_RECAPTCHA_SITE_KEY" \
@@ -62,12 +60,11 @@ pipeline {
         }
         stage('Push') {
             steps {
+                echo 'Push image to DOCR'
                 sh '''
-                    echo 'Push image to DOCR'
-
                     doctl registry login --expiry-seconds 300
-                    docker push $DO_REG_IMAGE:$COMMIT
-                    docker push $DO_REG_IMAGE:latest
+                    docker push $DO_CR_IMAGE:$COMMIT
+                    docker push $DO_CR_IMAGE:latest
                 '''
             }
         }
