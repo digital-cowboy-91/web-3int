@@ -68,8 +68,8 @@ jobs:
           echo "REPO_NAME=$(echo $GITHUB_REPOSITORY | cut -d '/' -f 2)" >> $GITHUB_ENV
           echo "DO_REG_IMAGE=${{ secrets.DO_REGISTRY }}/$(echo $GITHUB_REPOSITORY | cut -d '/' -f 2)" >> $GITHUB_ENV
           echo "WORKDIR=/services/$(echo $GITHUB_REPOSITORY | cut -d '/' -f 2)" >> $GITHUB_ENV
-      - name: Checkout the repo
-        uses: actions/checkout@v2
+      # - name: Checkout the repo
+      #   uses: actions/checkout@v2
       - name: Setup SSH
         run: |
           mkdir -p ~/.ssh/
@@ -80,62 +80,81 @@ jobs:
           ssh-keyscan -H ${{ secrets.DO_HOST }} >> ~/.ssh/known_hosts
       - name: Establish SSH connection
         run: ssh -T ${{ env.SSH_CONN }} 'echo "SSH connection established."'
-      - name: Stop existing docker compose
+      # - name: Stop existing docker compose
+      #   run: |
+      #     ssh -T ${{ env.SSH_CONN }} << EOF
+
+      #     w = ${{ env.WORKDIR }}
+
+      #     if [ -d "$w" ] && [ -f "$w/docker-compose.yml" ] && [ -f "$w/.env" ]; then
+      #       cd $w
+      #       docker compose down
+      #     fi
+      #     EOF
+      # - name: Clear directory
+      #   run: |
+      #     ssh -T ${{ env.SSH_CONN }} << EOF
+
+      #     w = ${{ env.WORKDIR }}
+
+      #     if [ -d "$w" ]; then
+      #       cd $w
+      #       find . -mindepth 1 -not -name 'persist' -not -path './persist/*' -exec rm -rf {} +
+      #     else
+      #       mkdir $w
+      #       mkdir $w/persist
+      #     fi
+      #       mkdir $w/temp
+      #     EOF
+      # - name: Transfer docker compose
+      #   run: scp ./dc.prod.yml ${{ env.SSH_CONN }}:${{ env.WORKDIR }}/docker-compose.yml
+      # - name: Generate .env file
+      #   run: |
+      #     ssh -T ${{ env.SSH_CONN }} << EOF
+
+      #     cd ${{ env.WORKDIR }}
+
+      #     echo WORKDIR=${{ env.WORKDIR }} >> .env
+
+      #     echo PROJECT_NAME=${{ env.REPO_NAME }} >> .env
+      #     echo DO_REG_IMAGE=${{ env.DO_REG_IMAGE }} >> .env
+
+      #     echo KEY=${{ secrets.CMS_KEY }} >> .env
+      #     echo SECRET=${{ secrets.CMS_SECRET }} >> .env
+      #     echo ADMIN_EMAIL=${{ secrets.CMS_ADMIN_EMAIL }} >> .env
+      #     echo ADMIN_PASSWORD=${{ secrets.CMS_ADMIN_PASSWORD }} >> .env
+      #     echo ZEPTOMAIL_URL=${{ secrets.CMS_ZEPTOMAIL_URL }} >> .env
+      #     echo ZEPTOMAIL_TOKEN=${{ secrets.CMS_ZEPTOMAIL_TOKEN }} >> .env
+
+      #     EOF
+      - name: Download extensions
         run: |
           ssh -T ${{ env.SSH_CONN }} << EOF
-          if [ -d "${{ env.WORKDIR }}" ] && [ -f "${{ env.WORKDIR }}/docker-compose.yml" ]; then
-            cd ${{ env.WORKDIR }}
-            docker compose down
-          fi
-          EOF
-      - name: Clear directory
-        run: |
-          ssh -T ${{ env.SSH_CONN }} << EOF
-          if [ -d "${{ env.WORKDIR }}" ]; then
-            cd ${{ env.WORKDIR }}
-            find . -mindepth 1 -not -name 'persist' -not -path './persist/*' -exec rm -rf {} +
-          else
-            mkdir ${{ env.WORKDIR }}
-            mkdir ${{ env.WORKDIR }}/persist
-          fi
-            mkdir ${{ env.WORKDIR }}/temp
-          EOF
-      - name: Transfer docker compose
-        run: scp ./dc.prod.yml ${{ env.SSH_CONN }}:${{ env.WORKDIR }}/docker-compose.yml
-      - name: Generate .env file
-        run: |
-          ssh -T ${{ env.SSH_CONN }} << EOF
 
-          cd ${{ env.WORKDIR }}
+          w = ${{ env.WORKDIR }}
 
-          echo WORKDIR=${{ env.WORKDIR }} >> .env
+          mkdir -p $w/extensions && cd $w/extensions
 
-          echo PROJECT_NAME=${{ env.REPO_NAME }} >> .env
-          echo DO_REG_IMAGE=${{ env.DO_REG_IMAGE }} >> .env
+          git clone https://pticon91:${{ secrets.DO_GIT_PAT }}@github.com/pticon91/directus-extension-uniss-zeptomail.git
 
-          echo KEY=${{ secrets.CMS_KEY }} >> .env
-          echo SECRET=${{ secrets.CMS_SECRET }} >> .env
-          echo ADMIN_EMAIL=${{ secrets.CMS_ADMIN_EMAIL }} >> .env
-          echo ADMIN_PASSWORD=${{ secrets.CMS_ADMIN_PASSWORD }} >> .env
-          echo ZEPTOMAIL_URL=${{ secrets.CMS_ZEPTOMAIL_URL }} >> .env
-          echo ZEPTOMAIL_TOKEN=${{ secrets.CMS_ZEPTOMAIL_TOKEN }} >> .env
+          cd .. && chown -R 1000:1000 extensions
 
           EOF
-      - name: Run docker compose
-        run: |
-          ssh -T ${{ env.SSH_CONN }} << EOF
+      # - name: Run docker compose
+      #   run: |
+      #     ssh -T ${{ env.SSH_CONN }} << EOF
 
-          cd ${{ env.WORKDIR }}
+      #     cd ${{ env.WORKDIR }}
 
-          doctl auth init -t ${{ secrets.DO_API_TOKEN }}
-          doctl registry login --expiry-seconds 60
+      #     doctl auth init -t ${{ secrets.DO_API_TOKEN }}
+      #     doctl registry login --expiry-seconds 60
 
-          docker compose pull
-          docker compose up -d --build
-          chown -R 1000:1000 ${{ env.WORKDIR }}/persist ${{ env.WORKDIR }}/temp
+      #     docker compose pull
+      #     docker compose up -d --build
+      #     chown -R 1000:1000 persist
 
-          EOF
-      - name: Remove SSH key
-        run: |
-          rm -rf ~/.ssh/id_rsa
-          rm -rf ~/.ssh/known_hosts
+      #     EOF
+      # - name: Remove SSH key
+      #   run: |
+      #     rm -rf ~/.ssh/id_rsa
+      #     rm -rf ~/.ssh/known_hosts
