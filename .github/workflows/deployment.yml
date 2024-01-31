@@ -70,16 +70,23 @@ jobs:
           echo "WORKDIR=/services/$(echo $GITHUB_REPOSITORY | cut -d '/' -f 2)" >> $GITHUB_ENV
       # - name: Checkout the repo
       #   uses: actions/checkout@v2
-      - name: Setup SSH
-        run: |
-          mkdir -p ~/.ssh/
-          echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          eval `ssh-agent`
-          ssh-add ~/.ssh/id_rsa
-          ssh-keyscan -H ${{ secrets.DO_HOST }} >> ~/.ssh/known_hosts
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DO_API_TOKEN }}
       - name: Establish SSH connection
-        run: ssh -T ${{ env.SSH_CONN }} 'echo "SSH connection established."'
+        run: |
+          doctl compute ssh vps1 --ssh-key-path ${{ secrets.SSH_KEY }}
+      # - name: Setup SSH
+      #   run: |
+      #     mkdir -p ~/.ssh/
+      #     echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_rsa
+      #     chmod 600 ~/.ssh/id_rsa
+      #     eval `ssh-agent`
+      #     ssh-add ~/.ssh/id_rsa
+      #     ssh-keyscan -H ${{ secrets.DO_HOST }} >> ~/.ssh/known_hosts
+      # - name: Establish SSH connection
+      #   run: ssh -T ${{ env.SSH_CONN }} 'echo "SSH connection established."'
       # - name: Stop existing docker compose
       #   run: |
       #     ssh -T ${{ env.SSH_CONN }} << EOF
@@ -131,7 +138,7 @@ jobs:
         run: |
           w=${{ env.WORKDIR }}
 
-          ssh -T ${{ env.SSH_CONN }} << EOF
+          doctl compute ssh vps1 --ssh-key-path ${{ secrets.SSH_KEY }} << EOF
 
           mkdir -p ${w}/extensions && cd ${w}/extensions
 
