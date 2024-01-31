@@ -76,7 +76,11 @@ jobs:
           token: ${{ secrets.DO_API_TOKEN }}
       - name: Establish SSH connection
         run: |
-          doctl compute ssh vps1 --ssh-key-path ${{ secrets.SSH_KEY }}
+          mkdir -p ~/.ssh/
+          echo "${{ secrets.SSH_KEY }}" > ~/.ssh/dovps
+          chmod 600 ~/.ssh/dovps
+
+          doctl compute ssh vps1 --ssh-key-path ~/.ssh/dovps
       # - name: Setup SSH
       #   run: |
       #     mkdir -p ~/.ssh/
@@ -138,7 +142,7 @@ jobs:
         run: |
           w=${{ env.WORKDIR }}
 
-          doctl compute ssh vps1 --ssh-key-path ${{ secrets.SSH_KEY }} << EOF
+          doctl compute ssh vps1 --ssh-key-path ~/.ssh/dovps << EOF
 
           mkdir -p ${w}/extensions && cd ${w}/extensions
 
