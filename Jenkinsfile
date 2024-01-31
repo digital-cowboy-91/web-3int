@@ -1,7 +1,7 @@
 pipeline {
     agent {
         docker { 
-            image 'docker-alpine:1.0.0' 
+            image 'docker-alpine:1.0.1' 
             args '-u root:root'
         }
     }
@@ -64,7 +64,7 @@ pipeline {
             steps {
                 sh '''
                     echo 'Push image to DOCR'
-                    
+
                     doctl registry login --expiry-seconds 300
                     docker push $DO_REG_IMAGE:$COMMIT
                     docker push $DO_REG_IMAGE:latest
