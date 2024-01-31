@@ -4,7 +4,7 @@ import { TContactForm } from "@/prisma/modelContactForm";
 
 export default async function submitAction(data: TContactForm) {
   try {
-    const URL = process.env.WEB_HOST + "/api/customer_queries";
+    const URL = process.env.WEB_HOST + "/api/client_queries";
     const res = await fetch(URL, {
       method: "POST",
       headers: {

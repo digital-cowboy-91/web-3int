@@ -117,6 +117,8 @@ jobs:
           echo SECRET=${{ secrets.CMS_SECRET }} >> .env
           echo ADMIN_EMAIL=${{ secrets.CMS_ADMIN_EMAIL }} >> .env
           echo ADMIN_PASSWORD=${{ secrets.CMS_ADMIN_PASSWORD }} >> .env
+          echo ZEPTOMAIL_URL=${{ secrets.CMS_ZEPTOMAIL_URL }} >> .env
+          echo ZEPTOMAIL_TOKEN=${{ secrets.CMS_ZEPTOMAIL_TOKEN }} >> .env
 
           EOF
       - name: Run docker compose
