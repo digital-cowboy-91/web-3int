@@ -3,9 +3,9 @@ pipeline {
         node {
             label 'docker-agent-alpine'
             withCredentials([
-                string(credentialsId: 'CMS_ADMIN_EMAIL', variable: 'CMS_ADMIN_EMAIL')
-                string(credentialsId: 'CMS_ADMIN_PWD', variable: 'CMS_ADMIN_PWD')                
-            ])
+                string(credentialsId: 'CMS_ADMIN_EMAIL', variable: 'CMS_ADMIN_EMAIL'),
+                string(credentialsId: 'CMS_ADMIN_PWD', variable: 'CMS_ADMIN_PWD'),
+                ])
             }
       }
     stages {
