@@ -131,7 +131,7 @@ jobs:
         run: |
           ssh -T ${{ env.SSH_CONN }} << EOF
 
-          w = ${{ env.WORKDIR }}
+          w=${{ env.WORKDIR }}
 
           mkdir -p $w/extensions && cd $w/extensions
 
