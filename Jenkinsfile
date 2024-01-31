@@ -2,6 +2,7 @@ pipeline {
     agent {
         node {
             label 'docker-agent-alpine'
+            args '-u root:root'
         }
     }
     environment {
