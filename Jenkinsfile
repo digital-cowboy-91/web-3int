@@ -1,9 +1,9 @@
 pipeline {
     agent {
-        node {
-            label 'docker-agent-alpine'
+        docker { 
+            image 'alpine:3.19' 
             args '-u root:root'
-        }
+        } 
     }
     environment {
         // PROJECT
