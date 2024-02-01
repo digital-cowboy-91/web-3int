@@ -73,7 +73,7 @@ pipeline {
             steps {
                 sshagent(credentials : ['DO_VPS1_SSH']) {
                     sh '''
-                        // Establish SSH connection
+                        # Establish SSH connection
                         ssh -T -o StrictHostKeyChecking=no $SSH date
                     '''
                     sh '''
@@ -109,14 +109,14 @@ EOF
                         ssh -T $SSH <<-EOF
                             cd $WORKDIR
 
-                            // Project
+                            # Project
                             echo PROJECT_NAME=$PROJECT_NAME >> .env
                             echo WORKDIR=$WORKDIR >> .env
 
-                            // DO
+                            # DO
                             echo DO_CR_IMAGE=$DO_CR_IMAGE >> .env
 
-                            // CMS
+                            # CMS
                             echo KEY=$CMS_KEY >> .env
                             echo SECRET=$CMS_SECRET >> .env
                             echo ADMIN_EMAIL=$CMS_ADMIN_EMAIL >> .env
