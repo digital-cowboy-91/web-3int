@@ -69,10 +69,12 @@ pipeline {
         // }
         stage('Deploy') {
             steps {
+                echo "DO_VPS1_SSH length: ${env.DO_VPS1_SSH.length()}"
+                echo "DO_VPS1_SSH length: ${DO_VPS1_SSH.length()}"
                 echo 'Establish SSH connection'
                 sh '''
                     mkdir -p ~/.ssh/
-                    echo "$DO_VPS1_SSH" > ~/.ssh/dovps
+                    echo $DO_VPS1_SSH > ~/.ssh/dovps
 
                     du ~/.ssh/dovps
                     wc -m ~/.ssh/dovps
