@@ -121,7 +121,7 @@ EOF
 
                             mkdir -p extensions && cd extensions
 
-                            git clone https://pticon91:$DO_VPS1_GIT_PAT@github.com/pticon91/directus-extension-uniss-zeptomail.git
+                            # git clone https://pticon91:$DO_VPS1_GIT_PAT@github.com/pticon91/directus-extension-uniss-zeptomail.git
                             
                             cd .. && chown -R 1000:1000 extensions
 EOF
