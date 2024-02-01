@@ -72,75 +72,58 @@ pipeline {
         stage('Deploy') {
             steps {
                 sshagent(credentials : ['DO_VPS1_SSH']) {
-                    sh '''
-                        # Establish SSH connection
-                        ssh -T -o StrictHostKeyChecking=no $SSH date
-                    '''
-                    sh '''
-                        echo '(re)Create workdir structure'
-                        ssh -T $SSH <<-EOF
+                    sh ''' # (re)Create workdir structure
+                        ssh -T -o StrictHostKeyChecking=no $SSH <<-EOF
                             mkdir -p $WORKDIR
                             mkdir -p $WORKDIR/persist
-EOF
-                    '''
-                    echo 'Stop existing stack'
-                    sh '''
-                        ssh -T $SSH <<-EOF
-                            cd $WORKDIR
-
+EOF '''
+                    sh ''' # Stop existing stack
+                        ssh -T $SSH <<-EOF cd $WORKDIR
                             if [ -f "docker-compose.yml" ] \
                             && [ -f ".env" ]; then
                                 docker compose down
                             fi
-EOF
-                    '''
-                    echo 'Clear directory'
-                    sh '''
-                        ssh -T $SSH <<-EOF
-                            cd $WORKDIR
-
+EOF '''
+                    sh ''' # Clear directory
+                        ssh -T $SSH <<-EOF cd $WORKDIR
                             find . -mindepth 1 -not -name 'persist' -not -path './persist/*' -exec rm -rf {} +
-EOF
-                    '''
-                    echo 'Transfer new compose file'
-                    sh 'scp ./dc.prod.yml $SSH:$WORKDIR/docker-compose.yml'
-                    echo 'Generate .env file'
-                    sh '''
-                        ssh -T $SSH <<-EOF
-                            cd $WORKDIR
 
+EOF '''
+                    sh ''' # Transfer compose file
+                        scp ./dc.prod.yml $SSH:$WORKDIR/docker-compose.yml '''
+
+                    sh ''' # Generate and transfer .env file
+                        cat <<-EOF > .temp.env
                             # Project
-                            echo PROJECT_NAME=$PROJECT_NAME >> .env
-                            echo WORKDIR=$WORKDIR >> .env
+                            PROJECT_NAME=$PROJECT_NAME
+                            WORKDIR=$WORKDIR
 
                             # DO
-                            echo DO_CR_IMAGE=$DO_CR_IMAGE >> .env
+                            DO_CR_IMAGE=$DO_CR_IMAGE
 
                             # CMS
-                            echo KEY=$CMS_KEY >> .env
-                            echo SECRET=$CMS_SECRET >> .env
-                            echo ADMIN_EMAIL=$CMS_ADMIN_EMAIL >> .env
-                            echo ADMIN_PASSWORD=$CMS_ADMIN_PASSWORD >> .env
-                            echo ZEPTOMAIL_URL=$CMS_ZEPTOMAIL_URL >> .env
-                            echo ZEPTOMAIL_TOKEN=$CMS_ZEPTOMAIL_TOKEN >> .env
+                            KEY=$CMS_KEY
+                            SECRET=$CMS_SECRET
+                            ADMIN_EMAIL=$CMS_ADMIN_EMAIL
+                            ADMIN_PASSWORD=$CMS_ADMIN_PASSWORD
+                            ZEPTOMAIL_URL=$CMS_ZEPTOMAIL_URL
+                            ZEPTOMAIL_TOKEN=$CMS_ZEPTOMAIL_TOKEN
 EOF
-                    '''
-                    echo 'Download extensions'
-                    sh '''
-                        ssh -T $SSH <<-EOF
-                            cd $WORKDIR
+
+                        scp ./.temp.env $SSH:$WORKDIR/.env
+                        rm ./.temp.env '''
+
+                    sh ''' # Download extensions
+                        ssh -T $SSH <<-EOF cd $WORKDIR
 
                             mkdir -p extensions && cd extensions
 
                             git clone https://pticon91:$DO_VPS1_GIT_PAT@github.com/pticon91/directus-extension-uniss-zeptomail.git
                             
                             cd .. && chown -R 1000:1000 extensions
-EOF
-                    '''
-                    echo 'Compose stack'
-                    sh '''
-                        ssh -T $SSH <<-EOF
-                            cd $WORKDIR
+EOF '''
+                    sh ''' # Compose stack
+                        ssh -T $SSH <<-EOF cd $WORKDIR
 
                             doctl auth init -t $DO_AUTH_TOKEN
                             doctl registry login --expiry-seconds 100
@@ -148,8 +131,7 @@ EOF
                             docker compose pull
                             docker compose up -d --build
                             chown -R 1000:1000 persist
-EOF
-                    '''
+EOF '''
 
                 }
             }
