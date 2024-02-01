@@ -24,19 +24,19 @@ pipeline {
         DO_VPS1_GIT_PAT = credentials('DO_VPS1_GIT_PAT')
         
         // CMS
-        KEY = credentials('CMS_KEY')
-        SECRET = credentials('CMS_SECRET')
+        CMS_KEY = credentials('CMS_KEY')
+        CMS_SECRET = credentials('CMS_SECRET')
 
-        ADMIN_EMAIL = "admin@xxx.com"
+        CMS_ADMIN_EMAIL = "admin@xxx.com"
         ADMIN_PASSWORD = "Init123*"
 
-        ZEPTOMAIL_URL = credentials('CMS_ZEPTOMAIL_URL')
-        ZEPTOMAIL_TOKEN = credentials('CMS_ZEPTOMAIL_TOKEN')
+        CMS_ZEPTOMAIL_URL = credentials('CMS_ZEPTOMAIL_URL')
+        CMS_ZEPTOMAIL_TOKEN = credentials('CMS_ZEPTOMAIL_TOKEN')
 
         // WEB
-        MONGO_URL = credentials('WEB_MONGO_URL')
-        RECAPTCHA_SECRET_KEY = credentials('WEB_RECAPTCHA_SECRET_KEY')
-        RECAPTCHA_SITE_KEY = credentials('WEB_RECAPTCHA_SITE_KEY')
+        WEB_MONGO_URL = credentials('WEB_MONGO_URL')
+        WEB_RECAPTCHA_SECRET_KEY = credentials('WEB_RECAPTCHA_SECRET_KEY')
+        WEB_RECAPTCHA_SITE_KEY = credentials('WEB_RECAPTCHA_SITE_KEY')
     }
     stages {
         // stage('Build') {
@@ -89,7 +89,7 @@ EOF
                     sh ''' # Stop existing stack
                         ssh -v -S ctrl-socket -T $SSH <<-EOF
                             cd $WORKDIR
-                            
+
                             if [ -f "docker-compose.yml" ] \
                             && [ -f ".env" ]; then
                                 docker compose down
