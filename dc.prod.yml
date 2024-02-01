@@ -30,7 +30,7 @@ services:
       - traefik_proxy
     volumes:
       - ${WORKDIR}/persist/database:/directus/database
-      - ${WORKDIR}/temp/extensions:/directus/extensions
+      - ${WORKDIR}/extensions:/directus/extensions
     labels:
       - traefik.http.routers.${PROJECT_NAME}-cms.rule=Host(`cms.3int.uk`)
       - traefik.http.routers.${PROJECT_NAME}-cms.entryPoints=websecure
@@ -44,8 +44,6 @@ services:
       - cms
     networks:
       - traefik_proxy
-    volumes:
-      - ${WORKDIR}/temp/extensions:/app/cms/extensions
     labels:
       - traefik.http.routers.${PROJECT_NAME}-web.rule=Host(`3int.uk`)
       - traefik.http.routers.${PROJECT_NAME}-web.entryPoints=websecure
