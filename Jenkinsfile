@@ -76,10 +76,10 @@ pipeline {
                     sh 'ssh -T -o StrictHostKeyChecking=no $SSH date'
                     echo '(re)Create workdir structure'
                     sh '''
-                    ssh -T $SSH <<EOF
-                    mkdir -p $WORKDIR
-                    mkdir -p $WORKDIR/persist
-                    EOF
+ssh -T $SSH <<EOF
+mkdir -p $WORKDIR
+mkdir -p $WORKDIR/persist
+EOF
                     '''
                     echo 'Stop existing stack'
                     sh '''
