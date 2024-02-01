@@ -76,23 +76,22 @@ pipeline {
                         ssh -T -o StrictHostKeyChecking=no $SSH <<-EOF
                             mkdir -p $WORKDIR
                             mkdir -p $WORKDIR/persist
-EOF
-'''
+EOF '''
                     sh ''' # Stop existing stack
-                        ssh -T $SSH <<-EOF cd $WORKDIR
+                        ssh -T -o StrictHostKeyChecking=no $SSH <<-EOF cd $WORKDIR
                             if [ -f "docker-compose.yml" ] \
                             && [ -f ".env" ]; then
                                 docker compose down
                             fi
 EOF '''
                     sh ''' # Clear directory
-                        ssh -T $SSH <<-EOF cd $WORKDIR
+                        ssh -T -o StrictHostKeyChecking=no $SSH <<-EOF cd $WORKDIR
                             find . -mindepth 1 -not -name 'persist' -not -path './persist/*' -exec rm -rf {} +
 
 EOF '''
                     sh ''' # Transfer compose file
-                        scp ./dc.prod.yml $SSH:$WORKDIR/docker-compose.yml '''
-
+                        scp ./dc.prod.yml $SSH:$WORKDIR/docker-compose.yml
+'''
                     sh ''' # Generate and transfer .env file
                         cat <<-EOF > .temp.env
                             # Project
@@ -112,10 +111,10 @@ EOF '''
 EOF
 
                         scp ./.temp.env $SSH:$WORKDIR/.env
-                        rm ./.temp.env '''
-
+                        rm ./.temp.env
+'''
                     sh ''' # Download extensions
-                        ssh -T $SSH <<-EOF cd $WORKDIR
+                        ssh -T -o StrictHostKeyChecking=no $SSH <<-EOF cd $WORKDIR
 
                             mkdir -p extensions && cd extensions
 
@@ -124,7 +123,7 @@ EOF
                             cd .. && chown -R 1000:1000 extensions
 EOF '''
                     sh ''' # Compose stack
-                        ssh -T $SSH <<-EOF cd $WORKDIR
+                        ssh -T -o StrictHostKeyChecking=no $SSH <<-EOF cd $WORKDIR
 
                             doctl auth init -t $DO_AUTH_TOKEN
                             doctl registry login --expiry-seconds 100
@@ -133,7 +132,6 @@ EOF '''
                             docker compose up -d --build
                             chown -R 1000:1000 persist
 EOF '''
-
                 }
             }
         }
