@@ -76,77 +76,78 @@ pipeline {
                     sh 'ssh -T -o StrictHostKeyChecking=no $SSH date'
                     echo '(re)Create workdir structure'
                     sh '''
-ssh -T $SSH <<EOF
-mkdir -p $WORKDIR
-mkdir -p $WORKDIR/persist
+ssh -T $SSH <<-EOF
+    mkdir -p $WORKDIR
+    mkdir -p $WORKDIR/persist
 EOF
                     '''
-                    echo 'Stop existing stack'
-                    sh '''
-                        ssh -T $SSH <<-EOF
-                            cd $WORKDIR
+                    // echo 'Stop existing stack'
+                    // sh '''
+                    //     ssh -T $SSH <<-EOF
+                    //         cd $WORKDIR
 
-                            if [ -f "docker-compose.yml" ] \
-                            && [ -f ".env" ]; then
-                                docker compose down
-                            fi EOF
-                    '''
-                    echo 'Clear directory'
-                    sh '''
-                        ssh -T $SSH << EOF
-                            cd $WORKDIR
+                    //         if [ -f "docker-compose.yml" ] \
+                    //         && [ -f ".env" ]; then
+                    //             docker compose down
+                    //         fi
+                    //     EOF
+                    // '''
+                    // echo 'Clear directory'
+                    // sh '''
+                    //     ssh -T $SSH << EOF
+                    //         cd $WORKDIR
 
-                            find . -mindepth 1 -not -name 'persist' -not -path './persist/*' -exec rm -rf {} +
-                        EOF
-                    '''
-                    echo 'Transfer new compose file'
-                    sh 'scp ./dc.prod.yml $SSH:$WORKDIR/docker-compose.yml'
-                    echo 'Generate .env file'
-                    sh '''
-                        ssh -T $SSH << EOF
-                            cd $WORKDIR
+                    //         find . -mindepth 1 -not -name 'persist' -not -path './persist/*' -exec rm -rf {} +
+                    //     EOF
+                    // '''
+                    // echo 'Transfer new compose file'
+                    // sh 'scp ./dc.prod.yml $SSH:$WORKDIR/docker-compose.yml'
+                    // echo 'Generate .env file'
+                    // sh '''
+                    //     ssh -T $SSH << EOF
+                    //         cd $WORKDIR
 
-                            // Project
-                            echo PROJECT_NAME=$PROJECT_NAME >> .env
-                            echo WORKDIR=$WORKDIR >> .env
+                    //         // Project
+                    //         echo PROJECT_NAME=$PROJECT_NAME >> .env
+                    //         echo WORKDIR=$WORKDIR >> .env
 
-                            // DO
-                            echo DO_CR_IMAGE=$DO_CR_IMAGE >> .env
+                    //         // DO
+                    //         echo DO_CR_IMAGE=$DO_CR_IMAGE >> .env
 
-                            // CMS
-                            echo KEY=$CMS_KEY >> .env
-                            echo SECRET=$CMS_SECRET >> .env
-                            echo ADMIN_EMAIL=$CMS_ADMIN_EMAIL >> .env
-                            echo ADMIN_PASSWORD=$CMS_ADMIN_PASSWORD >> .env
-                            echo ZEPTOMAIL_URL=$CMS_ZEPTOMAIL_URL >> .env
-                            echo ZEPTOMAIL_TOKEN=$CMS_ZEPTOMAIL_TOKEN >> .env
-                        EOF
-                    '''
-                    echo 'Download extensions'
-                    sh '''
-                        ssh -T $SSH << EOF
-                            cd $WORKDIR
+                    //         // CMS
+                    //         echo KEY=$CMS_KEY >> .env
+                    //         echo SECRET=$CMS_SECRET >> .env
+                    //         echo ADMIN_EMAIL=$CMS_ADMIN_EMAIL >> .env
+                    //         echo ADMIN_PASSWORD=$CMS_ADMIN_PASSWORD >> .env
+                    //         echo ZEPTOMAIL_URL=$CMS_ZEPTOMAIL_URL >> .env
+                    //         echo ZEPTOMAIL_TOKEN=$CMS_ZEPTOMAIL_TOKEN >> .env
+                    //     EOF
+                    // '''
+                    // echo 'Download extensions'
+                    // sh '''
+                    //     ssh -T $SSH << EOF
+                    //         cd $WORKDIR
 
-                            mkdir -p extensions && cd extensions
+                    //         mkdir -p extensions && cd extensions
 
-                            git clone https://pticon91:$DO_VPS1_GIT_PAT@github.com/pticon91/directus-extension-uniss-zeptomail.git
+                    //         git clone https://pticon91:$DO_VPS1_GIT_PAT@github.com/pticon91/directus-extension-uniss-zeptomail.git
                             
-                            cd .. && chown -R 1000:1000 extensions
-                        EOF
-                    '''
-                    echo 'Compose stack'
-                    sh '''
-                        ssh -T $SSH << EOF
-                            cd $WORKDIR
+                    //         cd .. && chown -R 1000:1000 extensions
+                    //     EOF
+                    // '''
+                    // echo 'Compose stack'
+                    // sh '''
+                    //     ssh -T $SSH << EOF
+                    //         cd $WORKDIR
 
-                            doctl auth init -t $DO_AUTH_TOKEN
-                            doctl registry login --expiry-seconds 100
+                    //         doctl auth init -t $DO_AUTH_TOKEN
+                    //         doctl registry login --expiry-seconds 100
 
-                            docker compose pull
-                            docker compose up -d --build
-                            chown -R 1000:1000 persist
-                        EOF
-                    '''
+                    //         docker compose pull
+                    //         docker compose up -d --build
+                    //         chown -R 1000:1000 persist
+                    //     EOF
+                    // '''
 
                 }
             }
