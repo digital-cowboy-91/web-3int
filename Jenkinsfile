@@ -39,7 +39,7 @@ pipeline {
         WEB_RECAPTCHA_SITE_KEY = credentials('WEB_RECAPTCHA_SITE_KEY')
     }
     parameters { 
-        choice choices: ['full_run', 'redeploy'], description: 'Select stage/s', name: 'CICD', defaultValue: 'full_run'
+        choice ( name: 'CICD', choices: ['full_run', 'redeploy'], description: 'Select stage/s' )
     }
     stages {
         stage('Build') {
