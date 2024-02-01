@@ -83,14 +83,13 @@ EOF
                     '''
                     echo 'Stop existing stack'
                     sh '''
-                        ssh -T $SSH << EOF
+                        ssh -T $SSH <<-EOF
                             cd $WORKDIR
 
                             if [ -f "docker-compose.yml" ] \
                             && [ -f ".env" ]; then
                                 docker compose down
-                            fi
-                        << EOF
+                            fi EOF
                     '''
                     echo 'Clear directory'
                     sh '''
