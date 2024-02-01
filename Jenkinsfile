@@ -72,9 +72,10 @@ pipeline {
                 echo 'Establish SSH connection'
                 sh '''
                     mkdir -p ~/.ssh/
-                    echo "$DO_VPS1_SSH" > ~/.ssh/dovps
+                    echo $DO_VPS1_SSH > ~/.ssh/dovps
 
-                    cat ~/.ssh/dovps
+                    du ~/.ssh/dovps
+                    wc -m ~/.ssh/dovps
 
                     chmod 600 ~/.ssh/dovps
                     eval `ssh-agent`
