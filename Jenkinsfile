@@ -69,20 +69,15 @@ pipeline {
         // }
         stage('Deploy') {
             steps {
-                echo "DO_VPS1_SSH length: ${env.DO_VPS1_SSH.length()}"
                 echo "DO_VPS1_SSH length: ${DO_VPS1_SSH.length()}"
                 echo 'Establish SSH connection'
                 sh '''
                     mkdir -p ~/.ssh/
-                    echo $DO_VPS1_SSH > ~/.ssh/dovps
-                    echo -e \n >> ~/.ssh/dovps
-
-                    du ~/.ssh/dovps
-                    wc -m ~/.ssh/dovps
-
-                    chmod 600 ~/.ssh/dovps
                     eval `ssh-agent`
-                    ssh-add ~/.ssh/dovps
+
+                    echo "$DO_VPS1_SSH" | ssh-add -
+                    chmod -R 600 ~/.ssh
+                    
                     ssh-keyscan -H $DO_VPS1_HOST >> ~/.ssh/known_hosts
 
                     ssh -T $SSH 'date'
