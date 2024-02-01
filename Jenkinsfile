@@ -8,11 +8,12 @@ pipeline {
     environment {
         // PROJECT
         PROJECT_NAME = "web3int"
+        COMMIT = '${sh(script: "echo $GIT_COMMIT | head -c7", returnStdout: true).trim()}'
         
         // DO
         DO_AUTH_TOKEN = credentials('DO_AUTH_TOKEN')
         DO_CR = credentials('DO_CR')
-        DO_CR_IMAGE = '${DO_CR}/${PROJECT_NAME}'
+        DO_CR_IMAGE = "${DO_CR}/${PROJECT_NAME}"
         
         // CMS
         KEY = credentials('CMS_KEY')
@@ -32,10 +33,6 @@ pipeline {
     stages {
         stage('Setup environment') {
             steps {
-                echo 'Set COMMIT env variable'
-                script {
-                    env.COMMIT = sh(script: "echo $GIT_COMMIT | head -c7", returnStdout: true).trim()
-                }
                 echo 'Install doctl'
                 sh '''
                     apk add doctl
