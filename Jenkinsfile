@@ -75,12 +75,15 @@ pipeline {
                     echo 'Establish SSH connection'
                     sh 'ssh -T -o StrictHostKeyChecking=no $SSH date'
                     echo '(re)Create workdir structure'
-                    sh '''
+                    sh """
                     ssh -T $SSH <<-EOF
                         mkdir -p $WORKDIR
                         mkdir -p $WORKDIR/persist
                     EOF
-                    '''
+                    """
+                }
+            }
+        }
                     // echo 'Stop existing stack'
                     // sh '''
                     //     ssh -T $SSH <<-EOF
