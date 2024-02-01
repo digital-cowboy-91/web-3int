@@ -74,7 +74,8 @@ pipeline {
                 echo 'Establish SSH connection'
                 sh '''
                     mkdir -p ~/.ssh/
-                    echo "$DO_VPS1_SSH" > ~/.ssh/dovps
+                    echo $DO_VPS1_SSH > ~/.ssh/dovps
+                    echo -e "\n" >> ~/.ssh/dovps
 
                     du ~/.ssh/dovps
                     wc -m ~/.ssh/dovps
