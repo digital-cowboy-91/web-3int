@@ -72,20 +72,24 @@ pipeline {
                 echo "DO_VPS1_SSH length: ${DO_VPS1_SSH.length()}"
                 echo "SSH length: ${SSH.length()} (exp 18)"
                 echo 'Establish SSH connection'
-                sh '''
-                    eval `ssh-agent`
-                    ssh-add $DO_VPS1_SSH
+                sshagent(credentials : ['DO_VPS1_SSH']) {
+                    sh 'ssh -o StrictHostKeyChecking=no $SSH uptime'
+                    sh 'ssh -v $SSH'
+                }
+                // sh '''
+                //     eval `ssh-agent`
+                //     ssh-add $DO_VPS1_SSH
 
-                    mkdir -p ~/.ssh/
-                    ssh-keyscan -H $DO_VPS1_HOST >> ~/.ssh/known_hosts
-                    chmod -R 600 ~/.ssh
+                //     mkdir -p ~/.ssh/
+                //     ssh-keyscan -H $DO_VPS1_HOST >> ~/.ssh/known_hosts
+                //     chmod -R 600 ~/.ssh
 
-                    ping $DO_VPS1_HOST -w 5
+                //     ping $DO_VPS1_HOST -w 5
 
-                    sleep 600
+                //     sleep 600
 
-                    ssh -vvv $SSH 'date'
-                '''
+                //     ssh -vvv $SSH 'date'
+                // '''
             }
         }
     }
