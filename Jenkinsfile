@@ -74,7 +74,7 @@ pipeline {
                     mkdir -p ~/.ssh/
                     echo $DO_VPS1_SSH > ~/.ssh/dovps
                     chmod 600 ~/.ssh/dovps
-                    eval ssh-agent
+                    eval `ssh-agent`
                     ssh-add ~/.ssh/dovps
                     ssh-keyscan -H $DO_VPS1_HOST >> ~/.ssh/known_hosts
 
