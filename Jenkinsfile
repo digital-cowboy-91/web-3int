@@ -10,6 +10,7 @@ pipeline {
         PROJECT_NAME = "web3int"
         COMMIT = "${sh(script: "echo $GIT_COMMIT | head -c7", returnStdout: true).trim()}"
         WORKDIR = "/services/${PROJECT_NAME}"
+        SSH = "${DO_VPS1_USER}@${DO_VPS1_HOST}"
         
         // DO
         DO_AUTH_TOKEN = credentials('DO_AUTH_TOKEN')
@@ -20,8 +21,6 @@ pipeline {
         DO_VPS1_HOST = credentials('DO_VPS1_HOST')
         DO_VPS1_USER = credentials('DO_VPS1_USER')
         
-        SSH = "root@178.62.66.109"
-
         // CMS
         KEY = credentials('CMS_KEY')
         SECRET = credentials('CMS_SECRET')
@@ -71,6 +70,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo "DO_VPS1_SSH length: ${DO_VPS1_SSH.length()}"
+                echo "SSH length: ${SSH.length()} (exp 18)"
                 echo 'Establish SSH connection'
                 sh '''
                     eval `ssh-agent`
