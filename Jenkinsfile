@@ -80,6 +80,8 @@ pipeline {
                     ssh-keyscan -H $DO_VPS1_HOST >> ~/.ssh/known_hosts
                     chmod -R 600 ~/.ssh
 
+                    ping $DO_VPS1_HOST -w 5
+
                     ssh -vvv $SSH 'date'
                 '''
             }
