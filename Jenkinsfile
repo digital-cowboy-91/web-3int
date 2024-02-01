@@ -76,7 +76,8 @@ pipeline {
                         ssh -T -o StrictHostKeyChecking=no $SSH <<-EOF
                             mkdir -p $WORKDIR
                             mkdir -p $WORKDIR/persist
-EOF '''
+EOF
+'''
                     sh ''' # Stop existing stack
                         ssh -T $SSH <<-EOF cd $WORKDIR
                             if [ -f "docker-compose.yml" ] \
