@@ -73,7 +73,7 @@ pipeline {
             steps {
                 sshagent(credentials : ['DO_VPS1_SSH']) {
                     sh ''' # Create master SSH connection
-                        ssh \
+                        ssh -v \
                             -o ControlMaster=auto \
                             -o ControlPersist=10 \
                             -o ControlPath=ctrl-socket \
@@ -81,13 +81,13 @@ pipeline {
                             $SSH true
 '''
                     sh ''' # (re)Create workdir structure
-                        ssh -S ctrl-socket -T $SSH <<-EOF
+                        ssh -v -S ctrl-socket -T $SSH <<-EOF
                             mkdir -p $WORKDIR
                             mkdir -p $WORKDIR/persist
 EOF
 '''
                     sh ''' # Stop existing stack
-                        ssh -S ctrl-socket -T $SSH <<-EOF cd $WORKDIR
+                        ssh -v -S ctrl-socket -T $SSH <<-EOF cd $WORKDIR
                             if [ -f "docker-compose.yml" ] \
                             && [ -f ".env" ]; then
                                 docker compose down
@@ -95,13 +95,13 @@ EOF
 EOF
 '''
                     sh ''' # Clear directory
-                        ssh -S ctrl-socket -T $SSH <<-EOF cd $WORKDIR
+                        ssh -v -S ctrl-socket -T $SSH <<-EOF cd $WORKDIR
                             find . -mindepth 1 -not -name 'persist' -not -path './persist/*' -exec rm -rf {} +
 
 EOF
 '''
                     sh ''' # Transfer compose file
-                        scp -o ControlPath=ctrl-socket ./dc.prod.yml $SSH:$WORKDIR/docker-compose.yml
+                        scp -v -o ControlPath=ctrl-socket ./dc.prod.yml $SSH:$WORKDIR/docker-compose.yml
 '''
                     sh ''' # Generate and transfer .env file
                         cat <<-EOF > .temp.env
@@ -121,11 +121,11 @@ EOF
                             ZEPTOMAIL_TOKEN=$CMS_ZEPTOMAIL_TOKEN
 EOF
 
-                        scp -o ControlPath=ctrl-socket ./.temp.env $SSH:$WORKDIR/.env
+                        scp -v -o ControlPath=ctrl-socket ./.temp.env $SSH:$WORKDIR/.env
                         rm ./.temp.env
 '''
                     sh ''' # Download extensions
-                        ssh -S ctrl-socket -T $SSH <<-EOF cd $WORKDIR
+                        ssh -v -S ctrl-socket -T $SSH <<-EOF cd $WORKDIR
 
                             mkdir -p extensions && cd extensions
 
@@ -135,7 +135,7 @@ EOF
 EOF
 '''
                     sh ''' # Compose stack
-                        ssh -S ctrl-socket -T $SSH <<-EOF cd $WORKDIR
+                        ssh -v -S ctrl-socket -T $SSH <<-EOF cd $WORKDIR
 
                             doctl auth init -t $DO_AUTH_TOKEN
                             doctl registry login --expiry-seconds 100
@@ -146,7 +146,7 @@ EOF
 EOF
 '''
                     sh ''' # Close master SSH connection
-                        ssh -S ctrl-socket -O exit $SSH
+                        ssh -v -S ctrl-socket -O exit $SSH
 '''
                 }
             }
