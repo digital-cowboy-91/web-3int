@@ -76,19 +76,22 @@ pipeline {
                         ssh -T -o StrictHostKeyChecking=no $SSH <<-EOF
                             mkdir -p $WORKDIR
                             mkdir -p $WORKDIR/persist
-EOF '''
+EOF
+'''
                     sh ''' # Stop existing stack
                         ssh -T -o StrictHostKeyChecking=no $SSH <<-EOF cd $WORKDIR
                             if [ -f "docker-compose.yml" ] \
                             && [ -f ".env" ]; then
                                 docker compose down
                             fi
-EOF '''
+EOF
+'''
                     sh ''' # Clear directory
                         ssh -T -o StrictHostKeyChecking=no $SSH <<-EOF cd $WORKDIR
                             find . -mindepth 1 -not -name 'persist' -not -path './persist/*' -exec rm -rf {} +
 
-EOF '''
+EOF
+'''
                     sh ''' # Transfer compose file
                         scp ./dc.prod.yml $SSH:$WORKDIR/docker-compose.yml
 '''
@@ -121,7 +124,8 @@ EOF
                             git clone https://pticon91:$DO_VPS1_GIT_PAT@github.com/pticon91/directus-extension-uniss-zeptomail.git
                             
                             cd .. && chown -R 1000:1000 extensions
-EOF '''
+EOF
+'''
                     sh ''' # Compose stack
                         ssh -T -o StrictHostKeyChecking=no $SSH <<-EOF cd $WORKDIR
 
@@ -131,7 +135,8 @@ EOF '''
                             docker compose pull
                             docker compose up -d --build
                             chown -R 1000:1000 persist
-EOF '''
+EOF
+'''
                 }
             }
         }
