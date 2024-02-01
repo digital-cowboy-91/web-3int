@@ -72,13 +72,15 @@ pipeline {
         stage('Deploy') {
             steps {
                 sshagent(credentials : ['DO_VPS1_SSH']) {
-                    echo 'Establish SSH connection'
-                    sh 'ssh -T -o StrictHostKeyChecking=no $SSH date'
-                    echo '(re)Create workdir structure'
                     sh '''
-                    ssh -T $SSH <<-EOF
-                        mkdir -p $WORKDIR
-                        mkdir -p $WORKDIR/persist
+                        // Establish SSH connection
+                        ssh -T -o StrictHostKeyChecking=no $SSH date
+                    '''
+                    sh '''
+                        echo '(re)Create workdir structure'
+                        ssh -T $SSH <<-EOF
+                            mkdir -p $WORKDIR
+                            mkdir -p $WORKDIR/persist
 EOF
                     '''
                     echo 'Stop existing stack'
@@ -94,7 +96,7 @@ EOF
                     '''
                     echo 'Clear directory'
                     sh '''
-                        ssh -T $SSH << EOF
+                        ssh -T $SSH <<-EOF
                             cd $WORKDIR
 
                             find . -mindepth 1 -not -name 'persist' -not -path './persist/*' -exec rm -rf {} +
@@ -104,7 +106,7 @@ EOF
                     sh 'scp ./dc.prod.yml $SSH:$WORKDIR/docker-compose.yml'
                     echo 'Generate .env file'
                     sh '''
-                        ssh -T $SSH << EOF
+                        ssh -T $SSH <<-EOF
                             cd $WORKDIR
 
                             // Project
@@ -125,7 +127,7 @@ EOF
                     '''
                     echo 'Download extensions'
                     sh '''
-                        ssh -T $SSH << EOF
+                        ssh -T $SSH <<-EOF
                             cd $WORKDIR
 
                             mkdir -p extensions && cd extensions
@@ -137,7 +139,7 @@ EOF
                     '''
                     echo 'Compose stack'
                     sh '''
-                        ssh -T $SSH << EOF
+                        ssh -T $SSH <<-EOF
                             cd $WORKDIR
 
                             doctl auth init -t $DO_AUTH_TOKEN
