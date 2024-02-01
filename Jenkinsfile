@@ -73,7 +73,7 @@ pipeline {
             steps {
                 sshagent(credentials : ['DO_VPS1_SSH']) {
                     echo 'Establish SSH connection'
-                    sh 'ssh -T $SSH date'
+                    sh 'ssh -T -o StrictHostKeyChecking=no $SSH date'
                     echo '(re)Create workdir structure'
                     sh '''
                         ssh -T $SSH << EOF
