@@ -8,7 +8,7 @@ pipeline {
     environment {
         // PROJECT
         PROJECT_NAME = "web3int"
-        COMMIT = '${sh(script: "echo $GIT_COMMIT | head -c7", returnStdout: true).trim()}'
+        COMMIT = "${sh(script: "echo $GIT_COMMIT | head -c7", returnStdout: true).trim()}"
         
         // DO
         DO_AUTH_TOKEN = credentials('DO_AUTH_TOKEN')
