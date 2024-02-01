@@ -78,7 +78,7 @@ pipeline {
                             -o ControlPersist=10 \
                             -o ControlPath=ctrl-socket \
                             -fn -o StrictHostKeyChecking=no \
-                            $SSH
+                            $SSH true
 '''
                     sh ''' # (re)Create workdir structure
                         ssh -S ctrl-socket -T $SSH <<-EOF
