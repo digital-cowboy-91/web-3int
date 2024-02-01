@@ -73,14 +73,12 @@ pipeline {
                 echo "DO_VPS1_SSH length: ${DO_VPS1_SSH.length()}"
                 echo 'Establish SSH connection'
                 sh '''
-                    mkdir -p ~/.ssh/
                     eval `ssh-agent`
+                    ssh-add $DO_VPS1_SSH
 
-                    echo "$DO_VPS1_SSH" > ~/.ssh/id_rsa
-                    chmod -R 400 ~/.ssh/id_rsa
-                    ssh-add ~/.ssh/id_rsa
-                    
+                    mkdir -p ~/.ssh/
                     ssh-keyscan -H $DO_VPS1_HOST >> ~/.ssh/known_hosts
+                    chmod -R 600 ~/.ssh/id_rsa
 
                     ssh -T $SSH 'date'
                 '''
