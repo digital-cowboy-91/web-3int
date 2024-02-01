@@ -17,7 +17,8 @@ pipeline {
         DO_CR = credentials('DO_CR')
         DO_CR_IMAGE = "${DO_CR}/${PROJECT_NAME}"
 
-        DO_VPS1_SSH = credentials('DO_SSH_KEY')
+        DO_VPS1_SSH = credentials('DO_VPS1_SSH')
+        // DO_VPS1_SSH = credentials('DO_SSH_KEY')
         DO_VPS1_HOST = credentials('DO_VPS1_HOST')
         DO_VPS1_USER = credentials('DO_VPS1_USER')
         
@@ -75,8 +76,9 @@ pipeline {
                     mkdir -p ~/.ssh/
                     eval `ssh-agent`
 
-                    echo "${DO_VPS1_SSH}" | ssh-add -
-                    chmod -R 600 ~/.ssh
+                    echo "$DO_VPS1_SSH" > ~/.ssh/id_rsa
+                    chmod -R 400 ~/.ssh/id_rsa
+                    ssh-add ~/.ssh/id_rsa
                     
                     ssh-keyscan -H $DO_VPS1_HOST >> ~/.ssh/known_hosts
 
