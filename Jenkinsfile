@@ -82,6 +82,8 @@ pipeline {
 
                     ping $DO_VPS1_HOST -w 5
 
+                    sleep 600
+
                     ssh -vvv $SSH 'date'
                 '''
             }
