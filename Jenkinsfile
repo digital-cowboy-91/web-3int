@@ -78,7 +78,7 @@ pipeline {
 
                     mkdir -p ~/.ssh/
                     ssh-keyscan -H $DO_VPS1_HOST >> ~/.ssh/known_hosts
-                    chmod -R 600 ~/.ssh/id_rsa
+                    chmod -R 600 ~/.ssh
 
                     ssh -T $SSH 'date'
                 '''
