@@ -38,7 +38,7 @@ services:
 
   web:
     container_name: ${PROJECT_NAME}-web
-    image: ${DO_REG_IMAGE}
+    image: ${DO_CR_IMAGE}
     restart: always
     depends_on:
       - cms

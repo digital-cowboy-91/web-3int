@@ -39,36 +39,36 @@ pipeline {
         WEB_RECAPTCHA_SITE_KEY = credentials('WEB_RECAPTCHA_SITE_KEY')
     }
     stages {
-        // stage('Build') {
-        //     steps {
-        //         echo 'Build docker image'
-        //         sh '''
-        //             docker build \
-        //                 -t $DO_CR_IMAGE:$COMMIT \
-        //                 -t $DO_CR_IMAGE:latest \
-        //                 --build-arg MONGO_URL="$WEB_MONGO_URL" \
-        //                 --build-arg RECAPTCHA_SECRET_KEY="$WEB_RECAPTCHA_SECRET_KEY" \
-        //                 --build-arg RECAPTCHA_SITE_KEY="$WEB_RECAPTCHA_SITE_KEY" \
-        //                 .
-        //         '''
-        //     }
-        // }
-        // stage('Push') {
-        //     steps {
-        //         echo 'Install and authenticate doctl'
-        //         sh '''
-        //             apk add doctl
-        //             doctl auth init -t $DO_AUTH_TOKEN
-        //         '''
-        //         sh 'printenv'
-        //         echo 'Push image to DOCR'
-        //         sh '''
-        //             doctl registry login --expiry-seconds 300
-        //             docker push $DO_CR_IMAGE:$COMMIT
-        //             docker push $DO_CR_IMAGE:latest
-        //         '''
-        //     }
-        // }
+        stage('Build') {
+            steps {
+                echo 'Build docker image'
+                sh '''
+                    docker build \
+                        -t $DO_CR_IMAGE:$COMMIT \
+                        -t $DO_CR_IMAGE:latest \
+                        --build-arg MONGO_URL="$WEB_MONGO_URL" \
+                        --build-arg RECAPTCHA_SECRET_KEY="$WEB_RECAPTCHA_SECRET_KEY" \
+                        --build-arg RECAPTCHA_SITE_KEY="$WEB_RECAPTCHA_SITE_KEY" \
+                        .
+                '''
+            }
+        }
+        stage('Push') {
+            steps {
+                echo 'Install and authenticate doctl'
+                sh '''
+                    apk add doctl
+                    doctl auth init -t $DO_AUTH_TOKEN
+                '''
+                sh 'printenv'
+                echo 'Push image to DOCR'
+                sh '''
+                    doctl registry login --expiry-seconds 300
+                    docker push $DO_CR_IMAGE:$COMMIT
+                    docker push $DO_CR_IMAGE:latest
+                '''
+            }
+        }
         stage('Deploy') {
             steps {
                 sshagent(credentials : ['DO_VPS1_SSH']) {
