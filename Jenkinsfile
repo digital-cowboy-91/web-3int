@@ -73,7 +73,12 @@ pipeline {
             steps {
                 sshagent(credentials : ['DO_VPS1_SSH']) {
                     sh ''' # Create master SSH connection
-                        ssh -M -S ctrl-socket -fn -o StrictHostKeyChecking=no $SSH sleep 10
+                        ssh \
+                            -o ControlMaster=auto \
+                            -o ControlPersist=10 \
+                            -o ControlPath=ctrl-socket \
+                            -fn -o StrictHostKeyChecking=no \
+                            $SSH
 '''
                     sh ''' # (re)Create workdir structure
                         ssh -S ctrl-socket -T $SSH <<-EOF
@@ -139,6 +144,9 @@ EOF
                             docker compose up -d --build
                             chown -R 1000:1000 persist
 EOF
+'''
+                    sh ''' # Close master SSH connection
+                        ssh -S ctrl-socket -O exit $SSH
 '''
                 }
             }
