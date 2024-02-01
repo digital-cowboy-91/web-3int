@@ -93,7 +93,7 @@ EOF
 EOF
 '''
                     sh ''' # Transfer compose file
-                        scp ./dc.prod.yml $SSH:$WORKDIR/docker-compose.yml
+                        scp -o StrictHostKeyChecking=no ./dc.prod.yml $SSH:$WORKDIR/docker-compose.yml
 '''
                     sh ''' # Generate and transfer .env file
                         cat <<-EOF > .temp.env
@@ -113,7 +113,7 @@ EOF
                             ZEPTOMAIL_TOKEN=$CMS_ZEPTOMAIL_TOKEN
 EOF
 
-                        scp ./.temp.env $SSH:$WORKDIR/.env
+                        scp -o StrictHostKeyChecking=no ./.temp.env $SSH:$WORKDIR/.env
                         rm ./.temp.env
 '''
                     sh ''' # Download extensions
