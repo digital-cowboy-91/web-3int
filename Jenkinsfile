@@ -20,6 +20,8 @@ pipeline {
         DO_VPS1_SSH = credentials('DO_VPS1_SSH')
         DO_VPS1_HOST = credentials('DO_VPS1_HOST')
         DO_VPS1_USER = credentials('DO_VPS1_USER')
+
+        DO_VPS1_GIT_PAT = credentials('DO_VPS1_GIT_PAT')
         
         // CMS
         KEY = credentials('CMS_KEY')
@@ -128,7 +130,7 @@ pipeline {
 
                             mkdir -p extensions && cd extensions
 
-                            git clone https://pticon91:${{ secrets.DO_GIT_PAT }}@github.com/pticon91/directus-extension-uniss-zeptomail.git
+                            git clone https://pticon91:$DO_VPS1_GIT_PAT@github.com/pticon91/directus-extension-uniss-zeptomail.git
                             
                             cd .. && chown -R 1000:1000 extensions
                         EOF
