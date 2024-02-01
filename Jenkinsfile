@@ -39,41 +39,41 @@ pipeline {
         WEB_RECAPTCHA_SITE_KEY = credentials('WEB_RECAPTCHA_SITE_KEY')
     }
     stages {
-        stage('Build') {
-            steps {
-                echo 'Build docker image'
-                sh '''
-                    docker build \
-                        -t $DO_CR_IMAGE:$COMMIT \
-                        -t $DO_CR_IMAGE:latest \
-                        --build-arg MONGO_URL="$WEB_MONGO_URL" \
-                        --build-arg RECAPTCHA_SECRET_KEY="$WEB_RECAPTCHA_SECRET_KEY" \
-                        --build-arg RECAPTCHA_SITE_KEY="$WEB_RECAPTCHA_SITE_KEY" \
-                        .
-                '''
-            }
-        }
-        stage('Push') {
-            steps {
-                echo 'Install and authenticate doctl'
-                sh '''
-                    apk add doctl
-                    doctl auth init -t $DO_AUTH_TOKEN
-                '''
-                sh 'printenv'
-                echo 'Push image to DOCR'
-                sh '''
-                    doctl registry login --expiry-seconds 300
-                    docker push $DO_CR_IMAGE:$COMMIT
-                    docker push $DO_CR_IMAGE:latest
-                '''
-            }
-        }
+        // stage('Build') {
+        //     steps {
+        //         echo 'Build docker image'
+        //         sh '''
+        //             docker build \
+        //                 -t $DO_CR_IMAGE:$COMMIT \
+        //                 -t $DO_CR_IMAGE:latest \
+        //                 --build-arg MONGO_URL="$WEB_MONGO_URL" \
+        //                 --build-arg RECAPTCHA_SECRET_KEY="$WEB_RECAPTCHA_SECRET_KEY" \
+        //                 --build-arg RECAPTCHA_SITE_KEY="$WEB_RECAPTCHA_SITE_KEY" \
+        //                 .
+        //         '''
+        //     }
+        // }
+        // stage('Push') {
+        //     steps {
+        //         echo 'Install and authenticate doctl'
+        //         sh '''
+        //             apk add doctl
+        //             doctl auth init -t $DO_AUTH_TOKEN
+        //         '''
+        //         sh 'printenv'
+        //         echo 'Push image to DOCR'
+        //         sh '''
+        //             doctl registry login --expiry-seconds 300
+        //             docker push $DO_CR_IMAGE:$COMMIT
+        //             docker push $DO_CR_IMAGE:latest
+        //         '''
+        //     }
+        // }
         stage('Deploy') {
             steps {
                 sshagent(credentials : ['DO_VPS1_SSH']) {
                     sh ''' # Create master SSH connection
-                        ssh -v \
+                        ssh \
                             -o ControlMaster=auto \
                             -o ControlPersist=10 \
                             -o ControlPath=ctrl-socket \
@@ -81,31 +81,33 @@ pipeline {
                             $SSH true
 '''
                     sh ''' # (re)Create workdir structure
-                        ssh -v -S ctrl-socket -T $SSH <<-EOF
+                        ssh -S ctrl-socket -T $SSH <<-EOF
                             mkdir -p $WORKDIR
                             mkdir -p $WORKDIR/persist
+                            ls -la $WORKDIR
 EOF
 '''
                     sh ''' # Stop existing stack
-                        ssh -v -S ctrl-socket -T $SSH <<-EOF
+                        ssh -S ctrl-socket -T $SSH <<-EOF
                             cd $WORKDIR
 
                             if [ -f "docker-compose.yml" ] \
                             && [ -f ".env" ]; then
                                 docker compose down
                             fi
+                            ls -la
 EOF
 '''
                     sh ''' # Clear directory
-                        ssh -v -S ctrl-socket -T $SSH <<-EOF
+                        ssh -S ctrl-socket -T $SSH <<-EOF
                             cd $WORKDIR
 
                             find . -mindepth 1 -not -name 'persist' -not -path './persist/*' -exec rm -rf {} +
-
+                            ls -la
 EOF
 '''
                     sh ''' # Transfer compose file
-                        scp -v -o ControlPath=ctrl-socket ./dc.prod.yml $SSH:$WORKDIR/docker-compose.yml
+                        scp -o ControlPath=ctrl-socket ./dc.prod.yml $SSH:$WORKDIR/docker-compose.yml
 '''
                     sh ''' # Generate and transfer .env file
                         cat <<-EOF > .temp.env
@@ -125,11 +127,11 @@ EOF
                             ZEPTOMAIL_TOKEN=$CMS_ZEPTOMAIL_TOKEN
 EOF
 
-                        scp -v -o ControlPath=ctrl-socket ./.temp.env $SSH:$WORKDIR/.env
+                        scp -o ControlPath=ctrl-socket ./.temp.env $SSH:$WORKDIR/.env
                         rm ./.temp.env
 '''
                     sh ''' # Download extensions
-                        ssh -v -S ctrl-socket -T $SSH <<-EOF
+                        ssh -S ctrl-socket -T $SSH <<-EOF
                             cd $WORKDIR
 
                             mkdir -p extensions && cd extensions
@@ -137,10 +139,11 @@ EOF
                             git clone https://pticon91:$DO_VPS1_GIT_PAT@github.com/pticon91/directus-extension-uniss-zeptomail.git
                             
                             cd .. && chown -R 1000:1000 extensions
+                            ls -la
 EOF
 '''
                     sh ''' # Compose stack
-                        ssh -v -S ctrl-socket -T $SSH <<-EOF
+                        ssh -S ctrl-socket -T $SSH <<-EOF
                             cd $WORKDIR
 
                             doctl auth init -t $DO_AUTH_TOKEN
@@ -149,10 +152,12 @@ EOF
                             docker compose pull
                             docker compose up -d --build
                             chown -R 1000:1000 persist
+
+                            ls -la
 EOF
 '''
                     sh ''' # Close master SSH connection
-                        ssh -v -S ctrl-socket -O exit $SSH
+                        ssh -S ctrl-socket -O exit $SSH
 '''
                 }
             }
