@@ -18,8 +18,8 @@ pipeline {
         DO_CR_IMAGE = "${DO_CR}/${PROJECT_NAME}"
 
         DO_VPS1_SSH = credentials('DO_VPS1_SSH')
-        DO_VPS1_HOST = credentials('DO_HOST')
-        DO_VPS1_USER = credentials('DO_USER')
+        DO_VPS1_HOST = credentials('DO_VPS1_HOST')
+        DO_VPS1_USER = credentials('DO_VPS1_USER')
         
         // CMS
         KEY = credentials('CMS_KEY')
