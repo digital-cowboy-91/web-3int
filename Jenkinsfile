@@ -87,7 +87,9 @@ pipeline {
 EOF
 '''
                     sh ''' # Stop existing stack
-                        ssh -v -S ctrl-socket -T $SSH <<-EOF cd $WORKDIR
+                        ssh -v -S ctrl-socket -T $SSH <<-EOF
+                            cd $WORKDIR
+                            
                             if [ -f "docker-compose.yml" ] \
                             && [ -f ".env" ]; then
                                 docker compose down
@@ -95,7 +97,9 @@ EOF
 EOF
 '''
                     sh ''' # Clear directory
-                        ssh -v -S ctrl-socket -T $SSH <<-EOF cd $WORKDIR
+                        ssh -v -S ctrl-socket -T $SSH <<-EOF
+                            cd $WORKDIR
+
                             find . -mindepth 1 -not -name 'persist' -not -path './persist/*' -exec rm -rf {} +
 
 EOF
@@ -125,7 +129,8 @@ EOF
                         rm ./.temp.env
 '''
                     sh ''' # Download extensions
-                        ssh -v -S ctrl-socket -T $SSH <<-EOF cd $WORKDIR
+                        ssh -v -S ctrl-socket -T $SSH <<-EOF
+                            cd $WORKDIR
 
                             mkdir -p extensions && cd extensions
 
@@ -135,7 +140,8 @@ EOF
 EOF
 '''
                     sh ''' # Compose stack
-                        ssh -v -S ctrl-socket -T $SSH <<-EOF cd $WORKDIR
+                        ssh -v -S ctrl-socket -T $SSH <<-EOF
+                            cd $WORKDIR
 
                             doctl auth init -t $DO_AUTH_TOKEN
                             doctl registry login --expiry-seconds 100
