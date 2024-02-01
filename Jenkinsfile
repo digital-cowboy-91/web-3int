@@ -79,7 +79,7 @@ pipeline {
                     ssh -T $SSH <<-EOF
                         mkdir -p $WORKDIR
                         mkdir -p $WORKDIR/persist
-EOF
+                    -EOF
                     '''
                     // echo 'Stop existing stack'
                     // sh '''
