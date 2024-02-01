@@ -20,8 +20,8 @@ pipeline {
         DO_VPS1_HOST = credentials('DO_VPS1_HOST')
         DO_VPS1_USER = credentials('DO_VPS1_USER')
         
-        SSH = "${DO_VPS1_USER}@${DO_VPS1_HOST}"
-        
+        SSH = "root@178.62.66.19"
+
         // CMS
         KEY = credentials('CMS_KEY')
         SECRET = credentials('CMS_SECRET')
