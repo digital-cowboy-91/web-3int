@@ -1,8 +1,8 @@
 pipeline {
     agent {
         docker { 
-            image 'docker-alpine:1.0.5' 
-            args '-u root:root'
+            image 'docker-alpine:1.0.6' 
+            args '-u root:root -p 22:22'
         }
     }
     environment {
