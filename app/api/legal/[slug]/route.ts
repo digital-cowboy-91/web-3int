@@ -1,15 +1,14 @@
-// import { NextRequest, NextResponse } from "next/server";
 import cmsClient from "@/cms/client";
 import { readItems } from "@directus/sdk";
+
+export const revalidate = 0;
 
 export async function GET(
   request: Request,
   { params }: { params: { slug: string } }
 ) {
-  console.log("params", params);
-
   const data = await cmsClient.request(
-    readItems("legals", {
+    readItems("legal", {
       filter: {
         slug: {
           _eq: params.slug,
@@ -17,6 +16,8 @@ export async function GET(
       },
     })
   );
+
+  console.log("[API] ", data[0].title);
 
   if (data.length === 0) {
     return Response.json(new Error("Not found"), { status: 404 });
