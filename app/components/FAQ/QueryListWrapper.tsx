@@ -1,10 +1,14 @@
-import { FINDALL } from "../../../prisma/modelFaq";
 import QueryList from "./QueryList";
 
 const QueryListWrapper = async () => {
-  const db = await FINDALL();
+  const URL = `${process.env.WEB_HOST}/api/faq`;
+  const res = await fetch(URL, {
+    next: {
+      tags: ["faq"],
+    },
+  }).then((res) => res.json());
 
-  return <QueryList data={db.data} />;
+  return <QueryList data={res} />;
 };
 
 export default QueryListWrapper;

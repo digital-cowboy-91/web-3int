@@ -1,13 +1,18 @@
 "use client";
 
 import { CSSButtonLink } from "@/app/styles";
-import { TFAQ } from "@/prisma/modelFaq";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 
 const changeHeight = (id: string, prev: number) => {
   const curr = document.querySelector("#" + id);
   return curr?.clientHeight || prev;
+};
+
+type TFAQ = {
+  id: number;
+  question: string;
+  answer: string;
 };
 
 const QueryList = ({ data }: { data: TFAQ[] }) => {
@@ -56,7 +61,7 @@ const QueryList = ({ data }: { data: TFAQ[] }) => {
         >
           {data
             .slice(page * offset, page * offset + offset)
-            .map(({ id, question, answer }, index) => (
+            .map(({ id, question, answer }: TFAQ) => (
               <motion.li key={id} variants={variantsItem}>
                 <h3 className={`text-primary mb-0`}>{question}</h3>
                 <p className="ms-0">{answer}</p>
