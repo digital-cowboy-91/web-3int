@@ -2,7 +2,7 @@ import { CSSContainer } from "@/app/styles";
 
 export default async function page({ params }: { params: { slug: string } }) {
   const URL = `${process.env.WEB_HOST}/api/legal/${params.slug}`;
-  const res_v2 = await fetch(URL, {
+  const res = await fetch(URL, {
     next: {
       tags: ["legal"],
     },
@@ -12,7 +12,7 @@ export default async function page({ params }: { params: { slug: string } }) {
     <section id="content" className="mt-8">
       <div
         className={`${CSSContainer} p-8`}
-        dangerouslySetInnerHTML={{ __html: res_v2[0].content }}
+        dangerouslySetInnerHTML={{ __html: res[0].content }}
       />
     </section>
   );
