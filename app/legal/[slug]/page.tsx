@@ -8,8 +8,6 @@ export default async function page({ params }: { params: { slug: string } }) {
     },
   }).then((res) => res.json());
 
-  console.log("[PAGE] ", res_v2[0].title);
-
   return (
     <section id="content" className="mt-8">
       <div

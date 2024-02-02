@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import cmsClient from "@/cms/client";
+import cmsClient from "@/directus/client";
 import { readItems, createItem } from "@directus/sdk";
 
 export async function POST(request: NextRequest) {

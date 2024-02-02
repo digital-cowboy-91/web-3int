@@ -1,4 +1,4 @@
-import cmsClient from "@/cms/client";
+import cmsClient from "@/directus/client";
 import { readItems } from "@directus/sdk";
 
 export const revalidate = 0;
@@ -16,8 +16,6 @@ export async function GET(
       },
     })
   );
-
-  console.log("[API] ", data[0].title);
 
   if (data.length === 0) {
     return Response.json(new Error("Not found"), { status: 404 });
