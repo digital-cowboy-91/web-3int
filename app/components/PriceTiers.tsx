@@ -6,51 +6,56 @@ const CSSDt =
   "border-b-2 border-gray my-4 text-end text-gray font-semibold uppercase";
 
 const PriceTiers = async () => {
-  const res = await FINDALL();
-
-  if (!res.success) return <div>Something went wrong</div>;
+  const URL = `${process.env.WEB_HOST}/api/pricing`;
+  const res = await fetch(URL, {
+    next: {
+      tags: ["pricing"],
+    },
+  }).then((res) => res.json());
 
   return (
     <div className="p-8 pt-0 flex flex-row justify-center">
       <div className="flex gap-8 justify-center flex-wrap">
-        {res.data.map(
-          ({ id, title, price, description, includes, optional }) => (
-            <div
-              key={id}
-              className="bg-white p-5 z-10 rounded-[1rem] flex-1 min-w-[250px] w-[300px]"
-            >
-              <div className="flex flex-row justify-between items-center font-semibold uppercase mb-5">
-                <span className="text-primary text-2xl">{title}</span>
-                <span className="text-dark">{price}</span>
-              </div>
-              <div className="text-dark">{description}</div>
-              <dl className={CSSDl}>
-                <dt className={CSSDt}>Includes</dt>
-                {includes.map(({ feature, description }, index) => (
+        {res.map(({ id, title, subtitle, price, features }) => (
+          <div
+            key={id}
+            className="bg-white p-5 z-10 rounded-[1rem] flex-1 min-w-[250px] w-[300px]"
+          >
+            <div className="flex flex-row justify-between items-center font-semibold uppercase mb-5">
+              <span className="text-primary text-2xl">{title}</span>
+              <span className="text-dark">{price}</span>
+            </div>
+            <div className="text-dark">{subtitle}</div>
+            <dl className={CSSDl}>
+              <dt className={CSSDt}>Includes</dt>
+              {features
+                .filter((item) => item.is_included)
+                .map(({ description, additional_information }, index) => (
                   <dd key={id + "_inc_" + index}>
                     <PriceTierFeature
-                      feature={feature}
-                      description={description}
+                      feature={description}
+                      description={additional_information}
                     />
                   </dd>
                 ))}
-                {Boolean(optional.length) && (
-                  <>
-                    <dt className={CSSDt}>Optional</dt>
-                    {optional.map(({ feature, description }, index) => (
+              {features.filter((item) => !item.is_included).length > 0 && (
+                <>
+                  <dt className={CSSDt}>Optional</dt>
+                  {features
+                    .filter((item) => !item.is_included)
+                    .map(({ description, additional_information }, index) => (
                       <dd key={id + "_exc_" + index}>
                         <PriceTierFeature
-                          feature={feature}
-                          description={description}
+                          feature={description}
+                          description={additional_information}
                         />
                       </dd>
                     ))}
-                  </>
-                )}
-              </dl>
-            </div>
-          )
-        )}
+                </>
+              )}
+            </dl>
+          </div>
+        ))}
       </div>
     </div>
   );
