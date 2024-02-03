@@ -115,12 +115,20 @@ EOF
 
                             # DO
                             DO_CR_IMAGE=$DO_CR_IMAGE
+                            
+                            DO_SPACES_B1_KEY=${DO_SPACES_B1_KEY}
+                            DO_SPACES_B1_SECRET=${DO_SPACES_B1_SECRET}
+                            DO_SPACES_B1_ENDPOINT=${DO_SPACES_B1_ENDPOINT}
+                            DO_SPACES_B1_BUCKET=${DO_SPACES_B1_BUCKET}
+                            DO_SPACES_B1_REGION=${DO_SPACES_B1_REGION}
 
                             # CMS
                             KEY=$CMS_KEY
                             SECRET=$CMS_SECRET
+
                             ADMIN_EMAIL=$CMS_ADMIN_EMAIL
                             ADMIN_PASSWORD=$CMS_ADMIN_PASSWORD
+
                             ZEPTOMAIL_URL=$CMS_ZEPTOMAIL_URL
                             ZEPTOMAIL_TOKEN=$CMS_ZEPTOMAIL_TOKEN
 EOF
