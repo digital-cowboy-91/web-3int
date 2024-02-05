@@ -9,8 +9,6 @@ const CSSDt =
 const PriceTiers = async () => {
   const res = await getPricing();
 
-  console.log(res);
-
   return (
     <div className="p-8 pt-0 flex flex-row justify-center">
       <div className="flex gap-8 justify-center flex-wrap">

@@ -6,5 +6,5 @@ export async function getPricing() {
     next: {
       tags: ["pricing"],
     },
-  });
+  }).then((res) => res.data);
 }

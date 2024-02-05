@@ -1,22 +1,17 @@
 "use server";
 
+import { createClientQuery } from "@/cms/items/clientQueries";
 import { TContactForm } from "@/prisma/modelContactForm";
 
 export default async function submitAction(data: TContactForm) {
   try {
-    const URL = process.env.WEB_HOST + "/api/client_queries";
-    const res = await fetch(URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
+    const res = await createClientQuery(data);
 
-    if (res.status !== 200) throw new Error("Failed to submit form");
+    if (res.status === 204) return "success";
 
-    return "success";
+    throw new Error("Failed to submit form");
   } catch (e) {
+    console.log("ERR ", e);
     return e;
   }
 }

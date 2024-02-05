@@ -6,5 +6,5 @@ export async function getLegalBySlug(slug: string) {
     next: {
       tags: ["legal"],
     },
-  });
+  }).then((res) => res.data);
 }

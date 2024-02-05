@@ -6,5 +6,5 @@ export async function getFAQ() {
     next: {
       tags: ["faq"],
     },
-  });
+  }).then((res) => res.data);
 }
