@@ -22,6 +22,12 @@ pipeline {
         DO_VPS1_USER = credentials('DO_VPS1_USER')
 
         DO_VPS1_GIT_PAT = credentials('DO_VPS1_GIT_PAT')
+
+        DO_SPACES_B1_KEY = credentials('DO_SPACES_B1_KEY')
+        DO_SPACES_B1_SECRET = credentials('DO_SPACES_B1_SECRET')
+        DO_SPACES_B1_ENDPOINT = credentials('DO_SPACES_B1_ENDPOINT')
+        DO_SPACES_B1_BUCKET = credentials('DO_SPACES_B1_BUCKET')
+        DO_SPACES_B1_REGION = credentials('DO_SPACES_B1_REGION')
         
         // CMS
         CMS_KEY = credentials('CMS_KEY')
@@ -116,11 +122,11 @@ EOF
                             # DO
                             DO_CR_IMAGE=$DO_CR_IMAGE
                             
-                            DO_SPACES_B1_KEY=${DO_SPACES_B1_KEY}
-                            DO_SPACES_B1_SECRET=${DO_SPACES_B1_SECRET}
-                            DO_SPACES_B1_ENDPOINT=${DO_SPACES_B1_ENDPOINT}
-                            DO_SPACES_B1_BUCKET=${DO_SPACES_B1_BUCKET}
-                            DO_SPACES_B1_REGION=${DO_SPACES_B1_REGION}
+                            DO_SPACES_B1_KEY=$DO_SPACES_B1_KEY
+                            DO_SPACES_B1_SECRET=$DO_SPACES_B1_SECRET
+                            DO_SPACES_B1_ENDPOINT=$DO_SPACES_B1_ENDPOINT
+                            DO_SPACES_B1_BUCKET=$DO_SPACES_B1_BUCKET
+                            DO_SPACES_B1_REGION=$DO_SPACES_B1_REGION
 
                             # CMS
                             KEY=$CMS_KEY
