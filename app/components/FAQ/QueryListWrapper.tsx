@@ -1,12 +1,8 @@
+import { getFAQ } from "@/cms/items/faq";
 import QueryList from "./QueryList";
 
 const QueryListWrapper = async () => {
-  const URL = `${process.env.WEB_HOST}/api/faq`;
-  const res = await fetch(URL, {
-    next: {
-      tags: ["faq"],
-    },
-  }).then((res) => res.json());
+  const res = await getFAQ();
 
   return <QueryList data={res} />;
 };

@@ -12,7 +12,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "media.3int.uk",
+        hostname: "assets.3int.uk",
         port: "",
         pathname: "/3int/**",
       },

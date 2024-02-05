@@ -39,7 +39,7 @@ ARG RECAPTCHA_SECRET_KEY
 ENV MONGO_URL=$MONGO_URL \
     RECAPTCHA_SITE_KEY=$RECAPTCHA_SITE_KEY \
     RECAPTCHA_SECRET_KEY=$RECAPTCHA_SECRET_KEY \
-    CMS_HOST=http://cms:8055 \
+    CMS_HOST=https://cms.3int.uk \
     WEB_HOST=http://web:3000 \
     NODE_OPTIONS=--max-old-space-size=512 \
     NEXT_TELEMETRY_DISABLED=1
@@ -74,7 +74,6 @@ COPY --from=deps-prod /app/node_modules ./node_modules
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/next.config.js ./next.config.js
-COPY --from=builder /app/cms/extensions ./cms/extensions
 
 # Prisma
 COPY --from=builder /app/prisma ./prisma

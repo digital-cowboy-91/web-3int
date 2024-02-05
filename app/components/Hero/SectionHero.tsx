@@ -12,7 +12,7 @@ export default async function SectionHero() {
         <Image
           wrapperClassName="absolute"
           className="object-cover"
-          src="https://media.3int.uk/3int/hero_image.png"
+          src="https://assets.3int.uk/3int/hero_image.png"
           alt=""
           sizes="1280px"
           fill

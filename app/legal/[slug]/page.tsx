@@ -1,12 +1,8 @@
 import { CSSContainer } from "@/app/styles";
+import { getLegalBySlug } from "@/cms/items/legal";
 
 export default async function page({ params }: { params: { slug: string } }) {
-  const URL = `${process.env.WEB_HOST}/api/legal/${params.slug}`;
-  const res = await fetch(URL, {
-    next: {
-      tags: ["legal"],
-    },
-  }).then((res) => res.json());
+  const res = await getLegalBySlug(params.slug);
 
   return (
     <section id="content" className="mt-8">

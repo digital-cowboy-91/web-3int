@@ -1,3 +1,4 @@
+import { getPricing } from "@/cms/items/pricing";
 import { FINDALL } from "../../prisma/modelPriceTier";
 import PriceTierFeature from "./PriceTierFeature";
 
@@ -6,12 +7,9 @@ const CSSDt =
   "border-b-2 border-gray my-4 text-end text-gray font-semibold uppercase";
 
 const PriceTiers = async () => {
-  const URL = `${process.env.WEB_HOST}/api/pricing`;
-  const res = await fetch(URL, {
-    next: {
-      tags: ["pricing"],
-    },
-  }).then((res) => res.json());
+  const res = await getPricing();
+
+  console.log(res);
 
   return (
     <div className="p-8 pt-0 flex flex-row justify-center">
