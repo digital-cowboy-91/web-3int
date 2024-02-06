@@ -124,7 +124,7 @@ EOF
                             
                             DO_SPACES_B1_KEY=$DO_SPACES_B1_KEY
                             DO_SPACES_B1_SECRET=$DO_SPACES_B1_SECRET
-                            DO_SPACES_B1_ENDPOINT=$DO_SPACES_B1_ENDPOINT
+                            DO_SPACES_B1_ENDPOINT=$DO_SPACES_B1_ENDPOINT/$PROJECT_NAME
                             DO_SPACES_B1_BUCKET=$DO_SPACES_B1_BUCKET
                             DO_SPACES_B1_REGION=$DO_SPACES_B1_REGION
 
