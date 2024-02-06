@@ -1,10 +1,11 @@
+import { getGalleryItems } from "@/cms/items/gallery";
 import { FINDALL } from "../../../prisma/modelModel";
 import ModelList from "./ModelList";
 
 const ModelListWrapper = async () => {
-  const db = await FINDALL();
+  const res = await getGalleryItems();
 
-  return <ModelList data={db.data} />;
+  return <ModelList data={res} />;
 };
 
 export default ModelListWrapper;

@@ -19,6 +19,7 @@
     "framer-motion": "^10.16.4",
     "next": "^14.1.0",
     "plaiceholder": "^3.0.0",
+    "prisma": "^5.8.1",
     "react": "^18",
     "react-dom": "^18",
     "react-google-recaptcha-v3": "^1.10.1",
@@ -30,8 +31,7 @@
     "remark-gfm": "^4.0.0",
     "sharp": "^0.33.0",
     "zod": "^3.22.4",
-    "zustand": "^4.4.6",
-    "prisma": "^5.8.1"
+    "zustand": "^4.4.6"
   },
   "devDependencies": {
     "@types/node": "^20",

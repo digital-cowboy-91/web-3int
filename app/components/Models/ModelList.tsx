@@ -1,12 +1,11 @@
 "use client";
 
 import { useStoreModal } from "@/app/storeModal";
+import { CSSButtonLink } from "@/app/styles";
 import { TModel } from "@/prisma/modelModel";
 import { AnimatePresence, motion } from "framer-motion";
-import Image from "@/app/components/Image";
 import { useEffect, useState } from "react";
 import GalleryDetail from "../GalleryDetail";
-import { CSSButtonLink } from "@/app/styles";
 
 const animateRow = {
   init: {
@@ -100,15 +99,11 @@ const ModelList = ({ data }: { data: TModel[] }) => {
                   className="bg-white flex flex-col rounded-[1rem] overflow-hidden cursor-pointer h-[300px] w-full relative"
                   aria-label={`Details of ${item.title} model`}
                 >
-                  <div className="relative h-2/3 w-full">
-                    <Image
-                      src={
-                        item.media.find((i) => i.id === item.coverImageId).url
-                      }
-                      alt=""
-                      sizes="400px"
-                      style={{ objectFit: "contain" }}
-                      fill
+                  <div className="relative h-2/3 w-full flex items-center">
+                    <img
+                      src={`https://cms.3int.uk/assets/${item.cover_image}?key=350`}
+                      alt={item.title}
+                      className="object-cover"
                     />
                   </div>
                   <div className="mx-auto font-semibold p-8 pt-4 h-1/3 flex items-center text-center">

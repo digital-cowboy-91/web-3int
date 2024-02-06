@@ -26,8 +26,6 @@ export const FINDALL = cache(async (): Promise<TSuccess | TError> => {
       },
     });
 
-    // console.log(JSON.stringify(data));
-
     return { success: true, data: data };
   } catch (e) {
     return { success: false, data: e };
