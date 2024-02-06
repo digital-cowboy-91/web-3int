@@ -2,7 +2,6 @@ const base = process.env.CMS_HOST;
 
 export default async function cmsAPI(path: string, init: RequestInit) {
   try {
-    console.log("cmsAPI", base + path, init);
     const res = await fetch(base + path, init);
 
     if (!res.ok) {
