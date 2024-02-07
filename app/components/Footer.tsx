@@ -1,17 +1,16 @@
 import { GETLEGALMENULINKS } from "@/prisma/modelPage";
 import { CSSContainer } from "../styles";
 import Link from "next/link";
+import { getLegalItems } from "@/cms/items/legal";
 
 const Footer = async () => {
-  const links = await GETLEGALMENULINKS();
-
-  if (!links.success) return null;
+  const res = await getLegalItems();
 
   return (
     <footer className="bg-gray text-white mt-32 p-8 flex flex-col items-center text-center gap-4">
       <ul className="m-0 flex flex-row gap-4 justify-center">
-        {links.data.map(({ id, title, slug }) => (
-          <li key={id}>
+        {res.map(({ title, slug }) => (
+          <li key={slug}>
             <Link
               href={`/legal/${slug}`}
               className="text-white whitespace-nowrap"
