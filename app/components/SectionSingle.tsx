@@ -40,14 +40,8 @@ export default async function SectionSingle({
               className="absolute end-0 top-[-130px] w-[320px] hidden md:block"
               src={image}
               alt=""
+              width={320}
             />
-            // <Image
-            //   className="absolute end-0 top-[-130px] w-[320px] hidden md:block "
-            //   src={image}
-            //   alt=""
-            //   width={500}
-            //   height={500}
-            // />
           )}
         </div>
         {dynamicComponent(child1.component, child1.props)}
