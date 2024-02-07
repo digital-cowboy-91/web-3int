@@ -4,15 +4,15 @@ import Link from "next/link";
 import { useStoreModal } from "../storeModal";
 import { CSSLinkOutline } from "../styles";
 
-const GalleryDetailLink = ({ id }: { id: string | number }) => {
+const GalleryDetailLink = ({ title }: { title: string }) => {
   const hideModal = useStoreModal((s) => s.hide);
   return (
     <Link
-      href={`?subject=${id}#contact`}
+      href={`?subject=About: ${title}#contact`}
       className={CSSLinkOutline}
       onClick={hideModal}
     >
-      Get Quote
+      Ask About
     </Link>
   );
 };

@@ -55,6 +55,7 @@ export const ContactForm = ({ options }: { options: TOption[] }) => {
   useEffect(() => {
     const subject = params.get("subject");
     if (subject) {
+      console.log(subject);
       setValue("subject", subject || "");
     }
   }, [params]);
@@ -142,12 +143,18 @@ export const ContactForm = ({ options }: { options: TOption[] }) => {
             label="Email"
             disabled={disabled}
           />
-          <Form.Select
+          <Form.Input
+            type="text"
+            name="subject"
+            label="Subject"
+            disabled={disabled}
+          />
+          {/* <Form.Select
             name="subject"
             label="Subject"
             options={options}
             disabled={disabled}
-          />
+          /> */}
           <Form.Textarea name="message" label="Message" disabled={disabled} />
           <div className="my-auto flex flex-row gap-8 justify-end">
             <button

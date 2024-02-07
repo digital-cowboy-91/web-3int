@@ -62,7 +62,7 @@ const GalleryDetail = ({ model }: { model: TGallery }) => {
           </table>
           <div className="my-auto flex flex-row gap-8 justify-end">
             {/* <button className={CSSButtonLink}>STL</button> */}
-            <GalleryDetailLink id={id} />
+            <GalleryDetailLink title={title} />
           </div>
         </div>
         <div className="flex flex-row gap-4 justify-center h-[100px] p-4 bg-primary overflow">
