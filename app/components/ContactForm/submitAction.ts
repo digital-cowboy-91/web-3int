@@ -1,10 +1,10 @@
 "use server";
 
-import { createClientQuery } from "@/cms/items/clientQueries";
+import { CMS_ClientQuery, TContactForm } from "@/cms/items/clientQueries";
 
-export default async function submitAction(data) {
+export default async function submitAction(data: TContactForm) {
   try {
-    const res = await createClientQuery(data);
+    const res = await CMS_ClientQuery.create(data);
 
     if (res.status === 204) return "success";
 

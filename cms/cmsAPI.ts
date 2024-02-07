@@ -1,6 +1,15 @@
 const base = process.env.CMS_HOST;
 
-export default async function cmsAPI(path: string, init: RequestInit) {
+type TResponse = {
+  data: any;
+  status: number;
+  statusText: string;
+};
+
+export default async function cmsAPI(
+  path: string,
+  init: RequestInit
+): Promise<TResponse> {
   try {
     const res = await fetch(base + path, init);
 
