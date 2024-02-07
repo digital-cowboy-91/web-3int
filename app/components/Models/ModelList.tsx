@@ -2,7 +2,6 @@
 
 import { useStoreModal } from "@/app/storeModal";
 import { CSSButtonLink } from "@/app/styles";
-import { TModel } from "@/prisma/modelModel";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import GalleryDetail from "../GalleryDetail";
@@ -53,7 +52,7 @@ const animateCard = {
   },
 };
 
-const ModelList = ({ data }: { data: TModel[] }) => {
+const ModelList = ({ data }) => {
   const [page, setPage] = useState(0);
   const [offset, setOffset] = useState(4);
 

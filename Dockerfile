@@ -49,8 +49,7 @@ COPY . .
 
 COPY --from=deps-dev /app/node_modules ./node_modules
 
-RUN npx prisma generate \
-    && npm run build
+RUN npm run build
 
 # IMG: Runner
 FROM base AS runner
@@ -74,10 +73,6 @@ COPY --from=deps-prod /app/node_modules ./node_modules
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/next.config.js ./next.config.js
-
-# Prisma
-COPY --from=builder /app/prisma ./prisma
-RUN npx prisma generate
 
 EXPOSE 3000
 

@@ -2,18 +2,26 @@
 
 import { CSSButtonLink, CSSButtonOutline } from "@/app/styles";
 import { verifyCaptchaAction } from "@/app/verifyCaptchaAction";
-import { TContactFormOption } from "@/prisma/modelContactFormOption";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAnimate } from "framer-motion";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import { FormProvider, useForm } from "react-hook-form";
-import { SContactForm, TContactForm } from "../../../prisma/modelContactForm";
 import Form from "../Form";
 import submitAction from "./submitAction";
+import { z } from "zod";
 
-export const ContactForm = ({ options }: { options: TContactFormOption[] }) => {
+export const SContactForm = z.object({
+  name: z.string().min(1),
+  email: z.string().email(),
+  subject: z.string(),
+  message: z.string().min(5),
+});
+
+export type TContactForm = z.infer<typeof SContactForm>;
+
+export const ContactForm = ({ options }) => {
   const { executeRecaptcha } = useGoogleReCaptcha();
   const [scope, animate] = useAnimate();
   const [submitted, setSubmitted] = useState(false);

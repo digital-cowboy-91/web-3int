@@ -1,4 +1,3 @@
-import { GETLEGALMENULINKS } from "@/prisma/modelPage";
 import { CSSContainer } from "../styles";
 import Link from "next/link";
 import { getLegalItems } from "@/cms/items/legal";

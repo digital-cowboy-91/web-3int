@@ -1,5 +1,4 @@
 import { getPricing } from "@/cms/items/pricing";
-import { FINDALL } from "../../prisma/modelPriceTier";
 import PriceTierFeature from "./PriceTierFeature";
 
 const CSSDl = "text-dark flex flex-col gap-2";

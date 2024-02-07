@@ -8,16 +8,16 @@ const nextConfig = {
   //     },
   //   ];
   // },
-  images: {
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "assets.3int.uk",
-        port: "",
-        pathname: "/3int/**",
-      },
-    ],
-  },
+  // images: {
+  //   remotePatterns: [
+  //     {
+  //       protocol: "https",
+  //       hostname: "assets.3int.uk",
+  //       port: "",
+  //       pathname: "/3int/**",
+  //     },
+  //   ],
+  // },
   typescript: {
     // !! WARN !!
     // Dangerously allow production builds to successfully complete even if

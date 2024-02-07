@@ -1,9 +1,8 @@
 "use server";
 
 import { createClientQuery } from "@/cms/items/clientQueries";
-import { TContactForm } from "@/prisma/modelContactForm";
 
-export default async function submitAction(data: TContactForm) {
+export default async function submitAction(data) {
   try {
     const res = await createClientQuery(data);
 
