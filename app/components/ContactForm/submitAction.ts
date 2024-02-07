@@ -4,7 +4,7 @@ import { CMS_ClientQuery, TContactForm } from "@/cms/items/clientQueries";
 
 export default async function submitAction(data: TContactForm) {
   try {
-    const res = await CMS_ClientQuery.create(data);
+    const res = await CMS_ClientQuery.createItem(data);
 
     if (res.status === 204) return "success";
 

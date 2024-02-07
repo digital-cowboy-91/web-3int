@@ -5,6 +5,7 @@ import { CSSButtonLink } from "@/app/styles";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import GalleryDetail from "../GalleryDetail";
+import { TGallery } from "@/cms/items/gallery";
 
 const animateRow = {
   init: {
@@ -52,7 +53,7 @@ const animateCard = {
   },
 };
 
-const ModelList = ({ data }) => {
+const ModelList = ({ data }: { data: TGallery[] }) => {
   const [page, setPage] = useState(0);
   const [offset, setOffset] = useState(4);
 

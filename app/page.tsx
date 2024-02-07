@@ -1,9 +1,9 @@
-import { getHomepage } from "@/cms/items/homepage";
+import { CMS_Homepage } from "@/cms/items/homepage";
 import SectionDouble from "./components/SectionDouble";
 import SectionSingle from "./components/SectionSingle";
 
 export default async function Home() {
-  const res = await getHomepage();
+  const res = await CMS_Homepage.readSingleton();
 
   return (
     <>

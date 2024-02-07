@@ -5,8 +5,9 @@ import { useState } from "react";
 import ReactPlayer from "react-player";
 import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 import GalleryDetailLink from "./GalleryDetailLink";
+import { TGallery } from "@/cms/items/gallery";
 
-const GalleryDetail = ({ model }: any) => {
+const GalleryDetail = ({ model }: { model: TGallery }) => {
   const { id, title, media, attributes } = model;
 
   const [activeMedia, setActiveMedia] = useState(media[0].asset);
@@ -49,9 +50,9 @@ const GalleryDetail = ({ model }: any) => {
           <h2 className="me-20">{title}</h2>
           <table className="ms-0">
             <tbody>
-              {attributes.map((attr: any) => {
+              {attributes.map((attr, index) => {
                 return (
-                  <tr key={attr.id}>
+                  <tr key={index}>
                     <th>{attr.name}</th>
                     <td className="text-right px-0">{attr.value}</td>
                   </tr>

@@ -12,7 +12,7 @@ export const SContactForm = z.object({
 
 export type TContactForm = z.infer<typeof SContactForm>;
 
-async function create(data: TContactForm) {
+async function createItem(data: TContactForm) {
   return await cmsAPI(base, {
     method: "POST",
     headers: {
@@ -23,5 +23,5 @@ async function create(data: TContactForm) {
 }
 
 export const CMS_ClientQuery = {
-  create,
+  createItem,
 };

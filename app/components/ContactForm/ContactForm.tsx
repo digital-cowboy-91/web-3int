@@ -11,8 +11,9 @@ import { FormProvider, useForm } from "react-hook-form";
 import Form from "../Form";
 import submitAction from "./submitAction";
 import { SContactForm, TContactForm } from "@/cms/items/clientQueries";
+import { TOption } from "./ContactFormWrapper";
 
-export const ContactForm = ({ options }) => {
+export const ContactForm = ({ options }: { options: TOption[] }) => {
   const { executeRecaptcha } = useGoogleReCaptcha();
   const [scope, animate] = useAnimate();
   const [submitted, setSubmitted] = useState(false);

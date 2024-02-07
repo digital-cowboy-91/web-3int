@@ -1,18 +1,13 @@
 "use client";
 
 import { CSSButtonLink } from "@/app/styles";
+import { TFAQ } from "@/cms/items/faq";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 
 const changeHeight = (id: string, prev: number) => {
   const curr = document.querySelector("#" + id);
   return curr?.clientHeight || prev;
-};
-
-type TFAQ = {
-  id: number;
-  question: string;
-  answer: string;
 };
 
 const QueryList = ({ data }: { data: TFAQ[] }) => {

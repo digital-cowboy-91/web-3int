@@ -1,8 +1,8 @@
-import { getGalleryItems } from "@/cms/items/gallery";
+import { CMS_Gallery } from "@/cms/items/gallery";
 import ModelList from "./ModelList";
 
 const ModelListWrapper = async () => {
-  const res = await getGalleryItems();
+  const res = await CMS_Gallery.readItems();
 
   return <ModelList data={res} />;
 };

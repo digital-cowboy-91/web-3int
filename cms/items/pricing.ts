@@ -1,10 +1,30 @@
 import cmsAPI from "../cmsAPI";
 
-export async function getPricing() {
-  return await cmsAPI("/items/pricing", {
+const base = "/items/pricing";
+
+type TFeature = {
+  description: string;
+  additional_information: string;
+  is_included: boolean;
+};
+
+export type TPricing = {
+  id: number;
+  title: string;
+  subtitle: string;
+  price: string;
+  features: TFeature[];
+};
+
+async function readItems() {
+  return await cmsAPI(base, {
     method: "GET",
     next: {
       tags: ["pricing"],
     },
-  }).then((res) => res.data);
+  }).then((res) => res.data as TPricing[]);
 }
+
+export const CMS_Pricing = {
+  readItems,
+};

@@ -1,7 +1,12 @@
 import { ContactForm } from "./ContactForm";
 
+export type TOption = {
+  value: string;
+  option: string;
+};
+
 export const ContactFormWrapper = async () => {
-  const options = [
+  const options: TOption[] = [
     {
       value: "tier_group",
       option: "Tier: GROUP",

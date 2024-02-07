@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useStoreModal } from "../storeModal";
 import { CSSLinkOutline } from "../styles";
 
-const GalleryDetailLink = ({ id }: { id: string }) => {
+const GalleryDetailLink = ({ id }: { id: string | number }) => {
   const hideModal = useStoreModal((s) => s.hide);
   return (
     <Link

@@ -1,10 +1,10 @@
-import { getHomepage } from "@/cms/items/homepage";
+import { CMS_Homepage } from "@/cms/items/homepage";
 import { CSSContainer } from "../../styles";
 import ActionButton from "./ActionButton";
 import LogoButton from "./LogoButton";
 
 export default async function SectionHero() {
-  const res = await getHomepage();
+  const res = await CMS_Homepage.readSingleton();
 
   return (
     <section id="hero" className="h-screen max-h-[720px]">
