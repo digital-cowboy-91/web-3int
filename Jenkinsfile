@@ -118,6 +118,7 @@ EOF
                             # Project
                             PROJECT_NAME=$PROJECT_NAME
                             WORKDIR=$WORKDIR
+                            PROJECT_KEY=$GIT_COMMIT
 
                             # DO
                             DO_CR_IMAGE=$DO_CR_IMAGE

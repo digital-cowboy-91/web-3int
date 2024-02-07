@@ -1,12 +1,12 @@
 import { revalidatePath, revalidateTag } from "next/cache";
+import { NextRequest } from "next/server";
 
-export async function POST(request: Request) {
-  //   const requestHeaders = new Headers(request.headers)
-  //   const secret = requestHeaders.get('x-vercel-reval-key')
+export async function POST(request: NextRequest) {
+  const authToken = request.nextUrl.searchParams.get("authToken");
 
-  //   if (secret !== process.env.CONTENTFUL_REVALIDATE_SECRET) {
-  //     return NextResponse.json({ message: 'Invalid secret' }, { status: 401 })
-  //   }
+  if (authToken !== process.env.PROJECT_KEY) {
+    return Response.json({ message: "Invalid token" }, { status: 401 });
+  }
 
   const body = await request.json();
 

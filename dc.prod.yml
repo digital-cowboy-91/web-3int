@@ -6,6 +6,7 @@ services:
     image: directus/directus:10.9.0
     restart: always
     environment:
+      PROJECT_KEY: ${PROJECT_KEY}
       KEY: ${KEY}
       SECRET: ${SECRET}
 
@@ -48,6 +49,8 @@ services:
     container_name: ${PROJECT_NAME}-web
     image: ${DO_CR_IMAGE}
     restart: always
+    environment:
+      PROJECT_KEY: ${PROJECT_KEY}
     depends_on:
       - cms
     networks:
