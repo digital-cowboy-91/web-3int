@@ -73,7 +73,19 @@ const GalleryDetail = ({ model }: any) => {
                 className={`relative w-[100px]`}
                 aria-label={`Show image ${item.title}`}
               >
-                <img src={`https://cms.3int.uk/assets/${item.id}?key=100`} />
+                {item.type.includes("video") && item.tags != null ? (
+                  item.tags.includes("timelapse") ? (
+                    <img
+                      src={`https://cms.3int.uk/assets/364bca3d-d4c6-49a8-82bf-4ba53db12f9d?key=100`}
+                    />
+                  ) : (
+                    <img
+                      src={`https://cms.3int.uk/assets/8c0f2911-96d4-4480-a36b-9132643e2d07?key=100`}
+                    />
+                  )
+                ) : (
+                  <img src={`https://cms.3int.uk/assets/${item.id}?key=100`} />
+                )}
                 {activeMedia.id === item.id && (
                   <motion.div className="underline" layoutId="underline" />
                 )}

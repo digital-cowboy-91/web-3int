@@ -1,5 +1,4 @@
 import { getGalleryItems } from "@/cms/items/gallery";
-import { FINDALL } from "../../../prisma/modelModel";
 import ModelList from "./ModelList";
 
 const ModelListWrapper = async () => {

@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 
 const ContactCard = dynamic(() => import("./components/ContactCard"));
 const ContactForm = dynamic(() => import("./components/ContactForm"));
-const QueryList = dynamic(() => import("./components/FAQ"));
+const FAQ = dynamic(() => import("./components/FAQ"));
 const ModelList = dynamic(() => import("./components/Models"));
 const PriceTiers = dynamic(() => import("./components/PriceTiers"));
 
@@ -26,8 +26,8 @@ export default function dynamicComponent(title: string, props: any) {
     case "PriceTiers":
       component = PriceTiers;
       break;
-    case "QueryList":
-      component = QueryList;
+    case "FAQ":
+      component = FAQ;
       break;
     case "SectionDouble":
       component = SectionDouble;
