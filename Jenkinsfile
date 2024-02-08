@@ -133,6 +133,8 @@ EOF
                             KEY=$CMS_KEY
                             SECRET=$CMS_SECRET
 
+                            PUBLIC_URL=https://cms.3int.uk
+
                             ADMIN_EMAIL=$CMS_ADMIN_EMAIL
                             ADMIN_PASSWORD=$CMS_ADMIN_PASSWORD
 

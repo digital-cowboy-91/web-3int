@@ -7,8 +7,11 @@ services:
     restart: always
     environment:
       PROJECT_KEY: ${PROJECT_KEY}
+
       KEY: ${KEY}
       SECRET: ${SECRET}
+
+      PUBLIC_URL: ${PUBLIC_URL}
 
       # DB_CLIENT: ${DB_CLIENT}
       # DB_HOST: ${DB_HOST}
