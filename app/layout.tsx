@@ -8,7 +8,7 @@ import Navbar from "./components/Navbar";
 import ReCaptchaProvider from "./components/ReCaptchaProvider";
 import "./globals.css";
 import { draftMode } from "next/headers";
-import PreviewBar from "./components/PreviewBar";
+import PreviewBanner from "./components/PreviewBanner";
 
 export const dynamic = "force-static";
 export const revalidate = 86400;
@@ -31,7 +31,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`text-sm font-normal relative ${poppins.className}`}>
-        {isEnabled && <PreviewBar />}
+        {isEnabled && <PreviewBanner />}
         <ReCaptchaProvider siteKey={process.env.RECAPTCHA_SITE_KEY!}>
           <Navbar />
           <SectionHero />

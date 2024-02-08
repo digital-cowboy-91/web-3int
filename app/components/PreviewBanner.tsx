@@ -13,7 +13,7 @@ async function exitPreview() {
   }
 }
 
-const PreviewBar = () => {
+const PreviewBanner = () => {
   return (
     <div className="bg-error px-5 py-2 text-white fixed z-[9999] bottom-0 top-screen w-full flex justify-between items-center">
       <div className="flex flex-row gap-2 items-center">
@@ -27,4 +27,4 @@ const PreviewBar = () => {
   );
 };
 
-export default PreviewBar;
+export default PreviewBanner;
