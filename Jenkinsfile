@@ -147,7 +147,7 @@ EOF
                             ZEPTOMAIL_URL=$CMS_ZEPTOMAIL_URL
                             ZEPTOMAIL_TOKEN=$CMS_ZEPTOMAIL_TOKEN
 
-                            CONTENT_SECURITY_POLICY_DIRECTIVES__FRAME_SRC=$WEB_PUBLIC_URL
+                            CMS_FRAME_SRC=$WEB_PUBLIC_URL
 
                             # WEB
                             WEB_PUBLIC_URL=$WEB_PUBLIC_URL

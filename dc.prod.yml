@@ -40,6 +40,8 @@ services:
 
       FLOWS_ENV_ALLOW_LIST: "PROJECT_KEY"
 
+      CONTENT_SECURITY_POLICY_DIRECTIVES__FRAME_SRC: ${CMS_FRAME_SRC}
+
       # EXTENSIONS_AUTO_RELOAD: "true"
     networks:
       - traefik_proxy
