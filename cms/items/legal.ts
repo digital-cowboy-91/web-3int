@@ -14,15 +14,11 @@ export type TLegal = {
 type TLegalList = Omit<TLegal, "content">;
 
 async function readBySlug(slug: string, isDraft: boolean = false) {
-  const [_slug, status, version] = slug.split("%3A");
-  const filters = [`filter[slug]=${_slug}`];
-
-  if (isDraft) {
-    if (status) filters.push(`filter[status]=${status}`);
-    if (version) filters.push(`filter[version]=${version}`);
-  }
-
-  console.log(filters.join("&"));
+  const [_slug, status] = slug.split("%3A");
+  const filters = [
+    `filter[slug]=${_slug}`,
+    `filter[status]=${isDraft ? status : "published"}`,
+  ];
 
   return await cmsAPI(`${base}?${filters.join("&")}`, {
     method: "GET",
