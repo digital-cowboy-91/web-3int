@@ -11,6 +11,9 @@ pipeline {
         COMMIT = "${sh(script: "echo $GIT_COMMIT | head -c7", returnStdout: true).trim()}"
         WORKDIR = "/services/${PROJECT_NAME}"
         SSH = "${DO_VPS1_USER}@${DO_VPS1_HOST}"
+
+        CMS_PUBLIC_URL=https://cms.3int.uk
+        WEB_PUBLIC_URL=https://3int.uk
         
         // DO
         DO_AUTH_TOKEN = credentials('DO_AUTH_TOKEN')
@@ -132,7 +135,7 @@ EOF
                             DO_SPACES_B1_REGION=$DO_SPACES_B1_REGION
 
                             # CMS
-                            CMS_PUBLIC_URL=https://cms.3int.uk
+                            CMS_PUBLIC_URL=$CMS_PUBLIC_URL
                             CMS_DRAFT_TOKEN=$CMS_DRAFT_TOKEN
 
                             KEY=$CMS_KEY
@@ -144,8 +147,10 @@ EOF
                             ZEPTOMAIL_URL=$CMS_ZEPTOMAIL_URL
                             ZEPTOMAIL_TOKEN=$CMS_ZEPTOMAIL_TOKEN
 
+                            CONTENT_SECURITY_POLICY_DIRECTIVES__FRAME_SRC=$WEB_PUBLIC_URL
+
                             # WEB
-                            WEB_PUBLIC_URL=https://3int.uk
+                            WEB_PUBLIC_URL=$WEB_PUBLIC_URL
 EOF
 
                         scp -o ControlPath=ctrl-socket ./.temp.env $SSH:$WORKDIR/.env
