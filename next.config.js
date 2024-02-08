@@ -18,6 +18,19 @@ const nextConfig = {
   //     },
   //   ],
   // },
+  async headers() {
+    return [
+      {
+        source: "/(.*)",
+        headers: [
+          {
+            key: "Content-Security-Policy",
+            value: 'frame-src "self" https://cms.3int.uk',
+          },
+        ],
+      },
+    ];
+  },
   typescript: {
     // ignoreBuildErrors: true,
   },
