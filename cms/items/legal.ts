@@ -13,19 +13,20 @@ export type TLegal = {
 
 type TLegalList = Omit<TLegal, "content">;
 
-async function readBySlug(slug: string, isDraft: boolean = false) {
-  const [_slug, status] = slug.split("%3A");
-  const filters = [
-    `filter[slug]=${_slug}`,
-    `filter[status]=${isDraft ? status : "published"}`,
-  ];
+async function previewSlug(slug: string) {
+  return await cmsAPI(`${base}?filter[slug]=${slug}`, {
+    method: "GET",
+    cache: "no-store",
+  }).then((res) => res.data[0] as TLegal);
+}
 
-  return await cmsAPI(`${base}?${filters.join("&")}`, {
+async function readSlug(slug: string) {
+  return await cmsAPI(`${base}?filter[slug]=${slug}`, {
     method: "GET",
     next: {
       tags: ["legal"],
     },
-  }).then((res) => res.data as TLegal[]);
+  }).then((res) => res.data[0] as TLegal);
 }
 
 async function readItems() {
@@ -38,6 +39,7 @@ async function readItems() {
 }
 
 export const CMS_Legal = {
-  readBySlug,
+  previewSlug,
+  readSlug,
   readItems,
 };

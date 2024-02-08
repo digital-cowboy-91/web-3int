@@ -14,8 +14,9 @@ export async function GET(request: Request) {
   }
 
   const path = searchParams.get("path");
+  const token = searchParams.get("token");
 
-  if (!path) {
+  if (token !== process.env.CMS_DRAFT_TOKEN || !path) {
     return new Response("Invalid request", { status: 400 });
   }
 

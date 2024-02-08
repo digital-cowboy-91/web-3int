@@ -7,9 +7,15 @@ import { notFound } from "next/navigation";
 export default async function page({ params }: { params: { slug: string } }) {
   const { isEnabled } = draftMode();
 
-  let res = await CMS_Legal.readBySlug(params.slug, isEnabled);
+  let res;
 
-  if (!res.length) {
+  if (isEnabled) {
+    res = await CMS_Legal.previewSlug(params.slug);
+  } else {
+    res = await CMS_Legal.readSlug(params.slug);
+  }
+
+  if (!res) {
     notFound();
   }
 
@@ -22,7 +28,7 @@ export default async function page({ params }: { params: { slug: string } }) {
       )}
       <div
         className={`${CSSContainer} p-8`}
-        dangerouslySetInnerHTML={{ __html: res[0].content }}
+        dangerouslySetInnerHTML={{ __html: res.content }}
       />
     </section>
   );
