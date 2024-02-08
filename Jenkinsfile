@@ -12,8 +12,8 @@ pipeline {
         WORKDIR = "/services/${PROJECT_NAME}"
         SSH = "${DO_VPS1_USER}@${DO_VPS1_HOST}"
 
-        CMS_PUBLIC_URL=https://cms.3int.uk
-        WEB_PUBLIC_URL=https://3int.uk
+        CMS_PUBLIC_URL="https://cms.3int.uk"
+        WEB_PUBLIC_URL="https://3int.uk"
         
         // DO
         DO_AUTH_TOKEN = credentials('DO_AUTH_TOKEN')
