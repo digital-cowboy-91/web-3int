@@ -130,16 +130,19 @@ EOF
                             DO_SPACES_B1_REGION=$DO_SPACES_B1_REGION
 
                             # CMS
+                            CMS_PUBLIC_URL=https://cms.3int.uk
+
                             KEY=$CMS_KEY
                             SECRET=$CMS_SECRET
-
-                            PUBLIC_URL=https://cms.3int.uk
 
                             ADMIN_EMAIL=$CMS_ADMIN_EMAIL
                             ADMIN_PASSWORD=$CMS_ADMIN_PASSWORD
 
                             ZEPTOMAIL_URL=$CMS_ZEPTOMAIL_URL
                             ZEPTOMAIL_TOKEN=$CMS_ZEPTOMAIL_TOKEN
+
+                            # WEB
+                            WEB_PUBLIC_URL=https://3int.uk
 EOF
 
                         scp -o ControlPath=ctrl-socket ./.temp.env $SSH:$WORKDIR/.env
