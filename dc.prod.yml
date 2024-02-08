@@ -57,6 +57,7 @@ services:
     restart: always
     environment:
       PROJECT_KEY: ${PROJECT_KEY}
+      CMS_DRAFT_TOKEN: ${CMS_DRAFT_TOKEN}
     depends_on:
       - cms
     networks:

@@ -30,11 +30,13 @@ pipeline {
         DO_SPACES_B1_REGION = credentials('DO_SPACES_B1_REGION')
         
         // CMS
+        CMS_DRAFT_TOKEN = credentials('CMS_DRAFT_TOKEN')
+
         CMS_KEY = credentials('CMS_KEY')
         CMS_SECRET = credentials('CMS_SECRET')
 
-        CMS_ADMIN_EMAIL = "admin@xxx.com"
-        ADMIN_PASSWORD = "Init123*"
+        CMS_ADMIN_EMAIL = "dev@uniss.uk"
+        CMS_ADMIN_PASSWORD = "Init123*"
 
         CMS_ZEPTOMAIL_URL = credentials('CMS_ZEPTOMAIL_URL')
         CMS_ZEPTOMAIL_TOKEN = credentials('CMS_ZEPTOMAIL_TOKEN')
@@ -131,6 +133,7 @@ EOF
 
                             # CMS
                             CMS_PUBLIC_URL=https://cms.3int.uk
+                            CMS_DRAFT_TOKEN=$CMS_DRAFT_TOKEN
 
                             KEY=$CMS_KEY
                             SECRET=$CMS_SECRET
