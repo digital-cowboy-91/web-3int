@@ -9,17 +9,21 @@ import ReCaptchaProvider from "./components/ReCaptchaProvider";
 import "./globals.css";
 import { draftMode } from "next/headers";
 import PreviewBanner from "./components/PreviewBanner";
+import { CMS_Homepage } from "@/cms/items/homepage";
 
 export const dynamic = "force-static";
 export const revalidate = 86400;
 
 const poppins = Poppins({ subsets: ["latin"], weight: ["400", "600", "700"] });
 
-export const metadata: Metadata = {
-  title: "3INT",
-  description:
-    "On-demand affordable 3D printing service from North-West UK. Whether you need a prototype for your new product, a custom-made toy for your child, or a replacement part for your favorite gadget, we can help. We create durable, long-lasting products that meet your exact specifications. Get a free quote today!",
-};
+export async function generateMetadata() {
+  const res = await CMS_Homepage.readSingleton();
+
+  return {
+    title: res.web_title,
+    description: res.web_description,
+  };
+}
 
 export default function RootLayout({
   children,
