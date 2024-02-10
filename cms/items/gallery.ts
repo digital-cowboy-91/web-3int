@@ -24,6 +24,15 @@ export type TGallery = {
   }[];
 };
 
+async function readItem(id: number | string) {
+  return await cmsAPI(`${base}/${id}?fields[]=*,media.asset.*`, {
+    method: "GET",
+    next: {
+      tags: [id.toString()],
+    },
+  }).then((res) => res.data as TGallery);
+}
+
 async function readItems() {
   return await cmsAPI(
     `${base}?fields[]=id,title,cover_image,attributes,media.asset.*`,
@@ -37,5 +46,6 @@ async function readItems() {
 }
 
 export const CMS_Gallery = {
+  readItem,
   readItems,
 };

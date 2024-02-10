@@ -1,14 +1,15 @@
 "use client";
 
+import { CSSLinkOutline } from "@/app/styles";
+import { TGallery } from "@/cms/items/gallery";
 import { motion } from "framer-motion";
+import Link from "next/link";
 import { useState } from "react";
 import ReactPlayer from "react-player";
 import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
-import GalleryDetailLink from "./GalleryDetailLink";
-import { TGallery } from "@/cms/items/gallery";
 
 const GalleryDetail = ({ model }: { model: TGallery }) => {
-  const { id, title, media, attributes } = model;
+  const { title, media, attributes } = model;
 
   const [activeMedia, setActiveMedia] = useState(media[0].asset);
 
@@ -62,7 +63,12 @@ const GalleryDetail = ({ model }: { model: TGallery }) => {
           </table>
           <div className="my-auto flex flex-row gap-8 justify-end">
             {/* <button className={CSSButtonLink}>STL</button> */}
-            <GalleryDetailLink title={title} />
+            <Link
+              href={`/?subject=About: ${title}#contact`}
+              className={CSSLinkOutline}
+            >
+              Ask About
+            </Link>
           </div>
         </div>
         <div className="flex flex-row gap-4 justify-center h-[100px] p-4 bg-primary overflow">

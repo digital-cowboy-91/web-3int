@@ -1,11 +1,10 @@
 "use client";
 
-import { useStoreModal } from "@/app/storeModal";
 import { CSSButtonLink } from "@/app/styles";
-import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useState } from "react";
-import GalleryDetail from "../GalleryDetail";
 import { TGallery } from "@/cms/items/gallery";
+import { AnimatePresence, motion } from "framer-motion";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 
 const animateRow = {
   init: {
@@ -57,8 +56,6 @@ const ModelList = ({ data }: { data: TGallery[] }) => {
   const [page, setPage] = useState(0);
   const [offset, setOffset] = useState(4);
 
-  const setConfig = useStoreModal((s) => s.setConfig);
-
   useEffect(() => {
     if (window.matchMedia("(min-width: 1024px)").matches) {
       setOffset(4);
@@ -85,31 +82,27 @@ const ModelList = ({ data }: { data: TGallery[] }) => {
           >
             {data.slice(p * offset, p * offset + offset).map((item) => (
               <motion.div key={item.id} variants={animateCol}>
-                <motion.button
+                <motion.div
                   variants={animateCard}
                   initial="init"
                   whileHover="hover"
                   whileFocus="focus"
-                  onClick={() => {
-                    setConfig({
-                      node: <GalleryDetail model={item} />,
-                      show: true,
-                    });
-                  }}
                   className="bg-white flex flex-col rounded-[1rem] overflow-hidden cursor-pointer h-[300px] w-full relative"
                   aria-label={`Details of ${item.title} model`}
                 >
-                  <div className="relative h-2/3 w-full flex items-center">
-                    <img
-                      src={`https://cms.3int.uk/assets/${item.cover_image}?key=350`}
-                      alt={item.title}
-                      className="object-cover"
-                    />
-                  </div>
-                  <div className="mx-auto font-semibold p-8 pt-4 h-1/3 flex items-center text-center">
-                    {item.title}
-                  </div>
-                </motion.button>
+                  <Link href={`/gallery/${item.id}`} scroll={false}>
+                    <div className="relative h-2/3 w-full flex items-center">
+                      <img
+                        src={`https://cms.3int.uk/assets/${item.cover_image}?key=350`}
+                        alt={item.title}
+                        className="object-cover"
+                      />
+                    </div>
+                    <div className="mx-auto font-semibold p-8 pt-4 h-1/3 flex items-center text-center">
+                      {item.title}
+                    </div>
+                  </Link>
+                </motion.div>
               </motion.div>
             ))}
           </motion.div>
