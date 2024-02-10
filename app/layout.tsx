@@ -8,6 +8,7 @@ import Navbar from "./components/Navbar";
 import PreviewBanner from "./components/PreviewBanner";
 import ReCaptchaProvider from "./components/ReCaptchaProvider";
 import "./globals.css";
+import GSMProvider from "./lib/GSMProvider";
 
 const poppins = Poppins({ subsets: ["latin"], weight: ["400", "600", "700"] });
 
@@ -33,14 +34,15 @@ export default function RootLayout({
     <html lang="en">
       <body className={`text-sm font-normal relative ${poppins.className}`}>
         {isEnabled && <PreviewBanner />}
-        <ReCaptchaProvider siteKey={process.env.RECAPTCHA_SITE_KEY!}>
-          <Navbar />
-          <SectionHero />
-          <main>{children}</main>
-          <Footer />
-          {modal}
-          <div id="modal-root" />
-        </ReCaptchaProvider>
+        <GSMProvider>
+          <ReCaptchaProvider siteKey={process.env.RECAPTCHA_SITE_KEY!}>
+            <Navbar />
+            <SectionHero />
+            <main>{children}</main>
+            {modal}
+            <Footer />
+          </ReCaptchaProvider>
+        </GSMProvider>
       </body>
     </html>
   );

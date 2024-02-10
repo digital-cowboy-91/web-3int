@@ -1,7 +1,7 @@
 "use client";
 
 import { CSSButtonLink, CSSButtonOutline } from "@/app/styles";
-import { verifyCaptchaAction } from "@/app/verifyCaptchaAction";
+import { verifyCaptchaAction } from "@/app/lib/verifyCaptchaAction";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAnimate } from "framer-motion";
 import { useSearchParams } from "next/navigation";

@@ -1,10 +1,11 @@
 "use client";
 
+import { GSMContext } from "@/app/lib/GSMProvider";
 import { CSSButtonLink } from "@/app/styles";
 import { TGallery } from "@/cms/items/gallery";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 const animateRow = {
   init: {
@@ -53,6 +54,8 @@ const animateCard = {
 };
 
 const ModelList = ({ data }: { data: TGallery[] }) => {
+  const { setShowModal } = useContext(GSMContext);
+
   const [page, setPage] = useState(0);
   const [offset, setOffset] = useState(4);
 
@@ -90,7 +93,11 @@ const ModelList = ({ data }: { data: TGallery[] }) => {
                   className="bg-white flex flex-col rounded-[1rem] overflow-hidden cursor-pointer h-[300px] w-full relative"
                   aria-label={`Details of ${item.title} model`}
                 >
-                  <Link href={`/gallery/${item.id}`} scroll={false}>
+                  <Link
+                    href={`/gallery/${item.id}`}
+                    scroll={false}
+                    onClick={() => setShowModal(true)}
+                  >
                     <div className="relative h-2/3 w-full flex items-center">
                       <img
                         src={`https://cms.3int.uk/assets/${item.cover_image}?key=350`}

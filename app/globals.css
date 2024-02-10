@@ -72,7 +72,7 @@ body {
   background-color: #fff;
 }
 
-dialog::backdrop {
+/* dialog::backdrop {
   position: fixed;
   top: 0;
   right: 0;
@@ -80,4 +80,4 @@ dialog::backdrop {
   left: 0;
   background-color: rgba(0, 0, 0, 0.75);
   z-index: 20;
-}
+} */

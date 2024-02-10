@@ -1,6 +1,6 @@
+import GalleryDetail from "@/app/gallery/[id]/GalleryDetail";
 import { CMS_Gallery } from "@/cms/items/gallery";
 import { notFound } from "next/navigation";
-import GalleryDetail from "@/app/gallery/[id]/GalleryDetail";
 import Modal from "./Modal";
 
 export default async function Page({ params }: { params: { id: string } }) {
@@ -10,7 +10,7 @@ export default async function Page({ params }: { params: { id: string } }) {
 
   return (
     <Modal>
-      <GalleryDetail model={res} />
+      <GalleryDetail model={res} />;
     </Modal>
   );
 }

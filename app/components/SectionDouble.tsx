@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
 import { CSSContainer } from "../styles";
-import dynamicComponent from "../dynamicComponent";
+import dynamicComponent from "../lib/dynamicComponent";
 
 type Component = {
   component: string;

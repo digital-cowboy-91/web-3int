@@ -1,5 +1,5 @@
 import Image from "next/image";
-import dynamicComponent from "../dynamicComponent";
+import dynamicComponent from "../lib/dynamicComponent";
 import { CSSContainer } from "../styles";
 import React from "react";
 
