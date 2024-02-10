@@ -27,8 +27,7 @@ export default function Modal({ children }: PropsWithChildren) {
   useEffect(() => {
     if (!showModal) {
       setShowModal(true);
-      document.documentElement.style.overflow = "hidden";
-      document.documentElement.style.paddingRight = "15px";
+      document.documentElement.classList.add("modal-lockdown");
     }
   }, []);
 
@@ -36,8 +35,7 @@ export default function Modal({ children }: PropsWithChildren) {
     setShowModal(false);
     setTimeout(() => {
       router.back();
-      document.documentElement.style.overflow = "";
-      document.documentElement.style.paddingRight = "";
+      document.documentElement.classList.remove("modal-lockdown");
     }, 300);
   }
 
@@ -53,10 +51,7 @@ export default function Modal({ children }: PropsWithChildren) {
             exit="exit"
             className="fixed inset-0 bg-dark bg-opacity-75"
           />
-          <div
-            className="fixed inset-0 z-10 w-screen overflow-y-aut"
-            style={{ paddingRight: 15 }}
-          >
+          <div className="fixed inset-0 z-10 w-screen overflow-y-aut scroll-bar-compensation">
             <motion.div
               key="dialog"
               variants={animateDialog}
