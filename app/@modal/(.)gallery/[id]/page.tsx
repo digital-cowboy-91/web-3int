@@ -10,7 +10,7 @@ export default async function Page({ params }: { params: { id: string } }) {
 
   return (
     <Modal>
-      <GalleryDetail model={res} />;
+      <GalleryDetail model={res} />
     </Modal>
   );
 }

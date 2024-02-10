@@ -34,15 +34,15 @@ export default function RootLayout({
     <html lang="en">
       <body className={`text-sm font-normal relative ${poppins.className}`}>
         {isEnabled && <PreviewBanner />}
-        <GSMProvider>
-          <ReCaptchaProvider siteKey={process.env.RECAPTCHA_SITE_KEY!}>
-            <Navbar />
-            <SectionHero />
-            <main>{children}</main>
-            {modal}
-            <Footer />
-          </ReCaptchaProvider>
-        </GSMProvider>
+        {/* <GSMProvider> */}
+        <ReCaptchaProvider siteKey={process.env.RECAPTCHA_SITE_KEY!}>
+          <Navbar />
+          <SectionHero />
+          <main>{children}</main>
+          <Footer />
+          {modal}
+        </ReCaptchaProvider>
+        {/* </GSMProvider> */}
       </body>
     </html>
   );
