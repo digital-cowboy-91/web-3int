@@ -50,6 +50,19 @@ const GalleryDetail = ({
         })}
       </div>
       <div
+        className={`md:order-5 md:col-start-4 md:col-span-2 flex items-center ${
+          modalMode && "mx-8 md:ms-0"
+        }`}
+      >
+        {/* <button className={CSSButtonLink}>STL</button> */}
+        <Link
+          href={`/?subject=About: ${title}#contact`}
+          className={`${CSSLinkOutline} ms-auto`}
+        >
+          Ask About
+        </Link>
+      </div>
+      <div
         className={`md:order-1 md:col-start-1 md:col-span-3 md:row-span-4 bg-white p-8 ${
           !modalMode && "rounded-md"
         }`}
@@ -86,7 +99,7 @@ const GalleryDetail = ({
       </div>
       <div
         className={`md:order-4 md:col-start-4 md:col-span-2 flex flex-wrap justify-between gap-2 ${
-          modalMode && "mx-8 md:ms-0"
+          modalMode && "mb-8 mx-8 md:ms-0"
         }`}
       >
         {media.map(({ asset: item }) => {
@@ -118,19 +131,6 @@ const GalleryDetail = ({
             </motion.button>
           );
         })}
-      </div>
-      <div
-        className={`md:order-5 md:col-start-4 md:col-span-2 flex items-center ${
-          modalMode && "mb-8 mx-8 md:ms-0"
-        }`}
-      >
-        {/* <button className={CSSButtonLink}>STL</button> */}
-        <Link
-          href={`/?subject=About: ${title}#contact`}
-          className={`${CSSLinkOutline} ms-auto`}
-        >
-          Ask About
-        </Link>
       </div>
     </div>
   );

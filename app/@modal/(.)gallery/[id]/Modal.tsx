@@ -51,7 +51,7 @@ export default function Modal({ children }: PropsWithChildren) {
             exit="exit"
             className="fixed inset-0 bg-dark bg-opacity-75"
           />
-          <div className="fixed inset-0 z-10 w-screen overflow-y-aut scroll-bar-compensation">
+          <div className="fixed inset-0 z-10 w-screen overflow-y-auto scroll-bar-compensation">
             <motion.div
               key="dialog"
               variants={animateDialog}
