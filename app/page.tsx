@@ -1,6 +1,7 @@
 import { CMS_Homepage } from "@/cms/items/homepage";
 import SectionDouble from "./components/SectionDouble";
 import SectionSingle from "./components/SectionSingle";
+import { Suspense } from "react";
 
 export default async function Home() {
   const res = await CMS_Homepage.readSingleton();
@@ -24,15 +25,17 @@ export default async function Home() {
         }}
       />
       <SectionSingle title="FAQ" slug="faq" child1={{ component: "FAQ" }} />
-      <SectionDouble
-        title="Contact"
-        slug="contact"
-        child1={{
-          component: "ContactCard",
-          props: { title: "Contact", description: res.contact_description },
-        }}
-        child2={{ component: "ContactForm" }}
-      />
+      <Suspense fallback={<div>Loading...</div>}>
+        <SectionDouble
+          title="Contact"
+          slug="contact"
+          child1={{
+            component: "ContactCard",
+            props: { title: "Contact", description: res.contact_description },
+          }}
+          child2={{ component: "ContactForm" }}
+        />
+      </Suspense>
     </>
   );
 }
