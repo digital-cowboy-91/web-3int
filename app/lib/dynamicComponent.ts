@@ -1,14 +1,13 @@
 import React from "react";
-import dynamic from "next/dynamic";
 
-const ContactCard = dynamic(() => import("../components/ContactCard"));
-const ContactForm = dynamic(() => import("../components/ContactForm"));
-const FAQ = dynamic(() => import("../components/FAQ"));
-const ModelList = dynamic(() => import("../components/Models"));
-const PriceTiers = dynamic(() => import("../components/PriceTiers"));
+import ContactCard from "../components/ContactCard";
+import ContactForm from "../components/ContactForm";
+import FAQ from "../components/FAQ";
+import ModelList from "../components/Models";
+import PriceTiers from "../components/PriceTiers";
 
-const SectionDouble = dynamic(() => import("../components/SectionDouble"));
-const SectionSingle = dynamic(() => import("../components/SectionSingle"));
+import SectionDouble from "../components/SectionDouble";
+import SectionSingle from "../components/SectionSingle";
 
 export default function dynamicComponent(title: string, props: any) {
   let component = null;

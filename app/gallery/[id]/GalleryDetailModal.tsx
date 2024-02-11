@@ -8,15 +8,15 @@ import { useState } from "react";
 import ReactPlayer from "react-player";
 import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 
-const GalleryDetail = ({ model }: { model: TGallery }) => {
+const GalleryDetailModal = ({ model }: { model: TGallery }) => {
   const { title, media, attributes } = model;
 
   const [activeMedia, setActiveMedia] = useState(media[0].asset);
 
   return (
-    <div className="flex flex-col md:flex-row md:w-full p-8">
-      <div className="order-2 md:order-1 md:w-3/5 md:h-auto rounded-[1rem] overflow-hidden">
-        <div className="h-[500px] bg-white inset-0 flex items-center justify-center p-4 md:p-8">
+    <div className="flex flex-col md:flex-row md:w-full">
+      <div className="relative bg-white order-2 md:order-1 md:w-3/5 h-[500px] md:h-auto">
+        <div className="absolute inset-0 flex items-center justify-center m-4 md:m-8">
           {activeMedia.type.includes("video") ? (
             <ReactPlayer
               playing
@@ -44,6 +44,32 @@ const GalleryDetail = ({ model }: { model: TGallery }) => {
               </TransformComponent>
             </TransformWrapper>
           )}
+        </div>
+      </div>
+      <div className="order-1 md:order-2 md:w-2/5">
+        <div className="flex flex-col gap-8 p-4 md:p-8 bg-gray-light">
+          <h2 className="me-20">{title}</h2>
+          <table className="ms-0">
+            <tbody>
+              {attributes.map((attr, index) => {
+                return (
+                  <tr key={index}>
+                    <th>{attr.name}</th>
+                    <td className="text-right px-0">{attr.value}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+          <div className="my-auto flex flex-row gap-8 justify-end">
+            {/* <button className={CSSButtonLink}>STL</button> */}
+            <Link
+              href={`/?subject=About: ${title}#contact`}
+              className={CSSLinkOutline}
+            >
+              Ask About
+            </Link>
+          </div>
         </div>
         <div className="flex flex-row gap-4 justify-center h-[100px] p-4 bg-primary overflow">
           {media.map(({ asset: item }) => {
@@ -75,34 +101,8 @@ const GalleryDetail = ({ model }: { model: TGallery }) => {
           })}
         </div>
       </div>
-      <div className="order-1 md:order-2 md:w-2/5">
-        <div className="h-full flex flex-col gap-8 p-4 md:p-8 bg-gray-light">
-          <h2 className="me-20">{title}</h2>
-          <table className="ms-0 text-left">
-            <tbody>
-              {attributes.map((attr, index) => {
-                return (
-                  <tr key={index}>
-                    <th>{attr.name}</th>
-                    <td className="text-right px-0">{attr.value}</td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-          <div className="mt-auto flex flex-row gap-8 justify-end">
-            {/* <button className={CSSButtonLink}>STL</button> */}
-            <Link
-              href={`/?subject=About: ${title}#contact`}
-              className={CSSLinkOutline}
-            >
-              Ask About
-            </Link>
-          </div>
-        </div>
-      </div>
     </div>
   );
 };
 
-export default GalleryDetail;
+export default GalleryDetailModal;
