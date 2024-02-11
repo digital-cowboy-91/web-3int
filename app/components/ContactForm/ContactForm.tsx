@@ -55,7 +55,6 @@ export const ContactForm = ({ options }: { options: TOption[] }) => {
   useEffect(() => {
     const subject = params.get("subject");
     if (subject) {
-      console.log(subject);
       setValue("subject", subject || "");
     }
   }, [params]);
