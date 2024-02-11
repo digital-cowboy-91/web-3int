@@ -15,14 +15,6 @@
 }
 
 @layer base {
-  /* h1,
-  h2,
-  h3,
-  p,
-  ul,
-  table {
-    @apply mb-4;
-  } */
   h1,
   h2,
   h3,
@@ -38,20 +30,6 @@
   h3 {
     @apply text-base;
   }
-  /* p,
-  ul,
-  table {
-    @apply ms-8;
-  }
-  a {
-    @apply text-primary border-transparent uppercase duration-300 hover:border-current;
-  }
-  table {
-    @apply border border-gray-light w-full;
-  }
-  td {
-    @apply px-2 py-1;
-  } */
 }
 
 html {
@@ -80,5 +58,30 @@ body {
 .scroll-bar-compensation {
   @media (min-width: 768px) {
     padding-right: 17px;
+  }
+}
+
+#page_content {
+  h1,
+  h2,
+  h3,
+  p,
+  ul,
+  table {
+    @apply mb-4;
+  }
+  p,
+  ul,
+  table {
+    @apply ms-8;
+  }
+  a {
+    @apply text-primary border-transparent uppercase duration-300 hover:border-current;
+  }
+  table {
+    @apply border border-gray-light w-full;
+  }
+  td {
+    @apply px-2 py-1;
   }
 }
