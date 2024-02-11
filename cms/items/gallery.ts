@@ -15,7 +15,7 @@ export type TAsset = {
 };
 
 export type TGallery = {
-  id: number;
+  id: string;
   title: string;
   cover_image: string;
   attributes: TAttribute[];
@@ -24,11 +24,11 @@ export type TGallery = {
   }[];
 };
 
-async function readItem(id: number | string) {
+async function readItem(id: string) {
   return await cmsAPI(`${base}/${id}?fields[]=*,media.asset.*`, {
     method: "GET",
     next: {
-      tags: [id.toString()],
+      tags: [id],
     },
   }).then((res) => res.data as TGallery);
 }

@@ -19,7 +19,7 @@ export default async function page({ params }: { params: { slug: string } }) {
   }
 
   return (
-    <section id="content" className="mt-8">
+    <section id="page_content" className="mt-8">
       <div
         className={`${CSSContainer} p-8`}
         dangerouslySetInnerHTML={{ __html: res.content }}
