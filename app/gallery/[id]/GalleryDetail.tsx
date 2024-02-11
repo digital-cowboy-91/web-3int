@@ -4,19 +4,57 @@ import { CSSLinkOutline } from "@/app/styles";
 import { TGallery } from "@/cms/items/gallery";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import ReactPlayer from "react-player";
 import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 
-const GalleryDetail = ({ model }: { model: TGallery }) => {
+import IconTimelapse from "@/app/components/icons/IconTimelapse";
+import IconAnimation from "@/app/components/icons/IconAnimation";
+
+const GalleryDetail = ({
+  model,
+  modalMode = false,
+}: {
+  model: TGallery;
+  modalMode?: boolean;
+}) => {
   const { title, media, attributes } = model;
 
   const [activeMedia, setActiveMedia] = useState(media[0].asset);
 
   return (
-    <div className="flex flex-col md:flex-row md:w-full p-8">
-      <div className="order-2 md:order-1 md:w-3/5 md:h-auto rounded-[1rem] overflow-hidden">
-        <div className="h-[500px] bg-white inset-0 flex items-center justify-center p-4 md:p-8">
+    <div
+      className={`grid grid-cols-1 md:grid-cols-5 min-h-[500px] gap-8 ${
+        modalMode && "bg-gray-light"
+      }`}
+    >
+      <h2
+        className={`md:order-2 md:col-start-4 md:col-span-2 ${
+          modalMode && "mt-8 ms-8 me-20 md:ms-0"
+        }`}
+      >
+        {title}
+      </h2>
+      <div
+        className={`md:order-3 md:col-start-4 md:col-span-2 text-left grid grid-cols-2 gap-2 ${
+          modalMode && "mx-8 md:ms-0"
+        }`}
+      >
+        {attributes.map((attr, index) => {
+          return (
+            <Fragment key={index}>
+              <div className="font-bold">{attr.name}</div>
+              <div className="text-right px-0">{attr.value}</div>
+            </Fragment>
+          );
+        })}
+      </div>
+      <div
+        className={`md:order-1 md:col-start-1 md:col-span-3 md:row-span-4 bg-white p-8 ${
+          !modalMode && "rounded-md"
+        }`}
+      >
+        <div className="flex items-center justify-center h-full">
           {activeMedia.type.includes("video") ? (
             <ReactPlayer
               playing
@@ -45,61 +83,54 @@ const GalleryDetail = ({ model }: { model: TGallery }) => {
             </TransformWrapper>
           )}
         </div>
-        <div className="flex flex-row gap-4 justify-center h-[100px] p-4 bg-primary overflow">
-          {media.map(({ asset: item }) => {
-            return (
-              <motion.button
-                key={item.id}
-                onClick={() => setActiveMedia(item)}
-                className={`relative w-[100px]`}
-                aria-label={`Show image ${item.title}`}
-              >
-                {item.type.includes("video") && item.tags != null ? (
-                  item.tags.includes("timelapse") ? (
-                    <img
-                      src={`https://cms.3int.uk/assets/364bca3d-d4c6-49a8-82bf-4ba53db12f9d?key=100`}
-                    />
-                  ) : (
-                    <img
-                      src={`https://cms.3int.uk/assets/8c0f2911-96d4-4480-a36b-9132643e2d07?key=100`}
-                    />
-                  )
-                ) : (
-                  <img src={`https://cms.3int.uk/assets/${item.id}?key=100`} />
-                )}
-                {activeMedia.id === item.id && (
-                  <motion.div className="underline" layoutId="underline" />
-                )}
-              </motion.button>
-            );
-          })}
-        </div>
       </div>
-      <div className="order-1 md:order-2 md:w-2/5">
-        <div className="h-full flex flex-col gap-8 p-4 md:p-8 bg-gray-light">
-          <h2 className="me-20">{title}</h2>
-          <table className="ms-0 text-left">
-            <tbody>
-              {attributes.map((attr, index) => {
-                return (
-                  <tr key={index}>
-                    <th>{attr.name}</th>
-                    <td className="text-right px-0">{attr.value}</td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-          <div className="mt-auto flex flex-row gap-8 justify-end">
-            {/* <button className={CSSButtonLink}>STL</button> */}
-            <Link
-              href={`/?subject=About: ${title}#contact`}
-              className={CSSLinkOutline}
+      <div
+        className={`md:order-4 md:col-start-4 md:col-span-2 flex flex-wrap justify-between gap-2 ${
+          modalMode && "mx-8 md:ms-0"
+        }`}
+      >
+        {media.map(({ asset: item }) => {
+          return (
+            <motion.button
+              key={item.id}
+              onClick={() => setActiveMedia(item)}
+              className={`relative w-[4rem] h-[4rem] bg-white rounded-md p-1`}
+              aria-label={`Show image ${item.title}`}
             >
-              Ask About
-            </Link>
-          </div>
-        </div>
+              {activeMedia.id === item.id && (
+                <motion.div
+                  className="absolute inset-0 border-2 border-primary rounded-md"
+                  layoutId="underline"
+                />
+              )}
+              {item.type.includes("video") && item.tags != null ? (
+                item.tags.includes("timelapse") ? (
+                  <IconTimelapse fill="#000" stroke="#000" />
+                ) : (
+                  <IconAnimation fill="#000" stroke="#000" />
+                )
+              ) : (
+                <img
+                  className="object-contain w-full h-full"
+                  src={`https://cms.3int.uk/assets/${item.id}?key=100`}
+                />
+              )}
+            </motion.button>
+          );
+        })}
+      </div>
+      <div
+        className={`md:order-5 md:col-start-4 md:col-span-2 flex ${
+          modalMode && "mb-8 mx-8 md:ms-0"
+        }`}
+      >
+        {/* <button className={CSSButtonLink}>STL</button> */}
+        <Link
+          href={`/?subject=About: ${title}#contact`}
+          className={`${CSSLinkOutline} ms-auto`}
+        >
+          Ask About
+        </Link>
       </div>
     </div>
   );

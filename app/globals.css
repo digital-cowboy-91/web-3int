@@ -15,14 +15,14 @@
 }
 
 @layer base {
-  h1,
+  /* h1,
   h2,
   h3,
   p,
   ul,
   table {
     @apply mb-4;
-  }
+  } */
   h1,
   h2,
   h3,
@@ -38,7 +38,7 @@
   h3 {
     @apply text-base;
   }
-  p,
+  /* p,
   ul,
   table {
     @apply ms-8;
@@ -51,7 +51,7 @@
   }
   td {
     @apply px-2 py-1;
-  }
+  } */
 }
 
 html {

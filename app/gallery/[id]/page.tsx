@@ -10,7 +10,7 @@ export default async function Page({ params }: { params: { id: string } }) {
 
   return (
     <section id="gallery-detail">
-      <div className={`${CSSContainer} my-8`}>
+      <div className={`${CSSContainer} my-8 p-8`}>
         <GalleryDetail model={res} />
       </div>
     </section>
