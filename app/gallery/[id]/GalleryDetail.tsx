@@ -120,7 +120,7 @@ const GalleryDetail = ({
         })}
       </div>
       <div
-        className={`md:order-5 md:col-start-4 md:col-span-2 flex ${
+        className={`md:order-5 md:col-start-4 md:col-span-2 flex items-center ${
           modalMode && "mb-8 mx-8 md:ms-0"
         }`}
       >
