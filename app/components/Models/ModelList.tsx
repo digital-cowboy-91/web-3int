@@ -1,11 +1,10 @@
 "use client";
 
-import { GSMContext } from "@/app/lib/GSMProvider";
 import { CSSButtonLink } from "@/app/styles";
 import { TGallery } from "@/cms/items/gallery";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const animateRow = {
   init: {
@@ -54,8 +53,6 @@ const animateCard = {
 };
 
 const ModelList = ({ data }: { data: TGallery[] }) => {
-  const { setShowModal } = useContext(GSMContext);
-
   const [page, setPage] = useState(0);
   const [offset, setOffset] = useState(4);
 
@@ -90,22 +87,18 @@ const ModelList = ({ data }: { data: TGallery[] }) => {
                   initial="init"
                   whileHover="hover"
                   whileFocus="focus"
-                  className="bg-white flex flex-col rounded-[1rem] overflow-hidden cursor-pointer h-[300px] w-full relative"
+                  className="bg-white rounded-[1rem] overflow-hidden cursor-pointer h-[300px] w-full"
                   aria-label={`Details of ${item.title} model`}
                 >
-                  <Link
-                    href={`/gallery/${item.id}`}
-                    scroll={false}
-                    onClick={() => setShowModal(true)}
-                  >
-                    <div className="relative h-2/3 w-full flex items-center">
+                  <Link href={`/gallery/${item.id}`} scroll={false}>
+                    <div className="h-2/3 w-full flex items-center">
                       <img
                         src={`https://cms.3int.uk/assets/${item.cover_image}?key=350`}
                         alt={item.title}
                         className="object-cover"
                       />
                     </div>
-                    <div className="mx-auto font-semibold p-8 pt-4 h-1/3 flex items-center text-center">
+                    <div className="h-1/3 w-full font-semibold p-8 pt-4 flex items-center justify-center text-center">
                       {item.title}
                     </div>
                   </Link>
