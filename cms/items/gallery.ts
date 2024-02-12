@@ -34,7 +34,7 @@ async function readItem(id: string) {
       method: "GET",
       cache: isDraft ? "no-store" : "default",
       next: {
-        tags: isDraft ? [id] : [],
+        tags: isDraft ? [] : [id],
       },
     },
     isDraft
@@ -50,7 +50,7 @@ async function readItems() {
       method: "GET",
       cache: isDraft ? "no-store" : "default",
       next: {
-        tags: isDraft ? ["gallery"] : [],
+        tags: isDraft ? [] : ["gallery"],
       },
     },
     isDraft

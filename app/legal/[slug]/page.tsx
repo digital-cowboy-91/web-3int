@@ -4,19 +4,9 @@ import { draftMode } from "next/headers";
 import { notFound } from "next/navigation";
 
 export default async function page({ params }: { params: { slug: string } }) {
-  const { isEnabled } = draftMode();
+  const res = await CMS_Legal.readSlug(params.slug);
 
-  let res;
-
-  if (isEnabled) {
-    res = await CMS_Legal.previewSlug(params.slug);
-  } else {
-    res = await CMS_Legal.readSlug(params.slug);
-  }
-
-  if (!res) {
-    notFound();
-  }
+  if (!res) notFound();
 
   return (
     <section id="page_content" className="mt-8">

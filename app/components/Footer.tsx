@@ -1,9 +1,12 @@
 import { CSSContainer } from "../styles";
 import Link from "next/link";
 import { CMS_Legal } from "@/cms/items/legal";
+import { notFound } from "next/navigation";
 
 const Footer = async () => {
   const res = await CMS_Legal.readItems();
+
+  if (!res) notFound();
 
   return (
     <footer className="bg-gray text-white mt-32 p-8 flex flex-col items-center text-center gap-4">
