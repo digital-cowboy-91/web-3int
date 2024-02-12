@@ -20,6 +20,13 @@ export type TGallery = {
   title: string;
   cover_image: string;
   attributes: TAttribute[];
+  work_name: string | null;
+  work_url: string | null;
+  author_name: string | null;
+  author_url: string | null;
+  license_name: string | null;
+  license_url: string | null;
+  claim_ownership: boolean;
   media: {
     asset: TAsset;
   }[];

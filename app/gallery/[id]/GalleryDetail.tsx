@@ -18,7 +18,19 @@ const GalleryDetail = ({
   model: TGallery;
   modalMode?: boolean;
 }) => {
-  const { title, media, attributes } = model;
+  const {
+    id,
+    title,
+    media,
+    attributes,
+    claim_ownership,
+    work_name,
+    work_url,
+    author_name,
+    author_url,
+    license_name,
+    license_url,
+  } = model;
 
   const [activeMedia, setActiveMedia] = useState(media[0]?.asset || undefined);
 
@@ -43,15 +55,15 @@ const GalleryDetail = ({
         {attributes?.map((attr, index) => {
           return (
             <Fragment key={index}>
-              <div className="font-bold">{attr.name}</div>
-              <div className="text-right px-0">{attr.value}</div>
+              <div className="font-semibold">{attr.name}</div>
+              <div className="text-right">{attr.value}</div>
             </Fragment>
           );
         })}
       </div>
       <div
         className={`md:order-5 md:col-start-4 md:col-span-2 flex items-center ${
-          modalMode && "md:mb-8 mx-8 md:ms-0"
+          modalMode && "mx-8 md:ms-0"
         }`}
       >
         {/* <button className={CSSButtonLink}>STL</button> */}
@@ -63,7 +75,27 @@ const GalleryDetail = ({
         </Link>
       </div>
       <div
-        className={`md:order-1 md:col-start-1 md:col-span-3 md:row-span-4 md:p-8
+        className={`md:order-6 md:col-start-4 md:col-span-2 text-xs ${
+          modalMode && "md:mb-8 mx-8 md:ms-0"
+        }`}
+      >
+        <Link href={claim_ownership ? "/gallery/" + id : (work_url as string)}>
+          {claim_ownership ? title : work_name}
+        </Link>{" "}
+        by{" "}
+        <Link href={claim_ownership ? "/" : (author_url as string)}>
+          {claim_ownership ? "3INT UK" : author_name}
+        </Link>
+        {license_name && license_url && (
+          <>
+            <br />
+            is licensed under{" "}
+            <Link href={license_url as string}>{license_name}</Link>
+          </>
+        )}
+      </div>
+      <div
+        className={`md:order-1 md:col-start-1 md:col-span-3 md:row-span-5 md:p-8
         ${!modalMode && "rounded-md"}
         ${activeMedia?.type.includes("video") ? "bg-dark" : "bg-white"}
         `}
