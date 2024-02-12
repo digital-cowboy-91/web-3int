@@ -61,9 +61,10 @@ const GalleryDetail = ({
           );
         })}
       </div>
+
       <div
-        className={`md:order-5 md:col-start-4 md:col-span-2 flex items-center ${
-          modalMode && "mx-8 md:ms-0"
+        className={`md:order-6 md:col-start-4 md:col-span-2 flex items-center ${
+          modalMode && "md:mb-8 mx-8 md:ms-0"
         }`}
       >
         {/* <button className={CSSButtonLink}>STL</button> */}
@@ -75,8 +76,8 @@ const GalleryDetail = ({
         </Link>
       </div>
       <div
-        className={`md:order-6 md:col-start-4 md:col-span-2 text-xs ${
-          modalMode && "md:mb-8 mx-8 md:ms-0"
+        className={`md:order-5 md:col-start-4 md:col-span-2 text-xs ${
+          modalMode && "mx-8 md:ms-0"
         }`}
       >
         <Link href={claim_ownership ? "/gallery/" + id : (work_url as string)}>
@@ -132,6 +133,7 @@ const GalleryDetail = ({
           )}
         </div>
       </div>
+
       <div
         className={`md:order-4 md:col-start-4 md:col-span-2 flex flex-wrap justify-between gap-2 ${
           modalMode && "md:mb-0 mb-8 mx-8 md:ms-0"
