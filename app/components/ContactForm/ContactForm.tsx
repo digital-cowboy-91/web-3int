@@ -134,12 +134,14 @@ export const ContactForm = ({ options }: { options: TOption[] }) => {
             type="text"
             name="name"
             label="Name"
+            autocomplete="name"
             disabled={disabled}
           />
           <Form.Input
             type="text"
             name="email"
             label="Email"
+            autocomplete="email"
             disabled={disabled}
           />
           <Form.Input

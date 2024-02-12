@@ -33,10 +33,17 @@ interface Input {
   type: "text" | "number";
   name: string;
   label: string;
+  autocomplete?: string;
   disabled?: boolean;
 }
 
-const Input = ({ type, name, label, disabled }: Input) => {
+const Input = ({
+  type,
+  name,
+  label,
+  autocomplete = "off",
+  disabled,
+}: Input) => {
   const {
     register,
     formState: { errors },
@@ -51,6 +58,7 @@ const Input = ({ type, name, label, disabled }: Input) => {
         id={name}
         type={type}
         placeholder=" "
+        autoComplete={autocomplete}
         className={CSSFormElement}
         disabled={disabled}
       />
