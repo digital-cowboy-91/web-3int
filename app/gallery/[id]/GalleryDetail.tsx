@@ -63,9 +63,10 @@ const GalleryDetail = ({
         </Link>
       </div>
       <div
-        className={`md:order-1 md:col-start-1 md:col-span-3 md:row-span-4 bg-white p-8 ${
-          !modalMode && "rounded-md"
-        }`}
+        className={`md:order-1 md:col-start-1 md:col-span-3 md:row-span-4 md:p-8
+        ${!modalMode && "rounded-md"}
+        ${activeMedia.type.includes("video") ? "bg-dark" : "bg-white"}
+        `}
       >
         <div className="flex items-center justify-center h-full">
           {activeMedia.type.includes("video") ? (
