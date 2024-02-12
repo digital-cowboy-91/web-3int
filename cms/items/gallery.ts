@@ -1,7 +1,7 @@
+import { draftMode } from "next/headers";
 import cmsAPI from "../cmsAPI";
 
 const base = "/items/gallery";
-const draftToken = process.env.CMS_DRAFT_TOKEN;
 
 type TAttribute = {
   name: string;
@@ -25,50 +25,39 @@ export type TGallery = {
   }[];
 };
 
-async function previewItem(id: string) {
+async function readItem(id: string) {
+  const { isEnabled: isDraft } = draftMode();
+
   return await cmsAPI(
-    `${base}/${id}?fields[]=*,media.asset.*&access_token=${draftToken}`,
+    `${base}/${id}?fields[]=*,media.asset.*`,
     {
       method: "GET",
-      cache: "no-store",
-    }
+      cache: isDraft ? "no-store" : "default",
+      next: {
+        tags: isDraft ? [id] : [],
+      },
+    },
+    isDraft
   ).then((res) => res.data as TGallery);
 }
 
-async function readItem(id: string) {
-  return await cmsAPI(`${base}/${id}?fields[]=*,media.asset.*`, {
-    method: "GET",
-    next: {
-      tags: [id],
-    },
-  }).then((res) => res.data as TGallery);
-}
-
-async function previewItems() {
-  return await cmsAPI(
-    `${base}?fields[]=id,title,cover_image,attributes,media.asset.*&access_token=${draftToken}`,
-    {
-      method: "GET",
-      cache: "no-store",
-    }
-  ).then((res) => res.data as TGallery[]);
-}
-
 async function readItems() {
+  const { isEnabled: isDraft } = draftMode();
+
   return await cmsAPI(
     `${base}?fields[]=id,title,cover_image,attributes,media.asset.*`,
     {
       method: "GET",
+      cache: isDraft ? "no-store" : "default",
       next: {
-        tags: ["gallery"],
+        tags: isDraft ? ["gallery"] : [],
       },
-    }
+    },
+    isDraft
   ).then((res) => res.data as TGallery[]);
 }
 
 export const CMS_Gallery = {
-  previewItem,
   readItem,
-  previewItems,
   readItems,
 };

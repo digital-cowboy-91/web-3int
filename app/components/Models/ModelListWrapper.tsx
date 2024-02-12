@@ -1,18 +1,9 @@
 import { CMS_Gallery } from "@/cms/items/gallery";
-import ModelList from "./ModelList";
-import { draftMode } from "next/headers";
 import { notFound } from "next/navigation";
+import ModelList from "./ModelList";
 
 const ModelListWrapper = async () => {
-  const { isEnabled } = draftMode();
-
-  let res;
-
-  if (isEnabled) {
-    res = await CMS_Gallery.previewItems();
-  } else {
-    res = await CMS_Gallery.readItems();
-  }
+  const res = await CMS_Gallery.readItems();
 
   if (!res) notFound();
 

@@ -1,4 +1,7 @@
+import { draftMode } from "next/headers";
+
 const base = process.env.CMS_HOST;
+const draftToken = process.env.CMS_DRAFT_TOKEN;
 
 type TResponse = {
   data: any;
@@ -8,10 +11,14 @@ type TResponse = {
 
 export default async function cmsAPI(
   path: string,
-  init: RequestInit
+  init: RequestInit,
+  draftMode: boolean = false
 ): Promise<TResponse> {
   try {
-    const res = await fetch(base + path, init);
+    const res = await fetch(
+      base + path + (draftMode ? `&access_token=${draftToken}` : ""),
+      init
+    );
 
     if (!res.ok) {
       throw new Error(
