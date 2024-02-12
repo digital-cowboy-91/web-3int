@@ -87,7 +87,7 @@ const ModelList = ({ data }: { data: TGallery[] }) => {
                   initial="init"
                   whileHover="hover"
                   whileFocus="focus"
-                  className="bg-white rounded-[1rem] overflow-hidden cursor-pointer h-[300px] w-full"
+                  className="bg-white rounded-[1rem] cursor-pointer h-[250px] w-full overflow-hidden"
                   aria-label={`Details of ${item.title} model`}
                 >
                   <Link href={`/gallery/${item.id}`} scroll={false}>
@@ -95,10 +95,10 @@ const ModelList = ({ data }: { data: TGallery[] }) => {
                       <img
                         src={`https://cms.3int.uk/assets/${item.cover_image}?key=350`}
                         alt={item.title}
-                        className="object-cover"
+                        className="object-contain w-full h-full"
                       />
                     </div>
-                    <div className="h-1/3 w-full font-semibold p-8 pt-4 flex items-center justify-center text-center">
+                    <div className="h-1/3 w-full font-semibold flex justify-center text-center p-4">
                       {item.title}
                     </div>
                   </Link>
