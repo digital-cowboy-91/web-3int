@@ -1,6 +1,7 @@
 import cmsAPI from "../cmsAPI";
 
 const base = "/items/gallery";
+const draftToken = process.env.CMS_DRAFT_TOKEN;
 
 type TAttribute = {
   name: string;
@@ -24,6 +25,16 @@ export type TGallery = {
   }[];
 };
 
+async function previewItem(id: string) {
+  return await cmsAPI(
+    `${base}/${id}?fields[]=*,media.asset.*&access_token=${draftToken}`,
+    {
+      method: "GET",
+      cache: "no-store",
+    }
+  ).then((res) => res.data as TGallery);
+}
+
 async function readItem(id: string) {
   return await cmsAPI(`${base}/${id}?fields[]=*,media.asset.*`, {
     method: "GET",
@@ -31,6 +42,16 @@ async function readItem(id: string) {
       tags: [id],
     },
   }).then((res) => res.data as TGallery);
+}
+
+async function previewItems() {
+  return await cmsAPI(
+    `${base}?fields[]=id,title,cover_image,attributes,media.asset.*&access_token=${draftToken}`,
+    {
+      method: "GET",
+      cache: "no-store",
+    }
+  ).then((res) => res.data as TGallery[]);
 }
 
 async function readItems() {
@@ -46,6 +67,8 @@ async function readItems() {
 }
 
 export const CMS_Gallery = {
+  previewItem,
   readItem,
+  previewItems,
   readItems,
 };

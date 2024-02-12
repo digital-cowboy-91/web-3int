@@ -20,7 +20,7 @@ const GalleryDetail = ({
 }) => {
   const { title, media, attributes } = model;
 
-  const [activeMedia, setActiveMedia] = useState(media[0].asset);
+  const [activeMedia, setActiveMedia] = useState(media[0]?.asset || undefined);
 
   return (
     <div
@@ -40,7 +40,7 @@ const GalleryDetail = ({
           modalMode && "mx-8 md:ms-0"
         }`}
       >
-        {attributes.map((attr, index) => {
+        {attributes?.map((attr, index) => {
           return (
             <Fragment key={index}>
               <div className="font-bold">{attr.name}</div>
@@ -65,14 +65,14 @@ const GalleryDetail = ({
       <div
         className={`md:order-1 md:col-start-1 md:col-span-3 md:row-span-4 md:p-8
         ${!modalMode && "rounded-md"}
-        ${activeMedia.type.includes("video") ? "bg-dark" : "bg-white"}
+        ${activeMedia?.type.includes("video") ? "bg-dark" : "bg-white"}
         `}
       >
         <div className="flex items-center justify-center h-full">
-          {activeMedia.type.includes("video") ? (
+          {activeMedia?.type.includes("video") ? (
             <ReactPlayer
               playing
-              url={`https://cms.3int.uk/assets/${activeMedia.id}`}
+              url={`https://cms.3int.uk/assets/${activeMedia?.id}`}
               controls={true}
             />
           ) : (
@@ -89,8 +89,8 @@ const GalleryDetail = ({
                 }}
               >
                 <img
-                  src={`https://cms.3int.uk/assets/${activeMedia.id}?key=1920`}
-                  alt={activeMedia.title}
+                  src={`https://cms.3int.uk/assets/${activeMedia?.id}?key=1920`}
+                  alt={activeMedia?.title}
                   className="object-contain"
                 />
               </TransformComponent>
@@ -103,7 +103,7 @@ const GalleryDetail = ({
           modalMode && "md:mb-0 mb-8 mx-8 md:ms-0"
         }`}
       >
-        {media.map(({ asset: item }) => {
+        {media?.map(({ asset: item }) => {
           return (
             <motion.button
               key={item.id}
