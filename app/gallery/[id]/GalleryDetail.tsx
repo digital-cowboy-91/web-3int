@@ -115,7 +115,7 @@ const GalleryDetail = ({
             >
               {activeMedia.id === item.id && (
                 <motion.div
-                  className="absolute inset-0 border-2 border-primary rounded-md"
+                  className="absolute z-10 inset-0 border-2 border-primary rounded-md"
                   layoutId="underline"
                 />
               )}
