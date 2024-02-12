@@ -5,7 +5,7 @@ import { TGallery } from "@/cms/items/gallery";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { Fragment, useState } from "react";
-import ReactPlayer from "react-player";
+import ReactPlayer from "react-player/lazy";
 import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 
 import IconTimelapse from "@/app/components/icons/IconTimelapse";
@@ -72,8 +72,10 @@ const GalleryDetail = ({
           {activeMedia?.type.includes("video") ? (
             <ReactPlayer
               playing
+              loop
               url={`https://cms.3int.uk/assets/${activeMedia?.id}`}
               controls={true}
+              fallback={<div>Loading... </div>}
             />
           ) : (
             <TransformWrapper initialScale={1} centerOnInit={true}>
