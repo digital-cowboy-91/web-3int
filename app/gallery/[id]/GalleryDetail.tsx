@@ -51,7 +51,7 @@ const GalleryDetail = ({
       </div>
       <div
         className={`md:order-5 md:col-start-4 md:col-span-2 flex items-center ${
-          modalMode && "mx-8 md:ms-0"
+          modalMode && "md:mb-8 mx-8 md:ms-0"
         }`}
       >
         {/* <button className={CSSButtonLink}>STL</button> */}
@@ -99,7 +99,7 @@ const GalleryDetail = ({
       </div>
       <div
         className={`md:order-4 md:col-start-4 md:col-span-2 flex flex-wrap justify-between gap-2 ${
-          modalMode && "mb-8 mx-8 md:ms-0"
+          modalMode && "md:mb-0 mb-8 mx-8 md:ms-0"
         }`}
       >
         {media.map(({ asset: item }) => {
