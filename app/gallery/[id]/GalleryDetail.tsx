@@ -97,7 +97,42 @@ const GalleryDetail = ({
         )}
       </div>
       <div
-        id="image-container"
+        className={`md:order-4 md:col-start-4 md:col-span-2 flex flex-wrap justify-between gap-2 ${
+          modalMode && "mx-8 md:ms-0"
+        }`}
+      >
+        {media?.map(({ asset: item }) => {
+          return (
+            <motion.button
+              key={item.id}
+              onClick={() => setActiveMedia(item)}
+              className={`relative w-[4rem] h-[4rem] bg-white rounded-md p-1`}
+              aria-label={`Show image ${item.title}`}
+            >
+              {activeMedia.id === item.id && (
+                <motion.div
+                  className="absolute z-10 inset-0 border-2 border-primary rounded-md"
+                  layoutId="underline"
+                />
+              )}
+              {item.type.includes("video") && item.tags != null ? (
+                item.tags.includes("timelapse") ? (
+                  <IconTimelapse fill="#000" stroke="#000" />
+                ) : (
+                  <IconAnimation fill="#000" stroke="#000" />
+                )
+              ) : (
+                <ImageAsset
+                  asset={item}
+                  preset="h100"
+                  className="object-contain w-full h-full"
+                />
+              )}
+            </motion.button>
+          );
+        })}
+      </div>
+      <div
         className={`md:order-1 md:col-start-1 md:col-span-3 md:row-span-5 md:p-8
         ${activeMedia?.type.includes("video") ? "bg-dark" : "bg-white"}
         `}
@@ -136,43 +171,6 @@ const GalleryDetail = ({
             </TransformWrapper>
           )}
         </div>
-      </div>
-
-      <div
-        className={`md:order-4 md:col-start-4 md:col-span-2 flex flex-wrap justify-between gap-2 ${
-          modalMode && "md:mb-0 mb-8 mx-8 md:ms-0"
-        }`}
-      >
-        {media?.map(({ asset: item }) => {
-          return (
-            <motion.button
-              key={item.id}
-              onClick={() => setActiveMedia(item)}
-              className={`relative w-[4rem] h-[4rem] bg-white rounded-md p-1`}
-              aria-label={`Show image ${item.title}`}
-            >
-              {activeMedia.id === item.id && (
-                <motion.div
-                  className="absolute z-10 inset-0 border-2 border-primary rounded-md"
-                  layoutId="underline"
-                />
-              )}
-              {item.type.includes("video") && item.tags != null ? (
-                item.tags.includes("timelapse") ? (
-                  <IconTimelapse fill="#000" stroke="#000" />
-                ) : (
-                  <IconAnimation fill="#000" stroke="#000" />
-                )
-              ) : (
-                <ImageAsset
-                  asset={item}
-                  preset="h100"
-                  className="object-contain w-full h-full"
-                />
-              )}
-            </motion.button>
-          );
-        })}
       </div>
     </div>
   );
