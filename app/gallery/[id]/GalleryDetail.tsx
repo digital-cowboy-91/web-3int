@@ -97,7 +97,7 @@ const GalleryDetail = ({
         )}
       </div>
       <div
-        className={`md:order-4 md:col-start-4 md:col-span-2 flex flex-wrap justify-between gap-2 ${
+        className={`md:order-4 md:col-start-4 md:col-span-2 flex flex-wrap justify-center gap-2 ${
           modalMode && "mx-8 md:ms-0"
         }`}
       >
@@ -133,7 +133,7 @@ const GalleryDetail = ({
         })}
       </div>
       <div
-        className={`md:order-1 md:col-start-1 md:col-span-3 md:row-span-5 md:p-8
+        className={`md:order-1 md:col-start-1 md:col-span-3 md:row-span-5 md:p-8 flex items-center
         ${activeMedia?.type.includes("video") ? "bg-dark" : "bg-white"}
         ${!modalMode && "rounded-md"}
         `}
