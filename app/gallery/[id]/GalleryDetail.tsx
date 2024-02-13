@@ -7,6 +7,7 @@ import Link from "next/link";
 import { Fragment, useState } from "react";
 import ReactPlayer from "react-player/lazy";
 import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
+import Image from "@/app/components/Image";
 
 import IconTimelapse from "@/app/components/icons/IconTimelapse";
 import IconAnimation from "@/app/components/icons/IconAnimation";
@@ -96,12 +97,12 @@ const GalleryDetail = ({
         )}
       </div>
       <div
+        id="image-container"
         className={`md:order-1 md:col-start-1 md:col-span-3 md:row-span-5 md:p-8
-        ${!modalMode && "rounded-md"}
         ${activeMedia?.type.includes("video") ? "bg-dark" : "bg-white"}
         `}
       >
-        <div className="flex items-center justify-center h-full">
+        <div className="aspect-square">
           {activeMedia?.type.includes("video") ? (
             <ReactPlayer
               playing
@@ -109,6 +110,8 @@ const GalleryDetail = ({
               url={`https://cms.3int.uk/assets/${activeMedia?.id}`}
               controls={true}
               fallback={<div>Loading... </div>}
+              width="100%"
+              height="100%"
             />
           ) : (
             <TransformWrapper initialScale={1} centerOnInit={true}>
@@ -123,10 +126,12 @@ const GalleryDetail = ({
                   position: "relative",
                 }}
               >
-                <img
-                  src={`https://cms.3int.uk/assets/${activeMedia?.id}?key=1920`}
+                <Image
+                  key={activeMedia?.id}
+                  id={activeMedia?.id}
                   alt={activeMedia?.title}
-                  className="object-contain"
+                  preset="h1280"
+                  className="object-contain h-full w-full"
                 />
               </TransformComponent>
             </TransformWrapper>
@@ -160,9 +165,11 @@ const GalleryDetail = ({
                   <IconAnimation fill="#000" stroke="#000" />
                 )
               ) : (
-                <img
+                <Image
+                  id={item.id}
+                  preset="h100"
+                  alt={item.title}
                   className="object-contain w-full h-full"
-                  src={`https://cms.3int.uk/assets/${item.id}?key=100`}
                 />
               )}
             </motion.button>

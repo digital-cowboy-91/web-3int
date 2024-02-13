@@ -5,6 +5,7 @@ import { TGallery } from "@/cms/items/gallery";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import Image from "../Image";
 
 const animateRow = {
   init: {
@@ -92,9 +93,9 @@ const ModelList = ({ data }: { data: TGallery[] }) => {
                 >
                   <Link href={`/gallery/${item.id}`} scroll={false}>
                     <div className="h-2/3 w-full flex items-center">
-                      <img
-                        src={`https://cms.3int.uk/assets/${item.cover_image}?key=350`}
-                        alt={item.title}
+                      <Image
+                        id={item.cover_image}
+                        preset="h250"
                         className="object-contain w-full h-full"
                       />
                     </div>
