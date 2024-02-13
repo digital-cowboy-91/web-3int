@@ -7,10 +7,10 @@ import Link from "next/link";
 import { Fragment, useState } from "react";
 import ReactPlayer from "react-player/lazy";
 import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
-import Image from "@/app/components/Image";
 
 import IconTimelapse from "@/app/components/icons/IconTimelapse";
 import IconAnimation from "@/app/components/icons/IconAnimation";
+import ImageAsset from "@/app/components/ImageAsset";
 
 const GalleryDetail = ({
   model,
@@ -126,10 +126,9 @@ const GalleryDetail = ({
                   position: "relative",
                 }}
               >
-                <Image
-                  key={activeMedia?.id}
-                  id={activeMedia?.id}
-                  alt={activeMedia?.title}
+                <ImageAsset
+                  key={activeMedia.id}
+                  asset={activeMedia}
                   preset="h1280"
                   className="object-contain h-full w-full"
                 />
@@ -165,10 +164,9 @@ const GalleryDetail = ({
                   <IconAnimation fill="#000" stroke="#000" />
                 )
               ) : (
-                <Image
-                  id={item.id}
+                <ImageAsset
+                  asset={item}
                   preset="h100"
-                  alt={item.title}
                   className="object-contain w-full h-full"
                 />
               )}

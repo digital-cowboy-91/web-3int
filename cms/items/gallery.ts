@@ -11,6 +11,7 @@ type TAttribute = {
 export type TAsset = {
   id: string;
   title: string;
+  filename_download: string;
   type: string;
   tags: string[] | null;
 };
@@ -18,7 +19,7 @@ export type TAsset = {
 export type TGallery = {
   id: string;
   title: string;
-  cover_image: string;
+  cover_image: TAsset;
   attributes: TAttribute[];
   work_name: string | null;
   work_url: string | null;
@@ -36,7 +37,7 @@ async function readItem(id: string) {
   const { isEnabled: isDraft } = draftMode();
 
   return await cmsAPI(
-    `${base}/${id}?fields[]=*,media.asset.*`,
+    `${base}/${id}?fields[]=*,cover_image.*,media.asset.*`,
     {
       method: "GET",
       cache: isDraft ? "no-store" : "default",
@@ -52,7 +53,7 @@ async function readItems() {
   const { isEnabled: isDraft } = draftMode();
 
   return await cmsAPI(
-    `${base}?fields[]=id,title,cover_image,attributes,media.asset.*`,
+    `${base}?fields[]=id,title,cover_image.*,attributes,media.asset.*`,
     {
       method: "GET",
       cache: isDraft ? "no-store" : "default",

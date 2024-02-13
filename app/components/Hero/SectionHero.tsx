@@ -2,7 +2,7 @@ import { CMS_Homepage } from "@/cms/items/homepage";
 import { CSSContainer } from "../../styles";
 import ActionButton from "./ActionButton";
 import LogoButton from "./LogoButton";
-import Image from "../Image";
+import ImageAsset from "../ImageAsset";
 
 export default async function SectionHero() {
   const res = await CMS_Homepage.readSingleton();
@@ -12,8 +12,8 @@ export default async function SectionHero() {
       <div
         className={`${CSSContainer} h-full grid md:grid-rows-1 md:grid-cols-2 gap-5 md:rounded-b-[2rem] relative shadow overflow-hidden`}
       >
-        <Image
-          id={res.hero_image}
+        <ImageAsset
+          asset={res.hero_image}
           preset="h720"
           className="object-cover w-full h-full absolute z-0"
         />

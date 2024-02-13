@@ -5,7 +5,7 @@ import { TGallery } from "@/cms/items/gallery";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import Image from "../Image";
+import ImageAsset from "../ImageAsset";
 
 const animateRow = {
   init: {
@@ -93,8 +93,8 @@ const ModelList = ({ data }: { data: TGallery[] }) => {
                 >
                   <Link href={`/gallery/${item.id}`} scroll={false}>
                     <div className="h-2/3 w-full flex items-center">
-                      <Image
-                        id={item.cover_image}
+                      <ImageAsset
+                        asset={item.cover_image}
                         preset="h250"
                         className="object-contain w-full h-full"
                       />

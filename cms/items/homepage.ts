@@ -1,12 +1,13 @@
 import cmsAPI from "../cmsAPI";
+import { TAsset } from "./gallery";
 
-const base = "/items/homepage";
+const base = "/items/homepage?fields[]=*,hero_image.*";
 
 export type THomepage = {
   id: number;
   web_title: string;
   web_description: string;
-  hero_image: string;
+  hero_image: TAsset;
   gallery_description: string;
   pricing_description: string;
   contact_description: string;
