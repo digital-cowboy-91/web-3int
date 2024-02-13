@@ -135,6 +135,7 @@ const GalleryDetail = ({
       <div
         className={`md:order-1 md:col-start-1 md:col-span-3 md:row-span-5 md:p-8
         ${activeMedia?.type.includes("video") ? "bg-dark" : "bg-white"}
+        ${!modalMode && "rounded-md"}
         `}
       >
         <div className="aspect-square">
