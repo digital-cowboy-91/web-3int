@@ -142,11 +142,20 @@ const GalleryDetail = ({
             <ReactPlayer
               playing
               loop
-              url={`https://cms.3int.uk/assets/${activeMedia?.id}`}
+              url={`https://cms.3int.uk/assets/${activeMedia?.id}/${activeMedia?.filename_download}`}
               controls={true}
               fallback={<div>Loading... </div>}
               width="100%"
               height="100%"
+              config={{
+                file: {
+                  attributes: {
+                    controlsList: "nodownload",
+                    disablePictureInPicture: true,
+                  },
+                },
+              }}
+              type={activeMedia?.type}
             />
           ) : (
             <TransformWrapper initialScale={1} centerOnInit={true}>
