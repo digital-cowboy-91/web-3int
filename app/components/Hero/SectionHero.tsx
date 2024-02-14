@@ -1,4 +1,4 @@
-import { CMS_Homepage } from "@/cms/items/homepage";
+import { CMS_Homepage } from "@/app/api/_cms/items/homepage";
 import { CSSContainer } from "../../styles";
 import ActionButton from "./ActionButton";
 import LogoButton from "./LogoButton";

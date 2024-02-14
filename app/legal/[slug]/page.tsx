@@ -1,5 +1,5 @@
 import { CSSContainer } from "@/app/styles";
-import { CMS_Legal } from "@/cms/items/legal";
+import { CMS_Legal } from "@/app/api/_cms/items/legal";
 import { notFound } from "next/navigation";
 
 export default async function page({ params }: { params: { slug: string } }) {

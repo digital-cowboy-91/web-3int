@@ -1,6 +1,6 @@
 import { CSSContainer } from "../styles";
 import Link from "next/link";
-import { CMS_Legal } from "@/cms/items/legal";
+import { CMS_Legal } from "@/app/api/_cms/items/legal";
 import { notFound } from "next/navigation";
 
 const Footer = async () => {

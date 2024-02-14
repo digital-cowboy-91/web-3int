@@ -10,7 +10,7 @@ import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import { FormProvider, useForm } from "react-hook-form";
 import Form from "../Form";
 import submitAction from "./submitAction";
-import { SContactForm, TContactForm } from "@/cms/items/clientQueries";
+import { SContactForm, TContactForm } from "@/app/api/_cms/items/clientQueries";
 import { TOption } from "./ContactFormWrapper";
 
 export const ContactForm = ({ options }: { options: TOption[] }) => {

@@ -1,7 +1,7 @@
 "use client";
 
 import { CSSLinkOutline } from "@/app/styles";
-import { TGallery } from "@/cms/items/gallery";
+import { TGallery } from "@/app/api/_cms/items/gallery";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { Fragment, useState } from "react";

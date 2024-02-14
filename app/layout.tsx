@@ -1,4 +1,4 @@
-import { CMS_Homepage } from "@/cms/items/homepage";
+import { CMS_Homepage } from "@/app/api/_cms/items/homepage";
 import { Poppins } from "next/font/google";
 import { draftMode } from "next/headers";
 import { ReactNode } from "react";

@@ -1,5 +1,5 @@
 import GalleryDetail from "@/app/gallery/[id]/GalleryDetail";
-import { CMS_Gallery } from "@/cms/items/gallery";
+import { CMS_Gallery } from "@/app/api/_cms/items/gallery";
 import { notFound } from "next/navigation";
 import Modal from "./Modal";
 

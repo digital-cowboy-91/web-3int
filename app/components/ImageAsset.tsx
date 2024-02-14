@@ -1,6 +1,6 @@
 "use client";
 
-import { TAsset } from "@/cms/items/gallery";
+import { TAsset } from "@/app/api/_cms/items/gallery";
 import { useEffect, useRef, useState } from "react";
 
 const base = "https://cms.3int.uk";

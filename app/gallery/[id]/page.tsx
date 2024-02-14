@@ -1,5 +1,5 @@
 import { CSSContainer } from "@/app/styles";
-import { CMS_Gallery } from "@/cms/items/gallery";
+import { CMS_Gallery } from "@/app/api/_cms/items/gallery";
 import { notFound } from "next/navigation";
 import GalleryDetail from "./GalleryDetail";
 
