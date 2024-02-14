@@ -1,5 +1,6 @@
 import { draftMode } from "next/headers";
 import cmsAPI from "../cmsAPI";
+import { TProduct } from "./products";
 
 const base = "/items/gallery";
 
@@ -31,13 +32,14 @@ export type TGallery = {
   media: {
     asset: TAsset;
   }[];
+  buying_options: TProduct[];
 };
 
 async function readItem(id: string) {
   const { isEnabled: isDraft } = draftMode();
 
   return await cmsAPI(
-    `${base}/${id}?fields[]=*,cover_image.*,media.asset.*`,
+    `${base}/${id}?fields[]=*,cover_image.*,media.asset.*, buying_options.*`,
     {
       method: "GET",
       cache: isDraft ? "no-store" : "default",
