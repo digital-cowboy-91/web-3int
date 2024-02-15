@@ -20,18 +20,32 @@ export default function BuyingOptions({ products }: { products: TProduct[] }) {
         />{" "}
         for <strong>{price > 0 ? "£" + price : "FREE"}</strong>
       </div>
-      <Link
-        className={`${CSSLinkOutline} bg-success text-dark`}
-        href={
-          price > 0
-            ? "/checkout/" + id
-            : "https://cms.3int.uk/assets/<download>"
-        }
-        rel="noopener noreferrer"
-        target="_blank"
-      >
-        {price > 0 ? "Checkout" : "Download"}
-      </Link>
+      {price > 0 ? (
+        <Link
+          className={`${CSSButtonOutline} bg-success text-dark`}
+          href={"/checkout/" + id}
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          Checkout
+        </Link>
+      ) : (
+        <a
+          className={`${CSSButtonOutline} bg-success text-dark`}
+          href={"/api/download?pid=" + id}
+          download
+        >
+          Download
+        </a>
+        // <button
+        //   className={`${CSSButtonOutline} bg-success text-dark`}
+        //   onClick={async () =>
+        //     await fetch("/api/download?pid=" + id).then((res) => res.blob())
+        //   }
+        // >
+        //   Download
+        // </button>
+      )}
     </div>
   );
 }

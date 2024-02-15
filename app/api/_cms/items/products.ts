@@ -1,5 +1,4 @@
 import cmsAPI from "../cmsAPI";
-import { TAsset } from "./gallery";
 
 const base = "/items/products";
 
@@ -21,6 +20,28 @@ async function readItem(id: string) {
   }).then((res) => res.data as TProduct);
 }
 
+type TDownloadable = {
+  id: string;
+  price: number;
+  asset: {
+    id: string;
+    filename_download: string;
+  };
+};
+
+async function readDownloadable(id: string) {
+  return await cmsAPI(
+    `${base}/${id}?fields[]=id,price,asset.id,asset.filename_download`,
+    {
+      method: "GET",
+      cache: "no-store",
+    },
+    false,
+    true
+  ).then((res) => res.data as TDownloadable);
+}
+
 export const CMS_Products = {
   readItem,
+  readDownloadable,
 };

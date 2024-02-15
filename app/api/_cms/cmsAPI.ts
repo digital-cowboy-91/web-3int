@@ -10,11 +10,14 @@ type TResponse = {
 export default async function cmsAPI(
   path: string,
   init: RequestInit,
-  draftMode: boolean = false
+  draftMode: boolean = false,
+  addSecret: boolean = false
 ): Promise<TResponse> {
   try {
     const res = await fetch(
-      base + path + (draftMode ? `&access_token=${draftToken}` : ""),
+      base +
+        path +
+        (draftMode || addSecret ? `&access_token=${draftToken}` : ""),
       init
     );
 

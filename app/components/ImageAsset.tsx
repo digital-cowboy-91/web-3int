@@ -3,8 +3,6 @@
 import { TAsset } from "@/app/api/_cms/items/gallery";
 import { useEffect, useRef, useState } from "react";
 
-const base = "https://cms.3int.uk";
-
 type Props = {
   asset: TAsset;
   preset?: string;
@@ -17,7 +15,7 @@ export default function ImageAsset({ asset, preset = "", className }: Props) {
 
   const { id, title, filename_download: filename } = asset;
 
-  const composedSrc = `${base}/assets/${id}/${filename}${(preset &&=
+  const composedSrc = `/media/${id}/${filename}${(preset &&=
     "?key=" + preset)}`;
 
   useEffect(() => {
