@@ -39,6 +39,9 @@ const config: Config = {
       error: {
         DEFAULT: "#ff0000",
       },
+      success: {
+        DEFAULT: "#95de76",
+      },
     },
     container: {
       center: true,

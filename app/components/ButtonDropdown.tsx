@@ -1,6 +1,15 @@
 import { useState } from "react";
 import { CSSButtonOutline } from "../styles";
 import { ChevronDownIcon } from "@heroicons/react/24/solid";
+import { AnimatePresence, motion } from "framer-motion";
+
+const animateList = {
+  init: { opacity: 0 },
+  enter: {
+    opacity: 1,
+  },
+  exit: { opacity: 0 },
+};
 
 export default function ButtonDropdown({
   options,
@@ -18,31 +27,38 @@ export default function ButtonDropdown({
   return (
     <div className="relative overflow-visible">
       <button
-        className={`${CSSButtonOutline} bg-action text-dark flex items-center gap-2`}
+        className={`${CSSButtonOutline} bg-success text-dark flex items-center gap-2`}
         type="button"
         onClick={() => setIsOpen(!isOpen)}
       >
         {options[activeIndex]} <ChevronDownIcon className="w-[1rem] h-[1rem]" />
       </button>
-      {isOpen && (
-        <ul
-          aria-labelledby="dropdownDefaultButton"
-          className="absolute bg-white pb-0 w-full rounded-md mt-1 overflow-hidden shadow"
-        >
-          {options.map((option, index) => (
-            <li
-              key={index}
-              className="w-full px-2 py-2 md:px-4 font-semibold hover:bg-action cursor-pointer"
-              onClick={() => {
-                setActiveIndex(index);
-                setIsOpen(false);
-              }}
-            >
-              {option}
-            </li>
-          ))}
-        </ul>
-      )}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.ul
+            variants={animateList}
+            initial="init"
+            animate="enter"
+            exit="exit"
+            aria-labelledby="dropdownDefaultButton"
+            className="absolute z-20 bg-white pb-0 w-full rounded-md mt-1 overflow-hidden shadow"
+            onMouseLeave={() => setIsOpen(false)}
+          >
+            {options.map((option, index) => (
+              <li
+                key={index}
+                className="w-full px-2 py-2 md:px-4 font-semibold hover:bg-success cursor-pointer"
+                onClick={() => {
+                  setActiveIndex(index);
+                  setIsOpen(false);
+                }}
+              >
+                {option}
+              </li>
+            ))}
+          </motion.ul>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

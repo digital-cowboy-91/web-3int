@@ -127,7 +127,7 @@ export const ContactForm = ({ options }: { options: TOption[] }) => {
         </div>
         <Form
           onSubmit={onSubmit}
-          className="min-w-[300px] max-w-[400px]"
+          className="min-w-[300px] max-w-[400px] grid grid-cols-1 gap-5"
           ariaHidden={submitted}
         >
           <Form.Input
@@ -157,7 +157,7 @@ export const ContactForm = ({ options }: { options: TOption[] }) => {
             disabled={disabled}
           /> */}
           <Form.Textarea name="message" label="Message" disabled={disabled} />
-          <div className="my-auto flex flex-row gap-8 justify-end">
+          <div className="flex flex-row gap-8 justify-end">
             <button
               onClick={() => reset()}
               className={CSSButtonLink}

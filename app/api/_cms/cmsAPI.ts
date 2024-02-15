@@ -1,5 +1,3 @@
-import { draftMode } from "next/headers";
-
 const base = process.env.CMS_HOST;
 const draftToken = process.env.CMS_DRAFT_TOKEN;
 

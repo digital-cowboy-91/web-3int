@@ -1,4 +1,5 @@
 import cmsAPI from "../cmsAPI";
+import { TAsset } from "./gallery";
 
 const base = "/items/products";
 
@@ -6,6 +7,7 @@ export type TProduct = {
   id: string;
   title: string;
   price: number;
+  downloadable: boolean;
   gallery_rel: {
     id: string;
     title: string;

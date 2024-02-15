@@ -10,6 +10,9 @@ export default async function actionBuy(id: string) {
       description: `${product.gallery_rel.title} - ${product.title}`,
       amount: product.price * 100,
       currency: "GBP",
+      metadata: {
+        product_id: product.id,
+      },
     });
 
     return JSON.stringify({
