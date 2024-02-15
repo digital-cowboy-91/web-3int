@@ -41,14 +41,8 @@ const GalleryDetail = ({
         modalMode && "bg-gray-light md:rounded-md p-4 md:p-8"
       }`}
     >
-      <h2
-        className={`md:order-1 md:col-span-5 ${
-          modalMode && "mt-5 md:mt-0 me-10"
-        }`}
-      >
-        {title}
-      </h2>
-      <div className="md:order-3 md:col-span-2 flex flex-col justify-between overflow-y-auto gap-8">
+      <div className="md:order-2 md:col-span-2 flex flex-col gap-8">
+        <h2 className={` ${modalMode && "mt-5 md:mt-0 me-10"}`}>{title}</h2>
         <div className="text-left grid grid-cols-2 gap-2">
           {attributes?.map((attr, index) => {
             return (
@@ -59,60 +53,64 @@ const GalleryDetail = ({
             );
           })}
         </div>
+      </div>
+      <div className="md:order-3 md:col-span-2 flex flex-col justify-end gap-8">
         {buying_options?.length > 0 && (
           <BuyingOptions products={buying_options} />
         )}
-        <div className="flex flex-wrap justify-start gap-2">
-          {media?.map(({ asset: item }) => {
-            return (
-              <motion.button
-                key={item.id}
-                onClick={() => setActiveMedia(item)}
-                className={`flex-none relative w-[4rem] h-[4rem] bg-white rounded-md p-1`}
-                aria-label={`Show image ${item.title}`}
-              >
-                {activeMedia.id === item.id && (
-                  <motion.div
-                    className="absolute z-10 inset-0 border-2 border-primary rounded-md"
-                    layoutId="underline"
-                  />
-                )}
-                {item.type.includes("video") && item.tags != null ? (
-                  item.tags.includes("timelapse") ? (
-                    <IconTimelapse fill="#000" stroke="#000" />
-                  ) : (
-                    <IconAnimation fill="#000" stroke="#000" />
-                  )
-                ) : (
-                  <ImageAsset
-                    asset={item}
-                    preset="h100"
-                    className="object-contain w-full h-full"
-                  />
-                )}
-              </motion.button>
-            );
-          })}
+        <div className="md:order-4 text-xs md:col-span-5">
+          <Link
+            href={claim_ownership ? "/gallery/" + id : (work_url as string)}
+          >
+            {claim_ownership ? title : work_name}
+          </Link>{" "}
+          by{" "}
+          <Link href={claim_ownership ? "/" : (author_url as string)}>
+            {claim_ownership ? "3INT UK" : author_name}
+          </Link>
+          {license_name && license_url && (
+            <>
+              <br />
+              is licensed under{" "}
+              <Link href={license_url as string}>{license_name}</Link>
+            </>
+          )}
         </div>
       </div>
-      <div className="md:order-4 text-xs md:col-span-5">
-        <Link href={claim_ownership ? "/gallery/" + id : (work_url as string)}>
-          {claim_ownership ? title : work_name}
-        </Link>{" "}
-        by{" "}
-        <Link href={claim_ownership ? "/" : (author_url as string)}>
-          {claim_ownership ? "3INT UK" : author_name}
-        </Link>
-        {license_name && license_url && (
-          <>
-            <br />
-            is licensed under{" "}
-            <Link href={license_url as string}>{license_name}</Link>
-          </>
-        )}
+      <div className="md:order-4 md:col-span-3 flex flex-wrap justify-center gap-2">
+        {media?.map(({ asset: item }) => {
+          return (
+            <motion.button
+              key={item.id}
+              onClick={() => setActiveMedia(item)}
+              className={`flex-none relative w-[4rem] h-[4rem] bg-white rounded-md p-1`}
+              aria-label={`Show image ${item.title}`}
+            >
+              {activeMedia.id === item.id && (
+                <motion.div
+                  className="absolute z-10 inset-0 border-2 border-primary rounded-md"
+                  layoutId="underline"
+                />
+              )}
+              {item.type.includes("video") && item.tags != null ? (
+                item.tags.includes("timelapse") ? (
+                  <IconTimelapse fill="#000" stroke="#000" />
+                ) : (
+                  <IconAnimation fill="#000" stroke="#000" />
+                )
+              ) : (
+                <ImageAsset
+                  asset={item}
+                  preset="h100"
+                  className="object-contain w-full h-full"
+                />
+              )}
+            </motion.button>
+          );
+        })}
       </div>
       <div
-        className={`md:order-2 md:h-[500px] md:col-span-3 md:p-8 flex flex-col gap-8 rounded-md ${
+        className={`md:order-1 md:h-[500px] md:col-span-3 md:row-span-2 md:p-8 flex flex-col gap-8 rounded-md ${
           activeMedia?.type.includes("video") ? "bg-dark" : "bg-white"
         }`}
       >
