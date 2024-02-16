@@ -102,8 +102,6 @@ export default function CheckoutForm({
 
   const disabled = isSubmitting || submitted;
 
-  console.log("CheckoutForm", { isSubmitting, submitted });
-
   return (
     <>
       {submitted && (
