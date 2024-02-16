@@ -8,7 +8,7 @@ interface Props {
 const ContactCard = ({ title, description }: Props) => {
   return (
     <div className="flex flex-col gap-5 h-full">
-      <h1>{title}</h1>
+      <h1 className="z-10 text-2xl uppercase">{title}</h1>
       <div className="my-auto">
         <Logo height="120px" className="mx-auto mb-5" />
         <p className="text-center max-w-[300px] mx-auto">{description}</p>

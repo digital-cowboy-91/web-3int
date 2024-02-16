@@ -1,12 +1,12 @@
 import cmsAPI from "../cmsAPI";
 import { TAsset } from "./gallery";
+import { TSEO } from "./seo";
 
 const base = "/items/homepage?fields[]=*,hero_image.*";
 
 export type THomepage = {
   id: number;
-  web_title: string;
-  web_description: string;
+  seo: TSEO;
   hero_image: TAsset;
   gallery_description: string;
   pricing_description: string;
@@ -14,7 +14,7 @@ export type THomepage = {
 };
 
 async function readSingleton() {
-  return await cmsAPI(base, {
+  return await cmsAPI(base + "?fields[]=*,seo.*", {
     method: "GET",
     next: {
       tags: ["homepage"],

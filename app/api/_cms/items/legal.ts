@@ -1,10 +1,12 @@
 import { draftMode } from "next/headers";
 import cmsAPI from "../cmsAPI";
+import { TSEO } from "./seo";
 
 const base = "/items/legal";
 
 export type TLegal = {
   id: number;
+  seo: TSEO;
   status: string;
   title: string;
   slug: string;
@@ -17,7 +19,7 @@ async function readSlug(slug: string) {
   const { isEnabled: isDraft } = draftMode();
 
   return await cmsAPI(
-    `${base}?filter[slug]=${slug}`,
+    `${base}?filter[slug]=${slug}&fields[]=*,seo.*`,
     {
       method: "GET",
       cache: isDraft ? "no-store" : "default",

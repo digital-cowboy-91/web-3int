@@ -8,7 +8,6 @@ import Navbar from "./components/Navbar";
 import PreviewBanner from "./components/PreviewBanner";
 import ReCaptchaProvider from "./components/ReCaptchaProvider";
 import "./globals.css";
-import GSMProvider from "./lib/GSMProvider";
 
 const poppins = Poppins({ subsets: ["latin"], weight: ["400", "600", "700"] });
 
@@ -16,8 +15,12 @@ export async function generateMetadata() {
   const res = await CMS_Homepage.readSingleton();
 
   return {
-    title: res.web_title,
-    description: res.web_description,
+    title: {
+      template: "%s · " + res.seo.title,
+      default: res.seo.title,
+    },
+    description: res.seo.description,
+    keywords: res.seo.keywords,
   };
 }
 
@@ -32,9 +35,13 @@ export default function RootLayout({
 
   return (
     <html lang="en">
+      <link
+        rel="icon"
+        href="/media/139473a8-56f1-4fd9-bd09-80bc40a26aba/favicon.svg"
+        sizes="any"
+      />
       <body className={`text-sm font-normal relative ${poppins.className}`}>
         {isEnabled && <PreviewBanner />}
-        {/* <GSMProvider> */}
         <ReCaptchaProvider siteKey={process.env.RECAPTCHA_SITE_KEY!}>
           <Navbar />
           <SectionHero />
@@ -42,7 +49,6 @@ export default function RootLayout({
           <Footer />
           {modal}
         </ReCaptchaProvider>
-        {/* </GSMProvider> */}
       </body>
     </html>
   );

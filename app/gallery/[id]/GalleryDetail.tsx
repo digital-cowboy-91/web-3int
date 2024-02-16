@@ -42,8 +42,8 @@ const GalleryDetail = ({
       }`}
     >
       <div className="md:order-2 md:col-span-2 flex flex-col gap-8">
-        <h2 className={` ${modalMode && "mt-5 md:mt-0 me-10"}`}>{title}</h2>
-        <div className="text-left grid grid-cols-2 gap-2">
+        <h1 className={` ${modalMode && "mt-5 md:mt-0 me-10"}`}>{title}</h1>
+        <div className="text-left grid grid-cols-2 gap-2 mb-auto">
           {attributes?.map((attr, index) => {
             return (
               <Fragment key={index}>
@@ -53,8 +53,6 @@ const GalleryDetail = ({
             );
           })}
         </div>
-      </div>
-      <div className="md:order-3 md:col-span-2 flex flex-col justify-end gap-8">
         {buying_options?.length > 0 && (
           <BuyingOptions products={buying_options} />
         )}
@@ -110,7 +108,7 @@ const GalleryDetail = ({
         })}
       </div>
       <div
-        className={`md:order-1 md:h-[500px] md:col-span-3 md:row-span-2 md:p-8 flex flex-col gap-8 rounded-md ${
+        className={`md:order-1 h-[300px] md:h-[500px] md:col-span-3 md:p-8 flex flex-col gap-8 rounded-md ${
           activeMedia?.type.includes("video") ? "bg-dark" : "bg-white"
         }`}
       >

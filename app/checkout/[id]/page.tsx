@@ -13,7 +13,7 @@ export default async function Page({ params }: { params: { id: string } }) {
   return (
     <section id="checkout">
       <div className={`${CSSContainer} my-8 p-8 grid grid-cols-1 gap-4`}>
-        <h2>Checkout</h2>
+        <h1>Checkout</h1>
         {/* <div>{JSON.stringify(res)}</div> */}
         <CheckoutForm product={res} />
       </div>
