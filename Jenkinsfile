@@ -45,6 +45,9 @@ pipeline {
         CMS_ZEPTOMAIL_TOKEN = credentials('CMS_ZEPTOMAIL_TOKEN')
 
         // WEB
+        REVOLUT_MERCHANT_HOST = credentials('REVOLUT_MERCHANT_HOST')
+        REVOLUT_MERCHANT_SECRET = credentials('REVOLUT_MERCHANT_SECRET')
+        
         WEB_MONGO_URL = credentials('WEB_MONGO_URL')
         WEB_RECAPTCHA_SECRET_KEY = credentials('WEB_RECAPTCHA_SECRET_KEY')
         WEB_RECAPTCHA_SITE_KEY = credentials('WEB_RECAPTCHA_SITE_KEY')
@@ -60,6 +63,8 @@ pipeline {
                         --build-arg MONGO_URL="$WEB_MONGO_URL" \
                         --build-arg RECAPTCHA_SECRET_KEY="$WEB_RECAPTCHA_SECRET_KEY" \
                         --build-arg RECAPTCHA_SITE_KEY="$WEB_RECAPTCHA_SITE_KEY" \
+                        --build-arg REVOLUT_MERCHANT_HOST="$REVOLUT_MERCHANT_HOST" \
+                        --build-arg REVOLUT_MERCHANT_SECRET="$REVOLUT_MERCHANT_SECRET" \
                         .
                 '''
             }
