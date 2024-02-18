@@ -19,7 +19,7 @@ export default async function Home() {
         slug="pricing"
         description={res.pricing_description}
         child1={{ component: "PriceTiers" }}
-        image="https://cms.3int.uk/assets/65be85a3-439f-4997-8623-4dc294db4549"
+        image="/media/65be85a3-439f-4997-8623-4dc294db4549"
         classNames={{
           container: "md:rounded-[2rem] bg-primary text-white relative shadow",
         }}
