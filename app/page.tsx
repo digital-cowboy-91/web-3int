@@ -20,6 +20,7 @@ export default async function Home() {
         description={res.pricing_description}
         child1={{ component: "PriceTiers" }}
         image="/media/65be85a3-439f-4997-8623-4dc294db4549?key=h320"
+        imageAlt="Bambulab P1S"
         classNames={{
           container: "md:rounded-[2rem] bg-primary text-white relative shadow",
         }}

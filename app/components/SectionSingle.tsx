@@ -12,6 +12,7 @@ interface Props {
   slug: string;
   child1: Component;
   image?: string;
+  imageAlt?: string;
   classNames?: {
     section?: string;
     container?: string;
@@ -25,6 +26,7 @@ export default async function SectionSingle({
   slug,
   child1,
   image,
+  imageAlt = "",
   classNames,
 }: Props) {
   return (
@@ -37,7 +39,7 @@ export default async function SectionSingle({
             <img
               className="absolute end-0 top-[-130px] w-[320px] hidden md:block"
               src={image}
-              alt=""
+              alt={imageAlt}
               width={320}
             />
           )}
