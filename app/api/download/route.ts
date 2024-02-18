@@ -3,10 +3,7 @@ import { CMS_Products } from "../_cms/items/products";
 
 async function fetchFile(id: string, filename: string) {
   const file = await fetch(
-    "https://cms.3int.uk/assets/" +
-      id +
-      "?download&access_token=" +
-      process.env.CMS_DRAFT_TOKEN,
+    `${process.env.CMS_HOST}/assets/${id}?download&access_token=${process.env.CMS_DRAFT_TOKEN}`,
     {
       cache: "no-store",
     }
