@@ -116,7 +116,7 @@ const GalleryDetail = ({
           <ReactPlayer
             playing
             loop
-            url={`${process.env.CMS_HOST}/assets/${activeMedia?.id}/${activeMedia?.filename_download}`}
+            url={`media/${activeMedia?.id}/${activeMedia?.filename_download}`}
             controls={true}
             fallback={<div>Loading... </div>}
             width="100%"
