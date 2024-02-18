@@ -1,3 +1,4 @@
+import { draftMode } from "next/headers";
 import cmsAPI from "../cmsAPI";
 
 const base = "/items/products";
@@ -14,10 +15,19 @@ export type TProduct = {
 };
 
 async function readItem(id: string) {
-  return await cmsAPI(`${base}/${id}?fields[]=*,gallery_rel.title`, {
-    method: "GET",
-    cache: "no-store",
-  }).then((res) => res.data as TProduct);
+  const { isEnabled: isDraft } = draftMode();
+
+  return await cmsAPI(
+    `${base}/${id}?fields[]=*,gallery_rel.title`,
+    {
+      method: "GET",
+      cache: isDraft ? "no-store" : "default",
+      next: {
+        tags: isDraft ? [] : [id],
+      },
+    },
+    isDraft
+  ).then((res) => res.data as TProduct);
 }
 
 type TDownloadable = {
