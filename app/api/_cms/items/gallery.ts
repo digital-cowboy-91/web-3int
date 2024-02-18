@@ -1,5 +1,7 @@
 import { draftMode } from "next/headers";
 import cmsAPI from "../cmsAPI";
+import { TProduct } from "./products";
+import { TSEO } from "./seo";
 
 const base = "/items/gallery";
 
@@ -18,6 +20,7 @@ export type TAsset = {
 
 export type TGallery = {
   id: string;
+  seo: TSEO;
   title: string;
   cover_image: TAsset;
   attributes: TAttribute[];
@@ -31,13 +34,14 @@ export type TGallery = {
   media: {
     asset: TAsset;
   }[];
+  buying_options: TProduct[];
 };
 
 async function readItem(id: string) {
   const { isEnabled: isDraft } = draftMode();
 
   return await cmsAPI(
-    `${base}/${id}?fields[]=*,cover_image.*,media.asset.*`,
+    `${base}/${id}?fields[]=*,cover_image.*,media.asset.*, buying_options.*, seo.*`,
     {
       method: "GET",
       cache: isDraft ? "no-store" : "default",
@@ -53,7 +57,7 @@ async function readItems() {
   const { isEnabled: isDraft } = draftMode();
 
   return await cmsAPI(
-    `${base}?fields[]=id,title,cover_image.*,attributes,media.asset.*`,
+    `${base}?fields[]=id,title,cover_image.*,attributes,media.asset.*,seo.*`,
     {
       method: "GET",
       cache: isDraft ? "no-store" : "default",

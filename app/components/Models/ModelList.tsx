@@ -1,7 +1,7 @@
 "use client";
 
 import { CSSButtonLink } from "@/app/styles";
-import { TGallery } from "@/cms/items/gallery";
+import { TGallery } from "@/app/api/_cms/items/gallery";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { useEffect, useState } from "react";

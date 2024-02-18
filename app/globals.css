@@ -22,7 +22,7 @@
     @apply font-semibold;
   }
   h1 {
-    @apply text-2xl uppercase;
+    @apply text-xl;
   }
   h2 {
     @apply text-xl;

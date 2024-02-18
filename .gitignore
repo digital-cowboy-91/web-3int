@@ -47,3 +47,4 @@ amplifyconfiguration*
 
 # private
 .notebook
+*.drawio

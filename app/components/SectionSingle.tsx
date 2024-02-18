@@ -31,7 +31,7 @@ export default async function SectionSingle({
     <section id={slug} className={classNames?.section}>
       <div className={`${CSSContainer} my-8 ${classNames?.container}`}>
         <div className="p-8 flex flex-col gap-4">
-          <h1 className="z-10">{title}</h1>
+          <h1 className="z-10 text-2xl uppercase">{title}</h1>
           {description && <p className="md:w-6/12 z-10">{description}</p>}
           {image && (
             <img

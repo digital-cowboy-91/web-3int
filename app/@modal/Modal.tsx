@@ -60,7 +60,7 @@ export default function Modal({ children }: PropsWithChildren) {
               exit="exit"
               className="flex min-h-full items-center justify-center text-center sm:items-center md:p-4"
             >
-              <div className="relative transform overflow-hidden text-left shadow-xl transition-all w-full max-w-screen-lg sm:rounded-lg">
+              <div className="relative transform text-left shadow-xl transition-all w-full max-w-screen-lg sm:rounded-lg">
                 <button
                   className="absolute end-0 m-8 me-4 md:me-8 border-2 rounded-full border-transparent hover:border-current"
                   onClick={onClose}

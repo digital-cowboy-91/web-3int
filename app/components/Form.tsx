@@ -35,6 +35,7 @@ interface Input {
   label: string;
   autocomplete?: string;
   disabled?: boolean;
+  className?: string;
 }
 
 const Input = ({
@@ -43,6 +44,7 @@ const Input = ({
   label,
   autocomplete = "off",
   disabled,
+  className,
 }: Input) => {
   const {
     register,
@@ -52,7 +54,7 @@ const Input = ({
   const err = errors[name];
 
   return (
-    <FieldWrapper error={errors[name]}>
+    <FieldWrapper error={errors[name]} className={className}>
       <input
         {...register(name)}
         id={name}
@@ -144,13 +146,64 @@ const Select = ({ name, label, options, disabled }: Select) => {
 };
 Form.Select = Select;
 
+interface Checkbox {
+  name: string;
+  label: string;
+  autocomplete?: string;
+  disabled?: boolean;
+  className?: string;
+}
+
+const Checkbox = ({
+  name,
+  label,
+  autocomplete = "off",
+  disabled,
+  className,
+}: Checkbox) => {
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext();
+
+  const err = errors[name];
+
+  return (
+    <FieldWrapper error={errors[name]} className={className}>
+      <div className="flex gap-2 items-center">
+        <input
+          {...register(name)}
+          id={name}
+          type="checkbox"
+          placeholder=" "
+          autoComplete={autocomplete}
+          className=""
+          disabled={disabled}
+        />
+        <label htmlFor={name} className="">
+          {label}
+        </label>
+      </div>
+    </FieldWrapper>
+  );
+};
+Form.Checkbox = Checkbox;
+
+interface Textarea {
+  name: string;
+  label: string;
+  rows?: number;
+  disabled?: boolean;
+}
+
 interface FieldWrapper {
   error: FieldError | Merge<FieldError, FieldErrorsImpl<any>> | undefined;
   children: ReactNode;
+  className?: string;
 }
 
-const FieldWrapper = ({ error, children }: FieldWrapper) => (
-  <div className="relative z-0 mb-5">
+const FieldWrapper = ({ error, children, className = "" }: FieldWrapper) => (
+  <div className={`relative z-0 ${className}`}>
     {children}
     {error && (
       <div className="my-2 text-error">{error.message?.toString()}</div>
