@@ -20,11 +20,7 @@ export default async function SectionHero() {
         <div className="col-span-1 w-80 mx-auto z-10">
           <div className="h-3/4 bg-primary flex flex-col justify-center gap-5 rounded-b-[2rem]">
             <LogoButton />
-            <p className="text-base text-white text-center ms-0">
-              on-demand 3D Printing service
-              <br />
-              for all your needs
-            </p>
+            <p className="text-base text-white text-center ms-0">{res.motto}</p>
           </div>
           <div className="h-1/4 flex flex-col justify-center">
             <ActionButton />
