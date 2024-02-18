@@ -4,7 +4,7 @@ const nextConfig = {
     return [
       {
         source: "/media/:id*",
-        destination: "https://cms.3int.uk/assets/:id*",
+        destination: process.env.CMS_HOST + "/assets/:id*",
       },
     ];
   },
