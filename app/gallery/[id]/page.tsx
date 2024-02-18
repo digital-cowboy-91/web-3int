@@ -6,6 +6,8 @@ import GalleryDetail from "./GalleryDetail";
 export async function generateMetadata({ params }: { params: { id: string } }) {
   const res = await CMS_Gallery.readItem(params.id);
 
+  console.log(res);
+
   if (!res) notFound();
 
   return {

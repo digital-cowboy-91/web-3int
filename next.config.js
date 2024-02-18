@@ -4,7 +4,7 @@ const nextConfig = {
     return [
       {
         source: "/media/:id*",
-        destination: process.env.CMS_HOST + "/assets/:id*",
+        destination: "http://cms:8055/assets/:id*",
       },
     ];
   },
