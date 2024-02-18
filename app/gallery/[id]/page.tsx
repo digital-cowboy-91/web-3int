@@ -3,6 +3,8 @@ import { CMS_Gallery } from "@/app/api/_cms/items/gallery";
 import { notFound } from "next/navigation";
 import GalleryDetail from "./GalleryDetail";
 
+export const dynamic = "force-static";
+
 export async function generateMetadata({ params }: { params: { id: string } }) {
   const res = await CMS_Gallery.readItem(params.id);
 

@@ -2,6 +2,8 @@ import { CSSContainer } from "@/app/styles";
 import { CMS_Legal } from "@/app/api/_cms/items/legal";
 import { notFound } from "next/navigation";
 
+export const dynamic = "force-static";
+
 export async function generateMetadata({
   params,
 }: {
