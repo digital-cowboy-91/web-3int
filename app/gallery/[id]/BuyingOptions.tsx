@@ -1,8 +1,14 @@
 import { TProduct } from "@/app/api/_cms/items/products";
 import ButtonDropdown from "@/app/components/ButtonDropdown";
 import { CSSButtonOutline, CSSLinkOutline } from "@/app/styles";
+import {
+  ArrowDownTrayIcon,
+  ShoppingBagIcon,
+} from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { useState } from "react";
+
+const linkClass = `${CSSLinkOutline} bg-success flex items-center gap-2`;
 
 export default function BuyingOptions({ products }: { products: TProduct[] }) {
   const [index, setIndex] = useState(0);
@@ -11,40 +17,28 @@ export default function BuyingOptions({ products }: { products: TProduct[] }) {
 
   return (
     <div className="w-full flex items-center justify-between">
-      <div className="flex flex-inline items-center gap-2">
-        Get{" "}
-        <ButtonDropdown
-          options={products.map(({ title }) => title)}
-          activeIndex={index}
-          setActiveIndex={(i) => setIndex(i)}
-        />{" "}
-        for <strong>{price > 0 ? "£" + price : "FREE"}</strong>
-      </div>
+      <span>Get</span>
+      <ButtonDropdown
+        options={products.map(({ title }) => title)}
+        activeIndex={index}
+        setActiveIndex={(i) => setIndex(i)}
+      />
+      <span>for</span>
       {price > 0 ? (
         <Link
-          className={`${CSSButtonOutline} bg-success text-dark`}
+          className={linkClass}
           href={"/checkout/" + id}
           rel="noopener noreferrer"
           target="_blank"
         >
-          Checkout
+          <span>{"£" + price}</span>
+          <ShoppingBagIcon className="w-6 h-6" />
         </Link>
       ) : (
-        <a
-          className={`${CSSButtonOutline} bg-success text-dark`}
-          href={"/api/download?pid=" + id}
-          download
-        >
-          Download
+        <a className={linkClass} href={"/api/download?pid=" + id} download>
+          <span>Free</span>
+          <ArrowDownTrayIcon className="w-6 h-6" />
         </a>
-        // <button
-        //   className={`${CSSButtonOutline} bg-success text-dark`}
-        //   onClick={async () =>
-        //     await fetch("/api/download?pid=" + id).then((res) => res.blob())
-        //   }
-        // >
-        //   Download
-        // </button>
       )}
     </div>
   );

@@ -27,11 +27,14 @@ export default function ButtonDropdown({
   return (
     <div className="relative overflow-visible">
       <button
-        className={`${CSSButtonOutline} bg-success text-dark flex items-center gap-2`}
+        className={`${CSSButtonOutline} bg-success text-dark flex items-center justify-between gap-2`}
         type="button"
         onClick={() => setIsOpen(!isOpen)}
       >
-        {options[activeIndex]} <ChevronDownIcon className="w-[1rem] h-[1rem]" />
+        <span className="w-[70px] overflow-hidden text-left">
+          {options[activeIndex]}
+        </span>
+        <ChevronDownIcon className="w-[1rem] h-[1rem]" />
       </button>
       <AnimatePresence>
         {isOpen && (
@@ -41,7 +44,7 @@ export default function ButtonDropdown({
             animate="enter"
             exit="exit"
             aria-labelledby="dropdownDefaultButton"
-            className="absolute z-20 bg-white pb-0 w-full rounded-md mt-1 overflow-hidden shadow"
+            className="absolute w-full z-20 bg-white pb-0 rounded-md mt-1 overflow-hidden shadow"
             onMouseLeave={() => setIsOpen(false)}
           >
             {options.map((option, index) => (
