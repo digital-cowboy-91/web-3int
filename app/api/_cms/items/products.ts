@@ -3,6 +3,11 @@ import cmsAPI from "../cmsAPI";
 
 const base = "/items/products";
 
+type TDiscount = {
+  quantity: number;
+  percentage: number;
+};
+
 export type TProduct = {
   id: string;
   title: string;
@@ -12,6 +17,8 @@ export type TProduct = {
     id: string;
     title: string;
   };
+  colours: string[];
+  discounts: TDiscount[] | [];
 };
 
 async function readItem(id: string) {

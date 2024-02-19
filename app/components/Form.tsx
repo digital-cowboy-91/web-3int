@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import {
   FieldError,
+  FieldErrors,
   FieldErrorsImpl,
   Merge,
   useFormContext,
@@ -51,10 +52,8 @@ const Input = ({
     formState: { errors },
   } = useFormContext();
 
-  const err = errors[name];
-
   return (
-    <FieldWrapper error={errors[name]} className={className}>
+    <FieldWrapper id={name} errors={errors} className={className}>
       <input
         {...register(name)}
         id={name}
@@ -86,7 +85,7 @@ const Textarea = ({ name, label, rows, disabled }: Textarea) => {
   } = useFormContext();
 
   return (
-    <FieldWrapper error={errors[name]}>
+    <FieldWrapper id={name} errors={errors}>
       <textarea
         {...register(name)}
         id={name}
@@ -120,7 +119,7 @@ const Select = ({ name, label, options, disabled }: Select) => {
   } = useFormContext();
 
   return (
-    <FieldWrapper error={errors[name]}>
+    <FieldWrapper id={name} errors={errors}>
       <select
         {...register(name)}
         id={name}
@@ -166,10 +165,8 @@ const Checkbox = ({
     formState: { errors },
   } = useFormContext();
 
-  const err = errors[name];
-
   return (
-    <FieldWrapper error={errors[name]} className={className}>
+    <FieldWrapper id={name} errors={errors} className={className}>
       <div className="flex gap-2 items-center">
         <input
           {...register(name)}
@@ -197,18 +194,41 @@ interface Textarea {
 }
 
 interface FieldWrapper {
-  error: FieldError | Merge<FieldError, FieldErrorsImpl<any>> | undefined;
+  id: string;
+  errors: FieldErrors;
   children: ReactNode;
   className?: string;
 }
 
-const FieldWrapper = ({ error, children, className = "" }: FieldWrapper) => (
-  <div className={`relative z-0 ${className}`}>
-    {children}
-    {error && (
-      <div className="my-2 text-error">{error.message?.toString()}</div>
-    )}
-  </div>
-);
+const FieldWrapper = ({
+  id,
+  errors,
+  children,
+  className = "",
+}: FieldWrapper) => {
+  const errMessage = extractError({ stringPath: id, errors });
+
+  return (
+    <div className={`relative z-0 ${className}`}>
+      {children}
+      {errMessage && <div className="my-2 text-error">{errMessage}</div>}
+    </div>
+  );
+};
+
+function extractError({
+  stringPath,
+  errors,
+}: {
+  stringPath: string;
+  errors: FieldErrors;
+}) {
+  const message = stringPath.split(".").reduce((acc: any, key) => {
+    if (acc === undefined) return undefined;
+    return acc[key];
+  }, errors)?.message;
+
+  return message;
+}
 
 export default Form;
