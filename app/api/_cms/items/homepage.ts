@@ -1,5 +1,5 @@
 import cmsAPI from "../cmsAPI";
-import { TAsset } from "./gallery";
+import { TAsset } from "./files";
 import { TSEO } from "./seo";
 
 const base = "/items/homepage?fields[]=*,hero_image.*,seo.*";

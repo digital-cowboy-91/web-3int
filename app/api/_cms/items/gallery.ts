@@ -2,6 +2,8 @@ import { draftMode } from "next/headers";
 import cmsAPI from "../cmsAPI";
 import { TProduct } from "./products";
 import { TSEO } from "./seo";
+import { TLicense } from "./licenses";
+import { TAsset } from "./files";
 
 const base = "/items/gallery";
 
@@ -10,27 +12,13 @@ type TAttribute = {
   value: string;
 };
 
-export type TAsset = {
-  id: string;
-  title: string;
-  filename_download: string;
-  type: string;
-  tags: string[] | null;
-};
-
 export type TGallery = {
   id: string;
   seo: TSEO;
+  license: TLicense;
   title: string;
   cover_image: TAsset;
   attributes: TAttribute[];
-  work_name: string | null;
-  work_url: string | null;
-  author_name: string | null;
-  author_url: string | null;
-  license_name: string | null;
-  license_url: string | null;
-  claim_ownership: boolean;
   media: {
     asset: TAsset;
   }[];
@@ -41,7 +29,7 @@ async function readItem(id: string) {
   const { isEnabled: isDraft } = draftMode();
 
   return await cmsAPI(
-    `${base}/${id}?fields[]=*,cover_image.*,media.asset.*, buying_options.*, seo.*`,
+    `${base}/${id}?fields[]=*,cover_image.*,media.asset.*,buying_options.*,seo.*,license.*,attributes.*`,
     {
       method: "GET",
       cache: isDraft ? "no-store" : "default",
@@ -57,7 +45,7 @@ async function readItems() {
   const { isEnabled: isDraft } = draftMode();
 
   return await cmsAPI(
-    `${base}?fields[]=id,title,cover_image.*,attributes,media.asset.*,seo.*`,
+    `${base}?fields[]=id,title,cover_image.*,attributes,media.asset.*`,
     {
       method: "GET",
       cache: isDraft ? "no-store" : "default",

@@ -20,7 +20,9 @@ export default async function SectionHero() {
         <div className="col-span-1 w-80 mx-auto z-10">
           <div className="h-3/4 bg-primary flex flex-col justify-center gap-5 rounded-b-[2rem]">
             <LogoButton />
-            <p className="text-base text-white text-center ms-0">{res.motto}</p>
+            <h1 className="text-base text-white text-center ms-0 px-4 font-normal">
+              {res.motto}
+            </h1>
           </div>
           <div className="h-1/4 flex flex-col justify-center">
             <ActionButton />

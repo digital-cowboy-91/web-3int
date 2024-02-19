@@ -20,16 +20,18 @@ const GalleryDetail = ({
 }) => {
   const {
     id,
+    license: {
+      claim_ownership,
+      author_name,
+      author_url,
+      license_title,
+      license_url,
+      work_title,
+      work_url,
+    },
     title,
     media,
     attributes,
-    claim_ownership,
-    work_name,
-    work_url,
-    author_name,
-    author_url,
-    license_name,
-    license_url,
     buying_options,
   } = model;
 
@@ -60,17 +62,17 @@ const GalleryDetail = ({
           <Link
             href={claim_ownership ? "/gallery/" + id : (work_url as string)}
           >
-            {claim_ownership ? title : work_name}
+            {claim_ownership ? title : work_title}
           </Link>{" "}
           by{" "}
           <Link href={claim_ownership ? "/" : (author_url as string)}>
             {claim_ownership ? "3INT UK" : author_name}
           </Link>
-          {license_name && license_url && (
+          {license_title && license_url && (
             <>
               <br />
               is licensed under{" "}
-              <Link href={license_url as string}>{license_name}</Link>
+              <Link href={license_url as string}>{license_title}</Link>
             </>
           )}
         </div>
