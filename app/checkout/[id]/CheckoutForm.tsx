@@ -12,11 +12,13 @@ import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import { FormProvider, useForm } from "react-hook-form";
 import actionCreateOrder from "./actionCreateOrder";
 import { SCheckout, TCheckout } from "./lib/schema";
+import { useRouter } from "next/navigation";
 
 export default function CheckoutForm({ product }: { product: TProduct }) {
   const { id, gallery_rel, title, price, downloadable, colours, discounts } =
     product;
 
+  const router = useRouter();
   const { executeRecaptcha } = useGoogleReCaptcha();
   const [submitted, setSubmitted] = useState(false);
 
@@ -53,6 +55,7 @@ export default function CheckoutForm({ product }: { product: TProduct }) {
         onSuccess() {
           console.log("Payment successful");
           setSubmitted(true);
+          router.push("/checkout/success");
         },
         onError() {
           console.log("Payment failed");
@@ -69,7 +72,7 @@ export default function CheckoutForm({ product }: { product: TProduct }) {
     setValue("product_id", id);
     setValue("description", gallery_rel.title + ", " + title);
     setValue("quantity", 1);
-    setValue("colour", colours[0]);
+    setValue("colour", downloadable ? undefined : colours[0]);
   }, []);
 
   const watchQuantity = watch("quantity");
