@@ -1,42 +1,67 @@
 "use server";
 
-import { REVOLUT_Orders } from "../../api/_revolut/order";
-import { TCheckout_full, TCheckout_min } from "./CheckoutForm";
+import { CMS_Products } from "@/app/api/_cms/items/products";
+import getDiscountCoef from "@/app/api/_cms/lib/getDiscountCoef";
+import { SCheckout, TCheckout } from "./lib/schema";
+import { REVOLUT_Orders, TOrderData } from "@/app/api/_revolut/order";
 
 export default async function actionCreateOrder(
-  data: TCheckout_min | TCheckout_full
+  data: TCheckout
 ): Promise<string> {
   try {
-    console.log("actionCreateOrder", data);
-    // const {
-    //   pid,
-    //   description,
-    //   quantity,
-    //   price,
-    //   email,
-    //   privacy,
-    //   terms,
-    //   marketing,
-    // } = data;
+    SCheckout.parse(data);
 
-    // const order = await REVOLUT_Orders.createItem({
-    //   description,
-    //   amount: price * quantity * 100,
-    //   currency: "GBP",
-    //   customer: {
-    //     email,
-    //   },
-    //   metadata: {
-    //     product_id: pid,
-    //     privacy,
-    //     terms,
-    //     marketing,
-    //   },
-    // });
+    const {
+      product_id,
+      description,
+      quantity,
+      forename,
+      surname,
+      shipping_address,
+      note,
+      colour,
+      privacy,
+      terms,
+      marketing,
+    } = data;
+    const { discounts, price } = await CMS_Products.readItem(product_id);
 
-    // console.log("ORDER ", order);
+    const orderData: TOrderData = {
+      description,
+      amount:
+        quantity === 1
+          ? price * 100
+          : Math.round(
+              price * quantity * getDiscountCoef(discounts, quantity) * 100
+            ),
+      currency: "GBP",
+      customer: {
+        full_name: `${forename} ${surname}`,
+        email: data.email,
+      },
+      shipping_address: shipping_address
+        ? {
+            street_line_1: shipping_address.street_line_1,
+            street_line_2: shipping_address.street_line_2,
+            country_code: "GB",
+            city: shipping_address.city,
+            postcode: shipping_address.postcode,
+          }
+        : undefined,
+      metadata: {
+        product_id,
+        quantity,
+        note,
+        colour,
+        privacy,
+        terms,
+        marketing,
+      },
+    };
 
-    // return JSON.stringify({ id: order.data.id, token: order.data.token });
+    const order = await REVOLUT_Orders.createItem(orderData);
+
+    return JSON.stringify({ id: order.data.id, token: order.data.token });
   } catch (e) {
     console.log("ERR ", e);
     return JSON.stringify(e);

@@ -3,7 +3,7 @@ import cmsAPI from "../cmsAPI";
 
 const base = "/items/products";
 
-type TDiscount = {
+export type TDiscount = {
   quantity: number;
   percentage: number;
 };
