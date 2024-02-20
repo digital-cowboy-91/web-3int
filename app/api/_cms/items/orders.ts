@@ -32,18 +32,18 @@ async function createItem(data: TOrder) {
 // }
 
 type TDownloadable = {
-  product: {
+  product_ref: {
     asset: {
       id: string;
       filename_download: string;
     };
   };
-  state: string;
+  payment_state: number;
 };
 
 async function readDownloadable(id: string) {
   return await cmsAPI(
-    `${base}/${id}?fields[]=state,product.asset.id,product.asset.filename_download`,
+    `${base}/${id}?fields[]=payment_state,product_ref.asset.id,product_ref.asset.filename_download`,
     {
       method: "GET",
       cache: "no-store",

@@ -34,10 +34,10 @@ export async function GET(request: Request) {
   if (oid) {
     const data = await CMS_Orders.readDownloadable(oid);
 
-    if (data && data.state === "completed") {
+    if (data && data.payment_state === 3) {
       return fetchFile(
-        data.product.asset.id,
-        data.product.asset.filename_download
+        data.product_ref.asset.id,
+        data.product_ref.asset.filename_download
       );
     }
   }

@@ -1,6 +1,6 @@
 import { TProduct } from "@/app/api/_cms/items/products";
 import ButtonDropdown from "@/app/components/ButtonDropdown";
-import { CSSButtonOutline, CSSLinkOutline } from "@/app/styles";
+import { CSSLinkOutline } from "@/app/styles";
 import {
   ArrowDownTrayIcon,
   ShoppingBagIcon,
