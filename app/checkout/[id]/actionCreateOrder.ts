@@ -66,7 +66,7 @@ export default async function actionCreateOrder(
 
     const order = await REVOLUT_Orders.createItem(orderData);
 
-    return JSON.stringify({ id: order.data.id, token: order.data.token });
+    return order.data.token;
   } catch (e) {
     console.log("ERR ", e);
     return JSON.stringify(e);

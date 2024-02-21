@@ -43,16 +43,11 @@ export default function CheckoutForm({ product }: { product: TProduct }) {
 
       if (!verified) throw new Error("Captcha verification failed");
 
-      const { id: rc_id, token: rc_token } = await actionCreateOrder(data).then(
-        (res) => JSON.parse(res)
-      );
+      const rc_token = await actionCreateOrder(data);
 
       if (!rc_token) throw new Error("Revolut token not received");
 
-      const RC = await RevolutCheckout(
-        rc_token,
-        process.env.REVOLUT_MERCHANT_MODE as Mode
-      );
+      const RC = await RevolutCheckout(rc_token);
 
       RC.payWithPopup({
         onSuccess() {
