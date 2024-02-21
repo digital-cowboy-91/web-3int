@@ -16,6 +16,9 @@ export type TOrderData = {
     marketing: boolean;
     note?: string | undefined;
     colour?: string | undefined;
+    downloadable: boolean;
+    forename: string;
+    surname: string;
   };
   shipping_address?:
     | {

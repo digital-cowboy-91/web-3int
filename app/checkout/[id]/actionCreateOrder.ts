@@ -24,7 +24,9 @@ export default async function actionCreateOrder(
       terms,
       marketing,
     } = data;
-    const { discounts, price } = await CMS_Products.readItem(product_id);
+    const { discounts, price, downloadable } = await CMS_Products.readItem(
+      product_id
+    );
 
     const orderData: TOrderData = {
       description,
@@ -36,7 +38,7 @@ export default async function actionCreateOrder(
             ),
       currency: "GBP",
       customer: {
-        full_name: `${forename} ${surname}`,
+        full_name: forename + " " + surname,
         email: data.email,
       },
       shipping_address: shipping_address
@@ -56,6 +58,9 @@ export default async function actionCreateOrder(
         privacy,
         terms,
         marketing,
+        downloadable,
+        forename,
+        surname,
       },
     };
 

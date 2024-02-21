@@ -156,6 +156,11 @@ EOF
 
                             # WEB
                             WEB_PUBLIC_URL=$WEB_PUBLIC_URL
+
+                            # REVOLUT
+                            REVOLUT_MERCHANT_HOST=$REVOLUT_MERCHANT_HOST
+                            REVOLUT_MERCHANT_SECRET=$REVOLUT_MERCHANT_SECRET
+                            REVOLUT_MERCHANT_MODE=prod
 EOF
 
                         scp -o ControlPath=ctrl-socket ./.temp.env $SSH:$WORKDIR/.env

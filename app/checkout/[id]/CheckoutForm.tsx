@@ -6,7 +6,7 @@ import Form from "@/app/components/Form";
 import { verifyCaptchaAction } from "@/app/lib/verifyCaptchaAction";
 import { CSSButtonOutline } from "@/app/styles";
 import { zodResolver } from "@hookform/resolvers/zod";
-import RevolutCheckout from "@revolut/checkout";
+import RevolutCheckout, { Mode } from "@revolut/checkout";
 import { useEffect, useState } from "react";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import { FormProvider, useForm } from "react-hook-form";
@@ -49,7 +49,10 @@ export default function CheckoutForm({ product }: { product: TProduct }) {
 
       if (!rc_token) throw new Error("Revolut token not received");
 
-      const RC = await RevolutCheckout(rc_token, "sandbox");
+      const RC = await RevolutCheckout(
+        rc_token,
+        process.env.REVOLUT_MERCHANT_MODE as Mode
+      );
 
       RC.payWithPopup({
         onSuccess() {
