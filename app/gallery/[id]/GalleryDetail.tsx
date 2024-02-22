@@ -83,7 +83,7 @@ const GalleryDetail = ({
             <motion.button
               key={item.id}
               onClick={() => setActiveMedia(item)}
-              className={`flex-none relative w-[4rem] h-[4rem] bg-white rounded-md p-1`}
+              className={`flex-none relative size-16 bg-white rounded-md p-1`}
               aria-label={`Show image ${item.title}`}
             >
               {activeMedia.id === item.id && (
@@ -102,7 +102,7 @@ const GalleryDetail = ({
                 <ImageAsset
                   asset={item}
                   preset="h100"
-                  className="object-contain w-full h-full"
+                  className="object-contain size-full"
                 />
               )}
             </motion.button>
@@ -150,7 +150,7 @@ const GalleryDetail = ({
                 key={activeMedia.id}
                 asset={activeMedia}
                 preset="h1280"
-                className="object-contain h-full w-full"
+                className="object-contain size-full"
               />
             </TransformComponent>
           </TransformWrapper>

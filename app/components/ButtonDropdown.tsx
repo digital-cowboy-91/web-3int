@@ -34,7 +34,7 @@ export default function ButtonDropdown({
         <span className="w-[70px] overflow-hidden text-left">
           {options[activeIndex]}
         </span>
-        <ChevronDownIcon className="w-[1rem] h-[1rem]" />
+        <ChevronDownIcon className="size-4" />
       </button>
       <AnimatePresence>
         {isOpen && (

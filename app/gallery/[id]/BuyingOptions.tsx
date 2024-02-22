@@ -32,12 +32,12 @@ export default function BuyingOptions({ products }: { products: TProduct[] }) {
           target="_blank"
         >
           <span>{"£" + price}</span>
-          <ShoppingBagIcon className="w-6 h-6" />
+          <ShoppingBagIcon className="size-6" />
         </Link>
       ) : (
         <a className={linkClass} href={"/api/download?pid=" + id} download>
           <span>Free</span>
-          <ArrowDownTrayIcon className="w-6 h-6" />
+          <ArrowDownTrayIcon className="size-6" />
         </a>
       )}
     </div>
