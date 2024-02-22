@@ -1,6 +1,6 @@
 import { TProduct } from "@/app/api/_cms/items/products";
 import ButtonDropdown from "@/app/components/ButtonDropdown";
-import { CSSLinkOutline } from "@/app/styles";
+import { CSSLinkOutline, TWButton, TWButtonColour } from "@/app/styles";
 import {
   ArrowDownTrayIcon,
   ShoppingBagIcon,
@@ -26,18 +26,22 @@ export default function BuyingOptions({ products }: { products: TProduct[] }) {
       <span>for</span>
       {price > 0 ? (
         <Link
-          className={linkClass}
+          className="link-outline-success"
           href={"/checkout/" + id}
           rel="noopener noreferrer"
           target="_blank"
         >
           <span>{"£" + price}</span>
-          <ShoppingBagIcon className="size-6" />
+          <ShoppingBagIcon className="size-4" />
         </Link>
       ) : (
-        <a className={linkClass} href={"/api/download?pid=" + id} download>
+        <a
+          className="link-outline-success"
+          href={"/api/download?pid=" + id}
+          download
+        >
           <span>Free</span>
-          <ArrowDownTrayIcon className="size-6" />
+          <ArrowDownTrayIcon className="size-4" />
         </a>
       )}
     </div>

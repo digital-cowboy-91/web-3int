@@ -3,7 +3,7 @@ import PriceTierFeature from "./PriceTierFeature";
 
 const CSSDl = "text-dark flex flex-col gap-2";
 const CSSDt =
-  "border-b-2 border-gray my-4 text-end text-gray font-semibold uppercase";
+  "border-b-2 border-grey my-4 text-end text-grey font-semibold uppercase";
 
 const PriceTiers = async () => {
   const res = await CMS_Pricing.readItems();

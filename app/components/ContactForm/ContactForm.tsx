@@ -1,7 +1,8 @@
 "use client";
 
-import { CSSButtonLink, CSSButtonOutline } from "@/app/styles";
+import { SContactForm, TContactForm } from "@/app/api/_cms/items/clientQueries";
 import { verifyCaptchaAction } from "@/app/lib/verifyCaptchaAction";
+import { CSSButtonLink } from "@/app/styles";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAnimate } from "framer-motion";
 import { useSearchParams } from "next/navigation";
@@ -9,9 +10,9 @@ import { useEffect, useState } from "react";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import { FormProvider, useForm } from "react-hook-form";
 import Form from "../Form";
-import submitAction from "./submitAction";
-import { SContactForm, TContactForm } from "@/app/api/_cms/items/clientQueries";
 import { TOption } from "./ContactFormWrapper";
+import submitAction from "./submitAction";
+import TWButton from "../UI/TWButton";
 
 export const ContactForm = ({ options }: { options: TOption[] }) => {
   const { executeRecaptcha } = useGoogleReCaptcha();
@@ -150,24 +151,18 @@ export const ContactForm = ({ options }: { options: TOption[] }) => {
             label="Subject"
             disabled={disabled}
           />
-          {/* <Form.Select
-            name="subject"
-            label="Subject"
-            options={options}
-            disabled={disabled}
-          /> */}
           <Form.Textarea name="message" label="Message" disabled={disabled} />
           <div className="flex flex-row gap-8 justify-end">
             <button
               onClick={() => reset()}
-              className={CSSButtonLink}
+              className="btn-underline-action"
               disabled={disabled}
             >
               Reset
             </button>
             <button
               type="submit"
-              className={CSSButtonOutline}
+              className="btn-outline-action"
               disabled={disabled}
             >
               Send

@@ -210,7 +210,7 @@ export default function CheckoutForm({ product }: { product: TProduct }) {
               </>
             )}
             <h3>Consent</h3>
-            <div className="grid grid-cols-1 gap-2">
+            <div className="space-y-2">
               <Form.Checkbox
                 name="privacy"
                 label="I've read the Privacy Policy and I agree with it"
@@ -233,7 +233,7 @@ export default function CheckoutForm({ product }: { product: TProduct }) {
             <div className="ms-auto">
               <button
                 type="submit"
-                className={CSSButtonOutline + " bg-success"}
+                className="btn-outline-success"
                 disabled={disabled}
               >
                 Buy

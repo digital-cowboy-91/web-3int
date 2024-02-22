@@ -79,9 +79,88 @@ body {
     @apply text-primary border-transparent uppercase duration-300 hover:border-current;
   }
   table {
-    @apply border border-gray-light w-full;
+    @apply border border-grey-light w-full;
   }
   td {
     @apply px-2 py-1;
   }
 }
+
+/* START: BTN & LINK */
+.btn {
+  @apply flex items-center gap-4 px-4 py-2 border-2 font-semibold uppercase transition-all;
+
+  &--outline {
+    @apply rounded-full;
+
+    &--success {
+      @apply border-green-600;
+
+      &--link:hover {
+        @apply bg-green-600 text-white;
+      }
+
+      &:enabled:hover {
+        @apply bg-green-600 text-white;
+      }
+    }
+
+    &--action {
+      @apply border-yellow-400;
+
+      &:enabled:hover {
+        @apply bg-yellow-400 text-dark;
+      }
+    }
+
+    &:disabled {
+      @apply cursor-not-allowed text-grey border-grey;
+    }
+  }
+
+  &--underline {
+    @apply border-b-2 border-transparent;
+
+    &--action {
+      &:enabled:hover {
+        @apply border-b-yellow-400;
+      }
+    }
+
+    &--white--link {
+      @apply text-white;
+
+      &:hover {
+        @apply border-b-white;
+      }
+    }
+
+    &:disabled {
+      @apply cursor-not-allowed text-grey;
+    }
+  }
+}
+
+/* BTN & LINK > WHITE */
+.link-underline-white {
+  @apply btn btn--underline btn--underline--white--link;
+}
+
+/* BTN & LINK > ACTION */
+.btn-outline-action {
+  @apply btn btn--outline btn--outline--action;
+}
+
+.btn-underline-action {
+  @apply btn btn--underline btn--underline--action;
+}
+
+/* BTN & LINK > SUCCESS */
+.btn-outline-success {
+  @apply btn btn--outline btn--outline--success;
+}
+
+.link-outline-success {
+  @apply btn btn--outline btn--outline--success btn--outline--success--link;
+}
+/* END: BTN & LINK */

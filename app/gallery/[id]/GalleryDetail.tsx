@@ -40,7 +40,7 @@ const GalleryDetail = ({
   return (
     <div
       className={`grid grid-cols-1 md:grid-cols-5 gap-8 ${
-        modalMode && "bg-gray-light md:rounded-md p-4 md:p-8"
+        modalMode && "bg-grey-light md:rounded-md p-4 md:p-8"
       }`}
     >
       <div className="md:order-2 md:col-span-2 flex flex-col gap-8">
