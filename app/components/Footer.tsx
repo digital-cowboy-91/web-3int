@@ -13,10 +13,7 @@ const Footer = async () => {
       <ul className="m-0 flex flex-row gap-4 justify-center">
         {res.map(({ title, slug }) => (
           <li key={slug}>
-            <Link
-              href={`/legal/${slug}`}
-              className="text-white whitespace-nowrap"
-            >
+            <Link href={`/legal/${slug}`} className="link-underline-white">
               {title}
             </Link>
           </li>

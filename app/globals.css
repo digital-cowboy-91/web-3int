@@ -88,10 +88,10 @@ body {
 
 /* START: BTN & LINK */
 .btn {
-  @apply flex items-center gap-4 px-4 py-2 border-2 font-semibold uppercase transition-all;
+  @apply flex items-center gap-4 px-4 py-2 font-semibold uppercase transition-all;
 
   &--outline {
-    @apply rounded-full;
+    @apply rounded-full border-2;
 
     &--success {
       @apply border-green-600;
@@ -119,7 +119,7 @@ body {
   }
 
   &--underline {
-    @apply border-b-2 border-transparent;
+    @apply border-y-2 border-transparent;
 
     &--action {
       &:enabled:hover {
