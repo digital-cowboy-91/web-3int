@@ -29,7 +29,7 @@ async function readItem(id: string) {
   const { isEnabled: isDraft } = draftMode();
 
   return await cmsAPI(
-    `${base}/${id}?fields[]=*,cover_image.*,media.asset.*,buying_options.*,seo.*,license.*,attributes.*`,
+    `${base}/${id}?fields[]=*,cover_image.*,media.asset.*,buying_options.*,seo.*,license.*,attributes.*,buying_options.gallery_rel.title,buying_options.gallery_rel.cover_image`,
     {
       method: "GET",
       cache: isDraft ? "no-store" : "default",

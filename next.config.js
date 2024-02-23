@@ -14,6 +14,10 @@ const nextConfig = {
         source: "/media/:id*",
         destination: "https://cms.3int.uk/assets/:id*",
       },
+      {
+        source: "/checkout/c/pay/:path*",
+        destination: "https://checkout.stripe.com/c/pay/:path*",
+      },
     ];
   },
   typescript: {

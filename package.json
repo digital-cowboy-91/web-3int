@@ -12,6 +12,7 @@
     "@heroicons/react": "^2.0.18",
     "@hookform/resolvers": "^3.3.2",
     "@revolut/checkout": "^1.1.18",
+    "@stripe/stripe-js": "^3.0.5",
     "framer-motion": "^10.16.4",
     "next": "^14.1.0",
     "react": "^18",
@@ -21,6 +22,7 @@
     "react-player": "^2.14.1",
     "react-spinners": "^0.13.8",
     "react-zoom-pan-pinch": "^3.3.0",
+    "stripe": "^14.18.0",
     "zod": "^3.22.4"
   },
   "devDependencies": {

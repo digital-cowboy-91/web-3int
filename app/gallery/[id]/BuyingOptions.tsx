@@ -1,14 +1,11 @@
 import { TProduct } from "@/app/api/_cms/items/products";
 import ButtonDropdown from "@/app/components/ButtonDropdown";
-import { CSSLinkOutline, TWButton, TWButtonColour } from "@/app/styles";
 import {
   ArrowDownTrayIcon,
   ShoppingBagIcon,
 } from "@heroicons/react/24/outline";
-import Link from "next/link";
 import { useState } from "react";
-
-const linkClass = `${CSSLinkOutline} bg-success flex items-center gap-2`;
+import ButtonCheckoutStripe from "./ButtonCheckoutStripe";
 
 export default function BuyingOptions({ products }: { products: TProduct[] }) {
   const [index, setIndex] = useState(0);
@@ -25,15 +22,19 @@ export default function BuyingOptions({ products }: { products: TProduct[] }) {
       />
       <span>for</span>
       {price > 0 ? (
-        <Link
-          className="link-outline-success"
-          href={"/checkout/" + id}
-          rel="noopener noreferrer"
-          target="_blank"
-        >
+        // <Link
+        //   className="link-outline-success"
+        //   href={"/checkout/" + id}
+        //   rel="noopener noreferrer"
+        //   target="_blank"
+        // >
+        //   <span>{"£" + price}</span>
+        //   <ShoppingBagIcon className="size-4" />
+        // </Link>
+        <ButtonCheckoutStripe product={products[index]}>
           <span>{"£" + price}</span>
           <ShoppingBagIcon className="size-4" />
-        </Link>
+        </ButtonCheckoutStripe>
       ) : (
         <a
           className="link-outline-success"

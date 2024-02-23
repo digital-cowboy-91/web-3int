@@ -16,6 +16,7 @@ export type TProduct = {
   gallery_rel: {
     id: string;
     title: string;
+    cover_image: string;
   };
   colours: string[];
   discounts: TDiscount[] | [];
@@ -25,7 +26,7 @@ async function readItem(id: string) {
   const { isEnabled: isDraft } = draftMode();
 
   return await cmsAPI(
-    `${base}/${id}?fields[]=*,gallery_rel.title`,
+    `${base}/${id}?fields[]=*,gallery_rel.title,gallery_rel.cover_image`,
     {
       method: "GET",
       cache: isDraft ? "no-store" : "default",
