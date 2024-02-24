@@ -6,6 +6,8 @@ import {
 } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import ButtonCheckoutStripe from "./ButtonCheckoutStripe";
+import Link from "next/link";
+import ButtonAddToCart from "./ButtonAddToCart";
 
 export default function BuyingOptions({ products }: { products: TProduct[] }) {
   const [index, setIndex] = useState(0);
@@ -31,10 +33,16 @@ export default function BuyingOptions({ products }: { products: TProduct[] }) {
         //   <span>{"£" + price}</span>
         //   <ShoppingBagIcon className="size-4" />
         // </Link>
-        <ButtonCheckoutStripe product={products[index]}>
+
+        // <ButtonCheckoutStripe product={products[index]}>
+        //   <span>{"£" + price}</span>
+        //   <ShoppingBagIcon className="size-4" />
+        // </ButtonCheckoutStripe>
+
+        <ButtonAddToCart pid={products[index].id}>
           <span>{"£" + price}</span>
           <ShoppingBagIcon className="size-4" />
-        </ButtonCheckoutStripe>
+        </ButtonAddToCart>
       ) : (
         <a
           className="link-outline-success"
