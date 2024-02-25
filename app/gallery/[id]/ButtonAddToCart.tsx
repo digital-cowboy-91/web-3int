@@ -1,52 +1,47 @@
 "use client";
 
+import { TProduct } from "@/app/api/_cms/items/products";
 import { setCartItem } from "@/app/cart/lib/cart";
+import { useCartStore } from "@/app/cart/lib/store";
 import { useRouter } from "next/navigation";
 import { ReactNode, use, useEffect, useState } from "react";
 
-function localCart() {
-  let cart = localStorage.getItem("cart");
-
-  if (!cart) return [];
-
-  return JSON.parse(cart);
-}
-
 type Props = {
-  pid: string;
+  product: TProduct;
   children: ReactNode;
 };
 
-export default function ByttonAddToCart({ pid, children }: Props) {
-  const [inCart, setInCart] = useState(false);
+export default function ButtonAddToCart({ product, children }: Props) {
+  const [inProgress, setInProgress] = useState(false);
   const router = useRouter();
 
+  const addCartItem = useCartStore((s) => s.addCartItem);
+
   useEffect(() => {
-    if (!inCart) return;
+    if (!inProgress) return;
 
     const countdown = setTimeout(() => {
-      setInCart(false);
+      setInProgress(false);
     }, 3000);
 
     return () => {
       clearTimeout(countdown);
     };
-  }, [inCart]);
+  }, [inProgress]);
 
   return (
     <button
       className="btn-outline-success"
       onClick={() => {
-        if (inCart) {
+        if (inProgress) {
           router.push("/cart");
+        } else {
+          addCartItem(product);
+          setInProgress(true);
         }
-
-        setCartItem({ id: pid, quantity: 1 });
-
-        setInCart(true);
       }}
     >
-      {inCart ? "Go to cart" : children}
+      {inProgress ? "Go to cart" : children}
     </button>
   );
 }

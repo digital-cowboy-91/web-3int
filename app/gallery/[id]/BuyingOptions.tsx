@@ -5,8 +5,6 @@ import {
   ShoppingBagIcon,
 } from "@heroicons/react/24/outline";
 import { useState } from "react";
-import ButtonCheckoutStripe from "./ButtonCheckoutStripe";
-import Link from "next/link";
 import ButtonAddToCart from "./ButtonAddToCart";
 
 export default function BuyingOptions({ products }: { products: TProduct[] }) {
@@ -39,7 +37,7 @@ export default function BuyingOptions({ products }: { products: TProduct[] }) {
         //   <ShoppingBagIcon className="size-4" />
         // </ButtonCheckoutStripe>
 
-        <ButtonAddToCart pid={products[index].id}>
+        <ButtonAddToCart product={products[index]}>
           <span>{"£" + price}</span>
           <ShoppingBagIcon className="size-4" />
         </ButtonAddToCart>
