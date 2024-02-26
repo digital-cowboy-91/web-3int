@@ -164,3 +164,72 @@ body {
   @apply btn btn--outline btn--outline--success btn--outline--success--link;
 }
 /* END: BTN & LINK */
+
+/* START: CART */
+.cart-grid {
+  @apply grid grid-cols-6 md:grid-cols-9 gap-4;
+
+  &--header {
+    @apply hidden md:grid grid-cols-subgrid md:col-span-9 gap-4 text-center font-semibold;
+  }
+
+  &--row {
+    @apply relative grid grid-cols-subgrid col-span-6 md:col-span-9 gap-4 p-4 rounded-md bg-white;
+
+    & > * {
+      @apply flex items-center gap-2;
+    }
+  }
+
+  &--footer {
+    @apply grid grid-cols-subgrid md:col-span-9 gap-4 text-center font-semibold;
+  }
+
+  .col-1 {
+    /* SM */
+    @apply col-start-1 col-end-5 flex-col justify-center items-start;
+    /* MD */
+    @apply md:order-2 md:col-start-2 md:col-end-5;
+  }
+  .col-2 {
+    /* SM */
+    @apply col-start-5 col-end-7 justify-end;
+    /* MD */
+    @apply md:order-1 md:col-start-1 md:col-end-2;
+  }
+  .col-3 {
+    /* SM */
+    @apply col-start-1 col-end-7;
+    /* MD */
+    @apply md:order-3 md:col-start-5 md:col-end-7;
+
+    & > select {
+      @apply h-8 w-full overflow-hidden;
+    }
+  }
+  .col-4 {
+    /* SM */
+    @apply col-start-1 col-end-4 justify-center gap-4;
+    /* MD */
+    @apply md:order-4 md:col-start-7 md:col-end-auto md:justify-evenly;
+  }
+  .col-5 {
+    /* SM */
+    @apply hidden justify-center;
+    /* MD */
+    @apply md:order-5 md:col-start-8 md:flex;
+  }
+  .col-6 {
+    /* SM */
+    @apply col-start-4 col-end-7 justify-center font-semibold;
+    /* MD */
+    @apply md:order-6 md:col-start-9 md:col-end-auto;
+  }
+
+  .discount {
+    /* SM */
+    @apply absolute right-0 bottom-0 px-2 py-1 bg-error text-white text-xs font-semibold rounded-tl-md rounded-br-md;
+    /* MD */
+    @apply md:bottom-auto md:rounded-none md:rounded-bl-md md:rounded-tr-md;
+  }
+}

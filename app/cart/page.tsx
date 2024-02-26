@@ -1,10 +1,19 @@
 "use client";
 
+import { Fragment, useEffect } from "react";
 import { CSSContainer } from "../styles";
 import { useCartStore } from "./lib/store";
+import { MinusCircleIcon, PlusCircleIcon } from "@heroicons/react/24/outline";
 
 export default function Page() {
-  const { cart, total, updateCartItem, removeCartItem } = useCartStore();
+  const { cart, total, isLoading, updateCartItem, removeCartItem, loadCart } =
+    useCartStore();
+
+  useEffect(() => {
+    if (cart.length === 0) loadCart();
+  }, []);
+
+  if (isLoading) return <div>Loading...</div>;
 
   return (
     <section id="gallery-detail">
@@ -13,42 +22,100 @@ export default function Page() {
         {cart.length === 0 ? (
           <div>Cart is empty</div>
         ) : (
-          <div className="grid grid-cols-1 gap-4">
-            {cart.map(
-              ({ product, quantity, amount, discount, filament }, index) => (
-                <div key={index} className="grid grid-cols-6 gap-4">
-                  <div className="col-span-3">
-                    {product.gallery_rel.title}, {product.title}
-                  </div>
-                  <div>
-                    <button
-                      onClick={() => {
-                        if (quantity === 1) {
-                          removeCartItem(index);
-                        } else {
-                          updateCartItem(index, quantity - 1);
-                        }
+          <div className="cart-grid">
+            <div className="cart-grid--header">
+              <div className="col-4">Quantity</div>
+              <div className="col-5">Unit price</div>
+              <div className="col-6">Total</div>
+            </div>
+            {cart.map(({ product, quantity, amount, discount, fid }, index) => (
+              <div className="cart-grid--row" key={index}>
+                <div className="col-1">
+                  <span className="font-semibold">
+                    {product.gallery_rel.title}
+                  </span>
+
+                  <span className="text-xs">
+                    {product.title +
+                      (product.downloadable ? " digital file" : "")}
+                  </span>
+                </div>
+                <div className="col-2">
+                  <img
+                    className="size-16 object-cover rounded-full border-2 border-primary"
+                    src={`/media/${product.gallery_rel.cover_image}?key=h100`}
+                    alt={product.gallery_rel.title}
+                  />
+                </div>
+                <div className="col-3">
+                  {!product.downloadable && (
+                    <select
+                      onChange={(e) => {
+                        updateCartItem(
+                          index,
+                          undefined,
+                          (fid = parseInt(e.currentTarget.value))
+                        );
                       }}
                     >
-                      -
-                    </button>
-
-                    {quantity}
-                    <button
-                      onClick={() => updateCartItem(index, quantity + 1)}
-                      disabled={product.downloadable}
-                    >
-                      +
-                    </button>
-                  </div>
-                  <div>{amount}</div>
-                  <div>{discount}</div>
+                      {product.filament_rels.map(
+                        ({
+                          filament_rel: { id, material, colour, cosmetic },
+                        }) => (
+                          <option key={id} value={id}>
+                            {material}, {colour} {cosmetic}
+                          </option>
+                        )
+                      )}
+                    </select>
+                  )}
                 </div>
-              )
-            )}
+                <div className="col-4 font-semibold">
+                  <button
+                    onClick={() => {
+                      if (quantity === 1) {
+                        removeCartItem(index);
+                      } else {
+                        updateCartItem(index, quantity - 1);
+                      }
+                    }}
+                    className="text-green-600"
+                  >
+                    <MinusCircleIcon className="size-8" />
+                  </button>
+
+                  {quantity}
+                  <button
+                    onClick={() => updateCartItem(index, quantity + 1)}
+                    disabled={product.downloadable}
+                    className="enabled:text-green-600 disabled:text-gray-200"
+                  >
+                    <PlusCircleIcon className="size-8" />
+                  </button>
+                </div>
+                <div className="col-5">£ {product.price}</div>
+                <div className="col-6">£ {amount}</div>
+                {Boolean(discount) && (
+                  <div className="discount">- {discount}%</div>
+                )}
+              </div>
+            ))}
+            <div className="cart-grid--row">
+              <div className="col-2 font-semibold">Delivery</div>
+              <div className="col-3">
+                <select>
+                  <option>Royal Mail</option>
+                  <option>Collect, Warrington - Cheshire</option>
+                </select>
+              </div>
+              <div className="col-6">£ #</div>
+            </div>
+            <div className="cart-grid--footer">
+              <div className="col-5">Total</div>
+              <div className="col-6">£{total.toFixed(2)}</div>
+            </div>
           </div>
         )}
-        <div className="mt-8">Total: £{total.toFixed(2)}</div>
       </div>
     </section>
   );

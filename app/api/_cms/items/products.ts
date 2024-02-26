@@ -1,7 +1,6 @@
 import { draftMode } from "next/headers";
 import cmsAPI from "../cmsAPI";
 import { TFilament } from "./filaments";
-import { z } from "zod";
 
 const base = "/items/products";
 
@@ -20,7 +19,9 @@ export type TProduct = {
     title: string;
     cover_image: string;
   };
-  filament_rels: TFilament[];
+  filament_rels: {
+    filament_rel: TFilament;
+  }[];
   colours: string[];
   discounts: TDiscount[] | [];
 };
@@ -29,7 +30,7 @@ async function readItem(id: string) {
   const { isEnabled: isDraft } = draftMode();
 
   return await cmsAPI(
-    `${base}/${id}?fields[]=*,gallery_rel.title,gallery_rel.cover_image,filament_rels.id,filament_rels.*`,
+    `${base}/${id}?fields[]=*,gallery_rel.title,gallery_rel.cover_image,filament_rels.filament_rel.*`,
     {
       method: "GET",
       cache: isDraft ? "no-store" : "default",

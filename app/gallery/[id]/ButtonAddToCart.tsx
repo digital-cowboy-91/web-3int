@@ -1,10 +1,9 @@
 "use client";
 
 import { TProduct } from "@/app/api/_cms/items/products";
-import { setCartItem } from "@/app/cart/lib/cart";
 import { useCartStore } from "@/app/cart/lib/store";
 import { useRouter } from "next/navigation";
-import { ReactNode, use, useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 
 type Props = {
   product: TProduct;
