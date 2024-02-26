@@ -9,6 +9,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontSize: {
+        "2xs": ["10px", "12px"],
+      },
       maxWidth: {
         "2/5": "40%",
       },

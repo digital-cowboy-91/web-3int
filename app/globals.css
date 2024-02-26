@@ -170,7 +170,7 @@ body {
   @apply grid grid-cols-6 md:grid-cols-9 gap-4;
 
   &--header {
-    @apply hidden md:grid grid-cols-subgrid md:col-span-9 gap-4 text-center font-semibold;
+    @apply hidden md:grid grid-cols-subgrid md:col-span-9 gap-4 px-4 text-center font-semibold uppercase;
   }
 
   &--row {
@@ -182,7 +182,11 @@ body {
   }
 
   &--footer {
-    @apply grid grid-cols-subgrid md:col-span-9 gap-4 text-center font-semibold;
+    @apply col-span-6 md:col-span-9 px-4;
+
+    & > button {
+      @apply ms-auto;
+    }
   }
 
   .col-1 {
@@ -228,7 +232,7 @@ body {
 
   .discount {
     /* SM */
-    @apply absolute right-0 bottom-0 px-2 py-1 bg-error text-white text-xs font-semibold rounded-tl-md rounded-br-md;
+    @apply absolute right-0 bottom-0 px-2 py-1 bg-error text-white text-2xs rounded-tl-md rounded-br-md;
     /* MD */
     @apply md:bottom-auto md:rounded-none md:rounded-bl-md md:rounded-tr-md;
   }

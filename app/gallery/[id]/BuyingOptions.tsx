@@ -1,45 +1,38 @@
 import { TProduct } from "@/app/api/_cms/items/products";
-import ButtonDropdown from "@/app/components/ButtonDropdown";
+import ButtonDropdown, {
+  ButtonDropdown_v2,
+} from "@/app/components/ButtonDropdown";
 import {
   ArrowDownTrayIcon,
   ShoppingBagIcon,
+  ShoppingCartIcon,
 } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import ButtonAddToCart from "./ButtonAddToCart";
 
 export default function BuyingOptions({ products }: { products: TProduct[] }) {
-  const [index, setIndex] = useState(0);
+  const [pid, setPid] = useState<string>(products[0].id);
 
-  let { id, price } = products[index];
+  let selectedProduct = products.find((p) => p.id === pid)!;
+  let { id, price } = selectedProduct;
 
   return (
     <div className="w-full flex items-center justify-between">
       <span>Get</span>
-      <ButtonDropdown
-        options={products.map(({ title }) => title)}
-        activeIndex={index}
-        setActiveIndex={(i) => setIndex(i)}
+      <ButtonDropdown_v2
+        id="buying-options"
+        defaultSelected={pid}
+        options={products.map(({ id, title }) => ({
+          option: title,
+          value: id,
+        }))}
+        onSelect={(value) => setPid(value)}
       />
       <span>for</span>
       {price > 0 ? (
-        // <Link
-        //   className="link-outline-success"
-        //   href={"/checkout/" + id}
-        //   rel="noopener noreferrer"
-        //   target="_blank"
-        // >
-        //   <span>{"£" + price}</span>
-        //   <ShoppingBagIcon className="size-4" />
-        // </Link>
-
-        // <ButtonCheckoutStripe product={products[index]}>
-        //   <span>{"£" + price}</span>
-        //   <ShoppingBagIcon className="size-4" />
-        // </ButtonCheckoutStripe>
-
-        <ButtonAddToCart product={products[index]}>
+        <ButtonAddToCart product={selectedProduct}>
           <span>{"£" + price}</span>
-          <ShoppingBagIcon className="size-4" />
+          <ShoppingCartIcon className="size-4" />
         </ButtonAddToCart>
       ) : (
         <a

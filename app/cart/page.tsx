@@ -1,9 +1,16 @@
 "use client";
 
-import { Fragment, useEffect } from "react";
+import {
+  ArrowRightCircleIcon,
+  ArrowRightIcon,
+  MinusCircleIcon,
+  PlusCircleIcon,
+  ShoppingBagIcon,
+} from "@heroicons/react/24/outline";
+import { useEffect } from "react";
+import { ButtonDropdown_v2 } from "../components/ButtonDropdown";
 import { CSSContainer } from "../styles";
 import { useCartStore } from "./lib/store";
-import { MinusCircleIcon, PlusCircleIcon } from "@heroicons/react/24/outline";
 
 export default function Page() {
   const { cart, total, isLoading, updateCartItem, removeCartItem, loadCart } =
@@ -26,7 +33,7 @@ export default function Page() {
             <div className="cart-grid--header">
               <div className="col-4">Quantity</div>
               <div className="col-5">Unit price</div>
-              <div className="col-6">Total</div>
+              <div className="col-6">Subtotal</div>
             </div>
             {cart.map(({ product, quantity, amount, discount, fid }, index) => (
               <div className="cart-grid--row" key={index}>
@@ -42,35 +49,33 @@ export default function Page() {
                 </div>
                 <div className="col-2">
                   <img
-                    className="size-16 object-cover rounded-full border-2 border-primary"
+                    className="object-cover"
                     src={`/media/${product.gallery_rel.cover_image}?key=h100`}
                     alt={product.gallery_rel.title}
                   />
                 </div>
                 <div className="col-3">
                   {!product.downloadable && (
-                    <select
-                      onChange={(e) => {
-                        updateCartItem(
-                          index,
-                          undefined,
-                          (fid = parseInt(e.currentTarget.value))
-                        );
-                      }}
-                    >
-                      {product.filament_rels.map(
+                    <ButtonDropdown_v2
+                      id={product.id + "_" + index}
+                      label="Filament"
+                      defaultSelected={fid?.toString()}
+                      options={product.filament_rels.map(
                         ({
                           filament_rel: { id, material, colour, cosmetic },
-                        }) => (
-                          <option key={id} value={id}>
-                            {material}, {colour} {cosmetic}
-                          </option>
-                        )
+                        }) => ({
+                          option: material + ", " + colour + " " + cosmetic,
+                          value: id.toString(),
+                        })
                       )}
-                    </select>
+                      onSelect={(index) => {
+                        console.log(index);
+                      }}
+                      className="w-full"
+                    />
                   )}
                 </div>
-                <div className="col-4 font-semibold">
+                <div className="col-4">
                   <button
                     onClick={() => {
                       if (quantity === 1) {
@@ -101,18 +106,29 @@ export default function Page() {
               </div>
             ))}
             <div className="cart-grid--row">
-              <div className="col-2 font-semibold">Delivery</div>
               <div className="col-3">
-                <select>
-                  <option>Royal Mail</option>
-                  <option>Collect, Warrington - Cheshire</option>
-                </select>
+                <ButtonDropdown_v2
+                  id={"delivery"}
+                  label="Delivery"
+                  defaultSelected="royal_mail"
+                  options={[
+                    { option: "Collect, Warrington", value: "collect" },
+                    { option: "Royal Mail", value: "royal_mail" },
+                  ]}
+                  onSelect={(index) => {
+                    console.log(index);
+                  }}
+                  className="w-full"
+                />
               </div>
               <div className="col-6">£ #</div>
             </div>
             <div className="cart-grid--footer">
-              <div className="col-5">Total</div>
-              <div className="col-6">£{total.toFixed(2)}</div>
+              <button className="btn-outline-success ">
+                <div>Total</div>
+                <div>£ {total}</div>
+                <ArrowRightCircleIcon className="size-6" />
+              </button>
             </div>
           </div>
         )}
