@@ -1,4 +1,4 @@
-import { CMS_Products } from "@/app/api/_cms/items/products";
+import { CMS_Products } from "@/app/api/_cms/items/store/products";
 import { CSSContainer } from "@/app/styles";
 import { notFound } from "next/navigation";
 import CheckoutForm from "./CheckoutForm";

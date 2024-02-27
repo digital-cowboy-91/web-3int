@@ -175,7 +175,7 @@ body {
   }
 
   &--items {
-    @apply grid grid-cols-6 md:grid-cols-12 gap-4 p-4;
+    @apply grid grid-cols-6 md:grid-cols-12 grid-flow-row auto-rows-min gap-4 p-4;
 
     &--row {
       @apply relative grid grid-cols-subgrid col-span-6 md:col-span-12 gap-4 p-4 rounded-md bg-white;
@@ -217,7 +217,7 @@ body {
 
       .discount {
         /* SM */
-        @apply absolute right-1 top-1 px-2 py-1 bg-error text-white text-2xs rounded-full;
+        @apply absolute -right-2 -top-2 px-2 py-1 bg-error text-white text-2xs rounded-full;
         /* MD */
         @apply md:bottom-auto;
       }
@@ -226,13 +226,13 @@ body {
 
   &--summary {
     /* SM */
-    @apply mx-4 p-8 grid grid-cols-[1fr_250px] gap-8 rounded-[2rem] bg-neutral-200;
+    @apply mx-4 p-8 grid grid-cols-[1fr_250px] gap-8 rounded-[2rem] bg-neutral-200 border-2 border-neutral-100;
     /* LG */
     @apply lg:grid-cols-1 lg:mb-auto;
 
     /* Neomorphic shadow: https://neumorphism.io */
     & {
-      box-shadow: 5px 5px 10px #aaaaaa, -5px -5px 10px #ffffff;
+      box-shadow: 3px 3px 10px #aaaaaa, -3px -3px 10px #ffffff;
     }
 
     & > h2 {
@@ -240,13 +240,16 @@ body {
     }
 
     .summary {
-      @apply space-y-4;
+      @apply space-y-2;
 
       & > * {
         @apply flex justify-between;
         & > span:last-child {
           @apply font-semibold;
         }
+      }
+      & > *:last-child {
+        @apply border-t border-dark pt-2;
       }
     }
 

@@ -60,8 +60,6 @@ export function fetchCartProducts() {
 
     if (!cart.length) return [];
 
-    let;
-
     return cart;
   } catch (e) {
     console.log(e);

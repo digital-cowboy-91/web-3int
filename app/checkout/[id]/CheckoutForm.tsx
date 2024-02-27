@@ -1,18 +1,17 @@
 "use client";
 
-import { TProduct } from "@/app/api/_cms/items/products";
+import { TProduct } from "@/app/api/_cms/items/store/products";
 import getDiscountCoef from "@/app/api/_cms/lib/getDiscountCoef";
 import Form from "@/app/components/Form";
 import { verifyCaptchaAction } from "@/app/lib/verifyCaptchaAction";
-import { CSSButtonOutline } from "@/app/styles";
 import { zodResolver } from "@hookform/resolvers/zod";
-import RevolutCheckout, { Mode } from "@revolut/checkout";
+import RevolutCheckout from "@revolut/checkout";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import { FormProvider, useForm } from "react-hook-form";
 import actionCreateOrder from "./actionCreateOrder";
 import { SCheckout, TCheckout } from "./lib/schema";
-import { useRouter } from "next/navigation";
 
 export default function CheckoutForm({ product }: { product: TProduct }) {
   const { id, gallery_rel, title, price, downloadable, colours, discounts } =

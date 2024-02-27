@@ -1,4 +1,4 @@
-import { CMS_Products } from "@/app/api/_cms/items/products";
+import { CMS_Products } from "@/app/api/_cms/items/store/products";
 import CheckoutStripeElementsWrapper from "@/app/checkout/[id]/CheckoutStripeElementsWrapper";
 import actionCheckoutStripePaymentIntent from "@/app/checkout/[id]/actionCheckoutStripePaymentIntent";
 import { CSSContainer } from "@/app/styles";

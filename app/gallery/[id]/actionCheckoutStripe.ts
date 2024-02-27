@@ -1,6 +1,6 @@
 "use server";
 
-import { TProduct } from "@/app/api/_cms/items/products";
+import { TProduct } from "@/app/api/_cms/items/store/products";
 import Stripe from "stripe";
 
 const secret_key = process.env.STRIPE_SECRET_KEY!;

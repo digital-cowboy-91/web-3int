@@ -20,7 +20,7 @@ const SLocalCartItem = z.object({
 });
 
 type TSummary = {
-  title: "Subtotal" | "Total" | "Tax";
+  title: "Subtotal" | "Total" | "Tax" | "Shipping";
   value: number;
 };
 
@@ -135,13 +135,15 @@ export const useCartStore = create<TStore>((set) => ({
       }
 
       let subtotal = recalculateCart(s.cart);
+      let shipping = shipping_method!.price;
       let total = subtotal + shipping_method!.price;
       let tax = round(total * 0.21);
 
       let summary: TSummary[] = [
         { title: "Subtotal", value: subtotal },
-        { title: "Total", value: total },
+        { title: "Shipping", value: shipping },
         { title: "Tax", value: tax },
+        { title: "Total", value: total },
       ];
 
       return { summary };

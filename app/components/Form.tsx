@@ -123,7 +123,6 @@ const Select = ({ name, label, options, disabled }: Select) => {
       <select
         {...register(name)}
         id={name}
-        placeholder=" "
         defaultValue={""}
         className={CSSFormElement}
         disabled={disabled}

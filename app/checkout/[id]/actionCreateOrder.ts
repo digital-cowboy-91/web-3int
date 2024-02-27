@@ -1,9 +1,9 @@
 "use server";
 
-import { CMS_Products } from "@/app/api/_cms/items/products";
+import { CMS_Products } from "@/app/api/_cms/items/store/products";
 import getDiscountCoef from "@/app/api/_cms/lib/getDiscountCoef";
-import { SCheckout, TCheckout } from "./lib/schema";
 import { REVOLUT_Orders, TOrderData } from "@/app/api/_revolut/order";
+import { SCheckout, TCheckout } from "./lib/schema";
 
 export default async function actionCreateOrder(
   data: TCheckout

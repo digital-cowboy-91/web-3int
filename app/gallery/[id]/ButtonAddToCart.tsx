@@ -1,6 +1,6 @@
 "use client";
 
-import { TProduct } from "@/app/api/_cms/items/products";
+import { TProduct } from "@/app/api/_cms/items/store/products";
 import { useCartStore } from "@/app/cart/lib/store";
 import { useRouter } from "next/navigation";
 import { ReactNode, useEffect, useState } from "react";

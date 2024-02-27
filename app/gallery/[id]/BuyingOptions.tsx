@@ -1,4 +1,4 @@
-import { TProduct } from "@/app/api/_cms/items/products";
+import { TProduct } from "@/app/api/_cms/items/store/products";
 import ButtonDropdown, {
   ButtonDropdown_v2,
 } from "@/app/components/ButtonDropdown";
