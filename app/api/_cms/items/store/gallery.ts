@@ -1,9 +1,9 @@
 import { draftMode } from "next/headers";
-import cmsAPI from "../cmsAPI";
+import cmsAPI from "../../cmsAPI";
 import { TProduct } from "./products";
-import { TSEO } from "./seo";
-import { TLicense } from "./licenses";
-import { TAsset } from "./files";
+import { TSEO } from "../seo";
+import { TLicense } from "../licenses";
+import { TAsset } from "../files";
 
 const base = "/items/gallery";
 

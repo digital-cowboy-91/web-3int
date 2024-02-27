@@ -1,5 +1,5 @@
-import { CMS_Orders } from "../_cms/items/orders";
-import { CMS_Products } from "../_cms/items/products";
+import { CMS_Orders } from "../_cms/items/store/orders";
+import { CMS_Products } from "../_cms/items/store/products";
 
 async function fetchFile(id: string, filename: string) {
   const file = await fetch(

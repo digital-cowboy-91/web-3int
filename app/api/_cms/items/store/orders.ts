@@ -1,4 +1,4 @@
-import cmsAPI from "../cmsAPI";
+import cmsAPI from "../../cmsAPI";
 
 const base = "/items/orders";
 

@@ -166,74 +166,92 @@ body {
 /* END: BTN & LINK */
 
 /* START: CART */
-.cart-grid {
-  @apply grid grid-cols-6 md:grid-cols-9 gap-4;
-
-  &--header {
-    @apply hidden md:grid grid-cols-subgrid md:col-span-9 gap-4 px-4 text-center font-semibold uppercase;
+.cart {
+  &--wrapper {
+    /* SM */
+    @apply grid;
+    /* LG */
+    @apply lg:grid-cols-[66%_34%];
   }
 
-  &--row {
-    @apply relative grid grid-cols-subgrid col-span-6 md:col-span-9 gap-4 p-4 rounded-md bg-white;
+  &--items {
+    @apply grid grid-cols-6 md:grid-cols-12 gap-4 p-4;
 
-    & > * {
-      @apply flex items-center gap-2;
+    &--row {
+      @apply relative grid grid-cols-subgrid col-span-6 md:col-span-12 gap-4 p-4 rounded-md bg-white;
+
+      & > * {
+        @apply flex items-center gap-2;
+      }
+
+      .col-detail {
+        /* SM */
+        @apply col-span-4 flex-col justify-center items-start;
+        /* MD */
+        @apply md:order-2 md:col-span-3;
+      }
+      .col-image {
+        /* SM */
+        @apply col-span-2 justify-end;
+        /* MD */
+        @apply md:order-1 md:col-span-2;
+      }
+      .col-filament {
+        /* SM */
+        @apply col-span-3;
+        /* MD */
+        @apply md:order-3 md:col-span-3;
+      }
+      .col-quantity {
+        /* SM */
+        @apply col-span-2 justify-between gap-2;
+        /* MD */
+        @apply md:order-4 md:col-span-2 md:justify-evenly;
+      }
+      .col-total {
+        /* SM */
+        @apply col-auto justify-center font-semibold;
+        /* MD */
+        @apply md:order-5 md:col-span-2;
+      }
+
+      .discount {
+        /* SM */
+        @apply absolute right-1 top-1 px-2 py-1 bg-error text-white text-2xs rounded-full;
+        /* MD */
+        @apply md:bottom-auto;
+      }
     }
   }
 
-  &--footer {
-    @apply col-span-6 md:col-span-9 px-4;
+  &--summary {
+    /* SM */
+    @apply mx-4 p-8 grid grid-cols-[1fr_250px] gap-8 rounded-[2rem] bg-neutral-200;
+    /* LG */
+    @apply lg:grid-cols-1 lg:mb-auto;
+
+    /* Neomorphic shadow: https://neumorphism.io */
+    & {
+      box-shadow: 5px 5px 10px #aaaaaa, -5px -5px 10px #ffffff;
+    }
+
+    & > h2 {
+      @apply col-span-2 lg:col-auto;
+    }
+
+    .summary {
+      @apply space-y-4;
+
+      & > * {
+        @apply flex justify-between;
+        & > span:last-child {
+          @apply font-semibold;
+        }
+      }
+    }
 
     & > button {
-      @apply ms-auto;
+      @apply col-span-2 lg:col-auto ms-auto btn-outline-success;
     }
-  }
-
-  .col-1 {
-    /* SM */
-    @apply col-start-1 col-end-5 flex-col justify-center items-start;
-    /* MD */
-    @apply md:order-2 md:col-start-2 md:col-end-5;
-  }
-  .col-2 {
-    /* SM */
-    @apply col-start-5 col-end-7 justify-end;
-    /* MD */
-    @apply md:order-1 md:col-start-1 md:col-end-2;
-  }
-  .col-3 {
-    /* SM */
-    @apply col-start-1 col-end-7;
-    /* MD */
-    @apply md:order-3 md:col-start-5 md:col-end-7;
-
-    & > select {
-      @apply h-8 w-full overflow-hidden;
-    }
-  }
-  .col-4 {
-    /* SM */
-    @apply col-start-1 col-end-4 justify-center gap-4;
-    /* MD */
-    @apply md:order-4 md:col-start-7 md:col-end-auto md:justify-evenly;
-  }
-  .col-5 {
-    /* SM */
-    @apply hidden justify-center;
-    /* MD */
-    @apply md:order-5 md:col-start-8 md:flex;
-  }
-  .col-6 {
-    /* SM */
-    @apply col-start-4 col-end-7 justify-center font-semibold;
-    /* MD */
-    @apply md:order-6 md:col-start-9 md:col-end-auto;
-  }
-
-  .discount {
-    /* SM */
-    @apply absolute right-0 bottom-0 px-2 py-1 bg-error text-white text-2xs rounded-tl-md rounded-br-md;
-    /* MD */
-    @apply md:bottom-auto md:rounded-none md:rounded-bl-md md:rounded-tr-md;
   }
 }

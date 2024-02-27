@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { CSSContainer } from "../styles";
+import LinkToCart from "../cart/components/LinkToCart";
 
 const sections = [
   { title: "Gallery", slug: "gallery" },
@@ -22,6 +23,9 @@ export default async function Navbar() {
               </Link>
             </li>
           ))}
+          <li>
+            <LinkToCart />
+          </li>
         </ul>
       </nav>
     </header>

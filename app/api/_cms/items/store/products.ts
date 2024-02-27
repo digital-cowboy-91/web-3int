@@ -1,5 +1,5 @@
 import { draftMode } from "next/headers";
-import cmsAPI from "../cmsAPI";
+import cmsAPI from "../../cmsAPI";
 import { TFilament } from "./filaments";
 
 const base = "/items/products";

@@ -1,4 +1,4 @@
-import { CMS_Gallery } from "@/app/api/_cms/items/gallery";
+import { CMS_Gallery } from "@/app/api/_cms/items/store/gallery";
 import { notFound } from "next/navigation";
 import ModelList from "./ModelList";
 

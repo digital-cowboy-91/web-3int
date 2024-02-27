@@ -1,8 +1,9 @@
-import { TFilament } from "@/app/api/_cms/items/filaments";
-import { TDiscount, TProduct } from "@/app/api/_cms/items/products";
+import { TDiscount, TProduct } from "@/app/api/_cms/items/store/products";
+import { TShipping } from "@/app/api/_cms/items/store/shipping";
 import { z } from "zod";
 import { create } from "zustand";
 import actionGetProduct from "./actionGetProduct";
+import actionGetShipping from "./actionGetShipping";
 
 type TCartItem = {
   product: TProduct;
@@ -18,21 +19,33 @@ const SLocalCartItem = z.object({
   fid: z.number().optional(),
 });
 
+type TSummary = {
+  title: "Subtotal" | "Total" | "Tax";
+  value: number;
+};
+
 type TStore = {
+  // CART
   cart: TCartItem[];
-  total: number;
-  isLoading: boolean;
   addCartItem: (product: TProduct) => void;
   updateCartItem: (index: number, quantity?: number, fid?: number) => void;
   removeCartItem: (index: number) => void;
-  loadCart: () => void;
+  // SHIPPING
+  shipping_id: number | undefined;
+  shipping_methods: TShipping[];
+  updateShippingId: (id: number) => void;
+  // SUMMARY
+  summary: TSummary[];
+  recalculate: () => void;
+  // INIT
+  isLoading: boolean;
+  initialize: () => void;
 };
 
 export const useCartStore = create<TStore>((set) => ({
+  // CART
   cart: [],
-  total: 0,
-  isLoading: true,
-  addCartItem: (product) =>
+  addCartItem: (product) => {
     set((s) => {
       let cart = s.cart;
 
@@ -54,44 +67,87 @@ export const useCartStore = create<TStore>((set) => ({
             : undefined,
       });
 
-      let total = recalculateCart(cart);
       safeCart(cart);
 
-      return { cart, total };
-    }),
-  updateCartItem: (index, quantity, fid) =>
+      return { cart };
+    });
+    useCartStore.getState().recalculate();
+  },
+  updateCartItem: (index, quantity, fid) => {
     set((s) => {
       let cart = s.cart;
       let thisItem = cart[index];
-
-      let total = s.total;
 
       if (quantity) {
         thisItem.quantity = quantity;
         thisItem.discount = getDiscount(thisItem.product.discounts, quantity);
         thisItem.amount =
           (thisItem.product.price * quantity * (100 - thisItem.discount)) / 100;
-        total = recalculateCart(cart);
       }
 
       if (fid) thisItem.fid = fid;
 
       safeCart(cart);
 
-      return { cart, total };
-    }),
-  removeCartItem: (index) =>
+      return { cart };
+    });
+    useCartStore.getState().recalculate();
+  },
+  removeCartItem: (index) => {
     set((s) => {
       let cart = s.cart;
       cart.splice(index, 1);
 
-      let total = recalculateCart(cart);
-
       safeCart(cart);
 
-      return { cart, total };
+      return { cart };
+    });
+    useCartStore.getState().recalculate();
+  },
+
+  // SHIPPING
+  shipping_id: undefined,
+  shipping_methods: [],
+  updateShippingId: (id) => {
+    set({ shipping_id: id });
+    useCartStore.getState().recalculate();
+  },
+  // SUMMARY
+  summary: [],
+  recalculate: () =>
+    set((s) => {
+      const shipping_method = s.shipping_methods.find(
+        (m) => m.id === s.shipping_id
+      );
+
+      function round(number: number) {
+        return Math.round(number * 100) / 100;
+      }
+
+      function recalculateCart(cart: TCartItem[]) {
+        let total = 0;
+
+        for (let i of cart) {
+          total += i.amount;
+        }
+
+        return round(total);
+      }
+
+      let subtotal = recalculateCart(s.cart);
+      let total = subtotal + shipping_method!.price;
+      let tax = round(total * 0.21);
+
+      let summary: TSummary[] = [
+        { title: "Subtotal", value: subtotal },
+        { title: "Total", value: total },
+        { title: "Tax", value: tax },
+      ];
+
+      return { summary };
     }),
-  loadCart: async () => {
+  isLoading: true,
+  initialize: async () => {
     set({ isLoading: true });
     let localCart = localStorage.getItem("cart");
 
@@ -139,9 +195,19 @@ export const useCartStore = create<TStore>((set) => ({
       });
     }
 
-    let total = recalculateCart(cart);
+    let methods = await actionGetShipping()
+      .then((res) => JSON.parse(res) as TShipping[])
+      .catch((e) => console.log(e));
 
-    set({ cart, total, isLoading: false });
+    if (!methods) return;
+
+    set({
+      cart,
+      shipping_methods: methods,
+      shipping_id: methods[0].id,
+      isLoading: false,
+    });
+    useCartStore.getState().recalculate();
   },
 }));
 
@@ -150,16 +216,6 @@ function getDiscount(discounts: TDiscount[], quantity: number) {
   let match = sorted.find((d) => quantity >= d.quantity)?.percentage || 0;
 
   return match;
-}
-
-function recalculateCart(cart: TCartItem[]) {
-  let total = 0;
-
-  for (let i of cart) {
-    total += i.amount;
-  }
-
-  return total;
 }
 
 function safeCart(cart: TCartItem[]) {

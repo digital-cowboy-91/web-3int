@@ -101,16 +101,22 @@ export function ButtonDropdown_v2({
   return (
     <div className={"relative " + className}>
       <button
-        className={`font-semibold px-4 py-2 gap-4 w-full bg-transparent rounded-full border-2 ${
-          isOpen ? "border-primary" : "border-green-600"
-        } inline-flex justify-between items-center text-nowrap overflow-hidden`}
+        className={`px-4 py-2 gap-4 w-full bg-transparent border-b-[1px] ${
+          isOpen ? "border-primary" : "border-grey hover:border-primary"
+        } inline-flex justify-between items-center text-nowrap overflow-hidden peer group`}
         type="button"
         onClick={() => setIsOpen(!isOpen)}
         onMouseLeave={handleMouseLeave}
       >
-        {options.find((o) => o.value === selected)?.option}
+        <span className="truncate">
+          {options.find((o) => o.value === selected)?.option}
+        </span>
         <ChevronDownIcon
-          className={`size-4 ${isOpen ? "" : "rotate-90"} transition-transform`}
+          className={`size-4 ${
+            isOpen
+              ? "text-primary"
+              : "text-grey group-hover:text-primary rotate-90"
+          } transition-transform`}
         />
       </button>
       <AnimatePresence>
@@ -143,14 +149,13 @@ export function ButtonDropdown_v2({
         )}
       </AnimatePresence>
       {label && (
-        <label
-          htmlFor={id}
-          className={`absolute left-4 -top-1 bg-white ${
-            isOpen ? "text-primary" : "text-green-600"
+        <span
+          className={`absolute -left-2 -top-2 ${
+            isOpen ? "text-primary" : "text-grey peer-hover:text-primary"
           } px-2 text-2xs`}
         >
           {label}
-        </label>
+        </span>
       )}
     </div>
   );

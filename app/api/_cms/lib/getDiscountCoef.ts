@@ -1,4 +1,4 @@
-import { TDiscount } from "../items/products";
+import { TDiscount } from "../items/store/products";
 
 export default function getDiscountCoef(
   discounts: TDiscount[],
