@@ -10,61 +10,6 @@ const animateList = {
   exit: { opacity: 0 },
 };
 
-export default function ButtonDropdown({
-  options,
-  activeIndex,
-  setActiveIndex,
-}: {
-  options: string[];
-  activeIndex: number;
-  setActiveIndex: (index: number) => void;
-}) {
-  const [isOpen, setIsOpen] = useState(false);
-
-  if (!options?.length) return null;
-
-  return (
-    <div className="relative overflow-visible">
-      <button
-        className="btn-outline-success"
-        type="button"
-        onClick={() => setIsOpen(!isOpen)}
-      >
-        <span className="w-[70px] overflow-hidden text-left">
-          {options[activeIndex]}
-        </span>
-        <ChevronDownIcon className="size-4" />
-      </button>
-      <AnimatePresence>
-        {isOpen && (
-          <motion.ul
-            variants={animateList}
-            initial="init"
-            animate="enter"
-            exit="exit"
-            aria-optionledby="dropdownDefaultButton"
-            className="absolute w-full z-20 bg-white pb-0 rounded-md mt-1 overflow-hidden shadow"
-            onMouseLeave={() => setIsOpen(false)}
-          >
-            {options.map((option, index) => (
-              <li
-                key={index}
-                className={`btn--outline--success--link w-full p-2 md:px-4 font-semibold cursor-pointer`}
-                onClick={() => {
-                  setActiveIndex(index);
-                  setIsOpen(false);
-                }}
-              >
-                {option}
-              </li>
-            ))}
-          </motion.ul>
-        )}
-      </AnimatePresence>
-    </div>
-  );
-}
-
 type TProps = {
   id: string;
   label?: string;
@@ -101,8 +46,10 @@ export function ButtonDropdown_v2({
   return (
     <div className={"relative " + className}>
       <button
-        className={`px-4 py-2 gap-4 w-full bg-transparent border-b-[1px] ${
-          isOpen ? "border-primary" : "border-grey hover:border-primary"
+        className={`px-4 gap-4 w-full font-semibold ${
+          isOpen
+            ? "border-primary border-b-2 pt-[8px] pb-[7px] "
+            : "border-grey hover:border-primary border-b-[1px] hover:border-b-2 py-[8px] hover:pt-[8px] hover:pb-[7px]"
         } inline-flex justify-between items-center text-nowrap overflow-hidden peer group`}
         type="button"
         onClick={() => setIsOpen(!isOpen)}
@@ -115,7 +62,7 @@ export function ButtonDropdown_v2({
           className={`size-4 ${
             isOpen
               ? "text-primary"
-              : "text-grey group-hover:text-primary rotate-90"
+              : "text-dark group-hover:text-primary rotate-90"
           } transition-transform`}
         />
       </button>
@@ -151,7 +98,9 @@ export function ButtonDropdown_v2({
       {label && (
         <span
           className={`absolute -left-2 -top-2 ${
-            isOpen ? "text-primary" : "text-grey peer-hover:text-primary"
+            isOpen
+              ? "text-primary"
+              : "text-dark peer-hover:text-primary bg-grey-light"
           } px-2 text-2xs`}
         >
           {label}

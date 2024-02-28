@@ -168,93 +168,77 @@ body {
 /* START: CART */
 .cart {
   &--wrapper {
-    /* SM */
-    @apply grid;
-    /* LG */
-    @apply lg:grid-cols-[66%_34%];
+    @apply grid lg:grid-cols-[66%_34%];
   }
 
   &--items {
-    @apply grid grid-cols-6 md:grid-cols-12 grid-flow-row auto-rows-min gap-4 p-4;
+    @apply grid grid-cols-[100px_1fr] sm:grid-cols-[100px_1fr_80px_70px] grid-flow-row auto-rows-min gap-4 p-4;
 
     &--row {
-      @apply relative grid grid-cols-subgrid col-span-6 md:col-span-12 gap-4 p-4 rounded-md bg-white;
+      @apply relative col-span-2 sm:col-span-4 grid grid-cols-subgrid gap-4 p-4 rounded-md bg-white;
 
       & > * {
         @apply flex items-center gap-2;
       }
 
-      .col-detail {
-        /* SM */
-        @apply col-span-4 flex-col justify-center items-start;
-        /* MD */
-        @apply md:order-2 md:col-span-3;
-      }
-      .col-image {
-        /* SM */
-        @apply col-span-2 justify-end;
-        /* MD */
-        @apply md:order-1 md:col-span-2;
-      }
-      .col-filament {
-        /* SM */
-        @apply col-span-3;
-        /* MD */
-        @apply md:order-3 md:col-span-3;
-      }
-      .col-quantity {
-        /* SM */
-        @apply col-span-2 justify-between gap-2;
-        /* MD */
-        @apply md:order-4 md:col-span-2 md:justify-evenly;
-      }
-      .col-total {
-        /* SM */
-        @apply col-auto justify-center font-semibold;
-        /* MD */
-        @apply md:order-5 md:col-span-2;
+      .image > img {
+        @apply object-cover;
       }
 
+      .detail {
+        @apply flex-col justify-center items-start;
+        & > span:first-child {
+          @apply font-semibold;
+        }
+        & > span:last-child {
+          @apply text-xs;
+        }
+      }
+      .quantity {
+        @apply justify-between gap-2;
+      }
+      .total {
+        @apply justify-end sm:justify-center font-semibold;
+      }
       .discount {
-        /* SM */
         @apply absolute -right-2 -top-2 px-2 py-1 bg-error text-white text-2xs rounded-full;
-        /* MD */
-        @apply md:bottom-auto;
       }
     }
   }
 
   &--summary {
+    @apply mx-4 mt-4 p-8 grid grid-cols-1 gap-8 rounded-[2rem] bg-neutral-200 border-2 border-neutral-100;
     /* SM */
-    @apply mx-4 p-8 grid grid-cols-[1fr_250px] gap-8 rounded-[2rem] bg-neutral-200 border-2 border-neutral-100;
+    @apply sm:grid-cols-[1fr_250px];
     /* LG */
-    @apply lg:grid-cols-1 lg:mb-auto;
+    @apply lg:mt-0 lg:grid-cols-1 lg:mb-auto;
 
     /* Neomorphic shadow: https://neumorphism.io */
     & {
       box-shadow: 3px 3px 10px #aaaaaa, -3px -3px 10px #ffffff;
     }
 
-    & > h2 {
-      @apply col-span-2 lg:col-auto;
+    & > * {
+      @apply space-y-8;
+
+      button {
+        @apply btn-outline-success w-full justify-center;
+        /* SM, LG */
+        @apply sm:col-start-2 lg:col-auto;
+      }
     }
 
-    .summary {
+    .summaries {
       @apply space-y-2;
-
-      & > * {
+      & > div {
         @apply flex justify-between;
         & > span:last-child {
           @apply font-semibold;
         }
+        &:last-child {
+          @apply pt-6 text-xl font-semibold text-primary;
+        }
       }
-      & > *:last-child {
-        @apply border-t border-dark pt-2;
-      }
-    }
-
-    & > button {
-      @apply col-span-2 lg:col-auto ms-auto btn-outline-success;
     }
   }
 }

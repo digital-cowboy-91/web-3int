@@ -1,10 +1,8 @@
 "use client";
 
-import { ButtonDropdown_v2 } from "@/app/components/ButtonDropdown";
 import { useCartStore } from "../lib/store";
+import QuantitySelector from "./QuantitySelector";
 import Shipping from "./Shipping";
-import { PlusCircleIcon } from "@heroicons/react/24/solid";
-import { MinusCircleIcon } from "@heroicons/react/24/solid";
 
 export default function Cart() {
   const isLoading = useCartStore((s) => s.isLoading);
@@ -22,82 +20,56 @@ export default function Cart() {
   ) : (
     <div className="cart--wrapper">
       <div className="cart--items">
-        {cart.map(({ product, quantity, amount, discount, fid }, index) => (
+        {cart.map(({ product, quantity, amount, discount }, index) => (
           <div className="cart--items--row" key={index}>
-            <div className="col-image">
+            <div className="image">
               <img
-                className="object-cover"
                 src={`/media/${product.gallery_rel.cover_image}?key=h100`}
                 alt={product.gallery_rel.title}
               />
             </div>
-            <div className="col-detail">
-              <span className="font-semibold">{product.gallery_rel.title}</span>
-              <span className="text-xs">
-                {product.title + (product.downloadable ? " digital file" : "")}
+            <div className="detail">
+              <span>{product.gallery_rel.title}</span>
+              <span>
+                {product.title +
+                  (product.downloadable
+                    ? " digital file"
+                    : " · PLA, Multicolour Matte")}
               </span>
             </div>
-            <div className="col-quantity">
-              <button
-                onClick={() => {
-                  if (quantity === 1) {
-                    removeCartItem(index);
-                  } else {
-                    updateCartItem(index, quantity - 1);
-                  }
+            <div className="quantity">
+              <QuantitySelector
+                value={quantity}
+                disableIncrease={product.downloadable}
+                handleChange={(value) => {
+                  if (value === 0) return removeCartItem(index);
+                  console.log("value", value);
+                  updateCartItem(index, value);
                 }}
-                className="text-primary"
-              >
-                <MinusCircleIcon className="size-6" />
-              </button>
-
-              {quantity}
-              <button
-                onClick={() => updateCartItem(index, quantity + 1)}
-                disabled={product.downloadable}
-                className="enabled:text-primary disabled:text-gray-200"
-              >
-                <PlusCircleIcon className="size-6" />
-              </button>
+              />
             </div>
-            <div className="col-filament">
-              {!product.downloadable && (
-                <ButtonDropdown_v2
-                  id={product.id + "_" + index}
-                  label="Filament"
-                  defaultSelected={fid?.toString()}
-                  options={product.filament_rels.map(
-                    ({ filament_rel: { id, material, colour, cosmetic } }) => ({
-                      option: material + ", " + colour + " " + cosmetic,
-                      value: id.toString(),
-                    })
-                  )}
-                  onSelect={(index) => {
-                    console.log(index);
-                  }}
-                  className="w-full"
-                />
-              )}
-            </div>
-
-            <div className="col-total">£ {amount}</div>
-
+            <div className="total">£ {amount}</div>
             {Boolean(discount) && <div className="discount">- {discount}%</div>}
           </div>
         ))}
       </div>
       <div className="cart--summary">
-        <h2>Shipping method</h2>
-        <Shipping />
-        <div className="summary">
-          {summary.map(({ title, value }, index) => (
-            <div key={index}>
-              <span>{title}</span>
-              <span>£ {value}</span>
-            </div>
-          ))}
+        <div>
+          <h2>Shipping method</h2>
+          <Shipping />
         </div>
-        <button>Checkout</button>
+        <div>
+          <h2>Summary</h2>
+          <div className="summaries">
+            {summary.map(({ title, value }, index) => (
+              <div key={index}>
+                <span>{title}</span>
+                <span>£ {value}</span>
+              </div>
+            ))}
+          </div>
+          <button>Checkout</button>
+        </div>
       </div>
     </div>
   );

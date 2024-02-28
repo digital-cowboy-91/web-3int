@@ -27,9 +27,14 @@ type TSummary = {
 type TStore = {
   // CART
   cart: TCartItem[];
-  addCartItem: (product: TProduct) => void;
+  addCartItem: (product: TProduct, quantity?: number, fid?: number) => void;
   updateCartItem: (index: number, quantity?: number, fid?: number) => void;
   removeCartItem: (index: number) => void;
+  calculateItemPrice: (
+    price: number,
+    quantity: number,
+    discounts: TDiscount[]
+  ) => { amount: number; discount: number };
   // SHIPPING
   shipping_id: number | undefined;
   shipping_methods: TShipping[];
@@ -45,7 +50,7 @@ type TStore = {
 export const useCartStore = create<TStore>((set) => ({
   // CART
   cart: [],
-  addCartItem: (product) => {
+  addCartItem: (product, quantity = 1, filamentId) => {
     set((s) => {
       let cart = s.cart;
 
@@ -56,36 +61,50 @@ export const useCartStore = create<TStore>((set) => ({
       )
         return { cart };
 
+      let { amount, discount } = s.calculateItemPrice(
+        product.price,
+        quantity,
+        product.discounts
+      );
+      let fid =
+        filamentId ||
+        (product.filament_rels && product.filament_rels.length > 0
+          ? product.filament_rels[0].filament_rel.id
+          : undefined);
+
       cart.push({
         product,
-        quantity: 1,
-        amount: product.price,
-        discount: 0,
-        fid:
-          product.filament_rels && product.filament_rels.length > 0
-            ? product.filament_rels[0].filament_rel.id
-            : undefined,
+        quantity,
+        amount,
+        discount,
+        fid,
       });
 
       safeCart(cart);
 
       return { cart };
     });
+
     useCartStore.getState().recalculate();
   },
-  updateCartItem: (index, quantity, fid) => {
+  updateCartItem: (index, quantity, filamentId) => {
     set((s) => {
       let cart = s.cart;
       let thisItem = cart[index];
 
       if (quantity) {
+        let { amount, discount } = s.calculateItemPrice(
+          thisItem.product.price,
+          quantity,
+          thisItem.product.discounts
+        );
+
         thisItem.quantity = quantity;
-        thisItem.discount = getDiscount(thisItem.product.discounts, quantity);
-        thisItem.amount =
-          (thisItem.product.price * quantity * (100 - thisItem.discount)) / 100;
+        thisItem.amount = amount;
+        thisItem.discount = discount;
       }
 
-      if (fid) thisItem.fid = fid;
+      if (filamentId) thisItem.fid = filamentId;
 
       safeCart(cart);
 
@@ -103,6 +122,20 @@ export const useCartStore = create<TStore>((set) => ({
       return { cart };
     });
     useCartStore.getState().recalculate();
+  },
+  calculateItemPrice: (price, quantity, discounts) => {
+    let discount = 0;
+
+    if (discounts.length > 0) {
+      let sorted = discounts.sort(
+        (first, last) => last.quantity - first.quantity
+      );
+      discount = sorted.find((d) => quantity >= d.quantity)?.percentage || 0;
+    }
+
+    let amount = (price * quantity * (100 - discount)) / 100;
+
+    return { amount, discount };
   },
 
   // SHIPPING
@@ -165,7 +198,7 @@ export const useCartStore = create<TStore>((set) => ({
 
       if (!product) continue;
 
-      let quantity = 1;
+      let quantity = i.quantity || 1;
       let discount = 0;
       let amount = product.price;
       let fid = undefined;
@@ -182,9 +215,11 @@ export const useCartStore = create<TStore>((set) => ({
         }
 
         if (i.quantity > 1) {
-          quantity = i.quantity;
-          discount = getDiscount(product.discounts, quantity);
-          amount = (product.price * quantity * (100 - discount)) / 100;
+          let calc = useCartStore
+            .getState()
+            .calculateItemPrice(product.price, quantity, product.discounts);
+          discount = calc.discount;
+          amount = calc.amount;
         }
       }
 
@@ -212,13 +247,6 @@ export const useCartStore = create<TStore>((set) => ({
     useCartStore.getState().recalculate();
   },
 }));
-
-function getDiscount(discounts: TDiscount[], quantity: number) {
-  let sorted = discounts.sort((first, last) => last.quantity - first.quantity);
-  let match = sorted.find((d) => quantity >= d.quantity)?.percentage || 0;
-
-  return match;
-}
 
 function safeCart(cart: TCartItem[]) {
   localStorage.setItem(

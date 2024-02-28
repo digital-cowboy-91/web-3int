@@ -7,10 +7,19 @@ import { ReactNode, useEffect, useState } from "react";
 
 type Props = {
   product: TProduct;
+  quantity?: number;
+  filamentId?: number;
   children: ReactNode;
+  className?: string;
 };
 
-export default function ButtonAddToCart({ product, children }: Props) {
+export default function ButtonAddToCart({
+  product,
+  quantity = 1,
+  filamentId,
+  children,
+  className = "",
+}: Props) {
   const [inProgress, setInProgress] = useState(false);
   const router = useRouter();
 
@@ -30,12 +39,12 @@ export default function ButtonAddToCart({ product, children }: Props) {
 
   return (
     <button
-      className="btn-outline-success"
+      className={`btn-outline-success ${className}`}
       onClick={() => {
         if (inProgress) {
           router.push("/cart");
         } else {
-          addCartItem(product);
+          addCartItem(product, quantity, filamentId);
           setInProgress(true);
         }
       }}
