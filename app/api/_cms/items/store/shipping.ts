@@ -9,6 +9,15 @@ export type TShipping = {
   price: number;
 };
 
+async function readItem(id: number) {
+  return await cmsAPI(base + "/" + id, {
+    method: "GET",
+    next: {
+      tags: ["shipping"],
+    },
+  }).then((res) => res.data as TShipping);
+}
+
 async function readItems() {
   return await cmsAPI(base, {
     method: "GET",
@@ -19,5 +28,6 @@ async function readItems() {
 }
 
 export const CMS_Shipping = {
+  readItem,
   readItems,
 };

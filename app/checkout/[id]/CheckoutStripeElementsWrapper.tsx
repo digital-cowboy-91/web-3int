@@ -8,10 +8,10 @@ export default function CheckoutStripeElementsWrapper({
   clientSecret,
   pub_key,
 }: {
-  clientSecret: string;
+  clientSecret?: string;
   pub_key: string;
 }) {
-  const stripePromise = loadStripe(pub_key);
+  const stripe = loadStripe(pub_key);
 
   return (
     <Elements
@@ -21,7 +21,7 @@ export default function CheckoutStripeElementsWrapper({
           theme: "stripe",
         },
       }}
-      stripe={stripePromise}
+      stripe={stripe}
     >
       <CheckoutStripeElements />
     </Elements>

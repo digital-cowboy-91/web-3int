@@ -40,7 +40,7 @@ export default function BuyingOptions({ products }: { products: TProduct[] }) {
         }))}
         onSelect={(value) => setPid(value)}
         className="w-full "
-        label="Product"
+        label="Delivery format"
       />
 
       {!downloadable && (

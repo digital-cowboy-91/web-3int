@@ -2,22 +2,29 @@ import { TDiscount, TProduct } from "@/app/api/_cms/items/store/products";
 import { TShipping } from "@/app/api/_cms/items/store/shipping";
 import { z } from "zod";
 import { create } from "zustand";
+import actionStripeUpdatePaymentIntent, {
+  actionStripeCreatePaymentIntent,
+  actionStripeRetrievePaymentIntent,
+} from "../checkout/lib/actionStripe";
 import actionGetProduct from "./actionGetProduct";
 import actionGetShipping from "./actionGetShipping";
 
 type TCartItem = {
   product: TProduct;
+  description: string;
   quantity: number;
   amount: number;
   discount: number;
   fid?: number;
 };
 
-const SLocalCartItem = z.object({
+export const SCartItemSimple = z.object({
   pid: z.string().uuid(),
   quantity: z.number().min(1),
   fid: z.number().optional(),
 });
+
+export type TCartItemSimple = z.infer<typeof SCartItemSimple>;
 
 type TSummary = {
   title: "Subtotal" | "Total" | "Tax" | "Shipping";
@@ -35,6 +42,7 @@ type TStore = {
     quantity: number,
     discounts: TDiscount[]
   ) => { amount: number; discount: number };
+  simplifyCart: () => TCartItemSimple[];
   // SHIPPING
   shipping_id: number | undefined;
   shipping_methods: TShipping[];
@@ -45,6 +53,12 @@ type TStore = {
   // INIT
   isLoading: boolean;
   initialize: () => void;
+  // STRIPE
+  clientSecret: string | undefined;
+  clientId: string | undefined;
+  intentIsUpToDate: boolean;
+  // initializeIntent: () => Promise<void>;
+  // updateIntent: () => Promise<void>;
 };
 
 export const useCartStore = create<TStore>((set) => ({
@@ -72,15 +86,18 @@ export const useCartStore = create<TStore>((set) => ({
           ? product.filament_rels[0].filament_rel.id
           : undefined);
 
+      let description = composeDescription(product, fid);
+
       cart.push({
         product,
+        description,
         quantity,
         amount,
         discount,
         fid,
       });
 
-      safeCart(cart);
+      safeCart();
 
       return { cart };
     });
@@ -88,28 +105,31 @@ export const useCartStore = create<TStore>((set) => ({
     useCartStore.getState().recalculate();
   },
   updateCartItem: (index, quantity, filamentId) => {
-    set((s) => {
-      let cart = s.cart;
-      let thisItem = cart[index];
+    let cart = useCartStore.getState().cart;
+    let thisItem = cart[index];
 
-      if (quantity) {
-        let { amount, discount } = s.calculateItemPrice(
+    if (quantity) {
+      let { amount, discount } = useCartStore
+        .getState()
+        .calculateItemPrice(
           thisItem.product.price,
           quantity,
           thisItem.product.discounts
         );
 
-        thisItem.quantity = quantity;
-        thisItem.amount = amount;
-        thisItem.discount = discount;
-      }
+      thisItem.quantity = quantity;
+      thisItem.amount = amount;
+      thisItem.discount = discount;
+    }
 
-      if (filamentId) thisItem.fid = filamentId;
+    if (filamentId) {
+      thisItem.description = composeDescription(thisItem.product, filamentId);
+      thisItem.fid = filamentId;
+    }
 
-      safeCart(cart);
+    set({ cart });
 
-      return { cart };
-    });
+    safeCart();
     useCartStore.getState().recalculate();
   },
   removeCartItem: (index) => {
@@ -117,16 +137,17 @@ export const useCartStore = create<TStore>((set) => ({
       let cart = s.cart;
       cart.splice(index, 1);
 
-      safeCart(cart);
+      safeCart();
 
       return { cart };
     });
+
     useCartStore.getState().recalculate();
   },
   calculateItemPrice: (price, quantity, discounts) => {
     let discount = 0;
 
-    if (discounts.length > 0) {
+    if (discounts && discounts.length > 0) {
       let sorted = discounts.sort(
         (first, last) => last.quantity - first.quantity
       );
@@ -143,6 +164,7 @@ export const useCartStore = create<TStore>((set) => ({
   shipping_methods: [],
   updateShippingId: (id) => {
     set({ shipping_id: id });
+
     useCartStore.getState().recalculate();
   },
   // SUMMARY
@@ -168,7 +190,7 @@ export const useCartStore = create<TStore>((set) => ({
       }
 
       let subtotal = recalculateCart(s.cart);
-      let shipping = shipping_method!.price;
+      let shipping = shipping_method?.price || 0;
       let total = subtotal + shipping_method!.price;
       let tax = round(total * 0.21);
 
@@ -179,16 +201,18 @@ export const useCartStore = create<TStore>((set) => ({
         { title: "Total", value: total },
       ];
 
-      return { summary };
+      return { summary, intentIsUpToDate: false };
     }),
   isLoading: true,
   initialize: async () => {
     set({ isLoading: true });
+    // await useCartStore.getState().initializeIntent();
+
     let localCart = localStorage.getItem("cart");
 
     if (!localCart) return [];
 
-    let parsedCart = z.array(SLocalCartItem).parse(JSON.parse(localCart));
+    let parsedCart = z.array(SCartItemSimple).parse(JSON.parse(localCart));
 
     let cart: TCartItem[] = [];
     for (let i of parsedCart) {
@@ -198,6 +222,7 @@ export const useCartStore = create<TStore>((set) => ({
 
       if (!product) continue;
 
+      let description = composeDescription(product, i.fid);
       let quantity = i.quantity || 1;
       let discount = 0;
       let amount = product.price;
@@ -225,6 +250,7 @@ export const useCartStore = create<TStore>((set) => ({
 
       cart.push({
         product,
+        description,
         quantity,
         amount,
         discount,
@@ -244,19 +270,87 @@ export const useCartStore = create<TStore>((set) => ({
       shipping_id: methods[0].id,
       isLoading: false,
     });
+
     useCartStore.getState().recalculate();
+  },
+  // CHECKOUT
+  clientSecret: undefined,
+  clientId: undefined,
+  intentIsUpToDate: false,
+  // initializeIntent: async () => {
+  //   console.log("initializeIntent");
+  //   let clientSecret = useCartStore.getState().clientSecret;
+  //   let clientId = useCartStore.getState().clientId;
+  //   let localClientId = localStorage.getItem("stripe-session") || undefined;
+
+  //   if (clientSecret && clientId) return;
+
+  //   if (clientId || localClientId) {
+  //     clientSecret = await actionStripeRetrievePaymentIntent(
+  //       clientId || localClientId!
+  //     );
+
+  //     set({ clientSecret, clientId: clientId || localClientId });
+  //     return;
+  //   }
+
+  //   let session = await actionStripeCreatePaymentIntent();
+
+  //   if (session) {
+  //     let { clientSecret, clientId } = JSON.parse(session);
+  //     localStorage.setItem("stripe-session", clientId);
+
+  //     set({ clientSecret, clientId });
+  //   }
+  // },
+  // updateIntent: async () => {
+  //   let clientId = useCartStore.getState().clientId!;
+  //   let simpleCart: TCartItemSimple[] = useCartStore.getState().simplifyCart();
+  //   let shipping_id = useCartStore.getState().shipping_id;
+
+  //   console.log(clientId, simpleCart, shipping_id);
+
+  //   await actionStripeUpdatePaymentIntent(clientId, simpleCart, shipping_id);
+
+  //   set({ intentIsUpToDate: true });
+  // },
+  simplifyCart: () => {
+    let cart: TCartItem[] = useCartStore.getState().cart;
+    let simpleCart: TCartItemSimple[] = cart.map(
+      ({ product, quantity, fid }) => ({
+        pid: product.id,
+        quantity,
+        fid,
+      })
+    );
+
+    return simpleCart;
   },
 }));
 
-function safeCart(cart: TCartItem[]) {
+function safeCart() {
   localStorage.setItem(
     "cart",
-    JSON.stringify(
-      cart.map(({ product, quantity, fid }) => ({
-        pid: product.id,
-        quantity: quantity,
-        fid,
-      }))
-    )
+    JSON.stringify(useCartStore.getState().simplifyCart())
   );
+}
+
+function composeDescription(product: TProduct, fid: number | undefined) {
+  let prefix = product.title;
+
+  if (product.downloadable) {
+    return prefix + " digital file";
+  }
+
+  if (product.filament_rels.length === 0) {
+    return prefix;
+  }
+
+  let filament = product.filament_rels.find(
+    (f) => f.filament_rel.id === fid
+  )?.filament_rel;
+  let appendix =
+    filament?.material + ", " + filament?.colour + " " + filament?.cosmetic;
+
+  return prefix + " · " + appendix;
 }

@@ -207,19 +207,25 @@ body {
   }
 
   &--summary {
-    @apply mx-4 mt-4 p-8 grid grid-cols-1 gap-8 rounded-[2rem] bg-success bg-opacity-10;
+    @apply mx-4 mt-4 p-8 grid grid-cols-1 gap-8 rounded-[2rem] bg-success bg-opacity-10 shadow;
     /* SM */
     @apply sm:grid-cols-[1fr_250px];
     /* LG */
     @apply lg:mt-0 lg:grid-cols-1 lg:mb-auto;
 
     /* Neomorphic shadow: https://neumorphism.io */
-    & {
+    /* & {
       box-shadow: 3px 3px 10px #aaaaaa, -3px -3px 10px #ffffff;
-    }
+    } */
 
     & > * {
       @apply space-y-8;
+
+      button {
+        @apply btn-outline-success w-full justify-center;
+        /* SM, LG */
+        @apply sm:col-start-2 lg:col-auto;
+      }
 
       a {
         @apply link-outline-success w-full justify-center;
@@ -236,7 +242,7 @@ body {
           @apply font-semibold;
         }
         &:last-child {
-          @apply pt-6 text-xl font-semibold text-primary;
+          @apply pt-6  font-semibold text-primary;
         }
       }
     }
