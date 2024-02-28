@@ -1,5 +1,5 @@
 import { TProduct } from "@/app/api/_cms/items/store/products";
-import QuantitySelector from "@/app/cart/components/QuantitySelector ";
+import QuantitySelector from "@/app/cart/components/QuantitySelector";
 import { ButtonDropdown_v2 } from "@/app/components/ButtonDropdown";
 import {
   ArrowDownTrayIcon,
