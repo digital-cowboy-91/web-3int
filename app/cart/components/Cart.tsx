@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useCartStore } from "../lib/store";
 import QuantitySelector from "./QuantitySelector";
 import Shipping from "./Shipping";
@@ -68,7 +69,7 @@ export default function Cart() {
               </div>
             ))}
           </div>
-          <button>Checkout</button>
+          <Link href="/cart/checkout">Checkout</Link>
         </div>
       </div>
     </div>
