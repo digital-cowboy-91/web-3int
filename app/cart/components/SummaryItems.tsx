@@ -14,10 +14,14 @@ export default function SummaryItems() {
 
   let summary = summarizeCart(cart, shipping);
 
-  return summary.map(({ title, value }, index) => (
-    <div key={index}>
-      <span>{title}</span>
-      <span>£ {round(value)}</span>
+  return (
+    <div className="summaries">
+      {summary.map(({ title, value }, index) => (
+        <div key={index}>
+          <span>{title}</span>
+          <span>£ {round(value)}</span>
+        </div>
+      ))}
     </div>
-  ));
+  );
 }
