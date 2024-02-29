@@ -7,15 +7,13 @@ import {
 } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import ButtonAddToCart from "./ButtonAddToCart";
-import { useCartStore } from "@/app/cart/lib/store";
+import { calculateItemPrice } from "@/app/cart/lib/calculateItemPrice";
 
 export default function BuyingOptions({ products }: { products: TProduct[] }) {
   const [pid, setPid] = useState<string>(products[0].id);
   const [fid, setFid] = useState<string | null>(null);
 
   const [quantity, setQuantity] = useState(1);
-
-  const calculateItemPrice = useCartStore((s) => s.calculateItemPrice);
 
   let selectedProduct = products.find((p) => p.id === pid)!;
   let { id, price, downloadable, filament_rels, discounts } = selectedProduct;
@@ -26,7 +24,7 @@ export default function BuyingOptions({ products }: { products: TProduct[] }) {
   if (quantity > 1) {
     let calc = calculateItemPrice(price, quantity, discounts);
     amount = calc.amount;
-    discount = calc.discount;
+    discount = calc.discount_pct;
   }
 
   return (

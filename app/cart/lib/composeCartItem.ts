@@ -1,32 +1,44 @@
-import { TProduct } from "@/app/api/_cms/items/store/products";
+"use server";
+
+import { CMS_Products, TProduct } from "@/app/api/_cms/items/store/products";
 import { calculateItemPrice } from "./calculateItemPrice";
 import { retrieveFilamentTitle } from "./composeFilamentTitle";
 import composeDescription from "./composeDescription";
 
-export function composeCartItem(
-  product: TProduct,
+export async function composeCartItem(
+  productId: string,
   quantity: number = 1,
   filamentId?: number
 ) {
-  let price = calculateItemPrice(product.price, quantity, product.discounts);
+  let product = await CMS_Products.readItem(productId);
 
-  let filament = retrieveFilamentTitle({
-    list: product.filament_rels.map((rel) => rel.filament_rel),
-    id: filamentId,
-  });
+  if (!product) return;
+
+  const { title, price, discounts, gallery_rel, filament_rels, downloadable } =
+    product;
+
+  let amounts = calculateItemPrice(price, quantity, discounts);
+
+  let filamentTitle = retrieveFilamentTitle(
+    filament_rels.map((rel) => rel.filament_rel),
+    filamentId
+  );
 
   let description = composeDescription(
-    product.title,
+    title,
     quantity,
-    product.downloadable,
-    filament
+    downloadable,
+    filamentTitle
   );
 
   return {
-    product,
+    pid: productId,
+    title: gallery_rel.title,
     description,
-    quantity,
-    ...price,
+    qty: quantity,
+    ...amounts,
     fid: filamentId,
+    cid: gallery_rel.cover_image,
+    downloadable,
   };
 }

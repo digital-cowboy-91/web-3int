@@ -42,7 +42,27 @@ async function readItem(id: string) {
   ).then((res) => res.data as TProduct);
 }
 
-type TDownloadable = {
+async function readItems(ids?: string[]) {
+  const { isEnabled: isDraft } = draftMode();
+
+  const filter = ids ? `&filter[id][_in]=${ids.join(",")}` : "";
+  const fields =
+    "fields[]=*,gallery_rel.title,gallery_rel.cover_image,filament_rels.filament_rel.*";
+
+  return await cmsAPI(
+    base + "?" + fields + filter,
+    {
+      method: "GET",
+      cache: isDraft ? "no-store" : "default",
+      next: {
+        tags: isDraft ? [] : ["products"],
+      },
+    },
+    isDraft
+  ).then((res) => res.data as TProduct[]);
+}
+
+export type TDownloadable = {
   id: string;
   price: number;
   asset: {
@@ -65,5 +85,6 @@ async function readDownloadable(id: string) {
 
 export const CMS_Products = {
   readItem,
+  readItems,
   readDownloadable,
 };

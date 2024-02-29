@@ -9,13 +9,10 @@ export function composeFilamentTitle({
   return f.material + ", " + f.colour + " " + f.cosmetic;
 }
 
-export function retrieveFilamentTitle({
-  list,
-  id,
-}: {
-  list: TFilament[];
-  id: number | undefined;
-}) {
+export function retrieveFilamentTitle(
+  list: TFilament[],
+  id: number | undefined
+) {
   let object = id ? list.find((f) => f.id === id) : list[0];
 
   return composeFilamentTitle({ filament: object });

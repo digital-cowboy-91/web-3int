@@ -1,7 +1,7 @@
 "use client";
 
 import { TProduct } from "@/app/api/_cms/items/store/products";
-import { useCartStore } from "@/app/cart/lib/store";
+import { useCartStore } from "@/app/cart/components/Cart.store";
 import { useRouter } from "next/navigation";
 import { ReactNode, useEffect, useState } from "react";
 
@@ -44,7 +44,7 @@ export default function ButtonAddToCart({
         if (inProgress) {
           router.push("/cart");
         } else {
-          addCartItem(product, quantity, filamentId);
+          addCartItem(product.id, quantity, filamentId);
           setInProgress(true);
         }
       }}

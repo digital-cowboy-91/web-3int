@@ -1,4 +1,4 @@
-import { TCartItem } from "../components/Cart";
+import { TCartItem } from "../components/Cart.store";
 
 export function summarizeCart(cart: TCartItem[], shipping: number) {
   let subtotal = 0;
