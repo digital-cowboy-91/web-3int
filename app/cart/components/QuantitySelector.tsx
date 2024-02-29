@@ -1,3 +1,5 @@
+"use client";
+
 import { MinusCircleIcon, PlusCircleIcon } from "@heroicons/react/24/solid";
 
 const buttonClass = "flex-none enabled:text-primary disabled:text-gray-200";

@@ -57,8 +57,8 @@ type TStore = {
   clientSecret: string | undefined;
   clientId: string | undefined;
   intentIsUpToDate: boolean;
-  // initializeIntent: () => Promise<void>;
-  // updateIntent: () => Promise<void>;
+  initializeIntent: () => Promise<void>;
+  updateIntent: () => Promise<void>;
 };
 
 export const useCartStore = create<TStore>((set) => ({
@@ -105,7 +105,7 @@ export const useCartStore = create<TStore>((set) => ({
     useCartStore.getState().recalculate();
   },
   updateCartItem: (index, quantity, filamentId) => {
-    let cart = useCartStore.getState().cart;
+    let cart = [...useCartStore.getState().cart];
     let thisItem = cart[index];
 
     if (quantity) {
@@ -277,43 +277,43 @@ export const useCartStore = create<TStore>((set) => ({
   clientSecret: undefined,
   clientId: undefined,
   intentIsUpToDate: false,
-  // initializeIntent: async () => {
-  //   console.log("initializeIntent");
-  //   let clientSecret = useCartStore.getState().clientSecret;
-  //   let clientId = useCartStore.getState().clientId;
-  //   let localClientId = localStorage.getItem("stripe-session") || undefined;
+  initializeIntent: async () => {
+    console.log("initializeIntent");
+    let clientSecret = useCartStore.getState().clientSecret;
+    let clientId = useCartStore.getState().clientId;
+    let localClientId = localStorage.getItem("stripe-session") || undefined;
 
-  //   if (clientSecret && clientId) return;
+    if (clientSecret && clientId) return;
 
-  //   if (clientId || localClientId) {
-  //     clientSecret = await actionStripeRetrievePaymentIntent(
-  //       clientId || localClientId!
-  //     );
+    if (clientId || localClientId) {
+      clientSecret = await actionStripeRetrievePaymentIntent(
+        clientId || localClientId!
+      );
 
-  //     set({ clientSecret, clientId: clientId || localClientId });
-  //     return;
-  //   }
+      set({ clientSecret, clientId: clientId || localClientId });
+      return;
+    }
 
-  //   let session = await actionStripeCreatePaymentIntent();
+    let session = await actionStripeCreatePaymentIntent();
 
-  //   if (session) {
-  //     let { clientSecret, clientId } = JSON.parse(session);
-  //     localStorage.setItem("stripe-session", clientId);
+    if (session) {
+      let { clientSecret, clientId } = JSON.parse(session);
+      localStorage.setItem("stripe-session", clientId);
 
-  //     set({ clientSecret, clientId });
-  //   }
-  // },
-  // updateIntent: async () => {
-  //   let clientId = useCartStore.getState().clientId!;
-  //   let simpleCart: TCartItemSimple[] = useCartStore.getState().simplifyCart();
-  //   let shipping_id = useCartStore.getState().shipping_id;
+      set({ clientSecret, clientId });
+    }
+  },
+  updateIntent: async () => {
+    let clientId = useCartStore.getState().clientId!;
+    let simpleCart: TCartItemSimple[] = useCartStore.getState().simplifyCart();
+    let shipping_id = useCartStore.getState().shipping_id;
 
-  //   console.log(clientId, simpleCart, shipping_id);
+    console.log(clientId, simpleCart, shipping_id);
 
-  //   await actionStripeUpdatePaymentIntent(clientId, simpleCart, shipping_id);
+    await actionStripeUpdatePaymentIntent(clientId, simpleCart, shipping_id);
 
-  //   set({ intentIsUpToDate: true });
-  // },
+    set({ intentIsUpToDate: true });
+  },
   simplifyCart: () => {
     let cart: TCartItem[] = useCartStore.getState().cart;
     let simpleCart: TCartItemSimple[] = cart.map(
