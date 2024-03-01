@@ -1,11 +1,20 @@
 "use client";
 
-import { useStore } from "zustand";
+import { useEffect } from "react";
 import { useCartStore } from "./Cart.store";
 import QuantitySelector from "./QuantitySelector";
 
 export default function Cart() {
-  const { cart, updateCartItem, removeCartItem } = useStore(useCartStore);
+  const cart = useCartStore((s) => s.cart);
+
+  const updateCartItem = useCartStore((s) => s.updateCartItem);
+  const removeCartItem = useCartStore((s) => s.removeCartItem);
+
+  const revalidateCart = useCartStore((s) => s.revalidateCart);
+
+  useEffect(() => {
+    revalidateCart();
+  }, []);
 
   return cart.length === 0 ? (
     <div>Cart is empty</div>

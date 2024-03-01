@@ -1,33 +1,36 @@
-import { z } from "zod";
+import { TProduct } from "@/app/api/_cms/items/store/products";
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { persist, subscribeWithSelector } from "zustand/middleware";
+import { composeCacheObject } from "../lib/composeCacheObject";
 import { composeCartItem } from "../lib/composeCartItem";
-
-export const SCartLocalItem = z.object({
-  pid: z.string().uuid(),
-  qty: z.number().min(1),
-  fid: z.number().optional(),
-});
-
-export type TCartLocalItem = z.infer<typeof SCartLocalItem>;
+import { revalidateCart } from "../lib/revalidateCart";
 
 export type TCartItem = {
-  pid: string;
-  title: string;
-  description: string;
-  qty: number;
   amount: number;
+  cid: string;
+  description: string;
   discount_amount: number;
   discount_pct: number;
-  fid?: number;
-  cid: string;
   downloadable: boolean;
+  fid?: number;
+  pid: string;
+  price?: number;
+  qty: number;
+  title: string;
+};
+
+export type TCache = {
+  [key: string]: {
+    value: any;
+    staleTime: number;
+  };
 };
 
 type TStore = {
   cart: TCartItem[];
+  isLoading: boolean | number;
   addCartItem: (
-    productId: string,
+    product: TProduct,
     quantity?: number,
     filamentId?: number
   ) => void;
@@ -37,44 +40,60 @@ type TStore = {
     filamentId?: number
   ) => void;
   removeCartItem: (index: number) => void;
+  revalidateCart: () => Promise<void>;
+  _cache: TCache;
 };
 
 export const useCartStore = create<TStore>()(
-  persist(
-    (set, get) => ({
-      cart: [],
-      addCartItem: async (productId, quantity = 1, filamentId = undefined) => {
-        let item = await composeCartItem(productId, quantity, filamentId);
+  subscribeWithSelector(
+    persist(
+      (set, get) => ({
+        cart: [],
+        isLoading: false,
+        addCartItem: (product, quantity = 1, filamentId = undefined) => {
+          const { cart, _cache } = get();
+          let item = composeCartItem(product, quantity, filamentId);
 
-        if (!item) return;
+          set({
+            cart: [...cart, item],
+            _cache: { ..._cache, ...composeCacheObject("product.id", product) },
+          });
+        },
+        updateCartItem: (index, quantity, filamentId) => {
+          const { cart, _cache } = get();
+          const { pid, qty, fid } = cart[index];
 
-        set({ cart: [...get().cart, item] });
-      },
-      updateCartItem: async (index, quantity, filamentId) => {
-        let cart = [...get().cart];
-        let { pid, qty, fid } = cart[index];
+          let product = _cache[pid].value;
 
-        let updatedItem = await composeCartItem(
-          pid,
-          quantity || qty,
-          filamentId || fid
-        );
+          if (!product) return;
 
-        if (!updatedItem) return;
+          let newCart = [...cart];
+          newCart[index] = composeCartItem(
+            product,
+            quantity || qty,
+            filamentId || fid
+          );
 
-        cart[index] = updatedItem;
-
-        set({ cart });
-      },
-      removeCartItem: (index) => {
-        let cart = [...get().cart];
-        cart.splice(index, 1);
-        set({ cart });
-      },
-    }),
-    {
-      version: 1,
-      name: "cart",
-    }
+          set({ cart: newCart });
+        },
+        removeCartItem: (index) => {
+          let cart = [...get().cart];
+          cart.splice(index, 1);
+          set({ cart });
+        },
+        revalidateCart: async () => {
+          const { cart, _cache } = get();
+          set({ isLoading: true });
+          const res = await revalidateCart(cart, _cache);
+          set({ ...res, isLoading: false });
+        },
+        _cache: {},
+      }),
+      {
+        version: 1,
+        name: "cart",
+        partialize: ({ cart }) => ({ cart }),
+      }
+    )
   )
 );

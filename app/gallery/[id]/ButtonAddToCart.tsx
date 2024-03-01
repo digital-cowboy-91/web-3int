@@ -44,7 +44,7 @@ export default function ButtonAddToCart({
         if (inProgress) {
           router.push("/cart");
         } else {
-          addCartItem(product.id, quantity, filamentId);
+          addCartItem(product, quantity, filamentId);
           setInProgress(true);
         }
       }}
