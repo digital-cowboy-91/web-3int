@@ -11,7 +11,6 @@
   "dependencies": {
     "@heroicons/react": "^2.0.18",
     "@hookform/resolvers": "^3.3.2",
-    "@revolut/checkout": "^1.1.18",
     "@stripe/react-stripe-js": "^2.5.0",
     "@stripe/stripe-js": "^3.0.5",
     "framer-motion": "^10.16.4",
@@ -24,7 +23,6 @@
     "react-spinners": "^0.13.8",
     "react-zoom-pan-pinch": "^3.3.0",
     "stripe": "^14.18.0",
-    "superjson": "^2.2.1",
     "zod": "^3.22.4",
     "zustand": "^4.5.1"
   },
