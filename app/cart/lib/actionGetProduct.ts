@@ -11,9 +11,7 @@ export async function actionGetProduct(id: string) {
 }
 
 export async function actionGetProducts(ids: string[]) {
-  console.log("ids", ids.length);
   let products = await CMS_Products.readItems(ids);
-  console.log("products", products.length);
 
   if (!products) throw new Error("No product found");
 

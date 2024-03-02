@@ -31,7 +31,6 @@ export default function ShippingItems({ methods }: { methods: TShipping[] }) {
         type="radio"
         name="shipping"
         onChange={(e) => {
-          console.log(e.currentTarget.checked);
           e.currentTarget.checked && setShipping(id, price);
         }}
         defaultChecked={index === 0}

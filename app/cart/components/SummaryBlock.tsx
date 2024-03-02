@@ -1,6 +1,5 @@
-import Link from "next/link";
-
 import ShippingBlock from "./ShippingBlock";
+import { SummaryButtons } from "./SummaryButtons";
 import SummaryItems from "./SummaryItems";
 
 export default function SummaryBlock() {
@@ -13,7 +12,7 @@ export default function SummaryBlock() {
       <div>
         <h2>Summary</h2>
         <SummaryItems />
-        <Link href="/cart/checkout">Checkout</Link>
+        <SummaryButtons />
       </div>
     </div>
   );

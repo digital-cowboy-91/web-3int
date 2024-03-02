@@ -4,6 +4,6 @@ export function composeProductCache(product: TProduct, ttl: number = 3600000) {
   return {
     id: product.id,
     data: product,
-    staleTime: new Date().getTime() + ttl,
+    staleTime: Date.now() + ttl,
   };
 }

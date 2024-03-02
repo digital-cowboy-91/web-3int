@@ -4,10 +4,6 @@ import { summarizeCart } from "../lib/summarizeCart";
 import { useCartStore } from "./Cart.store";
 import { useShippindStore } from "./ShippingItems";
 
-function round(number: number) {
-  return Math.round(number * 100) / 100;
-}
-
 export default function SummaryItems() {
   const cart = useCartStore((s) => s.cart);
   const shipping = useShippindStore((s) => s.amount);
@@ -18,10 +14,10 @@ export default function SummaryItems() {
 
   return (
     <div className="summaries">
-      {summary.map(({ title, value }, index) => (
-        <div key={index}>
+      {Object.entries(summary).map(([key, { title, value }]) => (
+        <div key={key}>
           <span>{title}</span>
-          <span>£ {round(value)}</span>
+          <span>£ {value}</span>
         </div>
       ))}
     </div>

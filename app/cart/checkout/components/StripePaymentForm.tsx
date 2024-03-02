@@ -2,6 +2,7 @@
 
 import {
   AddressElement,
+  ExpressCheckoutElement,
   LinkAuthenticationElement,
   PaymentElement,
 } from "@stripe/react-stripe-js";
@@ -9,6 +10,17 @@ import {
 export default function StripePaymentForm() {
   return (
     <form className="w-[500px] mx-auto p-4 flex flex-col gap-8">
+      <ExpressCheckoutElement
+        options={{
+          buttonType: {
+            applePay: "buy",
+            googlePay: "buy",
+          },
+        }}
+        onConfirm={() => {
+          console.log("confirmed");
+        }}
+      />
       <LinkAuthenticationElement />
       <AddressElement
         options={{
@@ -29,6 +41,9 @@ export default function StripePaymentForm() {
           },
         }}
       />
+      <button type="submit" className="btn-outline-success flex justify-center">
+        Order & Pay
+      </button>
     </form>
   );
 }

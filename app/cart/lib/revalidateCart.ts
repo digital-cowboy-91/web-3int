@@ -3,9 +3,18 @@ import { actionGetProducts } from "./actionGetProduct";
 import { composeCacheObject } from "./composeCacheObject";
 import { composeCartItem } from "./composeCartItem";
 
-export async function revalidateCart(cart: TCartItem[], cache: TCache) {
+export type TCartItemSimple = {
+  pid: string;
+  qty: number;
+  fid?: number;
+};
+
+export async function revalidateCart(
+  cart: TCartItem[] | TCartItemSimple[],
+  cache: TCache = {}
+) {
   // 1. Determine stale products
-  const now = new Date().getTime();
+  const now = Date.now();
   const staleProductIds = cart
     .filter(({ pid }) => {
       let product = cache[pid];

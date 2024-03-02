@@ -41,6 +41,7 @@ type TStore = {
   ) => void;
   removeCartItem: (index: number) => void;
   revalidateCart: () => Promise<void>;
+  _updatedAt: number;
   _cache: TCache;
 };
 
@@ -57,6 +58,7 @@ export const useCartStore = create<TStore>()(
           set({
             cart: [...cart, item],
             _cache: { ..._cache, ...composeCacheObject("product.id", product) },
+            _updatedAt: Date.now(),
           });
         },
         updateCartItem: (index, quantity, filamentId) => {
@@ -74,19 +76,23 @@ export const useCartStore = create<TStore>()(
             filamentId || fid
           );
 
-          set({ cart: newCart });
+          set({ cart: newCart, _updatedAt: Date.now() });
         },
         removeCartItem: (index) => {
           let cart = [...get().cart];
           cart.splice(index, 1);
-          set({ cart });
+          set({ cart, _updatedAt: Date.now() });
         },
         revalidateCart: async () => {
           const { cart, _cache } = get();
           set({ isLoading: true });
           const res = await revalidateCart(cart, _cache);
-          set({ ...res, isLoading: false });
+
+          if (!res) return set({ isLoading: false });
+
+          set({ ...res, isLoading: false, _updatedAt: Date.now() });
         },
+        _updatedAt: 0,
         _cache: {},
       }),
       {

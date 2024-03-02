@@ -8,7 +8,7 @@ export function composeCacheObject(
   return {
     [key]: {
       value,
-      staleTime: new Date().getTime() + ttl,
+      staleTime: Date.now() + ttl,
     },
   };
 }
