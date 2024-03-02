@@ -8,37 +8,29 @@ import { CMS_Shipping } from "@/app/api/_cms/items/store/shipping";
 const secret_key = process.env.STRIPE_SECRET_KEY!;
 const stripe = new Stripe(secret_key);
 
-export async function actionStripeRetrievePaymentIntent(id: string) {
-  try {
-    const session = await stripe.paymentIntents.retrieve(id);
+export const retrievePaymentIntent = async (id: string) => {
+  const session = await stripe.paymentIntents.retrieve(id);
+  const clientSecret = session.client_secret;
+  if (!clientSecret) throw new Error("Stripe: No client secret");
+  return clientSecret;
+};
 
-    if (!session.client_secret) {
-      throw new Error("Stripe: No client secret");
-    }
-
-    return session.client_secret;
-  } catch (err) {
-    return undefined;
-  }
-}
-
-export async function actionStripeCreatePaymentIntent(
-  simpleCart: TCartItemSimple[],
-  shipping_id: number
+export async function createPaymentIntent(
+  cartItems: TCartItemSimple[],
+  shippingId: number
 ) {
   try {
-    let res = await revalidateCart(simpleCart);
+    let cartData = await revalidateCart(cartItems);
+    if (!cartData) throw new Error("No revalidation data");
 
-    if (!res) throw new Error("No revalidation data");
-
-    let { cart, _cache } = res;
-
+    let { cart, _cache } = cartData;
     if (!cart || cart.length === 0) throw new Error("Cart is empty");
 
-    let { total } = summarizeCart(cart, shipping_id);
+    let { total } = summarizeCart(cart, shippingId);
 
+    const amountInCents = total.value * 100;
     const session = await stripe.paymentIntents.create({
-      amount: total.value * 100,
+      amount: amountInCents,
       currency: "gbp",
       automatic_payment_methods: {
         enabled: true,
@@ -59,37 +51,44 @@ export async function actionStripeCreatePaymentIntent(
   }
 }
 
-export default async function actionStripeUpdatePaymentIntent(
-  id: string,
-  simpleCart: TCartItemSimple[],
-  shipping_id: number
+export async function updatePaymentIntent(
+  paymentIntentId: string,
+  cartItems: TCartItemSimple[],
+  shippingId: number
 ) {
   try {
-    let res = await revalidateCart(simpleCart);
+    let revalidatedCart = await revalidateCart(cartItems);
 
-    if (!res) throw new Error("No revalidation data");
+    if (!revalidatedCart) {
+      throw new Error("No revalidation data");
+    }
 
-    let { cart, _cache } = res;
+    let { cart, _cache } = revalidatedCart;
 
-    if (!cart || cart.length === 0) {
+    if (cart.length === 0) {
       throw new Error("Cart is empty");
     }
 
-    let shipping = await CMS_Shipping.readItem(shipping_id);
+    let shipping = await CMS_Shipping.readItem(shippingId);
 
-    if (!shipping) throw new Error("No shipping found");
+    if (!shipping) {
+      throw new Error("No shipping found");
+    }
 
     let { total } = summarizeCart(cart, shipping.price);
 
-    await stripe.paymentIntents.update(id, {
-      amount: total.value * 100,
-    });
+    let updatedPaymentIntent = await stripe.paymentIntents.update(
+      paymentIntentId,
+      {
+        amount: total.value * 100,
+      }
+    );
 
     return {
       cart,
       _cache,
     };
-  } catch (err: any) {
+  } catch (err) {
     console.error(err);
   }
 }

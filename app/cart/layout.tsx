@@ -8,12 +8,11 @@ export default function Layout({ children }: { children: ReactNode }) {
     <section id="gallery-detail">
       <div className={`${CSSContainer} my-8`}>
         <h1 className="text-3xl font-bold mb-8">Cart</h1>
-        <StripeWrapper>
-          <div className="cart--wrapper">
-            {children}
-            <SummaryBlock />
-          </div>
-        </StripeWrapper>
+
+        <div className="cart--wrapper">
+          {children}
+          <SummaryBlock />
+        </div>
       </div>
     </section>
   );

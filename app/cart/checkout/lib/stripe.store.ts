@@ -1,7 +1,8 @@
 import { create } from "zustand";
-import actionStripeUpdatePaymentIntent, {
-  actionStripeCreatePaymentIntent,
-  actionStripeRetrievePaymentIntent,
+import {
+  createPaymentIntent,
+  retrievePaymentIntent,
+  updatePaymentIntent,
 } from "./actionStripe";
 import { useCartStore } from "../../components/Cart.store";
 import { useShippindStore } from "../../components/ShippingItems";
@@ -10,7 +11,7 @@ import { TCartItemSimple } from "../../lib/revalidateCart";
 type TStore = {
   clientSecret: string;
   isLoading: boolean;
-  dynamicRoute: string;
+  addressRequired: boolean;
   handleIntent: () => Promise<void>;
   // destroyIntent: () => Promise<void>
   _updatedAt: number;
@@ -19,47 +20,48 @@ type TStore = {
 export const useStripeStore = create<TStore>((set, get) => ({
   clientSecret: "",
   isLoading: false,
-  dynamicRoute: "",
+  addressRequired: false,
   handleIntent: async () => {
-    function terminate(message: string) {
-      console.log(message);
-      set({ isLoading: false });
-    }
-
     const now = Date.now();
+    let addressRequired = false;
 
     set({ isLoading: true });
     let { clientSecret } = get();
     let clientId = localStorage.getItem("stripe-session");
 
-    // Check cart existence
     const simpleCart: TCartItemSimple[] = useCartStore
       .getState()
-      .cart?.map(({ pid, qty, fid }) => ({
-        pid,
-        qty,
-        fid,
-      }));
+      .cart?.map(({ pid, qty, fid, downloadable }) => {
+        if (!downloadable && !addressRequired) addressRequired = true;
 
-    if (simpleCart.length === 0) return terminate("Cart is empty");
+        return { pid, qty, fid };
+      });
 
-    // Check shipping existence
+    if (simpleCart.length === 0) {
+      set({ isLoading: false });
+      return;
+    }
+
     const shippingId = useShippindStore.getState().id;
 
-    if (!shippingId) return terminate("No shipping selected");
+    if (!shippingId) {
+      set({ isLoading: false });
+      return;
+    }
 
-    // Retrieve payment intent
-    if (clientId) {
-      let res = await actionStripeRetrievePaymentIntent(clientId);
+    if (clientId && !clientSecret) {
+      let res = await retrievePaymentIntent(clientId);
 
       if (res) clientSecret = res;
     }
 
-    // Create payment intent
     if (!clientSecret) {
-      let res = await actionStripeCreatePaymentIntent(simpleCart, shippingId);
+      let res = await createPaymentIntent(simpleCart, shippingId);
 
-      if (!res) return terminate("No payment intent created");
+      if (!res) {
+        set({ isLoading: false });
+        return;
+      }
 
       useCartStore.setState({
         cart: res.cart,
@@ -71,15 +73,13 @@ export const useStripeStore = create<TStore>((set, get) => ({
       clientId = res.clientId;
     }
 
-    // Update payment intent
     if (clientSecret && clientId) {
-      let res = await actionStripeUpdatePaymentIntent(
-        clientId,
-        simpleCart,
-        shippingId
-      );
+      let res = await updatePaymentIntent(clientId, simpleCart, shippingId);
 
-      if (!res) return terminate("No payment intent updated");
+      if (!res) {
+        set({ isLoading: false });
+        return;
+      }
 
       useCartStore.setState({
         cart: res.cart,
@@ -88,7 +88,7 @@ export const useStripeStore = create<TStore>((set, get) => ({
       });
     }
 
-    set({ clientSecret, isLoading: false, _updatedAt: now });
+    set({ clientSecret, addressRequired, isLoading: false, _updatedAt: now });
   },
   _updatedAt: 0,
 }));

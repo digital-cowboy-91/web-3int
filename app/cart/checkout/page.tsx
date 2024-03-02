@@ -15,22 +15,16 @@ export default function Page() {
   const handleIntent = useStripeStore((s) => s.handleIntent);
 
   useEffect(() => {
-    console.log("[CHECKOUT] cartLastUpdate", cartLastUpdate);
-    console.log("[CHECKOUT] stripeLatUpdate", stripeLatUpdate);
-
     if (cartLastUpdate !== stripeLatUpdate) {
-      console.log("[CHECKOUT] update intent");
       handleIntent();
     }
   }, [cartLastUpdate, stripeLatUpdate]);
 
   if (cart.length === 0) {
-    console.log("[CHECKOUT] redirect /cart");
     redirect("/cart");
   }
 
   if (isLoading || stripeLatUpdate === 0) {
-    console.log("[CHECKOUT] Loading...");
     return <div>Loading...</div>;
   }
 

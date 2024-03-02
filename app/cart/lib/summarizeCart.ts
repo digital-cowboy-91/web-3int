@@ -12,7 +12,7 @@ export function summarizeCart(cart: TCartItem[], shippingAmount: number) {
     discount += i.discount_amount;
   }
 
-  let total = subtotal - discount + shippingAmount;
+  let total = subtotal + shippingAmount;
 
   return {
     subtotal: { title: "Subtotal", value: round(subtotal) },
