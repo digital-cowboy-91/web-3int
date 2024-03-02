@@ -1,12 +1,22 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useCartStore } from "./Cart.store";
+
+const path = "/cart/checkout";
 
 export function SummaryButtons() {
   const pathname = usePathname();
+  const router = useRouter();
 
-  if (pathname === "/cart/checkout") return null;
+  const cart = useCartStore((s) => s.cart);
 
-  return <Link href={"/cart/checkout"}>Checkout</Link>;
+  if (pathname === path) return null;
+
+  return (
+    <button onClick={() => router.push(path)} disabled={!cart.length}>
+      Checkout
+    </button>
+  );
 }

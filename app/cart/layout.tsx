@@ -1,7 +1,6 @@
 import { ReactNode } from "react";
 import { CSSContainer } from "../styles";
-import SummaryBlock from "./components/SummaryBlock";
-import StripeWrapper from "./checkout/components/StripeWrapper";
+import CartSummary from "./components/CartSummary";
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (
@@ -11,7 +10,7 @@ export default function Layout({ children }: { children: ReactNode }) {
 
         <div className="cart--wrapper">
           {children}
-          <SummaryBlock />
+          <CartSummary />
         </div>
       </div>
     </section>

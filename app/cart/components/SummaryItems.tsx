@@ -8,8 +8,6 @@ export default function SummaryItems() {
   const cart = useCartStore((s) => s.cart);
   const shipping = useShippindStore((s) => s.amount);
 
-  if (!cart?.length) return null;
-
   let summary = summarizeCart(cart, shipping);
 
   return (
