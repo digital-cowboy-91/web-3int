@@ -1,8 +1,10 @@
 "use client";
 
 import { TShipping } from "@/app/api/_cms/items/store/shipping";
+import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 import { create } from "zustand";
+import { useCartStore } from "./Cart.store";
 
 type TStore = {
   id: number;
@@ -11,13 +13,23 @@ type TStore = {
 };
 
 export const useShippindStore = create<TStore>((set) => ({
-  id: 0,
+  id: -1,
   amount: 0,
   setShipping: (id: number, amount: number) => set({ id, amount }),
 }));
 
 export default function ShippingItems({ methods }: { methods: TShipping[] }) {
+  const pathname = usePathname();
+
   const setShipping = useShippindStore((s) => s.setShipping);
+  const cart = useCartStore((s) => s.cart);
+
+  const shippingRequired =
+    cart.findIndex(({ downloadable }) => !downloadable) !== -1;
+
+  if (!shippingRequired) {
+    setShipping(-1, 0);
+  }
 
   useEffect(() => {
     setShipping(methods[0].id, methods[0].price);
@@ -34,6 +46,7 @@ export default function ShippingItems({ methods }: { methods: TShipping[] }) {
           e.currentTarget.checked && setShipping(id, price);
         }}
         defaultChecked={index === 0}
+        disabled={pathname === "/cart/checkout" || !shippingRequired}
       />
       <label className="font-semibold" htmlFor={id.toString()}>
         {title} · {price ? "£ " + price : "Free"}

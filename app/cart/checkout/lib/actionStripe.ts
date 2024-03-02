@@ -26,7 +26,17 @@ export async function createPaymentIntent(
     let { cart, _cache } = cartData;
     if (!cart || cart.length === 0) throw new Error("Cart is empty");
 
-    let { total } = summarizeCart(cart, shippingId);
+    let shippingPrice = 0;
+
+    if (shippingId !== -1) {
+      let res = await CMS_Shipping.readItem(shippingId);
+
+      if (!res) throw new Error("No shipping found");
+
+      shippingPrice = res.price;
+    }
+
+    let { total } = summarizeCart(cart, shippingPrice);
 
     const amountInCents = total.value * 100;
     const session = await stripe.paymentIntents.create({
@@ -69,13 +79,17 @@ export async function updatePaymentIntent(
       throw new Error("Cart is empty");
     }
 
-    let shipping = await CMS_Shipping.readItem(shippingId);
+    let shippingPrice = 0;
 
-    if (!shipping) {
-      throw new Error("No shipping found");
+    if (shippingId !== -1) {
+      let res = await CMS_Shipping.readItem(shippingId);
+
+      if (!res) throw new Error("No shipping found");
+
+      shippingPrice = res.price;
     }
 
-    let { total } = summarizeCart(cart, shipping.price);
+    let { total } = summarizeCart(cart, shippingPrice);
 
     let updatedPaymentIntent = await stripe.paymentIntents.update(
       paymentIntentId,
