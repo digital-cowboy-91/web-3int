@@ -175,7 +175,7 @@ body {
     @apply grid grid-cols-[100px_1fr] sm:grid-cols-[100px_1fr_80px_70px] grid-flow-row auto-rows-min gap-4 p-4;
 
     &--row {
-      @apply relative col-span-2 sm:col-span-4 grid grid-cols-subgrid gap-4 p-4 rounded-md bg-white;
+      @apply relative col-span-2 sm:col-span-4 grid grid-cols-subgrid gap-4 p-4 rounded-md bg-white shadow-sm;
 
       & > * {
         @apply flex items-center gap-2;

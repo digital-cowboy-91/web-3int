@@ -31,7 +31,9 @@ export async function createPaymentIntent(
     if (shippingId !== -1) {
       let res = await CMS_Shipping.readItem(shippingId);
 
-      if (!res) throw new Error("No shipping found");
+      if (!res) {
+        throw new Error("No shipping found");
+      }
 
       shippingPrice = res.price;
     }
@@ -80,23 +82,23 @@ export async function updatePaymentIntent(
     }
 
     let shippingPrice = 0;
-
     if (shippingId !== -1) {
       let res = await CMS_Shipping.readItem(shippingId);
 
-      if (!res) throw new Error("No shipping found");
+      if (!res) {
+        throw new Error("No shipping found");
+      }
 
-      shippingPrice = res.price;
+      if (res.price !== 0) {
+        shippingPrice = res.price;
+      }
     }
 
     let { total } = summarizeCart(cart, shippingPrice);
 
-    let updatedPaymentIntent = await stripe.paymentIntents.update(
-      paymentIntentId,
-      {
-        amount: total.value * 100,
-      }
-    );
+    await stripe.paymentIntents.update(paymentIntentId, {
+      amount: Math.round(total.value * 100),
+    });
 
     return {
       cart,

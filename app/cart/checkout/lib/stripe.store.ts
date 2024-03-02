@@ -55,6 +55,8 @@ export const useStripeStore = create<TStore>((set, get) => ({
       if (res) clientSecret = res;
     }
 
+    let cart, _cache;
+
     if (!clientSecret) {
       let res = await createPaymentIntent(simpleCart, shippingId);
 
@@ -63,12 +65,8 @@ export const useStripeStore = create<TStore>((set, get) => ({
         return;
       }
 
-      useCartStore.setState({
-        cart: res.cart,
-        _cache: res._cache,
-        _updatedAt: now,
-      });
-
+      cart = res.cart;
+      _cache = res._cache;
       clientSecret = res.clientSecret;
       clientId = res.clientId;
     }
@@ -80,14 +78,12 @@ export const useStripeStore = create<TStore>((set, get) => ({
         set({ isLoading: false });
         return;
       }
-
-      useCartStore.setState({
-        cart: res.cart,
-        _cache: res._cache,
-        _updatedAt: now,
-      });
+      cart = res.cart;
+      _cache = res._cache;
     }
 
+    useCartStore.setState({ cart, _cache, _updatedAt: now });
+    useShippindStore.setState({ _updatedAt: now });
     set({ clientSecret, addressRequired, isLoading: false, _updatedAt: now });
   },
   _updatedAt: 0,

@@ -10,12 +10,15 @@ type TStore = {
   id: number;
   amount: number;
   setShipping: (id: number, amount: number) => void;
+  _updatedAt: number;
 };
 
 export const useShippindStore = create<TStore>((set) => ({
   id: -1,
   amount: 0,
-  setShipping: (id: number, amount: number) => set({ id, amount }),
+  setShipping: (id: number, amount: number) =>
+    set({ id, amount, _updatedAt: Date.now() }),
+  _updatedAt: 0,
 }));
 
 export default function ShippingItems({ methods }: { methods: TShipping[] }) {

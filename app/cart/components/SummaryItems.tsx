@@ -15,7 +15,7 @@ export default function SummaryItems() {
       {Object.entries(summary).map(([key, { title, value }]) => (
         <div key={key}>
           <span>{title}</span>
-          <span>£ {value}</span>
+          <span>£ {value.toFixed(2)}</span>
         </div>
       ))}
     </div>

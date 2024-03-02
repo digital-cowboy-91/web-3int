@@ -1,8 +1,5 @@
 import { TCartItem } from "../components/Cart.store";
 
-function round(number: number) {
-  return Math.round(number * 100) / 100;
-}
 export function summarizeCart(cart: TCartItem[], shippingAmount: number) {
   let subtotal = 0;
   let discount = 0;
@@ -15,10 +12,10 @@ export function summarizeCart(cart: TCartItem[], shippingAmount: number) {
   let total = subtotal + shippingAmount;
 
   return {
-    subtotal: { title: "Subtotal", value: round(subtotal) },
-    discount: { title: "Discount", value: round(discount) },
-    shipping: { title: "Shipping", value: round(shippingAmount) },
-    tax: { title: "Tax", value: round(total * 0.21) },
-    total: { title: "Total", value: round(total) },
+    subtotal: { title: "Subtotal", value: subtotal },
+    discount: { title: "Discount", value: discount },
+    shipping: { title: "Shipping", value: shippingAmount },
+    tax: { title: "Tax", value: total * 0.21 },
+    total: { title: "Total", value: total },
   };
 }
