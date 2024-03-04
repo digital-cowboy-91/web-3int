@@ -5,7 +5,7 @@ import {
   updatePaymentIntent,
 } from "./actionStripe";
 import { useCartStore } from "../../components/Cart.store";
-import { useShippindStore } from "../../components/ShippingItems";
+import { useShippingStore } from "../../components/ShippingItems";
 import { TCartItemSimple } from "../../lib/revalidateCart";
 
 type TStore = {
@@ -42,7 +42,7 @@ export const useStripeStore = create<TStore>((set, get) => ({
       return;
     }
 
-    const shippingId = useShippindStore.getState().id;
+    const shippingId = useShippingStore.getState().id;
 
     if (!shippingId) {
       set({ isLoading: false });
@@ -83,7 +83,7 @@ export const useStripeStore = create<TStore>((set, get) => ({
     }
 
     useCartStore.setState({ cart, _cache, _updatedAt: now });
-    useShippindStore.setState({ _updatedAt: now });
+    useShippingStore.setState({ _updatedAt: now });
     set({ clientSecret, addressRequired, isLoading: false, _updatedAt: now });
   },
   _updatedAt: 0,

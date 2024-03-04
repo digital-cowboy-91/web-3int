@@ -13,7 +13,7 @@ type TStore = {
   _updatedAt: number;
 };
 
-export const useShippindStore = create<TStore>((set) => ({
+export const useShippingStore = create<TStore>((set) => ({
   id: -1,
   amount: 0,
   setShipping: (id: number, amount: number) =>
@@ -24,7 +24,7 @@ export const useShippindStore = create<TStore>((set) => ({
 export default function ShippingItems({ methods }: { methods: TShipping[] }) {
   const pathname = usePathname();
 
-  const setShipping = useShippindStore((s) => s.setShipping);
+  const setShipping = useShippingStore((s) => s.setShipping);
   const cart = useCartStore((s) => s.cart);
 
   const shippingRequired =

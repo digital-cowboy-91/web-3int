@@ -207,7 +207,7 @@ body {
   }
 
   &--summary {
-    @apply mx-4 mt-4 p-8 grid grid-cols-1 gap-8 rounded-[2rem] bg-success bg-opacity-10 shadow;
+    @apply mx-4 mt-4 p-8 grid grid-cols-1 gap-8 rounded-[2rem] bg-success-light shadow;
     /* SM */
     @apply sm:grid-cols-[1fr_250px];
     /* LG */

@@ -1,5 +1,5 @@
 import ShippingBlock from "./ShippingBlock";
-import { SummaryButtons } from "./SummaryButtons";
+import { PaymentOptions } from "./PaymentOptions";
 import SummaryItems from "./SummaryItems";
 
 export default function SummaryBlock() {
@@ -7,7 +7,7 @@ export default function SummaryBlock() {
     <div>
       <h2>Summary</h2>
       <SummaryItems />
-      <SummaryButtons />
+      <PaymentOptions />
     </div>
   );
 }

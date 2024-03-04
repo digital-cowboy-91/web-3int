@@ -36,7 +36,7 @@ const config: Config = {
         },
         success: {
           DEFAULT: "#3cb012",
-          light: "#95de76",
+          light: "#d9e5d5",
         },
       },
     },

@@ -1,14 +1,22 @@
 "use client";
 
+import { useElements } from "@stripe/react-stripe-js";
 import { summarizeCart } from "../lib/summarizeCart";
 import { useCartStore } from "./Cart.store";
-import { useShippindStore } from "./ShippingItems";
+import { useShippingStore } from "./ShippingItems";
 
 export default function SummaryItems() {
   const cart = useCartStore((s) => s.cart);
-  const shipping = useShippindStore((s) => s.amount);
+  const shipping = useShippingStore((s) => s.amount);
 
   let summary = summarizeCart(cart, shipping);
+
+  const elements = useElements();
+
+  elements?.update({
+    amount:
+      summary.total.value === 0 ? 50 : Math.round(summary.total.value * 100),
+  });
 
   return (
     <div className="summaries">

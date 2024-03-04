@@ -44,5 +44,5 @@ export async function revalidateCart(
     .filter((item) => item) as TCartItem[];
 
   // 5. Update store
-  return { cart: newCart, _cache: cache };
+  return { cart: newCart, _cache: cache, products: cache };
 }
