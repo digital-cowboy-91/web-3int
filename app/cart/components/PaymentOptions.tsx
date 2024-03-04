@@ -1,25 +1,35 @@
 "use client";
 
 import { ExpressCheckoutElement } from "@stripe/react-stripe-js";
-import { usePathname, useRouter } from "next/navigation";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import useStripePaymentHandler from "../checkout/lib/useStripePaymentHandler";
 import { useCartStore } from "./Cart.store";
 
 const path = "/cart/checkout";
 
 export function PaymentOptions() {
-  const { addressRequired, handleSubmit } = useStripePaymentHandler();
+  const { isLoading, addressRequired, handleSubmit } =
+    useStripePaymentHandler();
 
   const pathname = usePathname();
-  const router = useRouter();
 
   const cart = useCartStore((s) => s.cart);
 
-  if (pathname === path) return null;
+  if (pathname === path || cart.length === 0) return null;
+
+  if (isLoading) return <div>Loading...</div>;
 
   return (
     <>
       <ExpressCheckoutElement
+        options={{
+          buttonHeight: 40,
+          layout: {
+            maxColumns: 1,
+            overflow: "never",
+          },
+        }}
         onConfirm={(e) => {
           handleSubmit(e);
         }}
@@ -47,9 +57,13 @@ export function PaymentOptions() {
           <span className="bg-success-light px-2">OR</span>
         </div>
       </div>
-      <button onClick={() => router.push(path)} disabled={!cart.length}>
+
+      <Link
+        href={path}
+        className="flex justify-center items-center h-[40px] p-2 bg-primary text-white rounded-[0.25rem] font-semibold"
+      >
         PAY BY CARD
-      </button>
+      </Link>
     </>
   );
 }

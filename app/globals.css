@@ -222,15 +222,15 @@ body {
       @apply space-y-8;
 
       button {
-        @apply btn-outline-success w-full justify-center;
+        /* @apply btn-outline-success w-full justify-center; */
         /* SM, LG */
-        @apply sm:col-start-2 lg:col-auto;
+        /* @apply sm:col-start-2 lg:col-auto; */
       }
 
       a {
-        @apply link-outline-success w-full justify-center;
+        /* @apply link-outline-success w-full justify-center; */
         /* SM, LG */
-        @apply sm:col-start-2 lg:col-auto;
+        /* @apply sm:col-start-2 lg:col-auto; */
       }
     }
 
