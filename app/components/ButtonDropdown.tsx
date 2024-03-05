@@ -73,7 +73,6 @@ export function ButtonDropdown_v2({
             initial="init"
             animate="enter"
             exit="exit"
-            aria-optionledby="dropdownDefaultButton"
             className="absolute w-full z-10 bg-white pb-0 rounded-md mt-1 overflow-hidden shadow"
             onClick={() => setIsOpen(!isOpen)}
             onMouseEnter={handleMouseEnter}

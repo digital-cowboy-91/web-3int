@@ -1,4 +1,3 @@
-import ShippingBlock from "./ShippingBlock";
 import { PaymentOptions } from "./PaymentOptions";
 import SummaryItems from "./SummaryItems";
 

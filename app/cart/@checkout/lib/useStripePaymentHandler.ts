@@ -2,18 +2,17 @@
 
 import { useElements, useStripe } from "@stripe/react-stripe-js";
 import { StripeExpressCheckoutElementConfirmEvent } from "@stripe/stripe-js";
-import { useRouter } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
 import { useCartStore } from "../../components/Cart.store";
 import { useShippingStore } from "../../components/ShippingItems";
-import { createPaymentIntent } from "../lib/actionStripe";
+import { createPaymentIntent } from "../../checkout/lib/actionStripe";
 
-const host = process.env.NEXT_PUBLIC_WEB_HOST;
 export default function useStripePaymentHandler() {
-  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [addressRequired, setAddressRequired] = useState(false);
   const [isReady, setIsReady] = useState(false);
+
+  const [errorMessage, setErrorMessage] = useState();
 
   const cart = useCartStore((s) => s.cart);
   const shippingId = useShippingStore((s) => s.id);
@@ -33,7 +32,7 @@ export default function useStripePaymentHandler() {
 
   function handleError(err: any) {
     setIsLoading(false);
-    router.replace(`?status=error&msg=${err.message}`);
+    setErrorMessage(err.message);
   }
   async function handleSubmit(
     e: StripeExpressCheckoutElementConfirmEvent | FormEvent<HTMLFormElement>
@@ -45,12 +44,11 @@ export default function useStripePaymentHandler() {
     setIsLoading(true);
 
     if (!stripe || !elements) {
-      return handleError(
-        "Stripe is not ready. Please refresh the page and try again."
-      );
+      return handleError("Stripe is not ready");
     }
 
     const { error: submitError } = await elements?.submit();
+
     if (submitError) {
       return handleError(submitError);
     }
@@ -58,19 +56,17 @@ export default function useStripePaymentHandler() {
     const simpleCart = cart?.map(({ pid, qty, fid }) => ({ pid, qty, fid }));
 
     const res = await createPaymentIntent(simpleCart, shippingId);
+
     if (!res) {
-      return handleError(
-        "Failed to create payment intent. Please refresh the page and try again."
-      );
+      return handleError("Failed to create payment intent");
     }
 
     const { error } = await stripe!.confirmPayment({
       elements,
       clientSecret: res?.clientSecret,
       confirmParams: {
-        return_url: host + "/cart?status=success",
+        return_url: "https://3int.uk/cart/checkout?success=true",
       },
-      redirect: "if_required",
     });
 
     if (error) {
@@ -78,14 +74,13 @@ export default function useStripePaymentHandler() {
     }
 
     setIsLoading(false);
-
-    router.replace("/cart?status=success");
   }
 
   return {
     isLoading,
     isReady,
     addressRequired,
+    errorMessage,
     handleSubmit,
   };
 }

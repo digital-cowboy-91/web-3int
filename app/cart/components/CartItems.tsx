@@ -1,23 +1,43 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import useStatusParam from "../lib/useStatusParam";
 import { useCartStore } from "./Cart.store";
+import CartEmpty from "./CartEmpty";
 import QuantitySelector from "./QuantitySelector";
+import Link from "next/link";
+import StatusBanner from "./StatusBanner";
 
-export default function Cart() {
+export default function CartItems() {
+  const { status } = useStatusParam();
+  const router = useRouter();
+
   const cart = useCartStore((s) => s.cart);
+  const isLoading = useCartStore((s) => s.isLoading);
 
   const updateCartItem = useCartStore((s) => s.updateCartItem);
   const removeCartItem = useCartStore((s) => s.removeCartItem);
 
   const revalidateCart = useCartStore((s) => s.revalidateCart);
+  const purgeCart = useCartStore((s) => s.purgeCart);
 
   useEffect(() => {
     revalidateCart();
   }, []);
 
+  useEffect(() => {
+    if (status === "success") {
+      purgeCart();
+    } else if (cart.length && status === "empty") {
+      router.replace("/cart?status=");
+    } else if (!cart.length && status !== "empty") {
+      router.replace("/cart?status=empty");
+    }
+  }, [status]);
+
   return cart.length === 0 ? (
-    <div>Cart is empty</div>
+    <CartEmpty />
   ) : (
     <div className="cart--items">
       {cart.map(

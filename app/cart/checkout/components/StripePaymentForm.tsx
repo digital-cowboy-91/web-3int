@@ -7,18 +7,18 @@ import {
   useStripe,
 } from "@stripe/react-stripe-js";
 import useStripePaymentHandler from "../lib/useStripePaymentHandler";
+import StatusBanner from "../../components/StatusBanner";
 
 export default function StripePaymentForm() {
   const { isLoading, isReady, addressRequired, handleSubmit } =
     useStripePaymentHandler();
-
-  const stripe = useStripe();
 
   return (
     <form
       className="w-full max-w-[500px] mx-auto p-4 flex flex-col gap-8"
       onSubmit={handleSubmit}
     >
+      <StatusBanner />
       <LinkAuthenticationElement />
       {addressRequired && (
         <AddressElement

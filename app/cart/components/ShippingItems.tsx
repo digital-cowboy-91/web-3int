@@ -10,15 +10,12 @@ type TStore = {
   id: number;
   amount: number;
   setShipping: (id: number, amount: number) => void;
-  _updatedAt: number;
 };
 
 export const useShippingStore = create<TStore>((set) => ({
   id: -1,
   amount: 0,
-  setShipping: (id: number, amount: number) =>
-    set({ id, amount, _updatedAt: Date.now() }),
-  _updatedAt: 0,
+  setShipping: (id: number, amount: number) => set({ id, amount }),
 }));
 
 export default function ShippingItems({ methods }: { methods: TShipping[] }) {
@@ -30,13 +27,15 @@ export default function ShippingItems({ methods }: { methods: TShipping[] }) {
   const shippingRequired =
     cart.findIndex(({ downloadable }) => !downloadable) !== -1;
 
-  if (!shippingRequired) {
-    setShipping(-1, 0);
-  }
-
   useEffect(() => {
     setShipping(methods[0].id, methods[0].price);
   }, []);
+
+  useEffect(() => {
+    if (!shippingRequired) {
+      setShipping(-1, 0);
+    }
+  }, [shippingRequired]);
 
   return methods.map(({ id, title, description, price }, index) => (
     <div key={id} className="grid grid-cols-[1.5rem_minmax(0,_1fr)]">
