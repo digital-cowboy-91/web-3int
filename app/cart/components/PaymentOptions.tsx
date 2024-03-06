@@ -13,7 +13,7 @@ export function PaymentOptions() {
   const { isLoading, addressRequired, handleSubmit } =
     useStripePaymentHandler();
 
-  if ([undefined, "empty", "pending"].includes(cartStatus)) return null;
+  if (cartStatus !== "open") return null;
 
   if (isLoading) return <div>Loading...</div>;
 

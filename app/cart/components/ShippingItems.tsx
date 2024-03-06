@@ -48,10 +48,7 @@ export default function ShippingItems({ methods }: { methods: TShipping[] }) {
           e.currentTarget.checked && setShipping(id, price);
         }}
         defaultChecked={index === 0}
-        disabled={
-          !shippingRequired ||
-          [undefined, "empty", "pending"].includes(cartStatus)
-        }
+        disabled={!shippingRequired || cartStatus !== "open"}
       />
       <label className="font-semibold" htmlFor={id.toString()}>
         {title} · {price ? "£ " + price : "Free"}
