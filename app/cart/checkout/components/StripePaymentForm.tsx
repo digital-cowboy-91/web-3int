@@ -9,12 +9,21 @@ import { useEffect } from "react";
 import { useCartStore } from "../../components/Cart.store";
 import MessageBanner from "../../components/MessageBanner";
 import useStripePaymentHandler from "../lib/useStripePaymentHandler";
+import { useRouter } from "next/navigation";
 
 export default function StripePaymentForm() {
+  const router = useRouter();
+  const cartStatus = useCartStore((s) => s.status);
+
+  const shouldRedirect = !["open", "pending"].includes(cartStatus || "");
+
   const { isLoading, isReady, errorMsg, addressRequired, handleSubmit } =
     useStripePaymentHandler();
 
   useEffect(() => {
+    if (shouldRedirect) {
+      return router.replace("/cart");
+    }
     useCartStore.setState({ status: "pending" });
   }, []);
 
