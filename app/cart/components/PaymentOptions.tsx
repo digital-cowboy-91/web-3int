@@ -2,21 +2,18 @@
 
 import { ExpressCheckoutElement } from "@stripe/react-stripe-js";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import useStripePaymentHandler from "../checkout/lib/useStripePaymentHandler";
-import useStatusParam from "../lib/useStatusParam";
+import { useCartStore } from "./Cart.store";
 
 const path = "/cart/checkout";
 
 export function PaymentOptions() {
-  const { status } = useStatusParam();
+  const cartStatus = useCartStore((s) => s.status);
+
   const { isLoading, addressRequired, handleSubmit } =
     useStripePaymentHandler();
 
-  const pathname = usePathname();
-
-  if (pathname === path || ["success", "empty"].includes(status || ""))
-    return null;
+  if ([undefined, "empty", "pending"].includes(cartStatus)) return null;
 
   if (isLoading) return <div>Loading...</div>;
 

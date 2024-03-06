@@ -8,10 +8,16 @@ import {
 } from "@stripe/react-stripe-js";
 import useStripePaymentHandler from "../lib/useStripePaymentHandler";
 import StatusBanner from "../../components/StatusBanner";
+import { useCartStore } from "../../components/Cart.store";
+import { useEffect } from "react";
 
 export default function StripePaymentForm() {
   const { isLoading, isReady, addressRequired, handleSubmit } =
     useStripePaymentHandler();
+
+  useEffect(() => {
+    useCartStore.setState({ status: "pending" });
+  }, []);
 
   return (
     <form

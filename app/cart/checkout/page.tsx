@@ -1,4 +1,3 @@
-import StatusBanner from "../components/StatusBanner";
 import StripePaymentForm from "./components/StripePaymentForm";
 
 export default function Page() {

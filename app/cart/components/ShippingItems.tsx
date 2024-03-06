@@ -19,10 +19,10 @@ export const useShippingStore = create<TStore>((set) => ({
 }));
 
 export default function ShippingItems({ methods }: { methods: TShipping[] }) {
-  const pathname = usePathname();
+  const cart = useCartStore((s) => s.cart);
+  const cartStatus = useCartStore((s) => s.status);
 
   const setShipping = useShippingStore((s) => s.setShipping);
-  const cart = useCartStore((s) => s.cart);
 
   const shippingRequired =
     cart.findIndex(({ downloadable }) => !downloadable) !== -1;
@@ -48,7 +48,10 @@ export default function ShippingItems({ methods }: { methods: TShipping[] }) {
           e.currentTarget.checked && setShipping(id, price);
         }}
         defaultChecked={index === 0}
-        disabled={pathname === "/cart/checkout" || !shippingRequired}
+        disabled={
+          !shippingRequired ||
+          [undefined, "empty", "pending"].includes(cartStatus)
+        }
       />
       <label className="font-semibold" htmlFor={id.toString()}>
         {title} · {price ? "£ " + price : "Free"}
