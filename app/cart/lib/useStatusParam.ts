@@ -1,6 +1,6 @@
 import { useSearchParams } from "next/navigation";
 
-export type TStatusParam = "success" | "error" | "empty";
+export type TStatusParam = "success" | "error" | "empty" | "checking-out";
 
 export default function useStatusParam() {
   const params = useSearchParams();

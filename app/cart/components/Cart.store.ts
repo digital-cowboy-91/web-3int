@@ -28,6 +28,7 @@ export type TCache = {
 
 type TStore = {
   cart: TCartItem[];
+  status: undefined | "empty" | "open" | "pending" | "closed";
   isLoading: boolean | number;
   addCartItem: (
     product: TProduct,
@@ -50,6 +51,7 @@ export const useCartStore = create<TStore>()(
     persist(
       (set, get) => ({
         cart: [],
+        status: undefined,
         isLoading: false,
         addCartItem: (product, quantity = 1, filamentId = undefined) => {
           const { cart, _cache } = get();
@@ -57,6 +59,7 @@ export const useCartStore = create<TStore>()(
 
           set({
             cart: [...cart, item],
+            status: "open",
             _cache: { ..._cache, ...composeCacheObject("product.id", product) },
           });
         },
@@ -75,24 +78,30 @@ export const useCartStore = create<TStore>()(
             filamentId || fid
           );
 
-          set({ cart: newCart });
+          set({ cart: newCart, status: "open" });
         },
         removeCartItem: (index) => {
           let cart = [...get().cart];
           cart.splice(index, 1);
-          set({ cart });
+          set({ cart, status: cart.length ? "open" : "empty" });
         },
         revalidateCart: async () => {
           const { cart, _cache } = get();
+
+          if (!cart.length) return set({ status: "empty" });
+
           set({ isLoading: true });
           const res = await revalidateCart(cart, _cache);
 
-          if (!res) return set({ isLoading: false });
-
-          set({ ...res, isLoading: false });
+          set({
+            cart: res.cart,
+            _cache: res.cache,
+            isLoading: false,
+            status: "open",
+          });
         },
         purgeCart: () => {
-          set({ cart: [] });
+          set({ cart: [], status: "closed" });
         },
         _cache: {},
       }),

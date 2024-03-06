@@ -25,17 +25,16 @@ export async function revalidateCart(
     })
     .map(({ pid }) => pid);
 
-  if (staleProductIds.length === 0) return;
+  // 2. Refresh cache
+  if (staleProductIds.length) {
+    const products = await actionGetProducts(staleProductIds);
 
-  // 2. Get fresh products
-  const products = await actionGetProducts(staleProductIds);
+    products.forEach(
+      (p) => (cache = { ...cache, ...composeCacheObject(p.id, p) })
+    );
+  }
 
-  // 3. Update cache
-  products.forEach(
-    (p) => (cache = { ...cache, ...composeCacheObject(p.id, p) })
-  );
-
-  // 4. Update cart
+  // 3. Update cart
   const newCart = cart
     .map(({ pid, qty, fid }) => {
       const product = cache[pid].value;
@@ -43,6 +42,6 @@ export async function revalidateCart(
     })
     .filter((item) => item) as TCartItem[];
 
-  // 5. Update store
-  return { cart: newCart, _cache: cache, products: cache };
+  // 4. Update store
+  return { cart: newCart, cache, products: cache };
 }
