@@ -11,9 +11,11 @@ import { createPaymentIntent } from "../lib/actionStripe";
 const host = process.env.NEXT_PUBLIC_WEB_HOST;
 export default function useStripePaymentHandler() {
   const router = useRouter();
+
   const [isLoading, setIsLoading] = useState(false);
   const [addressRequired, setAddressRequired] = useState(false);
   const [isReady, setIsReady] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
   const cart = useCartStore((s) => s.cart);
   const shippingId = useShippingStore((s) => s.id);
@@ -33,7 +35,7 @@ export default function useStripePaymentHandler() {
 
   function handleError(err: any) {
     setIsLoading(false);
-    router.replace(`?status=error&msg=${err.message}`);
+    setErrorMsg(err.message);
   }
   async function handleSubmit(
     e: StripeExpressCheckoutElementConfirmEvent | FormEvent<HTMLFormElement>
@@ -85,6 +87,7 @@ export default function useStripePaymentHandler() {
   return {
     isLoading,
     isReady,
+    errorMsg,
     addressRequired,
     handleSubmit,
   };

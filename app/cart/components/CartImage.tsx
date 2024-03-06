@@ -7,7 +7,12 @@ const stripes = [-30, 70, -70];
 
 const commonStyle = { fill: "none", stroke: "#000", strokeWidth: "0.5px" };
 
-export default function CartImage() {
+export type TCartImageType = "check" | "cross";
+type TProps = {
+  type: TCartImageType;
+};
+
+export default function CartImage({ type }: TProps) {
   const [scope, animate] = useAnimate();
 
   useEffect(() => {
@@ -28,7 +33,7 @@ export default function CartImage() {
       );
 
       animate(
-        "#cross",
+        `#${type}`,
         {
           opacity: [0, 1],
           scale: [0.5, 1],
@@ -127,6 +132,28 @@ export default function CartImage() {
           <path
             d="M9.061,0.25l1.763,1.762l-3.525,3.525l3.525,3.524l-1.763,1.763l-3.524,-3.525l-3.525,3.525l-1.762,-1.763l3.525,-3.524l-3.525,-3.525l1.762,-1.762l3.525,3.525l3.524,-3.525Z"
             style={{ fill: "#f80000", stroke: "#000", strokeWidth: "0.5px" }}
+          />
+        </svg>
+        <svg
+          id="check"
+          className="absolute size-20 right-0 -bottom-5 opacity-0"
+          viewBox="0 0 15 12"
+          version="1.1"
+          style={{
+            fillRule: "evenodd",
+            clipRule: "evenodd",
+            strokeLinecap: "round",
+            strokeLinejoin: "round",
+            strokeMiterlimit: "1.5",
+          }}
+        >
+          <path
+            d="M1.947,3.814l3.564,3.564l7.128,-7.128l1.697,1.697l-8.825,8.825l-5.261,-5.261l1.697,-1.697Z"
+            style={{
+              fill: "#37aa00",
+              stroke: "#000",
+              strokeWidth: "0.5px",
+            }}
           />
         </svg>
         <div className="absolute inset-x-0 top-[135px] flex flex-col justify-center items-center gap-6">

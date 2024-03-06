@@ -1,14 +1,15 @@
-import CartImage from "./CartImage";
+import CartImage, { TCartImageType } from "./CartImage";
 
-export default function CartEmpty() {
+type TProps = {
+  type: TCartImageType;
+  message: string;
+};
+
+export default function CartEmpty({ type, message }: TProps) {
   return (
     <div className="size-full min-h-[300px] flex flex-col justify-center items-center gap-8">
-      {/* <img
-        src="/media/429eb72d-57b8-4178-a77a-5261aae2393f?key=h320"
-        className="h-[320px]"
-      /> */}
-      <CartImage />
-      <span className="text-2xl font-semibold uppercase">Cart is empty</span>
+      <CartImage type={type} />
+      <span className="text-2xl font-semibold uppercase">{message}</span>
     </div>
   );
 }

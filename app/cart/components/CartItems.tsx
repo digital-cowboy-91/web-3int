@@ -3,16 +3,24 @@
 import { useEffect } from "react";
 import { useCartStore } from "./Cart.store";
 import QuantitySelector from "./QuantitySelector";
+import { useSearchParams } from "next/navigation";
 
 export default function CartItems() {
+  const paramStatus = useSearchParams().get("status");
+
   const cart = useCartStore((s) => s.cart);
 
   const updateCartItem = useCartStore((s) => s.updateCartItem);
   const removeCartItem = useCartStore((s) => s.removeCartItem);
 
   const revalidateCart = useCartStore((s) => s.revalidateCart);
+  const purgeCart = useCartStore((s) => s.purgeCart);
 
   useEffect(() => {
+    if (paramStatus === "success") {
+      return purgeCart();
+    }
+
     revalidateCart();
   }, []);
 

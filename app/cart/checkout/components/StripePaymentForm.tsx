@@ -4,15 +4,14 @@ import {
   AddressElement,
   LinkAuthenticationElement,
   PaymentElement,
-  useStripe,
 } from "@stripe/react-stripe-js";
-import useStripePaymentHandler from "../lib/useStripePaymentHandler";
-import StatusBanner from "../../components/StatusBanner";
-import { useCartStore } from "../../components/Cart.store";
 import { useEffect } from "react";
+import { useCartStore } from "../../components/Cart.store";
+import MessageBanner from "../../components/MessageBanner";
+import useStripePaymentHandler from "../lib/useStripePaymentHandler";
 
 export default function StripePaymentForm() {
-  const { isLoading, isReady, addressRequired, handleSubmit } =
+  const { isLoading, isReady, errorMsg, addressRequired, handleSubmit } =
     useStripePaymentHandler();
 
   useEffect(() => {
@@ -24,7 +23,7 @@ export default function StripePaymentForm() {
       className="w-full max-w-[500px] mx-auto p-4 flex flex-col gap-8"
       onSubmit={handleSubmit}
     >
-      <StatusBanner />
+      {errorMsg && <MessageBanner type="error" text={errorMsg} />}
       <LinkAuthenticationElement />
       {addressRequired && (
         <AddressElement
