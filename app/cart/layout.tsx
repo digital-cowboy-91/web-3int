@@ -2,6 +2,13 @@ import { ReactNode, Suspense } from "react";
 import { CSSContainer } from "../styles";
 import StripeWrapper from "./checkout/components/StripeWrapper";
 import CartSummary from "./components/CartSummary";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Cart & Checkout",
+  description:
+    "Manage items you are about to purchase, select shipping and pay using your preferred payment method.",
+};
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (
