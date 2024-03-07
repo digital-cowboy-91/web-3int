@@ -9,10 +9,13 @@ export type TFAQ = {
 };
 
 async function readItems() {
-  return await cmsAPI(base, {
-    method: "GET",
-    next: {
-      tags: ["faq"],
+  return await cmsAPI({
+    path: base,
+    fetchInit: {
+      method: "GET",
+      next: {
+        tags: ["faq"],
+      },
     },
   }).then((res) => res.data as TFAQ[]);
 }

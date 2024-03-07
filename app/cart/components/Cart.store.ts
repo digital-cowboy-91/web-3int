@@ -14,7 +14,7 @@ export type TCartItem = {
   downloadable: boolean;
   fid?: number;
   pid: string;
-  price?: number;
+  price: number;
   qty: number;
   title: string;
 };

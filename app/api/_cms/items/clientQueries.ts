@@ -13,12 +13,15 @@ export const SContactForm = z.object({
 export type TContactForm = z.infer<typeof SContactForm>;
 
 async function createItem(data: TContactForm) {
-  return await cmsAPI(base, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
+  return await cmsAPI({
+    path: base,
+    fetchInit: {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
     },
-    body: JSON.stringify(data),
   });
 }
 

@@ -17,10 +17,13 @@ export type TPricing = {
 };
 
 async function readItems() {
-  return await cmsAPI(base, {
-    method: "GET",
-    next: {
-      tags: ["pricing"],
+  return await cmsAPI({
+    path: base,
+    fetchInit: {
+      method: "GET",
+      next: {
+        tags: ["pricing"],
+      },
     },
   }).then((res) => res.data as TPricing[]);
 }

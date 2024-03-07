@@ -29,37 +29,47 @@ export type TProduct = {
 async function readItem(id: string) {
   const { isEnabled: isDraft } = draftMode();
 
-  return await cmsAPI(
-    `${base}/${id}?fields[]=*,gallery_rel.title,gallery_rel.cover_image,filament_rels.filament_rel.*`,
-    {
+  return await cmsAPI({
+    path: base,
+    id,
+    params: [
+      "fields[]=*",
+      "fields[]=gallery_rel.title",
+      "fields[]=gallery_rel.cover_image",
+      "fields[]=filament_rels.filament_rel.*",
+    ],
+    fetchInit: {
       method: "GET",
       cache: isDraft ? "no-store" : "default",
       next: {
         tags: isDraft ? [] : [id],
       },
     },
-    isDraft
-  ).then((res) => res.data as TProduct);
+    draftMode: isDraft,
+  }).then((res) => res.data as TProduct);
 }
 
 async function readItems(ids?: string[]) {
   const { isEnabled: isDraft } = draftMode();
 
-  const filter = ids ? `&filter[id][_in]=${ids.join(",")}` : "";
-  const fields =
-    "fields[]=*,gallery_rel.title,gallery_rel.cover_image,filament_rels.filament_rel.*";
-
-  return await cmsAPI(
-    base + "?" + fields + filter,
-    {
+  return await cmsAPI({
+    path: base,
+    params: [
+      "fields[]=*",
+      "fields[]=gallery_rel.title",
+      "fields[]=gallery_rel.cover_image",
+      "fields[]=filament_rels.filament_rel.*",
+      ids ? `filter[id][_in]=${ids.join(",")}` : "",
+    ],
+    fetchInit: {
       method: "GET",
       cache: isDraft ? "no-store" : "default",
       next: {
         tags: isDraft ? [] : ["products"],
       },
     },
-    isDraft
-  ).then((res) => res.data as TProduct[]);
+    draftMode: isDraft,
+  }).then((res) => res.data as TProduct[]);
 }
 
 export type TDownloadable = {
@@ -72,15 +82,20 @@ export type TDownloadable = {
 };
 
 async function readDownloadable(id: string) {
-  return await cmsAPI(
-    `${base}/${id}?fields[]=id,price,asset.id,asset.filename_download`,
-    {
+  return await cmsAPI({
+    path: base,
+    id,
+    params: [
+      "fields[]=id,price",
+      "fields[]=asset.id",
+      "fields[]=asset.filename_download",
+    ],
+    fetchInit: {
       method: "GET",
       cache: "no-store",
     },
-    false,
-    true
-  ).then((res) => res.data as TDownloadable);
+    addSecret: true,
+  }).then((res) => res.data as TDownloadable);
 }
 
 export const CMS_Products = {

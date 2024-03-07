@@ -2,20 +2,38 @@ import cmsAPI from "../../cmsAPI";
 
 const base = "/items/orders";
 
-type TOrder = {
-  id: string;
-  product: string;
+type TOrderItems = {
+  product_ref: string;
+  filament_ref: number | undefined;
+  description: string;
+  quantity: number;
+  discount: number;
+  discount_pct: number;
+  price_at_sale: number;
   amount: number;
-  state: string;
+};
+type TOrder = {
+  stripe_id: string;
+  items_ref: TOrderItems[];
+  shipping_ref?: number;
+  subtotal: number;
+  discount: number;
+  shipping: number;
+  tax: number;
+  total: number;
 };
 
 async function createItem(data: TOrder) {
-  return await cmsAPI(base, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
+  return await cmsAPI({
+    path: base,
+    fetchInit: {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
     },
-    body: JSON.stringify(data),
+    addSecret: true,
   });
 }
 
@@ -42,15 +60,19 @@ type TDownloadable = {
 };
 
 async function readDownloadable(id: string) {
-  return await cmsAPI(
-    `${base}/${id}?fields[]=payment_state,product_ref.asset.id,product_ref.asset.filename_download`,
-    {
+  return await cmsAPI({
+    path: base,
+    params: [
+      "fields[]=payment_state",
+      "fields[]=product_ref.asset.id",
+      "fields[]=product_ref.asset.filename_download",
+    ],
+    fetchInit: {
       method: "GET",
       cache: "no-store",
     },
-    false,
-    true
-  ).then((res) => res.data as TDownloadable);
+    addSecret: true,
+  }).then((res) => res.data as TDownloadable);
 }
 
 export const CMS_Orders = {

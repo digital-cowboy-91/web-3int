@@ -15,10 +15,13 @@ export type THomepage = {
 };
 
 async function readSingleton() {
-  return await cmsAPI(base, {
-    method: "GET",
-    next: {
-      tags: ["homepage"],
+  return await cmsAPI({
+    path: base,
+    fetchInit: {
+      method: "GET",
+      next: {
+        tags: ["homepage"],
+      },
     },
   }).then((res) => res.data as THomepage);
 }

@@ -28,33 +28,43 @@ export type TGallery = {
 async function readItem(id: string) {
   const { isEnabled: isDraft } = draftMode();
 
-  return await cmsAPI(
-    `${base}/${id}?fields[]=*,cover_image.*,media.asset.*,buying_options.*,seo.*,license.*,attributes.*,buying_options.gallery_rel.title,buying_options.gallery_rel.cover_image,buying_options.filament_rels.filament_rel.*`,
-    {
+  return await cmsAPI({
+    path: base,
+    id,
+    params: [
+      "fields[]=*.*",
+      "fields[]=media.asset.*",
+      "fields[]=buying_options.*",
+      "fields[]=buying_options.gallery_rel.title",
+      "fields[]=buying_options.gallery_rel.cover_image",
+      "fields[]=buying_options.filament_rels.filament_rel.*",
+    ],
+    fetchInit: {
       method: "GET",
       cache: isDraft ? "no-store" : "default",
       next: {
         tags: isDraft ? [] : ["products", id],
       },
     },
-    isDraft
-  ).then((res) => res.data as TGallery);
+    draftMode: isDraft,
+  }).then((res) => res.data as TGallery);
 }
 
 async function readItems() {
   const { isEnabled: isDraft } = draftMode();
 
-  return await cmsAPI(
-    `${base}?fields[]=id,title,cover_image.*,attributes,media.asset.*`,
-    {
+  return await cmsAPI({
+    path: base,
+    params: ["fields[]=*.*", "fields[]=media.asset.*"],
+    fetchInit: {
       method: "GET",
       cache: isDraft ? "no-store" : "default",
       next: {
         tags: isDraft ? [] : ["gallery"],
       },
     },
-    isDraft
-  ).then((res) => res.data as TGallery[]);
+    draftMode: isDraft,
+  }).then((res) => res.data as TGallery[]);
 }
 
 export const CMS_Gallery = {

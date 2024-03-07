@@ -33,6 +33,7 @@ export function composeCartItem(
 
   return {
     ...amounts,
+    price,
     cid: gallery_rel.cover_image,
     description,
     downloadable,

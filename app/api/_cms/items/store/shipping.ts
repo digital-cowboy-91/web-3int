@@ -10,19 +10,26 @@ export type TShipping = {
 };
 
 async function readItem(id: number) {
-  return await cmsAPI(base + "/" + id, {
-    method: "GET",
-    next: {
-      tags: ["shipping"],
+  return await cmsAPI({
+    path: base,
+    id,
+    fetchInit: {
+      method: "GET",
+      next: {
+        tags: ["shipping"],
+      },
     },
   }).then((res) => res.data as TShipping);
 }
 
 async function readItems() {
-  return await cmsAPI(base, {
-    method: "GET",
-    next: {
-      tags: ["shipping"],
+  return await cmsAPI({
+    path: base,
+    fetchInit: {
+      method: "GET",
+      next: {
+        tags: ["shipping"],
+      },
     },
   }).then((res) => res.data as TShipping[]);
 }

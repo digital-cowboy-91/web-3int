@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
 import { useCartStore } from "../../components/Cart.store";
 import { useShippingStore } from "../../components/ShippingItems";
-import { createPaymentIntent } from "../lib/actionStripe";
+import { actionStripePaymentHandler } from "./actionStripePaymentHandler";
 
 const host = process.env.NEXT_PUBLIC_WEB_HOST;
 export default function useStripePaymentHandler() {
@@ -36,6 +36,7 @@ export default function useStripePaymentHandler() {
   function handleError(err: any) {
     setIsLoading(false);
     setErrorMsg(err.message);
+    console.log("[useStripePaymentHandler]", err);
   }
   async function handleSubmit(
     e: StripeExpressCheckoutElementConfirmEvent | FormEvent<HTMLFormElement>
@@ -47,28 +48,37 @@ export default function useStripePaymentHandler() {
     setIsLoading(true);
 
     if (!stripe || !elements) {
-      return handleError(
-        "Stripe is not ready. Please refresh the page and try again."
-      );
+      const errorMessage =
+        "Stripe is not ready. Please refresh the page and try again.";
+      handleError({ message: errorMessage });
+      return;
     }
 
     const { error: submitError } = await elements?.submit();
     if (submitError) {
-      return handleError(submitError);
+      handleError(submitError);
+      return;
     }
 
     const simpleCart = cart?.map(({ pid, qty, fid }) => ({ pid, qty, fid }));
 
-    const res = await createPaymentIntent(simpleCart, shippingId);
-    if (!res) {
-      return handleError(
-        "Failed to create payment intent. Please refresh the page and try again."
-      );
+    const res = await actionStripePaymentHandler(simpleCart, shippingId);
+
+    if (res.error) {
+      handleError({ message: res.error.message });
+      return;
     }
 
-    const { error } = await stripe!.confirmPayment({
+    if (!res.clientSecret) {
+      const errorMessage =
+        "Communication error between client and server. Please refresh the page and try again.";
+      handleError({ message: errorMessage });
+      return;
+    }
+
+    const { error } = await stripe.confirmPayment({
       elements,
-      clientSecret: res?.clientSecret,
+      clientSecret: res.clientSecret,
       confirmParams: {
         return_url: host + "/cart?status=success",
       },
@@ -76,11 +86,11 @@ export default function useStripePaymentHandler() {
     });
 
     if (error) {
-      return handleError(error);
+      handleError(error);
+      return;
     }
 
     setIsLoading(false);
-
     router.replace("/cart?status=success");
   }
 
