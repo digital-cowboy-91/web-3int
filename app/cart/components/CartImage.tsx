@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useAnimate } from "framer-motion";
+import { useAnimate } from "framer-motion";
 import { useEffect } from "react";
 
 const stripes = [-30, 70, -70];

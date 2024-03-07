@@ -1,4 +1,4 @@
-import { TProduct } from "@/app/api/_cms/items/store/products";
+import { TProduct } from "@/app/api/_cms/types/products";
 import { create } from "zustand";
 import { persist, subscribeWithSelector } from "zustand/middleware";
 import { composeCacheObject } from "../lib/composeCacheObject";

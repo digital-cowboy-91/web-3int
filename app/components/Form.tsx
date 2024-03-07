@@ -1,11 +1,5 @@
 import { ReactNode } from "react";
-import {
-  FieldError,
-  FieldErrors,
-  FieldErrorsImpl,
-  Merge,
-  useFormContext,
-} from "react-hook-form";
+import { FieldErrors, useFormContext } from "react-hook-form";
 import { CSSFormElement, CSSFormElementLabel } from "../styles";
 
 interface Form {

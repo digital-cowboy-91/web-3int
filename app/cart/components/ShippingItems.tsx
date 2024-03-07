@@ -1,7 +1,6 @@
 "use client";
 
-import { TShipping } from "@/app/api/_cms/items/store/shipping";
-import { usePathname } from "next/navigation";
+import { TShipping } from "@/app/api/_cms/types/shipping";
 import { useEffect } from "react";
 import { create } from "zustand";
 import { useCartStore } from "./Cart.store";

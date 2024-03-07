@@ -1,5 +1,6 @@
-import { TProduct } from "@/app/api/_cms/items/store/products";
+import { TProduct } from "@/app/api/_cms/types/products";
 import QuantitySelector from "@/app/cart/components/QuantitySelector";
+import { calculateItemPrice } from "@/app/cart/lib/calculateItemPrice";
 import { ButtonDropdown_v2 } from "@/app/components/ButtonDropdown";
 import {
   ArrowDownTrayIcon,
@@ -7,7 +8,6 @@ import {
 } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import ButtonAddToCart from "./ButtonAddToCart";
-import { calculateItemPrice } from "@/app/cart/lib/calculateItemPrice";
 
 export default function BuyingOptions({ products }: { products: TProduct[] }) {
   const [pid, setPid] = useState<string>(products[0].id);

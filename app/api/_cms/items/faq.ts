@@ -1,12 +1,7 @@
 import cmsAPI from "../cmsAPI";
+import { TFAQ } from "../types/faq";
 
 const base = "/items/faq";
-
-export type TFAQ = {
-  id: number;
-  question: string;
-  answer: string;
-};
 
 async function readItems() {
   return await cmsAPI({

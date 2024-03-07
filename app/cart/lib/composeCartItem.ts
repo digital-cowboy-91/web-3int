@@ -1,7 +1,7 @@
-import { TProduct } from "@/app/api/_cms/items/store/products";
+import { TProduct } from "@/app/api/_cms/types/products";
 import { calculateItemPrice } from "./calculateItemPrice";
-import { retrieveFilamentTitle } from "./composeFilamentTitle";
 import composeDescription from "./composeDescription";
+import { retrieveFilamentTitle } from "./composeFilamentTitle";
 
 export function composeCartItem(
   product: TProduct,

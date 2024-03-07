@@ -1,29 +1,8 @@
 import { draftMode } from "next/headers";
 import cmsAPI from "../../cmsAPI";
-import { TProduct } from "./products";
-import { TSEO } from "../seo";
-import { TLicense } from "../licenses";
-import { TAsset } from "../files";
+import { TGallery } from "../../types/gallery";
 
 const base = "/items/gallery";
-
-type TAttribute = {
-  name: string;
-  value: string;
-};
-
-export type TGallery = {
-  id: string;
-  seo: TSEO;
-  license: TLicense;
-  title: string;
-  cover_image: TAsset;
-  attributes: TAttribute[];
-  media: {
-    asset: TAsset;
-  }[];
-  buying_options: TProduct[];
-};
 
 async function readItem(id: string) {
   const { isEnabled: isDraft } = draftMode();

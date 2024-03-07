@@ -1,6 +1,6 @@
 "use client";
 
-import { TGallery } from "@/app/api/_cms/items/store/gallery";
+import { TGallery } from "@/app/api/_cms/types/gallery";
 import ImageAsset from "@/app/components/ImageAsset";
 import IconAnimation from "@/app/components/icons/IconAnimation";
 import IconTimelapse from "@/app/components/icons/IconTimelapse";

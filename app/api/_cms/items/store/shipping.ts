@@ -1,13 +1,7 @@
 import cmsAPI from "../../cmsAPI";
+import { TShipping } from "../../types/shipping";
 
 const base = "/items/shipping";
-
-export type TShipping = {
-  id: number;
-  title: string;
-  description: string;
-  price: number;
-};
 
 async function readItem(id: number) {
   return await cmsAPI({

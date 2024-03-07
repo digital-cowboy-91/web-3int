@@ -1,19 +1,8 @@
 import { draftMode } from "next/headers";
 import cmsAPI from "../cmsAPI";
-import { TSEO } from "./seo";
+import { TLegal } from "../types/legal";
 
 const base = "/items/legal";
-
-export type TLegal = {
-  id: number;
-  seo: TSEO;
-  status: string;
-  title: string;
-  slug: string;
-  content: string;
-};
-
-type TLegalList = Omit<TLegal, "content">;
 
 async function readSlug(slug: string) {
   const { isEnabled: isDraft } = draftMode();

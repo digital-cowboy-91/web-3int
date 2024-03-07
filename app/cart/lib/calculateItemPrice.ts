@@ -1,4 +1,4 @@
-import { TDiscount } from "@/app/api/_cms/items/store/products";
+import { TDiscount } from "@/app/api/_cms/types/products";
 
 export function calculateItemPrice(
   price: number,

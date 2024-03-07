@@ -1,4 +1,4 @@
-import { TProduct } from "@/app/api/_cms/items/store/products";
+import { TProduct } from "@/app/api/_cms/types/products";
 
 export function composeProductCache(product: TProduct, ttl: number = 3600000) {
   return {

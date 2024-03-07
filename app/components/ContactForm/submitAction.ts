@@ -1,9 +1,7 @@
 "use server";
 
-import {
-  CMS_ClientQuery,
-  TContactForm,
-} from "@/app/api/_cms/items/clientQueries";
+import { CMS_ClientQuery } from "@/app/api/_cms/items/clientQueries";
+import { TContactForm } from "@/app/api/_cms/types/clientQueries";
 
 export default async function submitAction(data: TContactForm) {
   try {

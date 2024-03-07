@@ -2,27 +2,6 @@ import cmsAPI from "../../cmsAPI";
 
 const base = "/items/orders";
 
-type TOrderItems = {
-  product_ref: string;
-  filament_ref: number | undefined;
-  description: string;
-  quantity: number;
-  discount: number;
-  discount_pct: number;
-  price_at_sale: number;
-  amount: number;
-};
-type TOrder = {
-  stripe_id: string;
-  items_ref: TOrderItems[];
-  shipping_ref?: number;
-  subtotal: number;
-  discount: number;
-  shipping: number;
-  tax: number;
-  total: number;
-};
-
 async function createItem(data: TOrder) {
   return await cmsAPI({
     path: base,
@@ -36,29 +15,6 @@ async function createItem(data: TOrder) {
     addSecret: true,
   });
 }
-
-// async function readItem(id: string) {
-//   return await cmsAPI(
-//     `${base}/${id}`,
-//     {
-//       method: "GET",
-//       cache: "no-store",
-//     },
-//     false,
-//     true
-//   ).then((res) => res.data as TOrder);
-// }
-
-type TDownloadable = {
-  product_ref: {
-    asset: {
-      id: string;
-      filename_download: string;
-    };
-  };
-  payment_state: number;
-};
-
 async function readDownloadable(id: string) {
   return await cmsAPI({
     path: base,

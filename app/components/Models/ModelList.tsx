@@ -1,6 +1,6 @@
 "use client";
 
-import { TGallery } from "@/app/api/_cms/items/store/gallery";
+import { TGallery } from "@/app/api/_cms/types/gallery";
 import { CSSButtonLink } from "@/app/styles";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";

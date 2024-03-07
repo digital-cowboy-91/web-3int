@@ -1,30 +1,8 @@
 import { draftMode } from "next/headers";
 import cmsAPI from "../../cmsAPI";
-import { TFilament } from "./filaments";
+import { TProduct, TDownloadable } from "../../types/products";
 
 const base = "/items/products";
-
-export type TDiscount = {
-  quantity: number;
-  percentage: number;
-};
-
-export type TProduct = {
-  id: string;
-  title: string;
-  price: number;
-  downloadable: boolean;
-  gallery_rel: {
-    id: string;
-    title: string;
-    cover_image: string;
-  };
-  filament_rels: {
-    filament_rel: TFilament;
-  }[];
-  colours: string[];
-  discounts: TDiscount[] | [];
-};
 
 async function readItem(id: string) {
   const { isEnabled: isDraft } = draftMode();
@@ -71,15 +49,6 @@ async function readItems(ids?: string[]) {
     draftMode: isDraft,
   }).then((res) => res.data as TProduct[]);
 }
-
-export type TDownloadable = {
-  id: string;
-  price: number;
-  asset: {
-    id: string;
-    filename_download: string;
-  };
-};
 
 async function readDownloadable(id: string) {
   return await cmsAPI({
