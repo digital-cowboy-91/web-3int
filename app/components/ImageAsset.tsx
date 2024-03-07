@@ -28,7 +28,7 @@ export default function ImageAsset({ asset, preset = "", className }: Props) {
     }
 
     function onErrorHandler() {
-      console.log("IMG", "ERROR", composedSrc);
+      console.error("IMG", "ERROR", composedSrc);
     }
 
     img.addEventListener("load", onLoadHandler);

@@ -95,8 +95,6 @@ export async function actionStripePaymentHandler(
       total: summary.total.value,
     };
 
-    console.log("[actionStripePaymentHandler]", order_items);
-
     await CMSOrders.createItem(order_items);
 
     return {

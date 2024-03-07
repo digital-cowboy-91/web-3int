@@ -50,7 +50,7 @@ export const ContactForm = ({ options }: { options: TOption[] }) => {
 
       setSubmitted(true);
     } catch (e) {
-      console.log("ContactForm", e);
+      console.error("ContactForm", e);
     }
   });
 

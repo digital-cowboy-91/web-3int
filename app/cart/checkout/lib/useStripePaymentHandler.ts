@@ -36,7 +36,7 @@ export default function useStripePaymentHandler() {
   function handleError(err: any) {
     setIsLoading(false);
     setErrorMsg(err.message);
-    console.log("[useStripePaymentHandler]", err);
+    console.error("[useStripePaymentHandler]", err);
   }
   async function handleSubmit(
     e: StripeExpressCheckoutElementConfirmEvent | FormEvent<HTMLFormElement>
