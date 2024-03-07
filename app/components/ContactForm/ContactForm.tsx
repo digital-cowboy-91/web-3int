@@ -1,6 +1,5 @@
 "use client";
 
-import { SContactForm, TContactForm } from "@/app/api/_cms/types/clientQueries";
 import { verifyCaptchaAction } from "@/app/lib/verifyCaptchaAction";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAnimate } from "framer-motion";
@@ -10,7 +9,11 @@ import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import { FormProvider, useForm } from "react-hook-form";
 import Form from "../Form";
 import { TOption } from "./ContactFormWrapper";
-import submitAction from "./submitAction";
+import {
+  SContactForm,
+  TContactForm,
+} from "@/app/api/_cms/collections/clientQueries";
+import CMSClientQueriesCreateItem_server from "@/app/api/_cms/collections/clientQueries/createItem.server";
 
 export const ContactForm = ({ options }: { options: TOption[] }) => {
   const { executeRecaptcha } = useGoogleReCaptcha();
@@ -39,10 +42,10 @@ export const ContactForm = ({ options }: { options: TOption[] }) => {
         throw new Error("Captcha verification failed");
       }
 
-      const res = await submitAction(data);
+      const res = await CMSClientQueriesCreateItem_server(data);
 
-      if (res != "success") {
-        throw new Error(res as string);
+      if ("error" in res) {
+        throw new Error(res.error.message);
       }
 
       setSubmitted(true);

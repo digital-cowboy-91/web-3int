@@ -1,5 +1,5 @@
-import { CMS_Orders } from "../_cms/items/store/orders";
-import { CMS_Products } from "../_cms/items/store/products";
+import { CMSOrders } from "../_cms/collections/orders";
+import { CMSProducts } from "../_cms/collections/products";
 
 async function fetchFile(id: string, filename: string) {
   const file = await fetch(
@@ -24,7 +24,7 @@ export async function GET(request: Request) {
   const oid = searchParams.get("oid");
 
   if (pid) {
-    const data = await CMS_Products.readDownloadable(pid);
+    const data = await CMSProducts.readDigital(pid);
 
     if (data && data.price === 0) {
       return fetchFile(data.asset.id, data.asset.filename_download);
@@ -32,7 +32,7 @@ export async function GET(request: Request) {
   }
 
   if (oid) {
-    const data = await CMS_Orders.readDownloadable(oid);
+    const data = await CMSOrders.readDigital(oid);
 
     if (data && data.payment_state === 3) {
       return fetchFile(

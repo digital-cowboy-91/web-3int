@@ -1,5 +1,5 @@
+import CMSProductsReadItems_server from "@/app/api/_cms/collections/products/readItems.server";
 import { TCache, TCartItem } from "../components/Cart.store";
-import { actionGetProducts } from "./actionGetProduct";
 import { composeCacheObject } from "./composeCacheObject";
 import { composeCartItem } from "./composeCartItem";
 
@@ -27,7 +27,7 @@ export async function revalidateCart(
 
   // 2. Refresh cache
   if (staleProductIds.length) {
-    const products = await actionGetProducts(staleProductIds);
+    const products = await CMSProductsReadItems_server(staleProductIds);
 
     products.forEach(
       (p) => (cache = { ...cache, ...composeCacheObject(p.id, p) })

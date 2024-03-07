@@ -1,10 +1,10 @@
-import { CMS_Homepage } from "@/app/api/_cms/items/homepage";
+import { CMSHomepage } from "./api/_cms/collections/homepage";
 import SectionDouble from "./components/SectionDouble";
 import SectionSingle from "./components/SectionSingle";
 import { Suspense } from "react";
 
 export default async function Home() {
-  const res = await CMS_Homepage.readSingleton();
+  const res = await CMSHomepage.readSingleton();
 
   return (
     <>

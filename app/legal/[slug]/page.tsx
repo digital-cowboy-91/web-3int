@@ -1,5 +1,5 @@
+import { CMSLegal } from "@/app/api/_cms/collections/legal";
 import { CSSContainer } from "@/app/styles";
-import { CMS_Legal } from "@/app/api/_cms/items/legal";
 import { notFound } from "next/navigation";
 
 export const dynamic = "force-static";
@@ -9,7 +9,7 @@ export async function generateMetadata({
 }: {
   params: { slug: string };
 }) {
-  const res = await CMS_Legal.readSlug(params.slug);
+  const res = await CMSLegal.readSlug(params.slug);
 
   if (!res) notFound();
 
@@ -21,7 +21,7 @@ export async function generateMetadata({
 }
 
 export default async function page({ params }: { params: { slug: string } }) {
-  const res = await CMS_Legal.readSlug(params.slug);
+  const res = await CMSLegal.readSlug(params.slug);
 
   if (!res) notFound();
 

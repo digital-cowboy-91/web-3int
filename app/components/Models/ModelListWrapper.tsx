@@ -1,9 +1,9 @@
-import { CMS_Gallery } from "@/app/api/_cms/items/store/gallery";
 import { notFound } from "next/navigation";
 import ModelList from "./ModelList";
+import { CMSGallery } from "@/app/api/_cms/collections/gallery";
 
 const ModelListWrapper = async () => {
-  const res = await CMS_Gallery.readItems();
+  const res = await CMSGallery.readItems();
 
   if (!res) notFound();
 

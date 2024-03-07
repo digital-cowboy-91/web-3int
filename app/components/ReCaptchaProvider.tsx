@@ -1,6 +1,5 @@
 "use client";
 
-import { PropsWithChildren } from "react";
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 
 type Props = {

@@ -1,4 +1,4 @@
-import { TProduct } from "@/app/api/_cms/types/products";
+import { TProduct } from "@/app/api/_cms/collections/products";
 import { calculateItemPrice } from "./calculateItemPrice";
 import composeDescription from "./composeDescription";
 import { retrieveFilamentTitle } from "./composeFilamentTitle";

@@ -1,11 +1,11 @@
-import { CMS_Homepage } from "@/app/api/_cms/items/homepage";
 import { CSSContainer } from "../../styles";
 import ActionButton from "./ActionButton";
 import LogoButton from "./LogoButton";
 import ImageAsset from "../ImageAsset";
+import { CMSHomepage } from "@/app/api/_cms/collections/homepage";
 
 export default async function SectionHero() {
-  const res = await CMS_Homepage.readSingleton();
+  const res = await CMSHomepage.readSingleton();
 
   return (
     <section id="hero" className="h-screen max-h-[720px]">

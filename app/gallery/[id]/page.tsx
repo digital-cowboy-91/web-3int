@@ -1,12 +1,12 @@
 import { CSSContainer } from "@/app/styles";
 import { notFound } from "next/navigation";
 import GalleryDetail from "./GalleryDetail";
-import { CMS_Gallery } from "@/app/api/_cms/items/store/gallery";
+import { CMSGallery } from "@/app/api/_cms/collections/gallery";
 
 export const dynamic = "force-static";
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
-  const res = await CMS_Gallery.readItem(params.id);
+  const res = await CMSGallery.readItem(params.id);
 
   if (!res) notFound();
 
@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
 }
 
 export default async function Page({ params }: { params: { id: string } }) {
-  const res = await CMS_Gallery.readItem(params.id);
+  const res = await CMSGallery.readItem(params.id);
 
   if (!res) notFound();
 

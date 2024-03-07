@@ -1,4 +1,3 @@
-import { TProduct } from "@/app/api/_cms/types/products";
 import QuantitySelector from "@/app/cart/components/QuantitySelector";
 import { calculateItemPrice } from "@/app/cart/lib/calculateItemPrice";
 import { ButtonDropdown_v2 } from "@/app/components/ButtonDropdown";
@@ -8,6 +7,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import ButtonAddToCart from "./ButtonAddToCart";
+import { TProduct } from "@/app/api/_cms/collections/products";
 
 export default function BuyingOptions({ products }: { products: TProduct[] }) {
   const [pid, setPid] = useState<string>(products[0].id);

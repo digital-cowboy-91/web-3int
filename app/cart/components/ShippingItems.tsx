@@ -1,9 +1,9 @@
 "use client";
 
-import { TShipping } from "@/app/api/_cms/types/shipping";
 import { useEffect } from "react";
 import { create } from "zustand";
 import { useCartStore } from "./Cart.store";
+import { TShipping } from "@/app/api/_cms/collections/shipping";
 
 type TStore = {
   id: number;

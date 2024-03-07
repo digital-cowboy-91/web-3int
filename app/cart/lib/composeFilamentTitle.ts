@@ -1,4 +1,4 @@
-import { TFilament } from "@/app/api/_cms/types/filaments";
+import { TFilament } from "@/app/api/_cms/collections/filaments";
 
 export function composeFilamentTitle({
   filament: f,

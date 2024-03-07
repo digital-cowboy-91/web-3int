@@ -1,11 +1,11 @@
 "use client";
 
-import { TGallery } from "@/app/api/_cms/types/gallery";
 import { CSSButtonLink } from "@/app/styles";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import ImageAsset from "../ImageAsset";
+import { TGallery } from "@/app/api/_cms/collections/gallery";
 
 const animateRow = {
   init: {

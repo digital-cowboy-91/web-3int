@@ -1,9 +1,9 @@
-import { TProduct } from "@/app/api/_cms/types/products";
 import { create } from "zustand";
 import { persist, subscribeWithSelector } from "zustand/middleware";
 import { composeCacheObject } from "../lib/composeCacheObject";
 import { composeCartItem } from "../lib/composeCartItem";
 import { revalidateCart } from "../lib/revalidateCart";
+import { TProduct } from "@/app/api/_cms/collections/products";
 
 export type TCartItem = {
   amount: number;

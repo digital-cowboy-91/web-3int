@@ -1,4 +1,4 @@
-import { CMS_Pricing } from "@/app/api/_cms/items/pricing";
+import { CMSPricing } from "../api/_cms/collections/pricing";
 import PriceTierFeature from "./PriceTierFeature";
 
 const CSSDl = "text-dark flex flex-col gap-2";
@@ -6,7 +6,7 @@ const CSSDt =
   "border-b-2 border-grey my-4 text-end text-grey font-semibold uppercase";
 
 const PriceTiers = async () => {
-  const res = await CMS_Pricing.readItems();
+  const res = await CMSPricing.readItems();
 
   return (
     <div className="p-8 pt-0 flex flex-row justify-center">

@@ -1,4 +1,3 @@
-import { CMS_Homepage } from "@/app/api/_cms/items/homepage";
 import { Poppins } from "next/font/google";
 import { draftMode } from "next/headers";
 import { ReactNode } from "react";
@@ -8,11 +7,12 @@ import Navbar from "./components/Navbar";
 import PreviewBanner from "./components/PreviewBanner";
 import ReCaptchaProvider from "./components/ReCaptchaProvider";
 import "./globals.css";
+import { CMSHomepage } from "./api/_cms/collections/homepage";
 
 const poppins = Poppins({ subsets: ["latin"], weight: ["400", "600", "700"] });
 
 export async function generateMetadata() {
-  const res = await CMS_Homepage.readSingleton();
+  const res = await CMSHomepage.readSingleton();
 
   return {
     title: {

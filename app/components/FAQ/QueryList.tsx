@@ -1,6 +1,6 @@
 "use client";
 
-import { TFAQ } from "@/app/api/_cms/types/faq";
+import { TFAQ } from "@/app/api/_cms/collections/faq";
 import { CSSButtonLink } from "@/app/styles";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";

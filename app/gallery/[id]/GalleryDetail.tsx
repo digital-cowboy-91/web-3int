@@ -1,6 +1,5 @@
 "use client";
 
-import { TGallery } from "@/app/api/_cms/types/gallery";
 import ImageAsset from "@/app/components/ImageAsset";
 import IconAnimation from "@/app/components/icons/IconAnimation";
 import IconTimelapse from "@/app/components/icons/IconTimelapse";
@@ -10,6 +9,7 @@ import { Fragment, useState } from "react";
 import ReactPlayer from "react-player/lazy";
 import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 import BuyingOptions from "./BuyingOptions";
+import { TGallery } from "@/app/api/_cms/collections/gallery";
 
 const GalleryDetail = ({
   model,

@@ -1,8 +1,8 @@
-import { CMS_FAQ } from "@/app/api/_cms/items/faq";
+import { CMSFAQ } from "@/app/api/_cms/collections/faq";
 import QueryList from "./QueryList";
 
 const QueryListWrapper = async () => {
-  const res = await CMS_FAQ.readItems();
+  const res = await CMSFAQ.readItems();
 
   return <QueryList data={res} />;
 };

@@ -1,10 +1,10 @@
 "use server";
 
-import { CMS_Orders } from "@/app/api/_cms/items/store/orders";
-import { CMS_Shipping } from "@/app/api/_cms/items/store/shipping";
 import Stripe from "stripe";
 import { TCartItemSimple, revalidateCart } from "../../lib/revalidateCart";
 import { summarizeCart } from "../../lib/summarizeCart";
+import { CMSShipping } from "@/app/api/_cms/collections/shipping";
+import { CMSOrders } from "@/app/api/_cms/collections/orders";
 
 const secret_key = process.env.STRIPE_SECRET_KEY!;
 const stripe = new Stripe(secret_key);
@@ -21,7 +21,7 @@ export async function serverCartRevalidation(
 
   let shippingPrice = 0;
   if (shippingId !== -1) {
-    let res = await CMS_Shipping.readItem(shippingId);
+    let res = await CMSShipping.readItem(shippingId);
 
     if (!res) {
       throw new Error("No shipping found");
@@ -97,7 +97,7 @@ export async function actionStripePaymentHandler(
 
     console.log("[actionStripePaymentHandler]", order_items);
 
-    await CMS_Orders.createItem(order_items);
+    await CMSOrders.createItem(order_items);
 
     return {
       clientSecret: client_secret,

@@ -1,8 +1,8 @@
-import { CMS_Shipping } from "@/app/api/_cms/items/store/shipping";
+import { CMSShipping } from "@/app/api/_cms/collections/shipping";
 import ShippingItems from "./ShippingItems";
 
 export default async function ShippingBlock() {
-  const methods = await CMS_Shipping.readItems();
+  const methods = await CMSShipping.readItems();
 
   if (!methods.length) return null;
 
