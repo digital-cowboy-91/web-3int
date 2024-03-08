@@ -4,6 +4,7 @@ import { useElements } from "@stripe/react-stripe-js";
 import { summarizeCart } from "../lib/summarizeCart";
 import { useCartStore } from "./Cart.store";
 import { useShippingStore } from "./ShippingItems";
+import asCurrency from "@/app/lib/asCurrency";
 
 export default function SummaryItems() {
   const cart = useCartStore((s) => s.cart);
@@ -14,8 +15,7 @@ export default function SummaryItems() {
   const elements = useElements();
 
   elements?.update({
-    amount:
-      summary.total.value === 0 ? 50 : Math.round(summary.total.value * 100),
+    amount: summary.total.value === 0 ? 50 : summary.total.value,
   });
 
   return (
@@ -23,7 +23,7 @@ export default function SummaryItems() {
       {Object.entries(summary).map(([key, { title, value }]) => (
         <div key={key}>
           <span>{title}</span>
-          <span>£ {value.toFixed(2)}</span>
+          <span>{asCurrency(value)}</span>
         </div>
       ))}
     </div>

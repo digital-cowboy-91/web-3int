@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { create } from "zustand";
 import { useCartStore } from "./Cart.store";
 import { TShipping } from "@/app/api/_cms/collections/shipping";
+import asCurrency from "@/app/lib/asCurrency";
 
 type TStore = {
   id: number;
@@ -24,7 +25,7 @@ export default function ShippingItems({ methods }: { methods: TShipping[] }) {
   const setShipping = useShippingStore((s) => s.setShipping);
 
   const shippingRequired =
-    cart.findIndex(({ downloadable }) => !downloadable) !== -1;
+    cart.findIndex(({ is_digital }) => !is_digital) !== -1;
 
   useEffect(() => {
     setShipping(methods[0].id, methods[0].price);
@@ -50,7 +51,7 @@ export default function ShippingItems({ methods }: { methods: TShipping[] }) {
         disabled={!shippingRequired || cartStatus !== "open"}
       />
       <label className="font-semibold" htmlFor={id.toString()}>
-        {title} · {price ? "£ " + price : "Free"}
+        {title} · {price ? asCurrency(price) : "Free"}
       </label>
       {description && (
         <span className="text-xs col-start-2">{description}</span>

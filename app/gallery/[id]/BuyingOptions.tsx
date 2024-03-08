@@ -8,6 +8,7 @@ import {
 import { useState } from "react";
 import ButtonAddToCart from "./ButtonAddToCart";
 import { TProduct } from "@/app/api/_cms/collections/products";
+import asCurrency from "@/app/lib/asCurrency";
 
 export default function BuyingOptions({ products }: { products: TProduct[] }) {
   const [pid, setPid] = useState<string>(products[0].id);
@@ -16,7 +17,7 @@ export default function BuyingOptions({ products }: { products: TProduct[] }) {
   const [quantity, setQuantity] = useState(1);
 
   let selectedProduct = products.find((p) => p.id === pid)!;
-  let { id, price, downloadable, filament_rels, discounts } = selectedProduct;
+  let { id, price, is_digital, filament_rels, discounts } = selectedProduct;
 
   let amount = price,
     discount = 0;
@@ -41,7 +42,7 @@ export default function BuyingOptions({ products }: { products: TProduct[] }) {
         label="Delivery format"
       />
 
-      {!downloadable && (
+      {!is_digital && (
         <ButtonDropdown_v2
           id="filament"
           defaultSelected={fid || filament_rels[0].filament_rel.id.toString()}
@@ -61,21 +62,21 @@ export default function BuyingOptions({ products }: { products: TProduct[] }) {
           value={quantity}
           disableDecrease={quantity === 1}
           handleChange={(q) => setQuantity(q)}
-          className={downloadable ? "hidden" : ""}
+          className={is_digital ? "hidden" : ""}
         />
         {price > 0 ? (
           <ButtonAddToCart
             product={selectedProduct}
             quantity={quantity}
             filamentId={fid ? parseInt(fid) : undefined}
-            className={downloadable ? "ms-auto" : ""}
+            className={is_digital ? "ms-auto" : ""}
           >
-            <span>{"£" + amount}</span>
+            <span>{asCurrency(amount)}</span>
             <ShoppingCartIcon className="size-4" />
           </ButtonAddToCart>
         ) : (
           <a
-            className={`link-outline-success ${downloadable ? "ms-auto" : ""}`}
+            className={`link-outline-success ${is_digital ? "ms-auto" : ""}`}
             href={"/api/download?pid=" + id}
             download
           >

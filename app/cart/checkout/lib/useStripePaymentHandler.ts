@@ -24,9 +24,7 @@ export default function useStripePaymentHandler() {
   const elements = useElements();
 
   useEffect(() => {
-    setAddressRequired(
-      cart.findIndex(({ downloadable }) => !downloadable) !== -1
-    );
+    setAddressRequired(cart.findIndex(({ is_digital }) => !is_digital) !== -1);
   }, [cart]);
 
   useEffect(() => {
@@ -75,6 +73,8 @@ export default function useStripePaymentHandler() {
       handleError({ message: errorMessage });
       return;
     }
+
+    console.log("Elements", elements);
 
     const { error } = await stripe.confirmPayment({
       elements,

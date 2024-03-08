@@ -9,7 +9,7 @@ export type TOrderItems = {
   amount: number;
 };
 export type TOrder = {
-  stripe_id: string;
+  payment_intent_id: string;
   items_ref: TOrderItems[];
   shipping_ref?: number;
   subtotal: number;

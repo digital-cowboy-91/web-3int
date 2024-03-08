@@ -15,7 +15,7 @@ export function summarizeCart(cart: TCartItem[], shippingAmount: number) {
     subtotal: { title: "Subtotal", value: subtotal },
     discount: { title: "Discount", value: discount },
     shipping: { title: "Shipping", value: shippingAmount },
-    tax: { title: "Tax", value: total * 0.21 },
+    tax: { title: "Tax", value: Math.round(total * 0.21) },
     total: { title: "Total", value: total },
   };
 }

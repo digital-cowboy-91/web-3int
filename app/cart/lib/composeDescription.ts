@@ -1,13 +1,13 @@
 export default function composeDescription(
   format: string,
   quantity: number,
-  downloadable: boolean,
+  is_digital: boolean,
   filament?: string
 ) {
   let sep = " · ";
   let qty = "qty " + quantity;
 
-  if (downloadable) {
+  if (is_digital) {
     return format + " digital file";
   }
 

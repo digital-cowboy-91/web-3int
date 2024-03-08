@@ -55,7 +55,7 @@ export async function actionStripePaymentHandler(
     //   );
 
     const { id, client_secret } = await stripe.paymentIntents.create({
-      amount: Math.round(summary.total.value * 100),
+      amount: summary.total.value,
       currency: "gbp",
     });
 
@@ -64,33 +64,34 @@ export async function actionStripePaymentHandler(
         "Failed to create payment intent. Please refresh the page and try again."
       );
 
+    // TODO: Fix filament ID not being written to DB
     const order_items = {
-      stripe_id: id,
+      discount: summary.discount.value,
       items_ref: cart.map(
         ({
-          pid,
-          qty,
-          fid,
+          amount,
           description,
           discount_amount,
           discount_pct,
+          fid,
+          pid,
           price,
-          amount,
+          qty,
         }) => ({
-          product_ref: pid,
-          filament_ref: fid,
-          description: description,
-          quantity: qty,
-          price_at_sale: price!,
-          discount: discount_amount,
-          discount_pct,
           amount,
+          description: description,
+          discount_pct,
+          discount: discount_amount,
+          filament_ref: fid,
+          price_at_sale: price!,
+          product_ref: pid,
+          quantity: qty,
         })
       ),
+      payment_intent_id: id,
       shipping_ref: shippingId === -1 ? undefined : shippingId,
-      subtotal: summary.subtotal.value,
-      discount: summary.discount.value,
       shipping: summary.shipping.value,
+      subtotal: summary.subtotal.value,
       tax: summary.tax.value,
       total: summary.total.value,
     };

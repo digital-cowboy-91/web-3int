@@ -10,7 +10,7 @@ export function composeCartItem(
 ) {
   const {
     discounts,
-    downloadable,
+    is_digital,
     filament_rels,
     gallery_rel,
     id,
@@ -27,7 +27,7 @@ export function composeCartItem(
   let description = composeDescription(
     title,
     quantity,
-    downloadable,
+    is_digital,
     filamentTitle
   );
 
@@ -36,7 +36,7 @@ export function composeCartItem(
     price,
     cid: gallery_rel.cover_image,
     description,
-    downloadable,
+    is_digital,
     fid: filamentId,
     pid: id,
     qty: quantity,

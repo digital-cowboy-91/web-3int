@@ -9,7 +9,7 @@ export type TProduct = {
   id: string;
   title: string;
   price: number;
-  downloadable: boolean;
+  is_digital: boolean;
   gallery_rel: {
     id: string;
     title: string;

@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useCartStore } from "./Cart.store";
 import QuantitySelector from "./QuantitySelector";
 import { useSearchParams } from "next/navigation";
+import asCurrency from "@/app/lib/asCurrency";
 
 export default function CartItems() {
   const paramStatus = useSearchParams().get("status");
@@ -28,7 +29,7 @@ export default function CartItems() {
     <div className="cart--items">
       {cart.map(
         (
-          { title, cid, description, qty, amount, discount_pct, downloadable },
+          { title, cid, description, qty, amount, discount_pct, is_digital },
           index
         ) => (
           <div className="cart--items--row" key={index}>
@@ -42,14 +43,14 @@ export default function CartItems() {
             <div className="qunatity">
               <QuantitySelector
                 value={qty}
-                disableIncrease={downloadable}
+                disableIncrease={is_digital}
                 handleChange={(value) => {
                   if (value === 0) return removeCartItem(index);
                   updateCartItem(index, value);
                 }}
               />
             </div>
-            <div className="total">£ {amount}</div>
+            <div className="total">{asCurrency(amount)}</div>
             {Boolean(discount_pct) && (
               <div className="discount">- {discount_pct}%</div>
             )}

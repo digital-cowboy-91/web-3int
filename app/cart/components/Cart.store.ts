@@ -11,7 +11,7 @@ export type TCartItem = {
   description: string;
   discount_amount: number;
   discount_pct: number;
-  downloadable: boolean;
+  is_digital: boolean;
   fid?: number;
   pid: string;
   price: number;

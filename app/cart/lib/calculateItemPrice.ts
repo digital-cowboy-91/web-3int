@@ -14,7 +14,7 @@ export function calculateItemPrice(
     discount_pct = sorted.find((d) => quantity >= d.quantity)?.percentage || 0;
   }
 
-  let amount = (price * quantity * (100 - discount_pct)) / 100;
+  let amount = Math.round(price * quantity * (100 - discount_pct)) / 100;
   let discount_amount = price * quantity - amount;
 
   return { amount, discount_amount, discount_pct };
