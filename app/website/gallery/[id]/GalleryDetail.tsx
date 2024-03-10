@@ -1,15 +1,15 @@
 "use client";
 
-import ImageAsset from "@/app/components/ImageAsset";
-import IconAnimation from "@/app/components/icons/IconAnimation";
-import IconTimelapse from "@/app/components/icons/IconTimelapse";
+import { TGallery } from "@/app/api/_cms/collections/gallery";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { Fragment, useState } from "react";
-import ReactPlayer from "react-player/lazy";
+import ReactPlayer from "react-player";
 import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
+import ImageAsset from "../../components/ImageAsset";
+import IconAnimation from "../../components/icons/IconAnimation";
+import IconTimelapse from "../../components/icons/IconTimelapse";
 import BuyingOptions from "./BuyingOptions";
-import { TGallery } from "@/app/api/_cms/collections/gallery";
 
 const GalleryDetail = ({
   model,

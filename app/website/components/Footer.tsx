@@ -1,7 +1,7 @@
-import { CSSContainer } from "../styles";
+import { CMSLegal } from "@/app/api/_cms/collections/legal";
+import { CSSContainer } from "@/app/styles";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { CMSLegal } from "../api/_cms/collections/legal";
 
 const Footer = async () => {
   const res = await CMSLegal.readItems();

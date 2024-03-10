@@ -1,10 +1,10 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
+import asCurrency from "../../lib/asCurrency";
 import { useCartStore } from "./Cart.store";
 import QuantitySelector from "./QuantitySelector";
-import { useSearchParams } from "next/navigation";
-import asCurrency from "@/app/lib/asCurrency";
 
 export default function CartItems() {
   const paramStatus = useSearchParams().get("status");

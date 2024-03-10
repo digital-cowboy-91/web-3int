@@ -9,6 +9,7 @@ export type TOrderItems = {
   amount: number;
 };
 export type TOrder = {
+  id: string;
   payment_intent_id: string;
   item_refs: TOrderItems[];
   shipping_ref?: string;

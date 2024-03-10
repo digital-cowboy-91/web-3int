@@ -1,7 +1,7 @@
 "use client";
 
+import { CSSButtonOutline } from "@/app/styles";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/solid";
-import { CSSButtonOutline } from "../styles";
 
 async function exitPreview() {
   const res = await fetch("/api/preview?exit=true");

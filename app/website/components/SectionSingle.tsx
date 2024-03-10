@@ -1,5 +1,5 @@
+import { CSSContainer } from "@/app/styles";
 import dynamicComponent from "../lib/dynamicComponent";
-import { CSSContainer } from "../styles";
 
 type Component = {
   component: string;

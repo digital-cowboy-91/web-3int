@@ -1,8 +1,8 @@
+import { CSSContainer } from "@/app/styles";
+import { Metadata } from "next";
 import { ReactNode, Suspense } from "react";
-import { CSSContainer } from "../styles";
 import StripeWrapper from "./checkout/components/StripeWrapper";
 import CartSummary from "./components/CartSummary";
-import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Cart & Checkout",

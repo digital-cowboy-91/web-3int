@@ -1,19 +1,19 @@
 "use client";
 
-import { verifyCaptchaAction } from "@/app/lib/verifyCaptchaAction";
+import {
+  SContactForm,
+  TContactForm,
+} from "@/app/api/_cms/collections/clientQueries";
+import CMSClientQueriesCreateItem_server from "@/app/api/_cms/collections/clientQueries/createItem.server";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAnimate } from "framer-motion";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import { FormProvider, useForm } from "react-hook-form";
+import { verifyCaptchaAction } from "../../lib/verifyCaptchaAction";
 import Form from "../Form";
 import { TOption } from "./ContactFormWrapper";
-import {
-  SContactForm,
-  TContactForm,
-} from "@/app/api/_cms/collections/clientQueries";
-import CMSClientQueriesCreateItem_server from "@/app/api/_cms/collections/clientQueries/createItem.server";
 
 export const ContactForm = ({ options }: { options: TOption[] }) => {
   const { executeRecaptcha } = useGoogleReCaptcha();

@@ -1,10 +1,10 @@
 "use client";
 
+import { TShipping } from "@/app/api/_cms/collections/shipping";
 import { useEffect } from "react";
 import { create } from "zustand";
+import asCurrency from "../../lib/asCurrency";
 import { useCartStore } from "./Cart.store";
-import { TShipping } from "@/app/api/_cms/collections/shipping";
-import asCurrency from "@/app/lib/asCurrency";
 
 type TStore = {
   id: string | undefined;

@@ -1,6 +1,6 @@
+import { CSSFormElement, CSSFormElementLabel } from "@/app/styles";
 import { ReactNode } from "react";
 import { FieldErrors, useFormContext } from "react-hook-form";
-import { CSSFormElement, CSSFormElementLabel } from "../styles";
 
 interface Form {
   onSubmit: () => void;

@@ -1,8 +1,8 @@
-import { CSSContainer } from "../../styles";
 import ActionButton from "./ActionButton";
 import LogoButton from "./LogoButton";
 import ImageAsset from "../ImageAsset";
 import { CMSHomepage } from "@/app/api/_cms/collections/homepage";
+import { CSSContainer } from "@/app/styles";
 
 export default async function SectionHero() {
   const res = await CMSHomepage.readSingleton();

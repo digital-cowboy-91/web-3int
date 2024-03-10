@@ -1,10 +1,10 @@
 "use client";
 
 import { useElements } from "@stripe/react-stripe-js";
+import asCurrency from "../../lib/asCurrency";
 import { summarizeCart } from "../lib/summarizeCart";
 import { useCartStore } from "./Cart.store";
 import { useShippingStore } from "./ShippingItems";
-import asCurrency from "@/app/lib/asCurrency";
 
 export default function SummaryItems() {
   const cart = useCartStore((s) => s.cart);

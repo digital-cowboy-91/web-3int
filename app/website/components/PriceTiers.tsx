@@ -1,4 +1,4 @@
-import { CMSPricing } from "../api/_cms/collections/pricing";
+import { CMSPricing } from "@/app/api/_cms/collections/pricing";
 import PriceTierFeature from "./PriceTierFeature";
 
 const CSSDl = "text-dark flex flex-col gap-2";

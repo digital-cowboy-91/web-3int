@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { CSSContainer } from "../styles";
+
 import LinkToCart from "../cart/components/LinkToCart";
+import { CSSContainer } from "@/app/styles";
 
 const sections = [
   { title: "Gallery", slug: "gallery" },

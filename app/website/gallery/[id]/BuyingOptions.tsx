@@ -1,15 +1,15 @@
-import QuantitySelector from "@/app/cart/components/QuantitySelector";
-import { calculateItemPrice } from "@/app/cart/lib/calculateItemPrice";
-import { ButtonDropdown_v2 } from "@/app/components/ButtonDropdown";
+import { TProduct } from "@/app/api/_cms/collections/products";
 import {
   ArrowDownTrayIcon,
   ShoppingCartIcon,
 } from "@heroicons/react/24/outline";
 import { useState } from "react";
+import QuantitySelector from "../../cart/components/QuantitySelector";
+import { calculateItemPrice } from "../../cart/lib/calculateItemPrice";
+import { composeFilamentTitle } from "../../cart/lib/composeFilamentTitle";
+import { ButtonDropdown_v2 } from "../../components/ButtonDropdown";
+import asCurrency from "../../lib/asCurrency";
 import ButtonAddToCart from "./ButtonAddToCart";
-import { TProduct } from "@/app/api/_cms/collections/products";
-import asCurrency from "@/app/lib/asCurrency";
-import { composeFilamentTitle } from "@/app/cart/lib/composeFilamentTitle";
 
 export default function BuyingOptions({ products }: { products: TProduct[] }) {
   const [pid, setPid] = useState<string>(products[0].id);
