@@ -196,7 +196,7 @@ export default function OrderSummaryEmail({
                         <Text className={text}>
                           <strong>{asCurrency(item.price_at_sale)}</strong>
                           {item.discount
-                            ? `, you've saved £${item.discount}`
+                            ? `, you've saved ${asCurrency(item.discount)}`
                             : ""}
                         </Text>
                       </Column>
