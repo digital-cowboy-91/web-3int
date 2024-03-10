@@ -1,6 +1,6 @@
 export type TOrderItems = {
   product_ref: string;
-  filament_ref: number | undefined;
+  filament_ref: string | undefined;
   description: string;
   quantity: number;
   discount: number;
@@ -10,8 +10,8 @@ export type TOrderItems = {
 };
 export type TOrder = {
   payment_intent_id: string;
-  items_ref: TOrderItems[];
-  shipping_ref?: number;
+  item_refs: TOrderItems[];
+  shipping_ref?: string;
   subtotal: number;
   discount: number;
   shipping: number;

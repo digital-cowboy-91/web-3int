@@ -3,7 +3,7 @@ import { TShipping } from ".";
 
 const base = "/items/shipping";
 
-export default async function readItem(id: number) {
+export default async function readItem(id: string) {
   return await cmsAPI({
     path: base,
     id,

@@ -74,8 +74,6 @@ export default function useStripePaymentHandler() {
       return;
     }
 
-    console.log("Elements", elements);
-
     const { error } = await stripe.confirmPayment({
       elements,
       clientSecret: res.clientSecret,

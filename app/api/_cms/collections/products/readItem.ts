@@ -10,9 +10,9 @@ export default async function readItem(id: string) {
     id,
     params: [
       "fields[]=*",
-      "fields[]=gallery_rel.title",
-      "fields[]=gallery_rel.cover_image",
-      "fields[]=filament_rels.filament_rel.*",
+      "fields[]=gallery_ref.title",
+      "fields[]=gallery_ref.cover_image",
+      "fields[]=filament_refs.filament_ref.*",
     ],
     fetchInit: {
       method: "GET",

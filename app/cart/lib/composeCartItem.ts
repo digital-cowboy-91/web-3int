@@ -6,13 +6,13 @@ import { retrieveFilamentTitle } from "./composeFilamentTitle";
 export function composeCartItem(
   product: TProduct,
   quantity: number = 1,
-  filamentId?: number
+  filamentId?: string
 ) {
   const {
     discounts,
     is_digital,
-    filament_rels,
-    gallery_rel,
+    filament_refs,
+    gallery_ref,
     id,
     price,
     title,
@@ -20,7 +20,7 @@ export function composeCartItem(
   let amounts = calculateItemPrice(price, quantity, discounts);
 
   let filamentTitle = retrieveFilamentTitle(
-    filament_rels.map((rel) => rel.filament_rel),
+    filament_refs.map((rel) => rel.filament_ref),
     filamentId
   );
 
@@ -34,12 +34,12 @@ export function composeCartItem(
   return {
     ...amounts,
     price,
-    cid: gallery_rel.cover_image,
+    cid: gallery_ref.cover_image,
     description,
     is_digital,
     fid: filamentId,
     pid: id,
     qty: quantity,
-    title: gallery_rel.title,
+    title: gallery_ref.title,
   };
 }

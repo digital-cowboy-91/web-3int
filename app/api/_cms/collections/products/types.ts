@@ -10,13 +10,13 @@ export type TProduct = {
   title: string;
   price: number;
   is_digital: boolean;
-  gallery_rel: {
+  gallery_ref: {
     id: string;
     title: string;
     cover_image: string;
   };
-  filament_rels: {
-    filament_rel: TFilament;
+  filament_refs: {
+    filament_ref: TFilament;
   }[];
   colours: string[];
   discounts: TDiscount[] | [];

@@ -44,7 +44,7 @@ export function ButtonDropdown_v2({
   }
 
   return (
-    <div className={"relative " + className}>
+    <div id={id} className={"relative " + className}>
       <button
         className={`px-4 gap-4 w-full font-semibold ${
           isOpen

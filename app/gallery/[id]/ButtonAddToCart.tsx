@@ -8,7 +8,7 @@ import { ReactNode, useEffect, useState } from "react";
 type Props = {
   product: TProduct;
   quantity?: number;
-  filamentId?: number;
+  filamentId?: string;
   children: ReactNode;
   className?: string;
 };

@@ -14,9 +14,9 @@ export default async function readItem(id: string) {
       "fields[]=*.*",
       "fields[]=media.asset.*",
       "fields[]=buying_options.*",
-      "fields[]=buying_options.gallery_rel.title",
-      "fields[]=buying_options.gallery_rel.cover_image",
-      "fields[]=buying_options.filament_rels.filament_rel.*",
+      "fields[]=buying_options.gallery_ref.title",
+      "fields[]=buying_options.gallery_ref.cover_image",
+      "fields[]=buying_options.filament_refs.filament_ref.*",
     ],
     fetchInit: {
       method: "GET",

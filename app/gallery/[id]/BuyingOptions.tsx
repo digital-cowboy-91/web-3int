@@ -9,18 +9,23 @@ import { useState } from "react";
 import ButtonAddToCart from "./ButtonAddToCart";
 import { TProduct } from "@/app/api/_cms/collections/products";
 import asCurrency from "@/app/lib/asCurrency";
+import { composeFilamentTitle } from "@/app/cart/lib/composeFilamentTitle";
 
 export default function BuyingOptions({ products }: { products: TProduct[] }) {
   const [pid, setPid] = useState<string>(products[0].id);
-  const [fid, setFid] = useState<string | null>(null);
+  const [fid, setFid] = useState<string | undefined>(undefined);
 
   const [quantity, setQuantity] = useState(1);
 
   let selectedProduct = products.find((p) => p.id === pid)!;
-  let { id, price, is_digital, filament_rels, discounts } = selectedProduct;
+  let { id, price, is_digital, filament_refs, discounts } = selectedProduct;
 
   let amount = price,
     discount = 0;
+
+  if (filament_refs.length && !fid) {
+    setFid(filament_refs[0].filament_ref.id);
+  }
 
   if (quantity > 1) {
     let calc = calculateItemPrice(price, quantity, discounts);
@@ -45,13 +50,11 @@ export default function BuyingOptions({ products }: { products: TProduct[] }) {
       {!is_digital && (
         <ButtonDropdown_v2
           id="filament"
-          defaultSelected={fid || filament_rels[0].filament_rel.id.toString()}
-          options={filament_rels.map(
-            ({ filament_rel: { id, material, colour, cosmetic } }) => ({
-              option: material + ", " + colour + " " + cosmetic,
-              value: id.toString(),
-            })
-          )}
+          defaultSelected={fid}
+          options={filament_refs.map(({ filament_ref }) => ({
+            option: composeFilamentTitle(filament_ref),
+            value: filament_ref.id,
+          }))}
           onSelect={(value) => setFid(value)}
           className="w-full"
           label="Filament"
@@ -68,7 +71,7 @@ export default function BuyingOptions({ products }: { products: TProduct[] }) {
           <ButtonAddToCart
             product={selectedProduct}
             quantity={quantity}
-            filamentId={fid ? parseInt(fid) : undefined}
+            filamentId={fid}
             className={is_digital ? "ms-auto" : ""}
           >
             <span>{asCurrency(amount)}</span>

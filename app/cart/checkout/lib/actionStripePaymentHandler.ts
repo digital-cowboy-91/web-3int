@@ -11,19 +11,26 @@ const stripe = new Stripe(secret_key);
 
 export async function serverCartRevalidation(
   cartItems: TCartItemSimple[],
-  shippingId: number
+  shippingId: string | undefined
 ) {
   let cartData = await revalidateCart(cartItems);
-  if (!cartData) throw new Error("No revalidation data");
+  if (!cartData) {
+    console.error("No revalidation data");
+    throw new Error("No revalidation data");
+  }
 
   let { cart, products } = cartData;
-  if (!cart || cart.length === 0) throw new Error("Cart is empty");
+  if (!cart || cart.length === 0) {
+    console.error("Cart is empty");
+    throw new Error("Cart is empty");
+  }
 
   let shippingPrice = 0;
-  if (shippingId !== -1) {
+  if (shippingId) {
     let res = await CMSShipping.readItem(shippingId);
 
     if (!res) {
+      console.error("No shipping found");
       throw new Error("No shipping found");
     }
 
@@ -41,7 +48,7 @@ export async function serverCartRevalidation(
 
 export async function actionStripePaymentHandler(
   cartItems: TCartItemSimple[],
-  shippingId: number
+  shippingId: string | undefined
 ) {
   try {
     const { cart, summary } = await serverCartRevalidation(
@@ -67,7 +74,7 @@ export async function actionStripePaymentHandler(
     // TODO: Fix filament ID not being written to DB
     const order_items = {
       discount: summary.discount.value,
-      items_ref: cart.map(
+      item_refs: cart.map(
         ({
           amount,
           description,
@@ -89,7 +96,7 @@ export async function actionStripePaymentHandler(
         })
       ),
       payment_intent_id: id,
-      shipping_ref: shippingId === -1 ? undefined : shippingId,
+      shipping_ref: shippingId,
       shipping: summary.shipping.value,
       subtotal: summary.subtotal.value,
       tax: summary.tax.value,

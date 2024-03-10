@@ -7,15 +7,15 @@ import { TShipping } from "@/app/api/_cms/collections/shipping";
 import asCurrency from "@/app/lib/asCurrency";
 
 type TStore = {
-  id: number;
+  id: string | undefined;
   amount: number;
-  setShipping: (id: number, amount: number) => void;
+  setShipping: (id: string | undefined, amount: number) => void;
 };
 
 export const useShippingStore = create<TStore>((set) => ({
-  id: -1,
+  id: undefined,
   amount: 0,
-  setShipping: (id: number, amount: number) => set({ id, amount }),
+  setShipping: (id, amount) => set({ id, amount }),
 }));
 
 export default function ShippingItems({ methods }: { methods: TShipping[] }) {
@@ -24,33 +24,31 @@ export default function ShippingItems({ methods }: { methods: TShipping[] }) {
 
   const setShipping = useShippingStore((s) => s.setShipping);
 
-  const shippingRequired =
-    cart.findIndex(({ is_digital }) => !is_digital) !== -1;
+  const disabled =
+    !cart.length || cart.findIndex(({ is_digital }) => !is_digital) === -1;
 
   useEffect(() => {
-    setShipping(methods[0].id, methods[0].price);
-  }, []);
-
-  useEffect(() => {
-    if (!shippingRequired) {
-      setShipping(-1, 0);
+    if (disabled) {
+      setShipping(undefined, 0);
+    } else {
+      setShipping(methods[0].id, methods[0].price);
     }
-  }, [shippingRequired]);
+  }, [disabled]);
 
   return methods.map(({ id, title, description, price }, index) => (
     <div key={id} className="grid grid-cols-[1.5rem_minmax(0,_1fr)]">
       <input
         className="size-4 my-auto"
-        id={id.toString()}
+        id={id}
         type="radio"
         name="shipping"
         onChange={(e) => {
           e.currentTarget.checked && setShipping(id, price);
         }}
-        defaultChecked={index === 0}
-        disabled={!shippingRequired || cartStatus !== "open"}
+        defaultChecked={index === 0 && !disabled}
+        disabled={disabled || cartStatus !== "open"}
       />
-      <label className="font-semibold" htmlFor={id.toString()}>
+      <label className="font-semibold" htmlFor={id}>
         {title} · {price ? asCurrency(price) : "Free"}
       </label>
       {description && (

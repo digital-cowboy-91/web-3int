@@ -6,7 +6,7 @@ import { composeCartItem } from "./composeCartItem";
 export type TCartItemSimple = {
   pid: string;
   qty: number;
-  fid?: number;
+  fid?: string;
 };
 
 export async function revalidateCart(

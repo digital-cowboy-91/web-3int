@@ -12,7 +12,7 @@ export type TCartItem = {
   discount_amount: number;
   discount_pct: number;
   is_digital: boolean;
-  fid?: number;
+  fid?: string;
   pid: string;
   price: number;
   qty: number;
@@ -33,12 +33,12 @@ type TStore = {
   addCartItem: (
     product: TProduct,
     quantity?: number,
-    filamentId?: number
+    filamentId?: string
   ) => void;
   updateCartItem: (
     index: number,
     quantity?: number,
-    filamentId?: number
+    filamentId?: string
   ) => void;
   removeCartItem: (index: number) => void;
   revalidateCart: () => Promise<void>;
@@ -63,6 +63,7 @@ export const useCartStore = create<TStore>()(
             _cache: { ..._cache, ...composeCacheObject("product.id", product) },
           });
         },
+
         updateCartItem: (index, quantity, filamentId) => {
           const { cart, _cache } = get();
           const { pid, qty, fid } = cart[index];

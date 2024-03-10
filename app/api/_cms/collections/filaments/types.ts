@@ -1,5 +1,5 @@
 export type TFilament = {
-  id: number;
+  id: string;
   material: string;
   cosmetic: string;
   colour: string;
