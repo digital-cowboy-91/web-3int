@@ -1,7 +1,7 @@
 "use client";
 
+import { TAsset } from "@/app/api/_cms/collections/files";
 import { useEffect, useRef, useState } from "react";
-import { TAsset } from "../api/_cms/collections/files/types";
 
 type Props = {
   asset: TAsset;

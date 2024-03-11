@@ -202,6 +202,7 @@ export default function OrderSummaryEmail({
                       </Column>
                       <Column>
                         {item.product_ref.is_digital && (
+                          //@ts-ignore
                           <Text align="right">
                             <Link
                               href={`${baseUrl}/download/${id}?oiid=${item.id}`}

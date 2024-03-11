@@ -71,7 +71,6 @@ export async function actionStripePaymentHandler(
         "Failed to create payment intent. Please refresh the page and try again."
       );
 
-    // TODO: Fix filament ID not being written to DB
     const order_items = {
       discount: summary.discount.value,
       item_refs: cart.map(

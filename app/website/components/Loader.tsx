@@ -1,5 +1,5 @@
 import { BarLoader } from "react-spinners";
-import config from "../../tailwind.config";
+import config from "@/tailwind.config";
 
 const Loader = () => {
   return (

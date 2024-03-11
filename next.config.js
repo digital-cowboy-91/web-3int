@@ -1,18 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   async rewrites() {
-    if (process.env.NODE_ENV === "production")
-      return [
-        {
-          source: "/*",
-          destination: "/website/*",
-        },
-        {
-          source: "/media/:id*",
-          destination: "http://cms:8055/assets/:id*",
-        },
-      ];
-
     return [
       {
         source: "/",
@@ -20,7 +8,10 @@ const nextConfig = {
       },
       {
         source: "/media/:id*",
-        destination: "https://cms.3int.uk/assets/:id*",
+        destination:
+          process.env.NODE_ENV === "production"
+            ? "http://cms:8055/assets/:id*"
+            : "https://cms.3int.uk/assets/:id*",
       },
       {
         source: "/e/:path*",
