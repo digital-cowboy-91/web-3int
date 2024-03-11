@@ -12,9 +12,6 @@ pipeline {
         WORKDIR = "/services/${PROJECT_NAME}"
         SSH = "${DO_VPS1_USER}@${DO_VPS1_HOST}"
 
-        CMS_PUBLIC_URL="https://cms.3int.uk"
-        WEB_PUBLIC_URL="https://3int.uk"
-        
         // DO
         DO_AUTH_TOKEN = credentials('DO_AUTH_TOKEN')
         DO_CR = credentials('DO_CR')
@@ -33,6 +30,8 @@ pipeline {
         DO_SPACES_B1_REGION = credentials('DO_SPACES_B1_REGION')
         
         // CMS
+        CMS_PUBLIC_URL="https://cms.3int.uk"
+
         CMS_DRAFT_TOKEN = credentials('CMS_DRAFT_TOKEN')
 
         CMS_KEY = credentials('CMS_KEY')
@@ -45,6 +44,8 @@ pipeline {
         CMS_ZEPTOMAIL_TOKEN = credentials('CMS_ZEPTOMAIL_TOKEN')
 
         // WEB
+        WEB_PUBLIC_URL="https://3int.uk"
+
         WEB_RECAPTCHA_SECRET_KEY = credentials('WEB_RECAPTCHA_SECRET_KEY')
         WEB_RECAPTCHA_SITE_KEY = credentials('WEB_RECAPTCHA_SITE_KEY')
 
@@ -153,7 +154,7 @@ EOF
 
                             # WEB
                             WEB_PUBLIC_URL=$WEB_PUBLIC_URL
-                            WEB_STRIEP_PUBLIC_KEY=$WEB_STRIPE_PUBLIC_KEY
+                            WEB_STRIPE_PUBLIC_KEY=$WEB_STRIPE_PUBLIC_KEY
 EOF
 
                         scp -o ControlPath=ctrl-socket ./.temp.env $SSH:$WORKDIR/.env
