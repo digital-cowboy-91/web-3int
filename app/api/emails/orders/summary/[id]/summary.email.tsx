@@ -1,4 +1,4 @@
-import asCurrency from "@/app/website/lib/asCurrency";
+import asCurrency from "@/app/lib/asCurrency";
 import {
   Body,
   Column,
@@ -15,7 +15,6 @@ import {
   Tailwind,
   Text,
 } from "@react-email/components";
-import * as React from "react";
 
 OrderSummaryEmail.PreviewProps = {
   title: "Template Title",

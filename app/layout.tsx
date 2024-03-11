@@ -1,13 +1,34 @@
 import { Poppins } from "next/font/google";
-import { draftMode } from "next/headers";
 import { ReactNode } from "react";
-import PreviewBanner from "./website/components/PreviewBanner";
+import { CMSHomepage } from "./api/_cms/collections/homepage";
+import Footer from "./components/Footer";
+import SectionHero from "./components/Hero/SectionHero";
+import Navbar from "./components/Navbar";
+import ReCaptchaProvider from "./components/ReCaptchaProvider";
+import "./globals.css";
 
 const poppins = Poppins({ subsets: ["latin"], weight: ["400", "600", "700"] });
 
-export default function RootLayout({ children }: { children: ReactNode }) {
-  const { isEnabled } = draftMode();
+export async function generateMetadata() {
+  const res = await CMSHomepage.readSingleton();
 
+  return {
+    title: {
+      template: "%s · " + res.seo.title,
+      default: res.seo.title,
+    },
+    description: res.seo.description,
+    keywords: res.seo.keywords,
+  };
+}
+
+export default function RootLayout({
+  children,
+  modal,
+}: {
+  children: ReactNode;
+  modal: ReactNode;
+}) {
   return (
     <html lang="en">
       <link
@@ -16,8 +37,13 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         sizes="any"
       />
       <body className={`text-sm font-normal relative ${poppins.className}`}>
-        {isEnabled && <PreviewBanner />}
-        {children}
+        <ReCaptchaProvider siteKey={process.env.RECAPTCHA_SITE_KEY!}>
+          <Navbar />
+          <SectionHero />
+          <main>{children}</main>
+          <Footer />
+          {modal}
+        </ReCaptchaProvider>
       </body>
     </html>
   );

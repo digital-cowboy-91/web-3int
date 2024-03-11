@@ -1,7 +1,7 @@
 import { CMSGallery } from "@/app/api/_cms/collections/gallery";
+import GalleryDetail from "@/app/gallery/[id]/GalleryDetail";
 import { notFound } from "next/navigation";
 import Modal from "../../Modal";
-import GalleryDetail from "@/app/website/gallery/[id]/GalleryDetail";
 
 export const dynamic = "force-static";
 
