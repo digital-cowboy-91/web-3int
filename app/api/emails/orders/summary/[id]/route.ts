@@ -32,3 +32,31 @@ export async function GET(
     },
   });
 }
+
+export async function POST(request: Request) {
+  const data = await request.json();
+
+  if (!data) {
+    return new Response("Not found", {
+      status: 404,
+    });
+  }
+
+  console.log(data);
+
+  const html = await renderAsync(
+    OrderSummaryEmail({
+      title: "Order confirmed",
+      subtitle: "Below you will find the summary & download links",
+      preview: "Preview",
+      data,
+    })
+  );
+
+  return new Response(html, {
+    status: 200,
+    headers: {
+      "Content-Type": "text/html",
+    },
+  });
+}
