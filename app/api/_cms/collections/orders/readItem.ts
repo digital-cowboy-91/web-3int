@@ -10,6 +10,7 @@ export default async function readItem(id: string) {
     id,
     params: [
       "fields[]=*",
+      "fields[]=customer_ref.email",
       "fields[]=item_refs.*",
       "fields[]=item_refs.product_ref.is_digital",
       "fields[]=item_refs.product_ref.gallery_ref.title",

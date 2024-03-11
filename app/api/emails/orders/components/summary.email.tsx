@@ -21,7 +21,9 @@ OrderSummaryEmail.PreviewProps = {
   subtitle: "Template Subtitle",
   preview: "Preview",
   data: {
-    customer_ref: "181c4679-9e1a-44c7-b8a7-9ba71f88009a",
+    customer_ref: {
+      email: "b5p8I@example.com",
+    },
     discount: 0,
     id: "770e9d25-cbd8-4386-b174-7a2c02697700",
     order_status: "received",
@@ -57,13 +59,22 @@ OrderSummaryEmail.PreviewProps = {
 
 type TProps = typeof OrderSummaryEmail.PreviewProps;
 
-const baseUrl = "https://3int.uk";
+const base = process.env.WEB_HOST;
 
 export default function OrderSummaryEmail({
   title,
   subtitle,
   preview,
-  data: { discount, id, shipping, subtotal, tax, total, item_refs },
+  data: {
+    discount,
+    id,
+    shipping,
+    subtotal,
+    tax,
+    total,
+    item_refs,
+    customer_ref,
+  },
 }: TProps) {
   const summaryList = [
     { name: "Subtotal", value: subtotal },
@@ -148,11 +159,13 @@ export default function OrderSummaryEmail({
         <Body className={main}>
           <Container className="p-4 md:p-8">
             <Section className={section}>
-              <Img
-                src={`${baseUrl}/media/139473a8-56f1-4fd9-bd09-80bc40a26aba?key=h100`}
-                alt="3INT UK logo"
-                className="w-[100px] object-contain mx-auto"
-              />
+              <Link href={base}>
+                <Img
+                  src={`${base}/media/139473a8-56f1-4fd9-bd09-80bc40a26aba?key=h100`}
+                  alt="3INT UK logo"
+                  className="w-[100px] object-contain mx-auto"
+                />
+              </Link>
               <Text className={`${text} font-semibold text-center`}>
                 3INT UK, your 3D printing service
               </Text>
@@ -174,7 +187,7 @@ export default function OrderSummaryEmail({
                   <Column className="w-[150px]">
                     {item.product_ref.gallery_ref.cover_image ? (
                       <Img
-                        src={`${baseUrl}/media/${item.product_ref.gallery_ref.cover_image}?key=h250`}
+                        src={`${base}/media/${item.product_ref.gallery_ref.cover_image}?key=h250`}
                         alt={item.product_ref.gallery_ref.title}
                         className="w-[150px] object-contain me-4 md:me-8"
                       />
@@ -204,9 +217,7 @@ export default function OrderSummaryEmail({
                         {item.product_ref.is_digital && (
                           //@ts-ignore
                           <Text align="right">
-                            <Link
-                              href={`${baseUrl}/download/${id}?oiid=${item.id}`}
-                            >
+                            <Link href={`${base}/d/${id}/${item.id}`}>
                               Download
                             </Link>
                           </Text>
@@ -240,24 +251,24 @@ export default function OrderSummaryEmail({
                 </Row>
               ))}
             </Section>
-            <Section className={`${section} text-center`}>
+            <Section className={`${section}`}>
               <Text className="text-xs">
-                You've received this email as it contains important information
-                about your recent order. To ensure you receive essential order
-                updates, you'll continue to get emails like this one.
+                1. Trouble seeing this email?{" "}
+                <Link href={`${base}/o/summary/${id}`}>
+                  View it in your browser
+                </Link>
               </Text>
               <Text className="text-xs">
-                If you have encountered any issues with your order, please
+                2. You've received this email as it contains important
+                information about your recent order. To ensure you receive
+                essential order updates, you'll continue to get emails like this
+                one.
+              </Text>
+              <Text className="text-xs">
+                3. If you have encountered any issues with your order, please
                 contact us at{" "}
                 <Link href="mailto:info@3int.uk">info@3int.uk</Link> or{" "}
                 <Link href="tel:+447123456789">+44 (0)7 123 456 789</Link>.
-              </Text>
-              <Text className="text-xs">Thank you for your business! </Text>
-              <Text className="text-xs">
-                Sincerely,{" "}
-                <Link href={baseUrl} className="text-xs font-semibold">
-                  3INT UK
-                </Link>
               </Text>
             </Section>
           </Container>

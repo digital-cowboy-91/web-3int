@@ -14,6 +14,7 @@ type TArgs = {
   draftMode?: boolean;
   addSecret?: boolean;
   fetchInit: RequestInit;
+  responseAsIs?: boolean;
 };
 
 export default async function cmsAPI({
@@ -23,6 +24,7 @@ export default async function cmsAPI({
   draftMode = false,
   addSecret = false,
   fetchInit,
+  responseAsIs = false,
 }: TArgs): Promise<TResponse> {
   try {
     // Add token to params
@@ -40,15 +42,21 @@ export default async function cmsAPI({
       throw new Error(`[cms_API] Status ${res.status}: ${res.statusText}`);
     }
     // Parse response
-    let data = res.statusText === "No Content" ? {} : await res.json();
+    let data;
 
+    if (responseAsIs) {
+      data = res;
+    } else {
+      let json = res.statusText === "No Content" ? {} : await res.json();
+      data = json?.data || json;
+    }
+    // Return
     return {
-      data: data?.data || data,
+      data,
       status: res.status,
       statusText: res.statusText,
     };
   } catch (err: any) {
-    console.error(err.message);
     throw new Error(err.message);
   }
 }

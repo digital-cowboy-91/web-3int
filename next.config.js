@@ -9,10 +9,18 @@ const nextConfig = {
             ? "http://cms:8055/assets/:id*"
             : "https://cms.3int.uk/assets/:id*",
       },
-      // {
-      //   source: "/e/:path*",
-      //   destination: "/emails/:path*",
-      // },
+      {
+        source: "/o/:path*",
+        destination: "/api/emails/orders/:path*",
+      },
+      {
+        source: "/d/:id",
+        destination: "/api/download/:id",
+      },
+      {
+        source: "/d/:id/:oiid",
+        destination: "/api/download/:id/:oiid",
+      },
     ];
   },
   typescript: {

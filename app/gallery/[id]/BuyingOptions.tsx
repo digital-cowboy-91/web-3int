@@ -80,7 +80,7 @@ export default function BuyingOptions({ products }: { products: TProduct[] }) {
         ) : (
           <a
             className={`link-outline-success ${is_digital ? "ms-auto" : ""}`}
-            href={"/api/download?pid=" + id}
+            href={"/d/" + id}
             download
           >
             <span>Free</span>
