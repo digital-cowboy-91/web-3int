@@ -13,7 +13,7 @@ services:
 
       PUBLIC_URL: ${CMS_PUBLIC_URL}
       WEB_PUBLIC_URL: ${WEB_PUBLIC_URL}
-      WEB_HOST: web:3000
+      WEB_HOST: http://web:3000
 
       # DB_CLIENT: ${DB_CLIENT}
       # DB_HOST: ${DB_HOST}
@@ -63,7 +63,7 @@ services:
     restart: always
     environment:
       PROJECT_KEY: ${PROJECT_KEY}
-      CMS_HOST: cms:8055
+      CMS_HOST: http://cms:8055
       CMS_DRAFT_TOKEN: ${CMS_DRAFT_TOKEN}
       NEXT_PUBLIC_WEB_HOST: ${WEB_PUBLIC_URL}
       NEXT_PUBLIC_STRIPE_PUBLIC_KEY: ${WEB_STRIPE_PUBLIC_KEY}

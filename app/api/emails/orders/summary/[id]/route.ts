@@ -8,13 +8,21 @@ export async function GET(
     params: { id: string };
   }
 ) {
-  const data = await CMSOrders.readItem(context.params.id);
+  const id = context.params.id;
+
+  console.log(`[ORDER SUMMARY] GET request for order ${id}`);
+
+  const data = await CMSOrders.readItem(id);
+  console.log("[ORDER SUMMARY] Order data", data);
 
   if (!data) {
+    console.log(`[ORDER SUMMARY] Order ${id} not found`);
     return new Response("Not found", {
       status: 404,
     });
   }
+
+  console.log(`[ORDER SUMMARY] Order ${id} found, rendering template`);
 
   const html = await renderAsync(
     OrderSummaryEmail({
@@ -24,6 +32,8 @@ export async function GET(
       data,
     })
   );
+
+  console.log(`[ORDER SUMMARY] Order ${id} template rendered`);
 
   return new Response(html, {
     status: 200,
@@ -37,12 +47,13 @@ export async function POST(request: Request) {
   const data = await request.json();
 
   if (!data) {
+    console.log("[ORDER SUMMARY] Order not found");
     return new Response("Not found", {
       status: 404,
     });
   }
 
-  console.log(data);
+  console.log(`[ORDER SUMMARY] Order received`, data);
 
   const html = await renderAsync(
     OrderSummaryEmail({
@@ -52,6 +63,8 @@ export async function POST(request: Request) {
       data,
     })
   );
+
+  console.log(`[ORDER SUMMARY] Order template rendered`);
 
   return new Response(html, {
     status: 200,
