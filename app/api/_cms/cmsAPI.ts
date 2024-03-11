@@ -7,26 +7,39 @@ type TResponse = {
   statusText: string;
 };
 
-export default async function cmsAPI(
-  path: string,
-  init: RequestInit,
-  draftMode: boolean = false,
-  addSecret: boolean = false
-): Promise<TResponse> {
+type TArgs = {
+  path: string;
+  id?: string | number;
+  params?: string[];
+  draftMode?: boolean;
+  addSecret?: boolean;
+  fetchInit: RequestInit;
+};
+
+export default async function cmsAPI({
+  path,
+  id,
+  params = [],
+  draftMode = false,
+  addSecret = false,
+  fetchInit,
+}: TArgs): Promise<TResponse> {
   try {
-    const res = await fetch(
+    // Add token to params
+    if (addSecret || draftMode) params.push(`access_token=${draftToken}`);
+    // Compose API URL
+    const url =
       base +
-        path +
-        (draftMode || addSecret ? `&access_token=${draftToken}` : ""),
-      init
-    );
-
+      path +
+      (id ? `/${id}` : "") +
+      (params.length ? `?${params.join("&")}` : "");
+    // Call API
+    const res = await fetch(url, fetchInit);
+    // Check for errors
     if (!res.ok) {
-      throw new Error(
-        `CMS API request failed with status ${res.status}: ${res.statusText}`
-      );
+      throw new Error(`[cms_API] Status ${res.status}: ${res.statusText}`);
     }
-
+    // Parse response
     let data = res.statusText === "No Content" ? {} : await res.json();
 
     return {
@@ -34,13 +47,8 @@ export default async function cmsAPI(
       status: res.status,
       statusText: res.statusText,
     };
-  } catch (err) {
-    console.log(`CMS API fetch failed: ${err}`);
-
-    return {
-      data: null,
-      status: 500,
-      statusText: "Internal Server Error",
-    };
+  } catch (err: any) {
+    console.error(err.message);
+    throw new Error(err.message);
   }
 }

@@ -1,0 +1,256 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-hex: #ebebeb;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 0, 0, 0;
+    --background-hex: #ebebeb;
+  }
+}
+
+@layer base {
+  h1,
+  h2,
+  h3,
+  a {
+    @apply font-semibold;
+  }
+  h1 {
+    @apply text-xl;
+  }
+  h2 {
+    @apply text-xl;
+  }
+  h3 {
+    @apply text-base;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: var(--background-hex);
+}
+
+/* TODO: Refactor section style and usage across all components */
+
+/* section > div {
+  @apply container relative my-8;
+} */
+
+.underline {
+  width: 100%;
+  height: 0.25rem;
+  border-radius: 2px;
+  position: absolute;
+  bottom: -0.3rem;
+  background-color: #fff;
+}
+
+.modal-lockdown {
+  overflow: hidden;
+  @apply scroll-bar-compensation;
+}
+
+.scroll-bar-compensation {
+  @media (min-width: 768px) {
+    padding-right: 17px;
+  }
+}
+
+#page_content {
+  h1,
+  h2,
+  h3,
+  p,
+  ul,
+  table {
+    @apply mb-4;
+  }
+  p,
+  ul,
+  table {
+    @apply ms-8;
+  }
+  a {
+    @apply text-primary border-transparent uppercase duration-300 hover:border-current;
+  }
+  table {
+    @apply border border-grey-light w-full;
+  }
+  td {
+    @apply px-2 py-1;
+  }
+}
+
+/* START: BTN & LINK */
+.btn {
+  @apply flex items-center gap-4 px-4 py-2 font-semibold uppercase transition-all;
+
+  &--outline {
+    @apply rounded-full border-2;
+
+    &--success {
+      @apply border-green-600;
+
+      &--link:hover {
+        @apply bg-green-600 text-white;
+      }
+
+      &:enabled:hover {
+        @apply bg-green-600 text-white;
+      }
+    }
+
+    &--action {
+      @apply border-yellow-400;
+
+      &:enabled:hover {
+        @apply bg-yellow-400 text-dark;
+      }
+    }
+
+    &:disabled {
+      @apply cursor-not-allowed text-grey border-grey;
+    }
+  }
+
+  &--underline {
+    @apply border-y-2 border-transparent;
+
+    &--action {
+      &:enabled:hover {
+        @apply border-b-yellow-400;
+      }
+    }
+
+    &--white--link {
+      @apply text-white;
+
+      &:hover {
+        @apply border-b-white;
+      }
+    }
+
+    &:disabled {
+      @apply cursor-not-allowed text-grey;
+    }
+  }
+}
+
+/* BTN & LINK > WHITE */
+.link-underline-white {
+  @apply btn btn--underline btn--underline--white--link;
+}
+
+/* BTN & LINK > ACTION */
+.btn-outline-action {
+  @apply btn btn--outline btn--outline--action;
+}
+
+.btn-underline-action {
+  @apply btn btn--underline btn--underline--action;
+}
+
+/* BTN & LINK > SUCCESS */
+.btn-outline-success {
+  @apply btn btn--outline btn--outline--success;
+}
+
+.link-outline-success {
+  @apply btn btn--outline btn--outline--success btn--outline--success--link;
+}
+/* END: BTN & LINK */
+
+/* START: CART */
+.cart {
+  &--wrapper {
+    @apply grid lg:grid-cols-[66%_34%];
+  }
+
+  &--items {
+    @apply grid grid-cols-[100px_1fr] sm:grid-cols-[100px_1fr_80px_70px] grid-flow-row auto-rows-min gap-4 p-4;
+
+    &--row {
+      @apply relative col-span-2 sm:col-span-4 grid grid-cols-subgrid gap-4 p-4 rounded-md bg-white shadow-sm;
+
+      & > * {
+        @apply flex items-center gap-2;
+      }
+
+      .image > img {
+        @apply object-cover;
+      }
+
+      .detail {
+        @apply flex-col justify-center items-start;
+        & > span:first-child {
+          @apply font-semibold;
+        }
+        & > span:last-child {
+          @apply text-xs;
+        }
+      }
+      .quantity {
+        @apply justify-between gap-2;
+      }
+      .total {
+        @apply justify-end sm:justify-center font-semibold;
+      }
+      .discount {
+        @apply absolute -right-2 -top-2 px-2 py-1 bg-error text-white text-2xs rounded-full;
+      }
+    }
+  }
+
+  &--summary {
+    @apply mx-4 mt-4 p-8 grid grid-cols-1 gap-8 rounded-[2rem] bg-success-light shadow;
+    /* SM */
+    @apply sm:grid-cols-[1fr_250px];
+    /* LG */
+    @apply lg:mt-0 lg:grid-cols-1 lg:mb-auto;
+
+    /* Neomorphic shadow: https://neumorphism.io */
+    /* & {
+      box-shadow: 3px 3px 10px #aaaaaa, -3px -3px 10px #ffffff;
+    } */
+
+    & > * {
+      @apply space-y-8;
+
+      button {
+        /* @apply btn-outline-success w-full justify-center; */
+        /* SM, LG */
+        /* @apply sm:col-start-2 lg:col-auto; */
+      }
+
+      a {
+        /* @apply link-outline-success w-full justify-center; */
+        /* SM, LG */
+        /* @apply sm:col-start-2 lg:col-auto; */
+      }
+    }
+
+    .summaries {
+      @apply space-y-2;
+      & > div {
+        @apply flex justify-between;
+        & > span:last-child {
+          @apply font-semibold;
+        }
+        &:last-child {
+          @apply pt-6  font-semibold text-primary;
+        }
+      }
+    }
+  }
+}
