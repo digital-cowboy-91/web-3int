@@ -3,7 +3,7 @@ name: ${PROJECT_NAME}
 services:
   cms:
     container_name: ${PROJECT_NAME}-cms
-    image: directus/directus:10.9.2
+    image: directus/directus:10.10.2
     restart: always
     environment:
       PROJECT_KEY: ${PROJECT_KEY}
