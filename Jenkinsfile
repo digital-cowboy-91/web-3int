@@ -45,12 +45,11 @@ pipeline {
         CMS_ZEPTOMAIL_TOKEN = credentials('CMS_ZEPTOMAIL_TOKEN')
 
         // WEB
-        REVOLUT_MERCHANT_HOST = credentials('REVOLUT_MERCHANT_HOST')
-        REVOLUT_MERCHANT_SECRET = credentials('REVOLUT_MERCHANT_SECRET')
-        
-        WEB_MONGO_URL = credentials('WEB_MONGO_URL')
         WEB_RECAPTCHA_SECRET_KEY = credentials('WEB_RECAPTCHA_SECRET_KEY')
         WEB_RECAPTCHA_SITE_KEY = credentials('WEB_RECAPTCHA_SITE_KEY')
+
+        WEB_STRIPE_PUBLIC_KEY = credentials('WEB_STRIPE_PUBLIC_KEY')
+        WEB_STRIPE_SECRET_KEY = credentials('WEB_STRIPE_SECRET_KEY')
     }
     stages {
         stage('Build') {
@@ -60,11 +59,9 @@ pipeline {
                     docker build \
                         -t $DO_CR_IMAGE:$COMMIT \
                         -t $DO_CR_IMAGE:latest \
-                        --build-arg MONGO_URL="$WEB_MONGO_URL" \
                         --build-arg RECAPTCHA_SECRET_KEY="$WEB_RECAPTCHA_SECRET_KEY" \
                         --build-arg RECAPTCHA_SITE_KEY="$WEB_RECAPTCHA_SITE_KEY" \
-                        --build-arg REVOLUT_MERCHANT_HOST="$REVOLUT_MERCHANT_HOST" \
-                        --build-arg REVOLUT_MERCHANT_SECRET="$REVOLUT_MERCHANT_SECRET" \
+                        --build-arg STRIPE_SECRET_KEY="$WEB_STRIPE_SECRET_KEY" \
                         .
                 '''
             }
@@ -156,11 +153,7 @@ EOF
 
                             # WEB
                             WEB_PUBLIC_URL=$WEB_PUBLIC_URL
-
-                            # REVOLUT
-                            REVOLUT_MERCHANT_HOST=$REVOLUT_MERCHANT_HOST
-                            REVOLUT_MERCHANT_SECRET=$REVOLUT_MERCHANT_SECRET
-                            REVOLUT_MERCHANT_MODE=prod
+                            WEB_STRIEP_PUBLIC_KEY=$WEB_STRIPE_PUBLIC_KEY
 EOF
 
                         scp -o ControlPath=ctrl-socket ./.temp.env $SSH:$WORKDIR/.env
