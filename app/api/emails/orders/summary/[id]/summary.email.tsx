@@ -112,6 +112,7 @@ export default function OrderSummaryEmail({
           },
         }}
       >
+        <head />
         <Head>
           <Font
             fontFamily="Poppins"
