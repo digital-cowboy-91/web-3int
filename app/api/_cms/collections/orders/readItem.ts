@@ -17,9 +17,10 @@ export default async function readItem(id: string) {
     ],
     fetchInit: {
       method: "GET",
-      next: {
-        revalidate: isDraft ? 0 : 60 * 60 * 24,
-      },
+      cache: "no-store",
+      // next: {
+      //   revalidate: isDraft ? 0 : 60 * 60 * 24,
+      // },
     },
     addSecret: true,
   }).then((res) => res.data);
