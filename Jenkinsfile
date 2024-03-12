@@ -66,7 +66,7 @@ pipeline {
                     docker build \
                         -t $DO_CR_IMAGE:$_COMMIT \
                         -t $DO_CR_IMAGE:latest \
-                        --build-arg CMS_DOCKER_URL="https//$CMS_DOMAIN" \
+                        --build-arg CMS_DOCKER_URL="https://$CMS_DOMAIN" \
                         --build-arg WEB_DOCKER_URL="$WEB_DOCKER_URL" \
                         --build-arg RECAPTCHA_SECRET_KEY="$RECAPTCHA_SECRET_KEY" \
                         --build-arg RECAPTCHA_SITE_KEY="$RECAPTCHA_SITE_KEY" \
