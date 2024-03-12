@@ -1,8 +1,8 @@
 // @ts-ignore
 import { SendMailClient } from "zeptomail";
 
-const url = process.env.EMAIL_ZEPTO_URL;
-const token = process.env.EMAIL_ZEPTO_SECRET;
+const url = process.env.ZEPTOMAIL_URL;
+const token = process.env.ZEPTOMAIL_SECRET_KEY;
 const client = new SendMailClient({ url, token });
 
 type TAccount = {

@@ -8,11 +8,12 @@ pipeline {
     environment {
         // PROJECT
         PROJECT_NAME = "web3int"
-        COMMIT = "${sh(script: "echo $GIT_COMMIT | head -c7", returnStdout: true).trim()}"
-        WORKDIR = "/services/${PROJECT_NAME}"
-        SSH = "${DO_VPS1_USER}@${DO_VPS1_HOST}"
 
-        // DO
+        _COMMIT = "${sh(script: "echo $GIT_COMMIT | head -c7", returnStdout: true).trim()}"
+        _WORKDIR = "/services/${PROJECT_NAME}"
+        _SSH = "${DO_VPS1_USER}@${DO_VPS1_HOST}"
+
+        // Digital Ocean
         DO_AUTH_TOKEN = credentials('DO_AUTH_TOKEN')
         DO_CR = credentials('DO_CR')
         DO_CR_IMAGE = "${DO_CR}/${PROJECT_NAME}"
@@ -30,27 +31,32 @@ pipeline {
         DO_SPACES_B1_REGION = credentials('DO_SPACES_B1_REGION')
         
         // CMS
-        CMS_PUBLIC_URL="https://cms.3int.uk"
-
-        CMS_DRAFT_TOKEN = credentials('CMS_DRAFT_TOKEN')
+        CMS_DOCKER_URL = credentials('CMS_DOCKER_URL')
+        CMS_DOMAIN = credentials('CMS_DOMAIN')
+        CMS_PUBLIC_URL =  "https://${CMS_DOMAIN}"
 
         CMS_KEY = credentials('CMS_KEY')
         CMS_SECRET = credentials('CMS_SECRET')
 
-        CMS_ADMIN_EMAIL = "dev@uniss.uk"
-        CMS_ADMIN_PASSWORD = "Init123*"
+        CMS_DRAFT_TOKEN = credentials('CMS_DRAFT_TOKEN')
 
-        CMS_ZEPTOMAIL_URL = credentials('CMS_ZEPTOMAIL_URL')
-        CMS_ZEPTOMAIL_TOKEN = credentials('CMS_ZEPTOMAIL_TOKEN')
+        CMS_ADMIN_EMAIL = credentials('CMS_ADMIN_EMAIL')
+        CMS_ADMIN_PASSWORD = credentials('CMS_ADMIN_PASSWORD')
 
         // WEB
-        WEB_PUBLIC_URL="https://3int.uk"
+        WEB_DOCKER_URL = credentials('WEB_DOCKER_URL')
+        WEB_DOMAIN = credentials('WEB_DOMAIN')
+        WEB_PUBLIC_URL = "https://${WEB_DOMAIN}"
 
-        WEB_RECAPTCHA_SECRET_KEY = credentials('WEB_RECAPTCHA_SECRET_KEY')
-        WEB_RECAPTCHA_SITE_KEY = credentials('WEB_RECAPTCHA_SITE_KEY')
+        // Services
+        RECAPTCHA_SECRET_KEY = credentials('RECAPTCHA_SECRET_KEY')
+        RECAPTCHA_SITE_KEY = credentials('RECAPTCHA_SITE_KEY')
 
-        WEB_STRIPE_PUBLIC_KEY = credentials('WEB_STRIPE_PUBLIC_KEY')
-        WEB_STRIPE_SECRET_KEY = credentials('WEB_STRIPE_SECRET_KEY')
+        STRIPE_PUBLIC_KEY = credentials('STRIPE_PUBLIC_KEY')
+        STRIPE_SECRET_KEY = credentials('STRIPE_SECRET_KEY')
+
+        ZEPTOMAIL_URL = credentials('ZEPTOMAIL_URL')
+        ZEPTOMAIL_SECRET_KEY = credentials('ZEPTOMAIL_SECRET_KEY')
     }
     stages {
         stage('Build') {
@@ -58,11 +64,14 @@ pipeline {
                 echo 'Build docker image'
                 sh '''
                     docker build \
-                        -t $DO_CR_IMAGE:$COMMIT \
+                        -t $DO_CR_IMAGE:$_COMMIT \
                         -t $DO_CR_IMAGE:latest \
-                        --build-arg RECAPTCHA_SECRET_KEY="$WEB_RECAPTCHA_SECRET_KEY" \
-                        --build-arg RECAPTCHA_SITE_KEY="$WEB_RECAPTCHA_SITE_KEY" \
-                        --build-arg STRIPE_SECRET_KEY="$WEB_STRIPE_SECRET_KEY" \
+                        --build-arg CMS_DOCKER_URL="https//$CMS_DOMAIN" \
+                        --build-arg WEB_DOCKER_URL="$WEB_DOCKER_URL" \
+                        --build-arg RECAPTCHA_SECRET_KEY="$RECAPTCHA_SECRET_KEY" \
+                        --build-arg RECAPTCHA_SITE_KEY="$RECAPTCHA_SITE_KEY" \
+                        --build-arg STRIPE_SECRET_KEY="$STRIPE_SECRET_KEY" \
+                        --build-arg ZEPTOMAIL_SECRET_KEY="$ZEPTOMAIL_SECRET_KEY" \
                         .
                 '''
             }
@@ -78,7 +87,7 @@ pipeline {
                 echo 'Push image to DOCR'
                 sh '''
                     doctl registry login --expiry-seconds 300
-                    docker push $DO_CR_IMAGE:$COMMIT
+                    docker push $DO_CR_IMAGE:$_COMMIT
                     docker push $DO_CR_IMAGE:latest
                 '''
             }
@@ -92,17 +101,17 @@ pipeline {
                             -o ControlPersist=10 \
                             -o ControlPath=ctrl-socket \
                             -o StrictHostKeyChecking=no \
-                            $SSH true
+                            $_SSH true
 '''
                     sh ''' # (re)Create workdir structure
-                        ssh -S ctrl-socket -T $SSH <<-EOF
-                            mkdir -p $WORKDIR
-                            mkdir -p $WORKDIR/persist
+                        ssh -S ctrl-socket -T $_SSH <<-EOF
+                            mkdir -p $_WORKDIR
+                            mkdir -p $_WORKDIR/persist
 EOF
 '''
                     sh ''' # Stop existing stack
-                        ssh -S ctrl-socket -T $SSH <<-EOF
-                            cd $WORKDIR
+                        ssh -S ctrl-socket -T $_SSH <<-EOF
+                            cd $_WORKDIR
 
                             if [ -f "docker-compose.yml" ] \
                             && [ -f ".env" ]; then
@@ -111,58 +120,58 @@ EOF
 EOF
 '''
                     sh ''' # Clear directory
-                        ssh -S ctrl-socket -T $SSH <<-EOF
-                            cd $WORKDIR
+                        ssh -S ctrl-socket -T $_SSH <<-EOF
+                            cd $_WORKDIR
 
                             find . -mindepth 1 -not -name 'persist' -not -path './persist/*' -exec rm -rf {} +
 
 EOF
 '''
                     sh ''' # Transfer compose file
-                        scp -o ControlPath=ctrl-socket ./dc.prod.yml $SSH:$WORKDIR/docker-compose.yml
+                        scp -o ControlPath=ctrl-socket ./dc.prod.yml $_SSH:$_WORKDIR/docker-compose.yml
 '''
                     sh ''' # Generate and transfer .env file
                         cat <<-EOF > .temp.env
-                            # Project
-                            PROJECT_NAME=$PROJECT_NAME
-                            WORKDIR=$WORKDIR
-                            PROJECT_KEY=$GIT_COMMIT
+# Project
+PROJECT_NAME=$PROJECT_NAME
+WORKDIR=$_WORKDIR
+PROJECT_KEY=$GIT_COMMIT
 
-                            # DO
-                            DO_CR_IMAGE=$DO_CR_IMAGE
-                            
-                            DO_SPACES_B1_KEY=$DO_SPACES_B1_KEY
-                            DO_SPACES_B1_SECRET=$DO_SPACES_B1_SECRET
-                            DO_SPACES_B1_ENDPOINT=$DO_SPACES_B1_ENDPOINT/$PROJECT_NAME
-                            DO_SPACES_B1_BUCKET=$DO_SPACES_B1_BUCKET
-                            DO_SPACES_B1_REGION=$DO_SPACES_B1_REGION
+# DO
+DO_CR_IMAGE=$DO_CR_IMAGE
 
-                            # CMS
-                            CMS_PUBLIC_URL=$CMS_PUBLIC_URL
-                            CMS_DRAFT_TOKEN=$CMS_DRAFT_TOKEN
+DO_SPACES_B1_KEY=$DO_SPACES_B1_KEY
+DO_SPACES_B1_SECRET=$DO_SPACES_B1_SECRET
+DO_SPACES_B1_ENDPOINT=$DO_SPACES_B1_ENDPOINT/$PROJECT_NAME
+DO_SPACES_B1_BUCKET=$DO_SPACES_B1_BUCKET
+DO_SPACES_B1_REGION=$DO_SPACES_B1_REGION
 
-                            KEY=$CMS_KEY
-                            SECRET=$CMS_SECRET
+# CMS
+CMS_DOMAIN=$CMS_DOMAIN
+CMS_DRAFT_TOKEN=$CMS_DRAFT_TOKEN
 
-                            ADMIN_EMAIL=$CMS_ADMIN_EMAIL
-                            ADMIN_PASSWORD=$CMS_ADMIN_PASSWORD
+CMS_KEY=$CMS_KEY
+CMS_SECRET=$CMS_SECRET
 
-                            ZEPTOMAIL_URL=$CMS_ZEPTOMAIL_URL
-                            ZEPTOMAIL_TOKEN=$CMS_ZEPTOMAIL_TOKEN
+CMS_ADMIN_EMAIL=$CMS_ADMIN_EMAIL
+CMS_ADMIN_PASSWORD=$CMS_ADMIN_PASSWORD
 
-                            CMS_FRAME_SRC=$WEB_PUBLIC_URL
+# WEB
+WEB_DOCKER_URL=$WEB_DOCKER_URL
+WEB_DOMAIN=$WEB_DOMAIN
 
-                            # WEB
-                            WEB_PUBLIC_URL=$WEB_PUBLIC_URL
-                            WEB_STRIPE_PUBLIC_KEY=$WEB_STRIPE_PUBLIC_KEY
+# Services
+STRIPE_PUBLIC_KEY=$STRIPE_PUBLIC_KEY
+ZEPTOMAIL_URL=$ZEPTOMAIL_URL
+
 EOF
 
-                        scp -o ControlPath=ctrl-socket ./.temp.env $SSH:$WORKDIR/.env
+                        scp -o ControlPath=ctrl-socket ./.temp.env $_SSH:$_WORKDIR/.env
                         rm ./.temp.env
 '''
                     sh ''' # Download extensions
-                        ssh -S ctrl-socket -T $SSH <<-EOF
-                            cd $WORKDIR
+                        ssh -S ctrl-socket -T $_SSH <<-EOF
+                            cd $_WORKDIR
 
                             mkdir -p extensions && cd extensions
 
@@ -172,8 +181,8 @@ EOF
 EOF
 '''
                     sh ''' # Compose stack
-                        ssh -S ctrl-socket -T $SSH <<-EOF
-                            cd $WORKDIR
+                        ssh -S ctrl-socket -T $_SSH <<-EOF
+                            cd $_WORKDIR
 
                             doctl auth init -t $DO_AUTH_TOKEN
                             doctl registry login --expiry-seconds 100
@@ -184,7 +193,7 @@ EOF
 EOF
 '''
                     sh ''' # Close master SSH connection
-                        ssh -S ctrl-socket -O exit $SSH
+                        ssh -S ctrl-socket -O exit $_SSH
 '''
                 }
             }

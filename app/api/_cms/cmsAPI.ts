@@ -1,4 +1,4 @@
-const base = process.env.CMS_HOST;
+const base = process.env.CMS_DOCKER_URL;
 const draftToken = process.env.CMS_DRAFT_TOKEN;
 
 type TResponse = {

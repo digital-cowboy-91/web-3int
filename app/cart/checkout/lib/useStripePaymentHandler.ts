@@ -8,7 +8,7 @@ import { useCartStore } from "../../components/Cart.store";
 import { useShippingStore } from "../../components/ShippingItems";
 import { actionStripePaymentHandler } from "./actionStripePaymentHandler";
 
-const host = process.env.NEXT_PUBLIC_WEB_HOST;
+const host = process.env.NEXT_PUBLIC__WEB_PUBLIC_URL;
 export default function useStripePaymentHandler() {
   const router = useRouter();
 

@@ -59,7 +59,7 @@ OrderSummaryEmail.PreviewProps = {
 
 type TProps = typeof OrderSummaryEmail.PreviewProps;
 
-const base = process.env.WEB_HOST;
+const base = process.env.WEB_PUBLIC_URL;
 
 export default function OrderSummaryEmail({
   title,

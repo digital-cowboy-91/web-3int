@@ -4,7 +4,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { ReactNode } from "react";
 
-const pub_key = process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY!;
+const pub_key = process.env.NEXT_PUBLIC__STRIPE_PUBLIC_KEY!;
 const stripePromise = loadStripe(pub_key);
 
 export default function StripeWrapper({ children }: { children: ReactNode }) {
