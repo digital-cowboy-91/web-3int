@@ -31,8 +31,8 @@ pipeline {
         DO_SPACES_B1_REGION = credentials('DO_SPACES_B1_REGION')
         
         // CMS
-        CMS_DOCKER_URL = credentials('CMS_DOCKER_URL')
-        CMS_DOMAIN = credentials('CMS_DOMAIN')
+        CMS_DOCKER_URL = "http://cms:8055"
+        CMS_DOMAIN = "cms.3int.uk"
         CMS_PUBLIC_URL =  "https://${CMS_DOMAIN}"
 
         CMS_KEY = credentials('CMS_KEY')
@@ -40,12 +40,12 @@ pipeline {
 
         CMS_DRAFT_TOKEN = credentials('CMS_DRAFT_TOKEN')
 
-        CMS_ADMIN_EMAIL = credentials('CMS_ADMIN_EMAIL')
+        CMS_ADMIN_EMAIL = "dev@dcb.uk"
         CMS_ADMIN_PASSWORD = credentials('CMS_ADMIN_PASSWORD')
 
         // WEB
-        WEB_DOCKER_URL = credentials('WEB_DOCKER_URL')
-        WEB_DOMAIN = credentials('WEB_DOMAIN')
+        WEB_DOCKER_URL = "http://web:3000"
+        WEB_DOMAIN = "3int.uk"
         WEB_PUBLIC_URL = "https://${WEB_DOMAIN}"
 
         // Services
