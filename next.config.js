@@ -10,8 +10,8 @@ const nextConfig = {
             : "https://cms.3int.uk/assets/:id*",
       },
       {
-        source: "/o/:path*",
-        destination: "/api/emails/orders/:path*",
+        source: "/e/:id",
+        destination: "/api/emails/:id",
       },
       {
         source: "/d/:id",

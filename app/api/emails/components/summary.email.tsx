@@ -17,6 +17,7 @@ import {
 } from "@react-email/components";
 
 OrderSummaryEmail.PreviewProps = {
+  emailId: "770e9d25-cbd8-4386-b174-7a2c02697700",
   title: "Template Title",
   subtitle: "Template Subtitle",
   preview: "Preview",
@@ -62,6 +63,7 @@ type TProps = typeof OrderSummaryEmail.PreviewProps;
 const base = process.env.WEB_PUBLIC_URL;
 
 export default function OrderSummaryEmail({
+  emailId,
   title,
   subtitle,
   preview,
@@ -122,7 +124,13 @@ export default function OrderSummaryEmail({
           },
         }}
       >
-        <head />
+        <head>
+          <link
+            rel="icon"
+            href="/media/139473a8-56f1-4fd9-bd09-80bc40a26aba/favicon.svg"
+            sizes="any"
+          />
+        </head>
         <Head>
           <Font
             fontFamily="Poppins"
@@ -254,7 +262,7 @@ export default function OrderSummaryEmail({
             <Section className={`${section}`}>
               <Text className="text-xs">
                 1. Trouble seeing this email?{" "}
-                <Link href={`${base}/o/summary/${id}`}>
+                <Link href={`${base}/e/${emailId}`}>
                   View it in your browser
                 </Link>
               </Text>
