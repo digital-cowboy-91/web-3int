@@ -54,11 +54,16 @@ services:
     restart: always
     environment:
       PROJECT_KEY: ${PROJECT_KEY}
+
       CMS_DOCKER_URL: ${CMS_DOCKER_URL}
-      CMS_PUBLIC_URL: https://${CMS_DOMAIN}
+      CMS_PUBLIC_URL: ${CMS_PUBLIC_URL}
       CMS_DRAFT_TOKEN: ${CMS_DRAFT_TOKEN}
+
+      WEB_PUBLIC_URL: ${WEB_PUBLIC_URL}
+
       ZEPTOMAIL_URL: ${ZEPTOMAIL_URL}
-      NEXT_PUBLIC__WEB_PUBLIC_URL: https://${WEB_DOMAIN}
+
+      NEXT_PUBLIC__WEB_PUBLIC_URL: ${WEB_PUBLIC_URL}
       NEXT_PUBLIC__STRIPE_PUBLIC_KEY: ${WEB_STRIPE_PUBLIC_KEY}
     depends_on:
       - cms
