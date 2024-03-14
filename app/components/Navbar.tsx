@@ -1,6 +1,5 @@
 import Link from "next/link";
 
-import LinkToCart from "../cart/components/LinkToCart";
 import { CSSContainer } from "@/app/styles";
 
 const sections = [
@@ -25,7 +24,9 @@ export default async function Navbar() {
             </li>
           ))}
           <li>
-            <LinkToCart />
+            <Link href="/cart" className="link-underline-white">
+              Cart
+            </Link>
           </li>
         </ul>
       </nav>
