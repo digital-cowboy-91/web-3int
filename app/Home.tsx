@@ -1,6 +1,6 @@
 import { Cart } from "./components/icons/IconCart";
 import HeadingAnim from "./components/Hero/FloatingPrintHead/Heading";
-import HeroAnimation from "./components/Hero/FloatingPrintHead/Background";
+import HeroAnimation from "./components/Hero/FloatingPrintHead/Somsing";
 
 export default async function Home() {
   return (

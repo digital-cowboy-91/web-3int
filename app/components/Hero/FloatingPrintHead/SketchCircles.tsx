@@ -1,4 +1,4 @@
-export default function Circles({ className }: { className?: string }) {
+export default function SketchCircles({ className }: { className?: string }) {
   return (
     <svg
       width="600px"
