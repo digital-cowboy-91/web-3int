@@ -37,8 +37,8 @@ html {
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: var(--background-hex);
+  @apply bg-light text-[#333333] text-sm font-normal;
+  /* @apply dark:bg-darkdark:text-white; */
 }
 
 /* TODO: Refactor section style and usage across all components */
@@ -254,3 +254,59 @@ body {
     }
   }
 }
+
+#spiral {
+  animation: animRotate 60s linear infinite;
+}
+@keyframes animRotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* .css-selector {
+  background: linear-gradient(270deg, #73a1ef, #92ef73);
+  background-size: 400% 400%;
+  z-index: -1000;
+
+  -webkit-animation: AnimationName 30s ease infinite;
+  -moz-animation: AnimationName 30s ease infinite;
+  animation: AnimationName 30s ease infinite;
+}
+
+@-webkit-keyframes AnimationName {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+@-moz-keyframes AnimationName {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+@keyframes AnimationName {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+} */

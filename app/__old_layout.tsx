@@ -1,9 +1,11 @@
 import { Poppins } from "next/font/google";
 import { ReactNode } from "react";
 import { CMSHomepage } from "./api/_cms/collections/homepage";
-import "./globals.css";
-import Header from "./components/Header";
 import Footer from "./components/Footer";
+import SectionHero from "./components/Hero/SectionHero";
+import Navbar from "./components/Navbar";
+import ReCaptchaProvider from "./components/ReCaptchaProvider";
+import "./globals.css";
 
 const poppins = Poppins({ subsets: ["latin"], weight: ["400", "600", "700"] });
 
@@ -34,10 +36,14 @@ export default function RootLayout({
         href="/media/139473a8-56f1-4fd9-bd09-80bc40a26aba/favicon.svg"
         sizes="any"
       />
-      <body className={poppins.className}>
-        <Header />
-        {children}
-        <Footer />
+      <body className={`text-sm font-normal relative ${poppins.className}`}>
+        <ReCaptchaProvider siteKey={process.env.RECAPTCHA_SITE_KEY!}>
+          <Navbar />
+          <SectionHero />
+          <main>{children}</main>
+          <Footer />
+          {modal}
+        </ReCaptchaProvider>
       </body>
     </html>
   );

@@ -19,7 +19,10 @@ const config: Config = {
         transparent: "transparent",
         current: "currentColor",
         white: "#FFFFFF",
-        dark: "#0D0C0C",
+        // custom
+        light: "#ebebeb",
+        // neutral-700
+        dark: "#404040",
         primary: {
           DEFAULT: "#0D79F2",
           light: "#0D79F2",
@@ -39,6 +42,13 @@ const config: Config = {
           light: "#d9e5d5",
         },
       },
+      // dropShadow: {
+      //   "3xl": "0 35px 35px rgba(0, 0, 0, 0.25)",
+      //   "4xl": [
+      //     "0 1px 1px rgba(0, 0, 0, 0.3)",
+      //     "0 3px 6px rgba(0, 0, 0, 0.02)",
+      //   ],
+      // },
     },
     colors,
     screens: {
@@ -55,6 +65,13 @@ const config: Config = {
     boxShadow: {
       DEFAULT: "5px 5px 20px 5px rgba(0, 0, 0, 0.3)",
       sm: "0px 1px 1px rgba(0, 0, 0, 0.03), 0px 3px 6px rgba(0, 0, 0, 0.02)",
+    },
+    dropShadow: {
+      // DEFAULT: [
+      //   "2px 2px 3px rgba(0, 0, 0, 0.3)",
+      //   "-2px -2px 3px rgba(255, 255, 255, 0.3)",
+      // ],
+      DEFAULT: ["3px 3px 5px rgba(0, 0, 0, 0.3)"],
     },
   },
   plugins: [],
