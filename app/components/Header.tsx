@@ -1,5 +1,5 @@
-import LogoChar from "../__sandbox/LogoChar";
-import LogoComplete from "../__sandbox/LogoComplete";
+import LogoChar from "./Logo/LogoChar";
+import LogoComplete from "./Logo/LogoComplete";
 import { IconCart } from "./icons/IconCart";
 
 export default async function Header() {
