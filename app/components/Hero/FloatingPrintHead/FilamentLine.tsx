@@ -3,16 +3,17 @@
 import useDOMRect from "./DOMRect.hook";
 
 export const FilamentLine = ({ className }: { className?: string }) => {
-  const screenW = useDOMRect("body").width;
-  const containerX = useDOMRect("#navContainer").x;
+  // const screenW = useDOMRect("body").width;
+  const { x: containerX, width: containerW } = useDOMRect("#navContainer");
+  const { x: printHeadX, width: printHeadW } = useDOMRect("#printHead");
 
-  if (!screenW || !containerX) return null;
+  if (!containerX || !printHeadX) return null;
 
   const pathH = 250;
   const stroke = 6;
-  const arc = 50;
+  const arc = 30;
 
-  const pathStart = screenW * 0.75;
+  const pathStart = printHeadX + printHeadW / 2 - containerX;
 
   return (
     <svg
@@ -37,7 +38,7 @@ export const FilamentLine = ({ className }: { className?: string }) => {
               className={`filamentLine`}
               d={`M${pathStart} 0 V${pathH - arc} A${arc} ${arc} 0 0 1 ${
                 pathStart - arc
-              } ${pathH} L${containerX} ${pathH}`}
+              } ${pathH} L${stroke / 2 + 100} ${pathH}`}
               strokeWidth={stroke}
               stroke="url(#filamentLinesGradient)"
               fill="none"

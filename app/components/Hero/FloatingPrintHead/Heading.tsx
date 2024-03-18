@@ -2,7 +2,7 @@
 
 import { AnimatePresence, useAnimate } from "framer-motion";
 
-export const Heading = () => {
+export default function Heading() {
   const [scope, animate] = useAnimate();
 
   function mouseEnter() {
@@ -40,13 +40,13 @@ export const Heading = () => {
       onTouchStart={mouseEnter}
       onTouchEnd={mouseLeave}
     >
-      <div className="inline-flex">
+      <div id="headingEx" className="inline-flex">
         Ex
         <AnimatePresence>
-          <span key={1} id="exprint" className="text-primary">
+          <span key={1} id="exprint" className="text-[#F1FF00]">
             print
           </span>
-          <span key={0} id="express" className="text-primary hidden">
+          <span key={0} id="express" className="text-white hidden">
             press
           </span>
         </AnimatePresence>
@@ -56,4 +56,4 @@ export const Heading = () => {
       </div>
     </h1>
   );
-};
+}

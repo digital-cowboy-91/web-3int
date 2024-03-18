@@ -12,7 +12,6 @@ export default function useAnimation() {
         opacity: [0, 1],
         rotateZ: [12, 0],
         scale: [0.5, 1],
-        y: 60,
       },
       {
         scale: {
@@ -28,18 +27,6 @@ export default function useAnimation() {
       }
     );
   };
-
-  const headDown = async () =>
-    await animate(
-      "#printHead",
-      {
-        y: 70,
-      },
-      {
-        delay: 0.5,
-        duration: 1,
-      }
-    );
 
   const spinFan = () =>
     animate(
@@ -71,7 +58,6 @@ export default function useAnimation() {
     return animate(
       ".filamentLine",
       {
-        opacity: 1,
         pathLength: [0, 1, 0],
         pathOffset: [0, 0, 1],
       },
@@ -85,22 +71,11 @@ export default function useAnimation() {
     );
   };
 
-  const headUp = async () =>
-    await animate(
-      "#printHead",
-      {
-        y: [70, 60],
-      },
-      {
-        duration: 1,
-      }
-    );
-
   const headFloat = () =>
     animate(
       "#printHead",
       {
-        y: [60, 70],
+        y: [-5, 5],
       },
       {
         duration: 1,
@@ -112,6 +87,7 @@ export default function useAnimation() {
 
   const play = async () => {
     setState("playing");
+
     await enter();
     spinFan();
     filamentLines();

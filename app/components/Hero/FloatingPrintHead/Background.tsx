@@ -1,6 +1,13 @@
+"use client";
+
+import useDOMRect from "./DOMRect.hook";
+
 export default function Background({ className }: { className?: string }) {
+  const { y: headingExY, height: headingExH } = useDOMRect("#headingEx");
+  const { x: prindHeadX, width: prindHeadW } = useDOMRect("#printHead");
+
   return (
-    <svg className={className}>
+    <svg className={className} height={headingExY + headingExH + 10 + "px"}>
       <defs>
         <filter id="noiseFilter">
           <feTurbulence
@@ -42,22 +49,21 @@ export default function Background({ className }: { className?: string }) {
 
         <radialGradient
           id="grad"
-          cx="75%"
+          cx={prindHeadX + prindHeadW / 2}
           cy="100%"
           r="100%"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0%" stopColor="#00A561" stopOpacity="0" />
-          {/* <stop offset="20%" stopColor="#00F48F" stopOpacity=".2" /> */}
-          <stop offset="33%" stopColor="#00F48F" stopOpacity=".5" />
-          <stop offset="66%" stopColor="#00F48F" stopOpacity=".75" />
-          <stop offset="100%" stopColor="#00F48F" />
+          <stop offset="0%" stopColor="#04A586" stopOpacity="0" />
+          <stop offset="33%" stopColor="#00D8AE" stopOpacity=".5" />
+          <stop offset="66%" stopColor="#00D8AE" stopOpacity=".75" />
+          <stop offset="100%" stopColor="#00D8AE" />
         </radialGradient>
       </defs>
       <rect
         width="100%"
         height="100%"
-        fill="#00A561"
+        fill="#04A586"
         filter="url(#noiseFilter)"
       />
       <rect width="100%" height="100%" fill="url(#grad)" />

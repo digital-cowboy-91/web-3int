@@ -1,5 +1,5 @@
-import { Hero } from "./components/Hero/Hero";
+import Hero from "./components/Hero/FloatingPrintHead/Hero";
 
 export default async function Home() {
-  return <Hero.FloatingPrintHead />;
+  return <Hero />;
 }

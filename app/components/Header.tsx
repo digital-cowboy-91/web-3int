@@ -1,3 +1,5 @@
+import LogoChar from "../__sandbox/LogoChar";
+import LogoComplete from "../__sandbox/LogoComplete";
 import { IconCart } from "./icons/IconCart";
 
 export default async function Header() {
@@ -5,15 +7,26 @@ export default async function Header() {
     <header className="absolute w-full z-10">
       <div
         id="navContainer"
-        className="container flex justify-between items-center font-semibold uppercase text-neutral-700"
+        className="container flex justify-between items-center font-semibold uppercase "
       >
         <div
           id="navLogo"
-          className="bg-primary h-[80px] px-4 flex items-center text-white "
+          className="bg-primary size-[100px] px-4 flex items-center justify-center"
         >
-          {/* <LogoSimplifiedAnim height="50" stroke={5} /> */}
-          3int UK
+          {/* <LogoComplete
+            height="50px"
+            fill="none"
+            stroke="#ffffff"
+            strokeWidth={5}
+          /> */}
+          <LogoChar
+            height="50px"
+            fill="none"
+            stroke="#ffffff"
+            strokeWidth={5}
+          />
         </div>
+
         <nav>
           <ul className="inline-flex gap-20">
             <li>Gallery / Store</li>
@@ -21,9 +34,8 @@ export default async function Header() {
             <li>FAQ</li>
           </ul>
         </nav>
-        <div>
-          <IconCart className="size-8" />
-        </div>
+
+        <IconCart className="size-8 m-4" />
       </div>
     </header>
   );
