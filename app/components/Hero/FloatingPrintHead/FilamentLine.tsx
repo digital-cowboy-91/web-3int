@@ -3,11 +3,14 @@
 import useDOMRect from "./DOMRect.hook";
 
 export const FilamentLine = ({ className }: { className?: string }) => {
-  // const screenW = useDOMRect("body").width;
   const { x: containerX, width: containerW } = useDOMRect("#navContainer");
-  const { x: printHeadX, width: printHeadW } = useDOMRect("#printHead");
+  const {
+    x: printHeadX,
+    width: printHeadW,
+    height: printHeadH,
+  } = useDOMRect("#printHeadContainer");
 
-  if (!containerX || !printHeadX) return null;
+  if (!containerW || !printHeadW) return null;
 
   const pathH = 250;
   const stroke = 6;
@@ -18,9 +21,12 @@ export const FilamentLine = ({ className }: { className?: string }) => {
   return (
     <svg
       id="filamentLines"
-      className={`${className} opacity-0`}
+      className={`${className} absolute inset-x-0 -z-10 opacity-0`}
       width="100%"
       height={pathH + stroke / 2}
+      style={{
+        top: printHeadH / 2,
+      }}
     >
       <defs>
         <linearGradient id="filamentLinesGradient">
@@ -38,7 +44,7 @@ export const FilamentLine = ({ className }: { className?: string }) => {
               className={`filamentLine`}
               d={`M${pathStart} 0 V${pathH - arc} A${arc} ${arc} 0 0 1 ${
                 pathStart - arc
-              } ${pathH} L${stroke / 2 + 100} ${pathH}`}
+              } ${pathH} L${stroke / 2 + 20} ${pathH}`}
               strokeWidth={stroke}
               stroke="url(#filamentLinesGradient)"
               fill="none"

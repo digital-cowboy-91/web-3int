@@ -34,7 +34,7 @@ export default function Heading() {
   return (
     <h1
       ref={scope}
-      className="semibold text-8xl uppercase space-y-4 drop-shadow"
+      className="semibold text-6xl sm:text-8xl uppercase space-y-8 md:space-y-4 drop-shadow flex flex-col"
       onMouseEnter={mouseEnter}
       onMouseLeave={mouseLeave}
       onTouchStart={mouseEnter}
@@ -51,8 +51,8 @@ export default function Heading() {
           </span>
         </AnimatePresence>
       </div>
-      <div>
-        <span className="ms-24">Yourself</span>
+      <div className="inline-flex justify-end md:justify-end md:ms-24">
+        Yourself
       </div>
     </h1>
   );

@@ -23,7 +23,7 @@ const animateSvg = {
   hover: {},
 };
 
-export default function LogoComplete({
+export default function LogoChar({
   fill = "#000000",
   stroke = "#000000",
   width = "100%",
