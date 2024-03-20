@@ -6,12 +6,12 @@ export default function Heading() {
   const [scope, animate] = useAnimate();
 
   function mouseEnter() {
-    animate("#express", {
+    animate("#headingExpress", {
       opacity: [0, 1],
       y: [30, 0],
       display: "block",
     });
-    animate("#exprint", {
+    animate("#headingExprint", {
       opacity: [1, 0],
       y: [0, -30],
       display: "none",
@@ -19,12 +19,12 @@ export default function Heading() {
   }
 
   function mouseLeave() {
-    animate("#express", {
+    animate("#headingExpress", {
       opacity: [1, 0],
       y: [0, 30],
       display: "none",
     });
-    animate("#exprint", {
+    animate("#headingExprint", {
       opacity: [0, 1],
       y: [-30, 0],
       display: "block",
@@ -34,26 +34,24 @@ export default function Heading() {
   return (
     <h1
       ref={scope}
-      className="semibold text-6xl sm:text-8xl uppercase space-y-8 md:space-y-4 drop-shadow flex flex-col"
+      className="semibold text-6xl sm:text-8xl uppercase drop-shadow flex flex-col"
       onMouseEnter={mouseEnter}
       onMouseLeave={mouseLeave}
-      onTouchStart={mouseEnter}
-      onTouchEnd={mouseLeave}
+      // onTouchStart={mouseEnter}
+      // onTouchEnd={mouseLeave}
     >
-      <div id="headingEx" className="inline-flex">
+      <div id="headingEx" className="leading-tight inline-flex">
         Ex
         <AnimatePresence>
-          <span key={1} id="exprint" className="text-[#F1FF00]">
+          <span key={1} id="headingExprint" className="text-[#F1FF00]">
             print
           </span>
-          <span key={0} id="express" className="text-white hidden">
+          <span key={0} id="headingExpress" className="text-white hidden">
             press
           </span>
         </AnimatePresence>
       </div>
-      <div className="inline-flex justify-end md:justify-end md:ms-24">
-        Yourself
-      </div>
+      <div className="leading-tight text-right">Yourself</div>
     </h1>
   );
 }

@@ -29,6 +29,7 @@ export default function LogoComplete({
       fill={fill}
       stroke={stroke}
       strokeWidth={strokeWidth}
+      strokeLinecap="round"
       viewBox="0 0 244 138"
       className={className}
       style={style}

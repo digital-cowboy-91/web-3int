@@ -3,14 +3,12 @@
 import useDOMRect from "./DOMRect.hook";
 
 export const FilamentLine = ({ className }: { className?: string }) => {
-  const { x: containerX, width: containerW } = useDOMRect("#navContainer");
+  const { x: containerX } = useDOMRect("#nav-container");
   const {
     x: printHeadX,
     width: printHeadW,
     height: printHeadH,
   } = useDOMRect("#printHeadContainer");
-
-  if (!containerW || !printHeadW) return null;
 
   const pathH = 250;
   const stroke = 6;

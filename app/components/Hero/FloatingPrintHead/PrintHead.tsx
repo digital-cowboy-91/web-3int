@@ -12,7 +12,7 @@ export default function PrintHead({ className }: { className?: string }) {
       ref={scope}
       className={`flex items-center justify-center h-[500px] ${className}`}
     >
-      <div id="printHead" className="relative w-[250px] z-10 drop-shadow">
+      <div id="printHead" className="w-[250px] drop-shadow">
         <img src="/print_head.svg" alt="" />
         <img
           id="fan"

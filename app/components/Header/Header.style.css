@@ -1,0 +1,60 @@
+#navigation {
+  @apply fixed w-full z-50;
+
+  .wrapper {
+    @apply container font-semibold p-4 uppercase;
+    @apply md:grid md:grid-cols-[100px_1fr_100px] md:grid-rows-[100px] md:p-0 md:place-items-center;
+
+    & > .logo-wrapper {
+      @apply hidden bg-primary size-full px-4;
+      @apply md:flex items-center justify-center;
+
+      & > svg {
+        @apply h-[50px] fill-none stroke-white stroke-[5px];
+      }
+    }
+
+    & > .buttons-wrapper {
+      @apply flex justify-between h-14 w-full;
+      @apply md:order-3;
+
+      & > * {
+        @apply m-3;
+      }
+
+      & > .mobile-menu-button {
+        @apply md:hidden;
+
+        & > * {
+          @apply size-full stroke-white stroke-[3px];
+        }
+      }
+    }
+
+    & > .menu-items {
+      @apply flex flex-col gap-4 mx-2 mt-4;
+      @apply md:order-2 md:flex-row md:gap-20 md:m-0;
+
+      & > li {
+        @apply font-semibold py-2 uppercase border-b-2 border-transparent hover:border-[#F1FF00] transition-colors;
+
+        &:first-child {
+          @apply md:hidden;
+        }
+
+        /* @media (max-width: 767px) {
+          @apply text-white;
+        } */
+      }
+
+      @media (max-width: 767px) {
+        @apply text-white h-0 overflow-hidden;
+      }
+    }
+    & > .background {
+      @apply bg-[#0D79F2] absolute -z-10 inset-0 md:hidden;
+
+      clip-path: circle(1.75rem at 2.75rem 2.75rem);
+    }
+  }
+}

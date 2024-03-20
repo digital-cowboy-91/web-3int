@@ -3,7 +3,7 @@
 import useDOMRect from "./DOMRect.hook";
 
 export default function SketchLines({ className }: { className?: string }) {
-  const containerW = useDOMRect("#navContainer").width;
+  const containerW = useDOMRect("#nav-container").width;
   const { width: logoW, height: logoH } = useDOMRect("#navLogo");
 
   if (!containerW) return null;

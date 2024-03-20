@@ -7,9 +7,13 @@ export default function Background({ className }: { className?: string }) {
   const { y: headingExY, height: headingExH } = useDOMRect("#headingEx");
   const { x: prindHeadX, width: prindHeadW } = useDOMRect("#printHead");
 
+  if (headingExY === 0) return null;
+
+  const topHeight = headingExY + headingExH + "px";
+
   return (
     <>
-      <svg className={className} height={headingExY + headingExH + 10 + "px"}>
+      <svg className={`${className} transition-all`} height={topHeight}>
         <defs>
           <filter id="noiseFilter">
             <feTurbulence
@@ -51,7 +55,7 @@ export default function Background({ className }: { className?: string }) {
 
           <radialGradient
             id="grad"
-            cx={prindHeadX + prindHeadW / 2}
+            cx={!prindHeadX ? "75%" : prindHeadX + prindHeadW / 2}
             cy="100%"
             r="100%"
             gradientUnits="userSpaceOnUse"
@@ -71,8 +75,8 @@ export default function Background({ className }: { className?: string }) {
         <rect width="100%" height="100%" fill="url(#grad)" />
       </svg>
       <LogoComplete
-        className="absolute w-3/4 -translate-x-1/2 left-1/2 -translate-y-1/2 -z-10"
-        style={{ top: headingExY + headingExH + 10 + "px" }}
+        className="absolute min-w-[1024px] w-3/4 -translate-x-1/2 left-1/2 -translate-y-1/2 -z-10 transition-all"
+        style={{ top: topHeight }}
         fill="none"
         stroke="#00000005"
       />

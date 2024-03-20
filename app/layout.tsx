@@ -1,9 +1,9 @@
 import { Poppins } from "next/font/google";
 import { ReactNode } from "react";
 import { CMSHomepage } from "./api/_cms/collections/homepage";
-import "./globals.css";
-import Header from "./components/Header";
 import Footer from "./components/Footer";
+import Header from "./components/Header/Header";
+import "./globals.css";
 
 const poppins = Poppins({ subsets: ["latin"], weight: ["400", "600", "700"] });
 
