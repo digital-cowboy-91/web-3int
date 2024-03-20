@@ -1,36 +1,31 @@
-"use client";
-
 import Link from "next/link";
 import LogoChar from "../Logo/LogoChar";
 import { IconCart } from "../icons/IconCart";
-import IconMobileMenu from "../icons/IconMobileMenu";
 import "./Header.style.css";
-import useAnimation from "./Header.hook";
+import MobileMenuButton from "./MobileMenuButton";
 
 const menuItems = ["Gallery / Store", "Services", "FAQ"];
 export default function Header() {
-  const { scope, toggleMenu } = useAnimation();
-
   return (
-    <header ref={scope} id="navigation">
+    <header id="navigation">
       <div id="nav-container" className="wrapper">
         <div className="logo-wrapper">
           <LogoChar />
         </div>
 
         <div className="buttons-wrapper">
-          <button className="mobile-menu-button" onClick={() => toggleMenu()}>
-            <IconMobileMenu />
-          </button>
+          <MobileMenuButton />
           <Link className="cart-link" href="/cart">
             <IconCart className="size-full" />
           </Link>
         </div>
 
         <ul className="menu-items">
-          <li>Home</li>
+          <li style={{ "--menu-items-item": 0 } as any}>Home</li>
           {menuItems.map((item, index) => (
-            <li key={index}>{item}</li>
+            <li key={index} style={{ "--menu-items-item": index + 1 } as any}>
+              {item}
+            </li>
           ))}
         </ul>
         <div className="background" />
