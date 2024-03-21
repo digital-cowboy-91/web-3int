@@ -1,3 +1,4 @@
+import ActionButton from "./ActionButton";
 import Background from "./Background";
 import Heading from "./Heading";
 import PrintHead from "./PrintHead";
@@ -18,9 +19,7 @@ export default async function Hero() {
             Together, let's make it real!
           </p>
           <div className="inline-flex justify-end gap-4 font-semibold text-lg mt-4 md:mt-8">
-            <button className="rounded-md shadow-md bg-[#F1FF00] px-20 py-2 uppercase">
-              Get Quote
-            </button>
+            <ActionButton />
           </div>
         </div>
       </div>
