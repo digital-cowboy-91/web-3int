@@ -7,7 +7,7 @@ import MobileMenuButton from "./MobileMenuButton";
 const menuItems = ["Gallery / Store", "Services", "FAQ"];
 export default function Header() {
   return (
-    <header id="navigation">
+    <header id="navigation" data-menu="closed">
       <div id="nav-container" className="wrapper">
         <div className="logo-wrapper">
           <LogoChar />

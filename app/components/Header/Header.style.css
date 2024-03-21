@@ -1,6 +1,10 @@
 #navigation {
-  @apply fixed w-full z-50 h-16 overflow-hidden;
-  @apply md:h-24;
+  @apply absolute w-full z-50 h-16 overflow-hidden bg-white bg-opacity-0 backdrop-blur-0;
+  @apply md:h-24 md:overflow-visible;
+
+  &.shrink {
+    @apply bg-opacity-30 backdrop-blur-md;
+  }
 
   .wrapper {
     @apply grid grid-rows-[4rem_1fr] container font-semibold uppercase;
@@ -83,15 +87,15 @@
     }
     & > .menu-items {
       & > li {
-        animation-name: animateIn;
+        animation: animateIn forwards;
         animation-duration: 250ms;
         animation-delay: calc(var(--menu-items-item) * 100ms);
-        animation-fill-mode: forwards;
 
         @keyframes animateIn {
           100% {
             opacity: 1;
             transform: translateX(0);
+            overflow: ;
           }
         }
       }
