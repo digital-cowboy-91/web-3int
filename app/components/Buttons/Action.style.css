@@ -1,0 +1,28 @@
+.v3-action {
+  @apply h-10 uppercase font-semibold inline-flex gap-3 items-center;
+
+  &,
+  &--w-icon > div {
+    transition: all 350ms cubic-bezier(0.25, 0.1, 0, 2);
+  }
+
+  &--w-icon {
+    & > div:first-child {
+      @apply w-10 border-2 rounded-full border-v3yellow p-1.5;
+    }
+
+    &:hover > div:first-child {
+      @apply scale-105 drop-shadow bg-v3yellow;
+      @apply active:scale-100 active:drop-shadow-none;
+    }
+  }
+
+  &--label {
+    @apply w-40 justify-center rounded-md bg-v3yellow uppercase font-semibold;
+
+    &:hover {
+      @apply scale-105 drop-shadow rounded-[2rem];
+      @apply active:scale-100 active:drop-shadow-none;
+    }
+  }
+}

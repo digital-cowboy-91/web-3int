@@ -1,5 +1,4 @@
-import ActionButton from "./Col1/ActionButton";
-import ExploreButton from "./Col1/ExploreButton";
+import Action from "../../Buttons/Action";
 import Heading from "./Col1/Heading";
 import PrintHead from "./Col2/PrintHead";
 import DynamicBg from "./DynamicBg";
@@ -20,8 +19,28 @@ export default function Hero() {
               something in mind. Together, let's make it real!
             </p>
             <div>
-              <ExploreButton />
-              <ActionButton />
+              <Action
+                as="button"
+                icon={
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    strokeWidth={2}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    stroke="currentColor"
+                  >
+                    <path d="M1,12L23,12" />
+                    <path d="M4,4L23,12L4,20" />
+                  </svg>
+                }
+                label={
+                  <span>
+                    Ex<span className="text-v3yellow">plore</span>
+                  </span>
+                }
+              />
+              <Action as="button" label="Get quote" />
             </div>
           </div>
         </div>
