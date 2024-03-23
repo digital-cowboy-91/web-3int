@@ -18,7 +18,8 @@
   }
 
   &--col2 {
-    @apply order-2 grid grid-rows-[5rem_min-content_1fr] w-[500px] mx-auto;
+    @apply order-2 grid grid-rows-[5rem_min-content_1fr] mx-auto;
+    @apply sm:w-3/4;
     @apply lg:order-1 lg:grid-rows-[1fr_min-content_1fr] lg:w-auto;
 
     & > div:last-child {

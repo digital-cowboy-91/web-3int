@@ -1,11 +1,31 @@
 "use client";
 
-import IconMobileMenu from "../icons/IconMobileMenu";
+import Action from "../Buttons/Action";
 
-export default function MobileMenuButton() {
+export default function MobileMenuButton({
+  className,
+}: {
+  className?: string;
+}) {
   return (
-    <button
-      className="mobile-menu-button"
+    <Action
+      as="button"
+      color="secondary"
+      className={className}
+      icon={
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          strokeWidth={2}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          stroke="currentColor"
+        >
+          <path d="M4,6 L14,6" />
+          <path d="M4,12 L20,12" />
+          <path d="M10,18 L20,18" />
+        </svg>
+      }
       onClick={async () => {
         const body = document.querySelector("body") as HTMLBodyElement;
         const nav = document.querySelector("#navigation") as HTMLDivElement;
@@ -13,8 +33,6 @@ export default function MobileMenuButton() {
         body.classList.toggle("modal-lockdown");
         nav.dataset.menu = nav.dataset.menu === "open" ? "closed" : "open";
       }}
-    >
-      <IconMobileMenu />
-    </button>
+    />
   );
 }

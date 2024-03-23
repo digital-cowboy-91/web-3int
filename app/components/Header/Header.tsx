@@ -14,10 +14,11 @@ export default function Header() {
         </div>
 
         <div className="buttons-wrapper">
-          <MobileMenuButton />
+          <MobileMenuButton className="lg:hidden" />
           <Action
             as="a"
             href="/"
+            variant="outline"
             icon={
               <svg
                 viewBox="0 0 24 24"
@@ -37,10 +38,12 @@ export default function Header() {
         </div>
 
         <ul className="menu-items">
-          <li style={{ "--menu-items-item": 0 } as any}>Home</li>
+          <li style={{ "--menu-items-item": 0 } as any}>
+            <Action as="a" href="/" label="Home" variant="underline" />
+          </li>
           {menuItems.map((item, index) => (
             <li key={index} style={{ "--menu-items-item": index + 1 } as any}>
-              {item}
+              <Action as="a" href="/" label={item} variant="underline" />
             </li>
           ))}
         </ul>

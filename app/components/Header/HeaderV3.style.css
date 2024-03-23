@@ -1,5 +1,5 @@
 #navigation {
-  @apply absolute w-full z-50 h-20 overflow-hidden;
+  @apply absolute w-full z-40 h-20 overflow-hidden;
   @apply md:overflow-visible;
 
   .wrapper {
@@ -17,8 +17,8 @@
     }
 
     & > .buttons-wrapper {
-      @apply flex justify-between p-4 pb-0;
-      @apply md:order-3 md:p-0 md:justify-self-end;
+      @apply flex justify-between;
+      @apply md:order-3 md:justify-self-end;
 
       & > .mobile-menu-button {
         @apply md:hidden;
@@ -39,12 +39,8 @@
       @apply flex flex-col items-start gap-4 ms-16 mt-4;
       @apply md:order-2 md:flex-row md:gap-20 md:m-0 md:w-full;
 
-      & > li {
-        @apply font-semibold py-0.5 uppercase border-y-[3px] border-transparent hover:border-b-[#F1FF00] transition-colors;
-
-        &:first-child {
-          @apply md:hidden;
-        }
+      & > li:first-child {
+        @apply md:hidden;
       }
 
       @media (max-width: 767px) {
@@ -56,10 +52,10 @@
       }
     }
     & > .background {
-      @apply absolute -z-10 inset-0 bg-primary;
+      @apply absolute -z-10 inset-0 bg-v3green;
       @apply md:hidden;
 
-      clip-path: circle(1.5rem at 2.5rem 2.5rem);
+      clip-path: circle(0rem at 2.25rem 2.5rem);
       transition: 0.5s;
     }
   }
@@ -70,7 +66,7 @@
 
   & > .wrapper {
     & > .background {
-      clip-path: circle(calc(100vh * sqrt(2)) at 2.5rem 2.5rem);
+      clip-path: circle(calc(100vh * sqrt(2)) at 2.25rem 2.5rem);
     }
     & > .buttons-wrapper > .cart-link > svg {
       @apply stroke-white;

@@ -2,7 +2,13 @@ import Link, { LinkProps } from "next/link";
 import { ButtonHTMLAttributes, ReactNode } from "react";
 import "./Action.style.css";
 
-type TProps = (
+type TVariant = "outline" | "underline" | "full";
+
+type TProps = {
+  className?: string;
+  variant?: "outline" | "underline" | "full" | "none";
+  color?: "primary" | "secondary";
+} & (
   | { icon: ReactNode; label?: string | ReactNode }
   | { icon?: ReactNode; label: string | ReactNode }
 ) &
@@ -11,11 +17,25 @@ type TProps = (
     | (LinkProps & { as: "a" })
   );
 
-export default function Action({ icon, label, as, ...props }: TProps) {
-  const setClass = [
-    "v3-action",
-    Boolean(icon) ? "v3-action--w-icon" : "v3-action--label",
-  ].join(" ");
+export default function Action({
+  className,
+  variant = "full",
+  color = "primary",
+  icon,
+  label,
+  as,
+  ...props
+}: TProps) {
+  const setClass =
+    variant === "none"
+      ? className
+      : [
+          "v3-action",
+          Boolean(icon) ? "v3-action--w-icon" : "v3-action--label",
+          `var--${variant}`,
+          `var--${color}`,
+          className,
+        ].join(" ");
   const children = (
     <>
       {icon && <div>{icon}</div>}

@@ -50,6 +50,7 @@ export default function Hero() {
             <div>
               <Action
                 as="button"
+                variant="outline"
                 icon={
                   <svg
                     viewBox="0 0 24 24"
