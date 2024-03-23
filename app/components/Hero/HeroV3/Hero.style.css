@@ -1,0 +1,30 @@
+.hero-v3 {
+  @apply w-full h-screen flex justify-center items-center;
+  /* relative lg:w-full lg:h-screen flex items-center overflow-hidden */
+  &--wrapper {
+    @apply container grid grid-cols-2;
+  }
+
+  &--col1 {
+    @apply grid grid-rows-3;
+
+    & > div:last-child {
+      @apply flex flex-col;
+
+      & > p {
+        @apply grow flex items-center leading-loose;
+      }
+      & > div {
+        @apply flex justify-between text-base;
+      }
+    }
+  }
+
+  &--col2 {
+    @apply relative flex justify-center items-center max-h-[600px];
+
+    & > svg {
+      @apply absolute left-1/2 -translate-x-1/2 -z-10 h-full;
+    }
+  }
+}

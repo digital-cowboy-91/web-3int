@@ -24,10 +24,11 @@
       @apply md:order-3 md:p-0;
 
       & > * {
-        @apply p-2 h-full;
+        @apply size-12 border-2 border-transparent rounded-full transition-colors flex justify-center items-center;
+        @apply hover:border-white;
 
         & > svg {
-          @apply w-8 transition-colors;
+          @apply size-8 transition-colors;
         }
       }
 
@@ -40,7 +41,6 @@
       }
 
       & > .cart-link {
-        @apply border-2 border-transparent rounded-full transition-colors;
         @apply hover:border-[#F1FF00];
       }
     }

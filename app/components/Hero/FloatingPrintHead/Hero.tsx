@@ -9,7 +9,7 @@ export default async function Hero() {
       id="floatingPrintHead"
       className="relative lg:w-full lg:h-screen flex items-center overflow-hidden"
     >
-      <div className="relative my-[calc(100px+2rem)] gap-8 md:gap-0 lg:mt-0 container grid auto-rows-min lg:grid-cols-[1fr_300px] xl:grid-cols-[1fr_40%]">
+      <div className="relative my-[calc(100px+2rem)] md:my-0 gap-8 md:gap-0 lg:mt-0 container grid auto-rows-min lg:grid-cols-[1fr_300px] xl:grid-cols-[1fr_40%]">
         <PrintHead className="order-1 lg:order-2" />
         <div className="order-2 lg:order-1 flex flex-col justify-center gap-8 md:gap-4 p-4 md:p-8 min-w-3/4 mx-auto sm:w-auto sm:m-0">
           <Heading />

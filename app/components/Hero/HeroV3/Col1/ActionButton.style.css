@@ -1,0 +1,7 @@
+#hero-v3--action-button {
+  @apply h-10 rounded-md  bg-v3yellow px-14 uppercase font-semibold;
+  @apply hover:scale-105 hover:rounded-[2rem] hover:shadow-md;
+  @apply active:scale-100 active:shadow-none;
+
+  transition: all 350ms cubic-bezier(0.25, 0.1, 0, 2), border-radius 100ms;
+}

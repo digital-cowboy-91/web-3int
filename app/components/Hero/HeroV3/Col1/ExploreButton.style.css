@@ -1,0 +1,11 @@
+#hero-v3--explore-button {
+  @apply uppercase font-semibold;
+
+  & > div {
+    transition: all 350ms cubic-bezier(0.25, 0.1, 0, 2);
+  }
+  &:hover > div {
+    @apply scale-105 drop-shadow bg-v3yellow;
+    @apply active:scale-100 active:drop-shadow-none;
+  }
+}

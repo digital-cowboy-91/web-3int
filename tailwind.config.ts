@@ -41,14 +41,34 @@ const config: Config = {
           DEFAULT: "#3cb012",
           light: "#d9e5d5",
         },
+        v3yellow: {
+          DEFAULT: "#F1FF00",
+        },
+        v3green: {
+          DEFAULT: "#04A586",
+          light: "#00D8AE",
+        },
+        v3dark: {
+          DEFAULT: "#333333",
+          deep: "#141414",
+        },
+        v3grey: {
+          DEFAULT: "#EBEBEB",
+          deep: "#BEBEBE",
+        },
       },
-      // dropShadow: {
-      //   "3xl": "0 35px 35px rgba(0, 0, 0, 0.25)",
-      //   "4xl": [
-      //     "0 1px 1px rgba(0, 0, 0, 0.3)",
-      //     "0 3px 6px rgba(0, 0, 0, 0.02)",
-      //   ],
-      // },
+      boxShadow: {
+        DEFAULT: "5px 5px 20px 5px rgba(0, 0, 0, 0.3)",
+        sm: "0px 1px 1px rgba(0, 0, 0, 0.03), 0px 3px 6px rgba(0, 0, 0, 0.02)",
+        md: "3px 3px 5px rgba(0, 0, 0, 0.3)",
+      },
+      dropShadow: {
+        // DEFAULT: [
+        //   "2px 2px 3px rgba(0, 0, 0, 0.3)",
+        //   "-2px -2px 3px rgba(255, 255, 255, 0.3)",
+        // ],
+        DEFAULT: ["3px 3px 5px rgba(0, 0, 0, 0.3)"],
+      },
     },
     colors,
     screens: {
@@ -61,18 +81,6 @@ const config: Config = {
     },
     container: {
       center: true,
-    },
-    boxShadow: {
-      DEFAULT: "5px 5px 20px 5px rgba(0, 0, 0, 0.3)",
-      sm: "0px 1px 1px rgba(0, 0, 0, 0.03), 0px 3px 6px rgba(0, 0, 0, 0.02)",
-      md: "3px 3px 5px rgba(0, 0, 0, 0.3)",
-    },
-    dropShadow: {
-      // DEFAULT: [
-      //   "2px 2px 3px rgba(0, 0, 0, 0.3)",
-      //   "-2px -2px 3px rgba(255, 255, 255, 0.3)",
-      // ],
-      DEFAULT: ["3px 3px 5px rgba(0, 0, 0, 0.3)"],
     },
   },
   plugins: [],
