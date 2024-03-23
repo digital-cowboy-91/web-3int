@@ -37,7 +37,7 @@ html {
 }
 
 body {
-  @apply bg-light text-[#333333] text-sm font-normal;
+  @apply bg-v3grey-deep text-v3dark text-sm font-normal;
   /* @apply dark:bg-darkdark:text-white; */
 }
 

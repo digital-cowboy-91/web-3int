@@ -1,10 +1,8 @@
-import Link from "next/link";
 import LogoChar from "../Logo/LogoChar";
-import { IconCart } from "../icons/IconCart";
 // import "./Header.style.css";
+import Action from "../Buttons/Action";
 import "./HeaderV3.style.css";
 import MobileMenuButton from "./MobileMenuButton";
-import Action from "../Buttons/Action";
 
 const menuItems = ["Gallery / Store", "Services", "FAQ"];
 export default function Header() {

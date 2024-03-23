@@ -34,7 +34,7 @@ export default function RootLayout({
         href="/media/139473a8-56f1-4fd9-bd09-80bc40a26aba/favicon.svg"
         sizes="any"
       />
-      <body className={poppins.className + " overflow-x-hidden"}>
+      <body className={poppins.className}>
         <Header />
         <main>{children}</main>
         <Footer />

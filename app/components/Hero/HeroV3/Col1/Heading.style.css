@@ -1,5 +1,5 @@
 .hero-v3--heading {
-  @apply font-semibold text-6xl uppercase;
+  @apply relative font-semibold text-6xl uppercase;
   @apply sm:text-8xl;
 
   & > span {

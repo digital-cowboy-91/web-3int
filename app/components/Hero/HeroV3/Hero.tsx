@@ -10,6 +10,35 @@ export default function Hero() {
     <section className="hero-v3">
       <div className="hero-v3--wrapper">
         <div className="hero-v3--col1">
+          <NoisyGradientShape
+            id="printHeadBg"
+            className="absolute inset-0 -z-20"
+            shape="circle"
+            gradient={{
+              colors: {
+                from: "#00D8AE",
+                to: "#04A586",
+                noise: "#00D8AE",
+              },
+              steps: [
+                {
+                  offset: "0%",
+                  opacity: 1,
+                },
+                {
+                  offset: "66%",
+                  opacity: 0.5,
+                },
+                {
+                  offset: "100%",
+                  opacity: 0,
+                },
+              ],
+            }}
+          />
+          <PrintHead />
+        </div>
+        <div className="hero-v3--col2">
           <div />
           <Heading />
           <div>
@@ -43,35 +72,6 @@ export default function Hero() {
               <Action as="button" label="Get quote" />
             </div>
           </div>
-        </div>
-        <div className="hero-v3--col2">
-          <NoisyGradientShape
-            id="printHeadBg"
-            className="absolute inset-0 -z-20"
-            shape="circle"
-            gradient={{
-              colors: {
-                from: "#00D8AE",
-                to: "#04A586",
-                noise: "#00D8AE",
-              },
-              steps: [
-                {
-                  offset: "0%",
-                  opacity: 1,
-                },
-                {
-                  offset: "66%",
-                  opacity: 0.5,
-                },
-                {
-                  offset: "100%",
-                  opacity: 0,
-                },
-              ],
-            }}
-          />
-          <PrintHead />
         </div>
       </div>
       <DynamicBg />

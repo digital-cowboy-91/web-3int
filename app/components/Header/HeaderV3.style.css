@@ -1,10 +1,11 @@
 #navigation {
-  @apply absolute w-full z-50 h-16 overflow-hidden;
-  @apply md:h-24 md:overflow-visible;
+  @apply absolute w-full z-50 h-20 overflow-hidden;
+  @apply md:overflow-visible;
 
   .wrapper {
-    @apply grid grid-rows-[4rem_1fr] items-center container font-semibold uppercase;
-    @apply md:grid md:grid-cols-[6rem_1fr_6rem] md:grid-rows-[6rem] md:p-0;
+    @apply grid grid-rows-[5rem_1fr] items-center container font-semibold uppercase px-4;
+    @apply md:grid md:grid-cols-[5rem_1fr_5rem] md:grid-rows-[5rem];
+    @apply lg:px-8;
 
     & > .logo-wrapper {
       @apply hidden;

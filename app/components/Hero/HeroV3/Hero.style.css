@@ -1,12 +1,25 @@
 .hero-v3 {
-  @apply w-full h-screen flex justify-center items-center;
-  /* relative lg:w-full lg:h-screen flex items-center overflow-hidden */
+  @apply w-full flex justify-center items-center overflow-x-hidden;
+  @apply lg:h-screen;
+
   &--wrapper {
-    @apply container grid grid-cols-2;
+    @apply container grid grid-rows-2 px-4 py-20;
+    @apply lg:grid-cols-2 lg:grid-rows-1 lg:p-8;
   }
 
   &--col1 {
-    @apply grid grid-rows-3;
+    @apply relative flex justify-center items-center h-[500px];
+    @apply lg:order-2 lg:h-[550px];
+    @apply xl:h-[600px];
+
+    & > svg {
+      @apply absolute left-1/2 -translate-x-1/2 -z-10 h-full;
+    }
+  }
+
+  &--col2 {
+    @apply order-2 grid grid-rows-[5rem_min-content_1fr] w-[500px] mx-auto;
+    @apply lg:order-1 lg:grid-rows-[1fr_min-content_1fr] lg:w-auto;
 
     & > div:last-child {
       @apply flex flex-col;
@@ -17,14 +30,6 @@
       & > div {
         @apply flex justify-between text-base;
       }
-    }
-  }
-
-  &--col2 {
-    @apply relative flex justify-center items-center max-h-[600px];
-
-    & > svg {
-      @apply absolute left-1/2 -translate-x-1/2 -z-10 h-full;
     }
   }
 }
