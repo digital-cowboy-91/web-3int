@@ -37,7 +37,7 @@
       }
 
       &:hover > div:first-child {
-        @apply bg-v3yellow;
+        @apply bg-v3yellow dark:text-v3dark;
       }
     }
 
@@ -69,7 +69,7 @@
     }
 
     &.var--full.var--primary {
-      @apply bg-v3yellow;
+      @apply bg-v3yellow text-v3dark;
     }
 
     &.var--full.var--secondary {

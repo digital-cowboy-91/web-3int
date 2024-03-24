@@ -9,14 +9,14 @@ export default function DynamicBg() {
   return (
     <NoisyGradientShape
       id="heroBg"
-      className="size-full absolute inset-0 -z-50"
+      className="size-full absolute inset-0 -z-40"
       shape="rect"
       viewbox={"0 0 100% 100%"}
       gradient={{
         colors: {
-          from: "#bebebe",
-          to: "#ffffff",
-          noise: "rgb(220, 220, 220)",
+          from: "var(--def-grad-from)",
+          to: "var(--def-grad-to)",
+          noise: "var(--def-grad-noise)",
         },
         coordinates: {
           x: x ? x + width / 2 : "50%",

@@ -7,6 +7,7 @@ const config: Config = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  darkMode: "class",
   theme: {
     extend: {
       fontSize: {
@@ -42,19 +43,25 @@ const config: Config = {
           light: "#d9e5d5",
         },
         v3yellow: {
-          DEFAULT: "#F1FF00",
+          DEFAULT: "var(--v3yellow)",
         },
         v3green: {
-          DEFAULT: "#04A586",
-          light: "#00D8AE",
+          DEFAULT: "var(--v3green)",
+          light: "var(--v3green-light)",
         },
         v3dark: {
-          DEFAULT: "#333333",
-          deep: "#141414",
+          DEFAULT: "var(--v3dark)",
+          deep: "var(--v3dark-deep)",
         },
         v3grey: {
-          DEFAULT: "#EBEBEB",
-          deep: "#BEBEBE",
+          DEFAULT: "var(--v3grey)",
+          deep: "var(--v3grey-deep)",
+        },
+        def: {
+          bg: "var(--def-bg)",
+          text: "var(--def-text)",
+          invert_bg: "var(--invert--def-bg)",
+          invert_text: "var(--invert--def-text)",
         },
       },
       boxShadow: {

@@ -3,15 +3,59 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-hex: #ebebeb;
+  /* Scheme */
+  --light: #ffffff; 
+
+  --v3yellow: #f1ff00;
+
+  --v3green: #04a586;
+  --v3green-light: #00d8ae;
+  --v3green-noise: rgb(68, 165, 134)
+
+  --v3grey: #ebebeb;
+  --v3grey-deep: #bebebe;
+  --v3grey-noise: rgb(220, 220, 220);
+
+  --v3dark: #333333;
+  --v3dark-deep: #141414;
+  --v3dark-noise: #141414;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 0, 0, 0;
-    --background-hex: #ebebeb;
-  }
+:root:not(.dark){
+  /* Defaults */
+  /* Gradients */
+  --def-grad-from: var(--v3grey-deep);
+  --def-grad-to: #ffffff;
+  --def-grad-noise: var(--v3grey-noise);
+
+  --invert--def-grad-from: var(--v3dark-deep);
+  --invert--def-grad-to: var(--v3dark);
+  --invert--def-grad-noise: var(--v3dark-noise);
+
+  /* Background */
+  --def-bg: var(--v3grey-deep);
+  --invert--def-bg: var(--v3dark-deep);
+
+  /* Text */
+  --def-text: var(--v3dark);
+  --invert--def-text: var(--light);
+}
+
+/* @media (prefers-color-scheme: dark), */
+:root.dark {
+    --def-grad-from: var(--v3dark-deep);
+    --def-grad-to: var(--v3dark);
+    --def-grad-noise: var(--v3dark-noise);
+
+    --invert--def-grad-from: var(--v3grey-deep);
+    --invert--def-grad-to: #ffffff;
+    --invert--def-grad-noise: var(--v3grey-noise);
+
+    --def-bg: var(--v3dark-deep);
+    --invert--def-bg: var(--v3grey-deep);
+
+    --def-text: var(--light);
+    --invert--def-text: var(--v3dark);
 }
 
 @layer base {
@@ -37,8 +81,11 @@ html {
 }
 
 body {
-  @apply bg-v3grey-deep text-v3dark text-sm font-normal;
-  /* @apply dark:bg-darkdark:text-white; */
+  @apply bg-def-invert_bg text-def-text text-sm font-normal;
+
+  & > main {
+    @apply relative rounded-b-[2rem] overflow-hidden pb-8 shadow;
+  }
 }
 
 /* TODO: Refactor section style and usage across all components */
