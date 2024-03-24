@@ -1,14 +1,13 @@
 "use client";
 
-import useDOMRect from "../Hero/FloatingPrintHead/DOMRect.hook";
-import NoisyGradientShape from "../Hero/HeroV3/NoisyGradientShape";
-import "./FooterBg.style.css";
+import useDOMRect from "../../lib/DOMRect.hook";
+import SVGNoisyGradientShape from "../SVGs/SVGNoisyGradientShape";
 
 export default function FooterBg() {
   const { width, height } = useDOMRect("footer");
 
   return (
-    <NoisyGradientShape
+    <SVGNoisyGradientShape
       id="footerBg"
       className="size-full absolute inset-0 -z-50"
       shape="rect"

@@ -1,7 +1,5 @@
 "use client";
 
-import useDOMRect from "../../FloatingPrintHead/DOMRect.hook";
-
 type TProps = {
   className?: string;
   parentDOMRect: {
@@ -53,7 +51,6 @@ export const FilamentLine = ({ className, parentDOMRect }: TProps) => {
               strokeWidth={stroke}
               stroke="url(#filamentLinesGradient)"
               strokeLinecap="round"
-              // strokeDasharray="100"
               fill="none"
             />
           );

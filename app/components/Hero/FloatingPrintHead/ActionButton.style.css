@@ -1,7 +1,0 @@
-#hero-action-button {
-  @apply rounded-md shadow-md bg-[#F1FF00] px-20 py-2 uppercase;
-  @apply hover:scale-105 hover:rounded-[2rem];
-  @apply active:scale-95;
-
-  transition: border-radius 100ms, transform 350ms cubic-bezier(0.25, 0.1, 0, 2);
-}

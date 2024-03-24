@@ -1,13 +1,15 @@
+// TODO: Fix viewbox
+
 "use client";
 
-import useDOMRect from "../FloatingPrintHead/DOMRect.hook";
-import NoisyGradientShape from "./NoisyGradientShape";
+import useDOMRect from "../../../lib/DOMRect.hook";
+import SVGNoisyGradientShape from "../../SVGs/SVGNoisyGradientShape";
 
-export default function DynamicBg() {
+export default function Background() {
   const { x, y, width, height } = useDOMRect("#printHeadBg");
 
   return (
-    <NoisyGradientShape
+    <SVGNoisyGradientShape
       id="heroBg"
       className="size-full absolute inset-0 -z-40"
       shape="rect"

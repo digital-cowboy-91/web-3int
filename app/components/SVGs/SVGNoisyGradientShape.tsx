@@ -1,3 +1,5 @@
+// TODO: Linear
+
 import _ from "lodash";
 
 type TProps = {
@@ -21,15 +23,15 @@ type TProps = {
     type?: "linear" | "radial";
   };
   shape: "circle" | "rect";
-  viewbox?: string;
+  viewbox: string;
 };
 
-export default function NoisyGradientShape({
+export default function SVGNoisyGradientShape({
   id,
   className,
   gradient,
   shape,
-  viewbox = "0 0 500 500",
+  viewbox,
 }: TProps) {
   const { type, coordinates, colors, steps } = _.merge(
     {

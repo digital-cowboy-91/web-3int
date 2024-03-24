@@ -1,5 +1,4 @@
 import LogoChar from "../Logo/LogoChar";
-// import "./Header.style.css";
 import Action from "../Buttons/Action";
 import "./HeaderV3.style.css";
 import MobileMenuButton from "./MobileMenuButton";
