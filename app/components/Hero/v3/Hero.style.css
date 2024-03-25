@@ -8,9 +8,9 @@
   }
 
   &--col1 {
-    @apply relative justify-self-center flex justify-center items-center size-[500px];
-    @apply lg:order-2 lg:size-[550px];
-    @apply xl:size-[600px];
+    @apply relative justify-self-center flex justify-center items-center h-[500px];
+    @apply lg:order-2 lg:h-[550px];
+    @apply xl:h-[600px];
 
     & > svg {
       @apply absolute left-1/2 -translate-x-1/2 -z-10 h-full;
@@ -18,7 +18,10 @@
 
     &::before,
     &::after {
-      @apply absolute inset-0 rounded-full content-[""] -z-30;
+      @apply absolute size-[450px] rounded-full content-[""] -z-30;
+      @apply sm:size-[500px];
+      @apply lg:size-[550px];
+      @apply xl:size-[600px];
     }
 
     &::before {
