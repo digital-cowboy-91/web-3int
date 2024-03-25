@@ -1,17 +1,16 @@
 .footer {
-  @apply w-full relative grid grid-rows-[5rem_2.5rem] text-def-invert_text;
+  @apply w-full relative grid grid-rows-[5rem_2.5rem];
 
   & > div {
     @apply h-full flex items-center;
   }
 
   &--menu {
-    @apply container px-4 text-def-invert_text;
+    @apply container px-4 text-[--rgb-invert--text];
   }
 
   &--copyright {
     @apply bg-v3dark-deep dark:bg-v3green text-white justify-center;
-    /* @apply bg-def-invert_bg justify-center; */
 
     & > div > span {
       @apply text-v3yellow;

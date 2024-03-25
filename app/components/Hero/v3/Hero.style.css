@@ -8,12 +8,31 @@
   }
 
   &--col1 {
-    @apply relative flex justify-center items-center h-[500px];
-    @apply lg:order-2 lg:h-[550px];
-    @apply xl:h-[600px];
+    @apply relative justify-self-center flex justify-center items-center size-[500px];
+    @apply lg:order-2 lg:size-[550px];
+    @apply xl:size-[600px];
 
     & > svg {
       @apply absolute left-1/2 -translate-x-1/2 -z-10 h-full;
+    }
+
+    &::before,
+    &::after {
+      @apply absolute inset-0 rounded-full content-[""] -z-30;
+    }
+
+    &::before {
+      background: rgb(var(--coords-secondary));
+      background-image: var(--noise-pattern);
+      background-size: 100px;
+    }
+
+    &::after {
+      background: radial-gradient(
+        circle at 50% 50%,
+        rgb(var(--coords-secondary-light)),
+        rgba(var(--coords-secondary), 0)
+      );
     }
   }
 

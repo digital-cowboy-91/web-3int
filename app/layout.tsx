@@ -38,7 +38,7 @@ export default function RootLayout({
       </head>
       <body className={poppins.className}>
         <Header />
-        <main>{children}</main>
+        <main className="main-gradient">{children}</main>
         <Footer />
       </body>
     </html>

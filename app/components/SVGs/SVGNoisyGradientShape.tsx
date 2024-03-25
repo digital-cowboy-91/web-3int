@@ -64,7 +64,7 @@ export default function SVGNoisyGradientShape({
         <filter id={"noiseFilter" + id}>
           <feTurbulence
             type="fractalNoise"
-            baseFrequency="5"
+            baseFrequency="1"
             numOctaves="1"
             stitchTiles="stitch"
             result={"feTurbulence" + id}

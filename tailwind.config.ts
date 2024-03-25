@@ -43,19 +43,19 @@ const config: Config = {
           light: "#d9e5d5",
         },
         v3yellow: {
-          DEFAULT: "var(--v3yellow)",
+          DEFAULT: "rgb(var(--coords-primary))",
         },
         v3green: {
-          DEFAULT: "var(--v3green)",
-          light: "var(--v3green-light)",
+          DEFAULT: "rgb(var(--coords-secondary))",
+          light: "rgb(var(--coords-secondary-light))",
         },
         v3dark: {
-          DEFAULT: "var(--v3dark)",
-          deep: "var(--v3dark-deep)",
+          DEFAULT: "rgb(var(--coords-dark))",
+          deep: "rgb(var(--coords-dark-deep))",
         },
         v3grey: {
-          DEFAULT: "var(--v3grey)",
-          deep: "var(--v3grey-deep)",
+          DEFAULT: "rgb(var(--coords-neutral))",
+          deep: "rgb(var(--coords-neutral-deep))",
         },
         def: {
           bg: "var(--def-bg)",

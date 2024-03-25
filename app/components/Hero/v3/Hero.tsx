@@ -1,42 +1,13 @@
 import Action from "../../Buttons/Action";
 import Heading from "./Heading";
-import PrintHead from "./PrintHead/PrintHead";
-import Background from "./Background";
 import "./Hero.style.css";
-import SVGNoisyGradientShape from "../../SVGs/SVGNoisyGradientShape";
+import PrintHead from "./PrintHead/PrintHead";
 
 export default function Hero() {
   return (
     <section className="hero-v3">
       <div className="hero-v3--wrapper">
         <div className="hero-v3--col1">
-          <SVGNoisyGradientShape
-            id="printHeadBg"
-            className="absolute inset-0 -z-20"
-            viewbox="0 0 500 500"
-            shape="circle"
-            gradient={{
-              colors: {
-                from: "#00D8AE",
-                to: "#04A586",
-                noise: "#00D8AE",
-              },
-              steps: [
-                {
-                  offset: "0%",
-                  opacity: 1,
-                },
-                {
-                  offset: "66%",
-                  opacity: 0.5,
-                },
-                {
-                  offset: "100%",
-                  opacity: 0,
-                },
-              ],
-            }}
-          />
           <PrintHead />
         </div>
         <div className="hero-v3--col2">
@@ -76,7 +47,6 @@ export default function Hero() {
           </div>
         </div>
       </div>
-      <Background />
     </section>
   );
 }

@@ -1,9 +1,8 @@
-import FooterBg from "./FooterBg";
 import "./Footer.style.css";
 
 export default function Footer() {
   return (
-    <footer className="footer">
+    <footer className="footer main-gradient--footer">
       <div className="footer--menu">Menu</div>
       <div className="footer--copyright">
         <div>
@@ -11,7 +10,6 @@ export default function Footer() {
           <span>digitalcowboys</span>
         </div>
       </div>
-      <FooterBg />
     </footer>
   );
 }
