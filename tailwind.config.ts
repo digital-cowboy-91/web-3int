@@ -65,7 +65,7 @@ const config: Config = {
         },
       },
       boxShadow: {
-        DEFAULT: "5px 5px 20px 5px rgba(0, 0, 0, 0.3)",
+        DEFAULT: "3px 3px 5px rgba(0, 0, 0, 0.3)",
         sm: "0px 1px 1px rgba(0, 0, 0, 0.03), 0px 3px 6px rgba(0, 0, 0, 0.02)",
         md: "3px 3px 5px rgba(0, 0, 0, 0.3)",
       },

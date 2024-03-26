@@ -19,20 +19,6 @@
     & > .buttons-wrapper {
       @apply flex justify-between;
       @apply md:order-3 md:justify-self-end;
-
-      & > .mobile-menu-button {
-        @apply md:hidden;
-        @apply size-12 border-2 border-transparent rounded-full transition-colors;
-        @apply hover:border-white;
-
-        & > svg {
-          @apply size-8 transition-colors;
-        }
-
-        & > * {
-          @apply stroke-white stroke-[3px];
-        }
-      }
     }
 
     & > .menu-items {
@@ -68,7 +54,7 @@
     & > .background {
       clip-path: circle(calc(100vh * sqrt(2)) at 2.25rem 2.5rem);
     }
-    & > .buttons-wrapper > .cart-link > svg {
+    & > .buttons-wrapper svg {
       @apply stroke-white;
     }
     & > .menu-items {

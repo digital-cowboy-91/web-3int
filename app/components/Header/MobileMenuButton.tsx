@@ -1,6 +1,6 @@
 "use client";
 
-import Action from "../Buttons/Action";
+import Action from "../Actions/Action";
 
 export default function MobileMenuButton({
   className,
@@ -12,6 +12,7 @@ export default function MobileMenuButton({
       as="button"
       color="secondary"
       className={className}
+      active="icon"
       icon={
         <svg
           viewBox="0 0 24 24"

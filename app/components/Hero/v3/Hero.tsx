@@ -1,4 +1,4 @@
-import Action from "../../Buttons/Action";
+import Action from "../../Actions/Action";
 import Heading from "./Heading";
 import "./Hero.style.css";
 import PrintHead from "./PrintHead/PrintHead";
@@ -22,7 +22,8 @@ export default function Hero() {
             <div>
               <Action
                 as="button"
-                variant="outline"
+                variant="outlined"
+                active="icon"
                 icon={
                   <svg
                     viewBox="0 0 24 24"

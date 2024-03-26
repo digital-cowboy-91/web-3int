@@ -1,13 +1,15 @@
 import Link, { LinkProps } from "next/link";
 import { ButtonHTMLAttributes, ReactNode } from "react";
-import "./Action.style.css";
-
-type TVariant = "outline" | "underline" | "full";
+// import "./Action.style.css";
+// import "./Action.style.v2.css";
+// import "./Action.style.v3.css";
+import "./Action.style.v4.css";
 
 type TProps = {
+  active?: "button" | "icon";
   className?: string;
-  variant?: "outline" | "underline" | "full" | "none";
-  color?: "primary" | "secondary";
+  color?: "primary" | "secondary" | "black";
+  variant?: "outlined" | "underscored" | "filled";
 } & (
   | { icon: ReactNode; label?: string | ReactNode }
   | { icon?: ReactNode; label: string | ReactNode }
@@ -18,27 +20,27 @@ type TProps = {
   );
 
 export default function Action({
+  active = "button",
+  as,
   className,
-  variant = "full",
   color = "primary",
   icon,
   label,
-  as,
+  variant = "filled",
   ...props
 }: TProps) {
-  const setClass =
-    variant === "none"
-      ? className
-      : [
-          "v3-action",
-          Boolean(icon) ? "v3-action--w-icon" : "v3-action--label",
-          `var--${variant}`,
-          `var--${color}`,
-          className,
-        ].join(" ");
+  const setClass = [
+    "action",
+    `active--${active}`,
+    `color--${color}`,
+    `variant--${variant}`,
+    className,
+  ]
+    .filter((i) => i)
+    .join(" ");
   const children = (
     <>
-      {icon && <div>{icon}</div>}
+      {icon && <div className={`action__icon`}>{icon}</div>}
       {label}
     </>
   );

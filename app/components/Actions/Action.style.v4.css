@@ -1,0 +1,107 @@
+.action {
+  @apply h-10 uppercase font-semibold inline-flex gap-3 items-center;
+
+  --_bezier: cubic-bezier(0.25, 0.1, 0, 2);
+  --_color: ;
+  --_text: ;
+
+  &__icon {
+    @apply w-10 border-2 border-transparent rounded-full p-1.5;
+  }
+
+  &.color {
+    &--primary {
+      --_color: rgb(var(--coords-primary));
+      --_text: rgb(var(--coords-dark));
+    }
+
+    &--secondary {
+      --_color: rgb(var(--coords-secondary));
+      --_text: rgb(var(--coords-light));
+    }
+
+    &--black {
+      --_color: #000000;
+      --_text: #ffffff;
+    }
+  }
+
+  &.active {
+    &--button,
+    &--icon > .action__icon {
+      @apply border-transparent transform-gpu;
+
+      transition: background-color 100ms linear, color 100ms linear,
+        transform 350ms var(--_bezier), border-radius 350ms var(--_bezier),
+        filter 350ms var(--_bezier), box-shadow 350ms var(--_bezier);
+    }
+
+    &--icon:hover > .action__icon {
+      @apply scale-105 drop-shadow;
+      @apply active:scale-100 active:drop-shadow-none;
+    }
+  }
+
+  &.active--icon.variant {
+    &--filled > .action__icon {
+      @apply bg-[--_color];
+
+      & > svg {
+        @apply stroke-[--_text];
+      }
+    }
+
+    &--outlined {
+      & > .action__icon {
+        @apply border-[--_color];
+      }
+
+      &:hover > .action__icon {
+        @apply bg-[--_color] dark:text-[--_text];
+
+        & > svg {
+          @apply stroke-[--_text];
+        }
+      }
+    }
+  }
+
+  &.active--button.variant {
+    &--filled,
+    &--outlined {
+      @apply w-40 justify-center rounded-md border-[3px];
+
+      &:hover {
+        @apply scale-105 shadow rounded-[2rem];
+        @apply active:scale-100 active:shadow-none;
+      }
+    }
+
+    &--filled,
+    &--outlined:hover {
+      @apply bg-[--_color] text-[--_text];
+    }
+
+    &--outlined {
+      @apply border-[--_color];
+    }
+
+    &--underscored {
+      @apply relative;
+
+      &:hover:before {
+        @apply border-[--_color] border-b-[3px] absolute left-0 bottom-0 w-0 content-[""];
+        animation: animate-underscore 250ms ease-out forwards;
+      }
+    }
+
+    @keyframes animate-underscore {
+      0% {
+        width: 0%;
+      }
+      100% {
+        width: 100%;
+      }
+    }
+  }
+}

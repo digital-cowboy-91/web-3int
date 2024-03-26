@@ -2,6 +2,11 @@
   @apply relative font-semibold text-7xl uppercase;
   @apply sm:text-8xl;
 
+  &,
+  & * {
+    @apply select-none;
+  }
+
   & > span {
     & > span {
       @apply absolute ease-in-out;

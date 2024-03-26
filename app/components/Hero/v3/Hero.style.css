@@ -27,7 +27,7 @@
     &::before {
       background: rgb(var(--coords-secondary));
       background-image: var(--noise-pattern);
-      background-size: 100px;
+      background-size: var(--noise-size);
     }
 
     &::after {

@@ -3,6 +3,12 @@
 @tailwind utilities;
 
 :root {
+  /* TW Breakpoints */
+  /* sm: 640px;
+  md: 768px;
+  lg: 1024px;
+  xl: 1280px; */
+
   /* Scheme */
   --light: #ffffff;
   --coords-light: 255, 255, 255;
@@ -20,6 +26,11 @@
 
   /* --noise-pattern: url(https://l4fqnthlyi7x.connect.remote.it/noise-strong.png); */
   --noise-pattern: url(http://localhost:3000/noise-strong.png);
+  --noise-size: 150px;
+
+  @media (min-width: 1024px) {
+    --noise-size: 100px;
+  }
 }
 
 :root:not(.dark) {
@@ -70,7 +81,7 @@
   &::before,
   &--footer::before {
     background-image: var(--noise-pattern);
-    background-size: 100px;
+    background-size: var(--noise-size);
   }
 
   &::before {
@@ -78,15 +89,52 @@
   }
 
   &::after {
+    --main-grad-x: 50%;
+    --main-grad-y: 350px;
+    --main-grad-r: 640px;
+
+    @media (min-width: 768px) {
+      --main-grad-r: 768px;
+    }
+
+    @media (min-width: 1024px) {
+      --main-grad-x: 67%;
+      --main-grad-y: 50%;
+      --main-grad-r: 1024px;
+    }
+
+    @media (min-width: 1280px) {
+      --main-grad-x: 62%;
+      --main-grad-y: 50%;
+      --main-grad-r: 1280px;
+    }
+
     background: radial-gradient(
-      circle at 75% 50%,
+      circle at var(--main-grad-x) var(--main-grad-y),
       rgba(var(--main-grad-from), 0),
       rgba(var(--main-grad-to), 0.7),
-      rgba(var(--main-grad-to), 1) 1280px
+      rgba(var(--main-grad-to), 1) var(--main-grad-r)
     );
+
+    /* background: radial-gradient(
+      circle at var(--main-grad-x) var(--main-grad-y),
+      rgba(100, 0, 0, 0),
+      rgba(100, 0, 0, 0.7),
+      rgba(100, 0, 0, 1) var(--main-grad-r)
+    ); */
   }
 
   &--footer {
+    --main-grad-r: 200px;
+
+    @media (min-width: 768px) {
+      --main-grad-r: 400px;
+    }
+
+    @media (min-width: 1024px) {
+      --main-grad-r: 600px;
+    }
+
     &::before {
       background-color: rgb(var(--invert--main-grad-from));
     }
@@ -96,7 +144,7 @@
         circle at 50% 100%,
         rgba(var(--invert--main-grad-from), 0),
         rgba(var(--invert--main-grad-to), 0.7),
-        rgba(var(--invert--main-grad-to), 1) 720px
+        rgba(var(--invert--main-grad-to), 1) var(--main-grad-r)
       );
     }
   }

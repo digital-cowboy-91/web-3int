@@ -1,5 +1,5 @@
 import LogoChar from "../Logo/LogoChar";
-import Action from "../Buttons/Action";
+import Action from "../Actions/Action";
 import "./HeaderV3.style.css";
 import MobileMenuButton from "./MobileMenuButton";
 
@@ -17,7 +17,8 @@ export default function Header() {
           <Action
             as="a"
             href="/"
-            variant="outline"
+            variant="outlined"
+            active="icon"
             icon={
               <svg
                 viewBox="0 0 24 24"
@@ -38,11 +39,11 @@ export default function Header() {
 
         <ul className="menu-items">
           <li style={{ "--menu-items-item": 0 } as any}>
-            <Action as="a" href="/" label="Home" variant="underline" />
+            <Action as="a" href="/" label="Home" variant="underscored" />
           </li>
           {menuItems.map((item, index) => (
             <li key={index} style={{ "--menu-items-item": index + 1 } as any}>
-              <Action as="a" href="/" label={item} variant="underline" />
+              <Action as="a" href="/" label={item} variant="underscored" />
             </li>
           ))}
         </ul>
