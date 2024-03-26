@@ -28,7 +28,7 @@
   --noise-pattern: url(http://localhost:3000/noise-strong.png);
   --noise-size: 150px;
 
-  @media (min-width: 1024px) {
+  @media screen(lg) {
     --noise-size: 100px;
   }
 }
@@ -93,17 +93,17 @@
     --main-grad-y: 350px;
     --main-grad-r: 640px;
 
-    @media (min-width: 768px) {
+    @media screen(md) {
       --main-grad-r: 768px;
     }
 
-    @media (min-width: 1024px) {
+    @media screen(lg) {
       --main-grad-x: 67%;
       --main-grad-y: 50%;
       --main-grad-r: 1024px;
     }
 
-    @media (min-width: 1280px) {
+    @media screen(xl) {
       --main-grad-x: 62%;
       --main-grad-y: 50%;
       --main-grad-r: 1280px;
@@ -115,23 +115,16 @@
       rgba(var(--main-grad-to), 0.7),
       rgba(var(--main-grad-to), 1) var(--main-grad-r)
     );
-
-    /* background: radial-gradient(
-      circle at var(--main-grad-x) var(--main-grad-y),
-      rgba(100, 0, 0, 0),
-      rgba(100, 0, 0, 0.7),
-      rgba(100, 0, 0, 1) var(--main-grad-r)
-    ); */
   }
 
   &--footer {
     --main-grad-r: 200px;
 
-    @media (min-width: 768px) {
+    @media screen(md) {
       --main-grad-r: 400px;
     }
 
-    @media (min-width: 1024px) {
+    @media screen(lg) {
       --main-grad-r: 600px;
     }
 
