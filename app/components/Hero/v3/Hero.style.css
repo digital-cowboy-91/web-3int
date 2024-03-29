@@ -48,7 +48,7 @@
       @apply flex flex-col;
 
       & > p {
-        @apply grow flex items-center leading-loose;
+        @apply grow flex items-center leading-loose text-primary;
       }
       & > div {
         @apply flex justify-between text-base;
