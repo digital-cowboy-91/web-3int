@@ -11,7 +11,7 @@ const config: Config = {
   theme: {
     extend: {
       fontSize: {
-        "2xs": ["10px", "12px"],
+        "2xs": ["0.7rem", "1rem"],
       },
       maxWidth: {
         "2/5": "40%",
@@ -20,14 +20,6 @@ const config: Config = {
         transparent: "transparent",
         current: "currentColor",
         white: "#FFFFFF",
-        // custom
-        light: "#ebebeb",
-        // neutral-700
-        dark: "#404040",
-        primary: {
-          DEFAULT: "#0D79F2",
-          light: "#0D79F2",
-        },
         action: {
           DEFAULT: "#ffcd00",
         },
@@ -42,32 +34,41 @@ const config: Config = {
           DEFAULT: "#3cb012",
           light: "#d9e5d5",
         },
-        v3yellow: {
-          DEFAULT: "rgb(var(--coords-primary))",
+        light: {
+          DEFAULT: "rgb(var(--coords-light))",
         },
-        v3green: {
-          DEFAULT: "rgb(var(--coords-secondary))",
-          light: "rgb(var(--coords-secondary-light))",
-        },
-        v3dark: {
+        dark: {
           DEFAULT: "rgb(var(--coords-dark))",
           deep: "rgb(var(--coords-dark-deep))",
         },
-        v3grey: {
+        primary: {
+          DEFAULT: "rgb(var(--coords-primary))",
+          deep: "rgb(var(--coords-primary-deep))",
+        },
+        secondary: {
+          DEFAULT: "rgb(var(--coords-secondary))",
+        },
+        neutral: {
           DEFAULT: "rgb(var(--coords-neutral))",
           deep: "rgb(var(--coords-neutral-deep))",
         },
         def: {
           bg: "var(--def-bg)",
           text: "var(--def-text)",
+          link: "var(--rgb-link)",
           invert_bg: "var(--invert--def-bg)",
           invert_text: "var(--invert--def-text)",
+        },
+        auto: {
+          white: "var(--auto-white)",
+          link: "var(--auto-link)",
+          text: "var(--auto-text)",
         },
       },
       boxShadow: {
         DEFAULT: "3px 3px 5px rgba(0, 0, 0, 0.3)",
         sm: "0px 1px 1px rgba(0, 0, 0, 0.03), 0px 3px 6px rgba(0, 0, 0, 0.02)",
-        md: "3px 3px 5px rgba(0, 0, 0, 0.3)",
+        md: "5px 5px 10px 10px rgba(0, 0, 0, 0.3)",
       },
       dropShadow: {
         // DEFAULT: [
@@ -83,8 +84,6 @@ const config: Config = {
       md: "768px",
       lg: "1024px",
       xl: "1280px",
-      // '2xl': '1536px',
-      // => @media (min-width: 1536px) { ... }
     },
     container: {
       center: true,

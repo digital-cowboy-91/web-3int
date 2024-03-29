@@ -2,8 +2,9 @@
   @apply h-10 uppercase font-semibold inline-flex gap-3 items-center;
 
   --_bezier: cubic-bezier(0.25, 0.1, 0, 2);
-  --_color: ;
-  --_text: ;
+  --_background: ;
+  --_foreground: ;
+  --_foreground-hover: ;
 
   &__icon {
     @apply w-10 border-2 border-transparent rounded-full p-1.5;
@@ -11,18 +12,15 @@
 
   &.color {
     &--primary {
-      --_color: rgb(var(--coords-primary));
-      --_text: rgb(var(--coords-dark));
+      --_background: rgb(var(--coords-primary));
+      --_foreground: var(--auto-link);
+      --_foreground-hover: rgb(var(--coords-light));
     }
 
     &--secondary {
-      --_color: rgb(var(--coords-secondary));
-      --_text: rgb(var(--coords-light));
-    }
-
-    &--black {
-      --_color: #000000;
-      --_text: #ffffff;
+      --_background: rgb(var(--coords-secondary));
+      --_foreground: var(--auto-text);
+      --_foreground-hover: rgb(var(--coords-light));
     }
   }
 
@@ -44,24 +42,16 @@
 
   &.active--icon.variant {
     &--filled > .action__icon {
-      @apply bg-[--_color];
-
-      & > svg {
-        @apply stroke-[--_text];
-      }
+      @apply bg-[--_background] text-[--_foreground-hover];
     }
 
     &--outlined {
       & > .action__icon {
-        @apply border-[--_color];
+        @apply border-[--_background] text-[--_foreground];
       }
 
       &:hover > .action__icon {
-        @apply bg-[--_color] dark:text-[--_text];
-
-        & > svg {
-          @apply stroke-[--_text];
-        }
+        @apply bg-[--_background] text-[--_foreground-hover];
       }
     }
   }
@@ -69,7 +59,7 @@
   &.active--button.variant {
     &--filled,
     &--outlined {
-      @apply w-40 justify-center rounded-md border-[3px];
+      @apply w-40 justify-center rounded-md border-[3px] text-[--_foreground];
 
       &:hover {
         @apply scale-105 shadow rounded-[2rem];
@@ -79,18 +69,18 @@
 
     &--filled,
     &--outlined:hover {
-      @apply bg-[--_color] text-[--_text];
+      @apply bg-[--_background] text-[--_foreground-hover];
     }
 
     &--outlined {
-      @apply border-[--_color];
+      @apply border-[--_background];
     }
 
     &--underscored {
-      @apply relative;
+      @apply relative text-[--_foreground];
 
       &:hover:before {
-        @apply border-[--_color] border-b-[3px] absolute left-0 bottom-0 w-0 content-[""];
+        @apply border-[--_background] text-[--_foreground-hover] border-b-[3px] absolute left-0 bottom-0 w-0 content-[""];
         animation: animate-underscore 250ms ease-out forwards;
       }
     }

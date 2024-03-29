@@ -1,11 +1,18 @@
-import { Poppins } from "next/font/google";
+import { Poppins, Noto_Sans } from "next/font/google";
 import { ReactNode } from "react";
 import { CMSHomepage } from "./api/_cms/collections/homepage";
 import Header from "./components/Header/Header";
 import "./globals.css";
-import Footer from "./components/Footer/Footer";
+import Footer from "./components/Footer/Footer.v2";
 
-const poppins = Poppins({ subsets: ["latin"], weight: ["400", "600", "700"] });
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["400", "600", "700", "900"],
+});
+// const noto = Noto_Sans({
+//   subsets: ["latin"],
+//   weight: ["400", "600", "700"],
+// });
 
 export async function generateMetadata() {
   const res = await CMSHomepage.readSingleton();
@@ -36,10 +43,11 @@ export default function RootLayout({
           sizes="any"
         />
       </head>
-      <body className={poppins.className}>
+      <body className={`${poppins.className}`}>
         <Header />
-        <main className="main-gradient">{children}</main>
+        <main>{children}</main>
         <Footer />
+        {/* {modal} */}
       </body>
     </html>
   );

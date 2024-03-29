@@ -1,0 +1,54 @@
+.gallery-item {
+  @apply relative w-[250px] h-[170px] rounded-md p-3 overflow-hidden bg-auto-white;
+
+  &,
+  &::after,
+  &__overlay > div {
+    @apply transition-all duration-300;
+  }
+
+  &::after {
+    @apply absolute inset-0 content-[""] opacity-70;
+
+    background: linear-gradient(
+      0deg,
+      rgba(var(--coords-white)),
+      rgba(var(--coords-white), 0) 75%
+    );
+  }
+
+  & > img {
+    @apply object-contain;
+  }
+
+  &:hover {
+    @apply drop-shadow scale-[1.02];
+
+    &::after {
+      @apply opacity-0;
+    }
+  }
+
+  &:hover > &__overlay {
+    & > div {
+      @apply translate-y-3 opacity-0;
+    }
+  }
+
+  &__overlay {
+    @apply absolute inset-0 top-1/2 grid grid-cols-[66%_33%] items-center font-semibold px-3 z-10;
+
+    & > div {
+      @apply text-light;
+
+      & > span {
+        @apply inline px-1 bg-[rgb(var(--coords-secondary))] box-decoration-clone;
+      }
+    }
+
+    & > svg {
+      @apply size-8 justify-self-end;
+      @apply text-[rgba(var(--coords-dark),0.1)];
+    }
+  }
+}

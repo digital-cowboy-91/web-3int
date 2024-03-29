@@ -11,7 +11,6 @@ type Props = {
 
 export default function ImageAsset({ asset, preset = "", className }: Props) {
   const ref = useRef<HTMLImageElement>(null);
-  const [isLoaded, setIsLoaded] = useState(false);
 
   const { id, title, filename_download: filename } = asset;
 
@@ -24,7 +23,7 @@ export default function ImageAsset({ asset, preset = "", className }: Props) {
     if (!img) return;
 
     function onLoadHandler() {
-      setIsLoaded(true);
+      img?.classList.remove("opacity-0");
     }
 
     function onErrorHandler() {
@@ -52,11 +51,7 @@ export default function ImageAsset({ asset, preset = "", className }: Props) {
       loading="lazy"
       src={composedSrc}
       alt={title}
-      className={className}
-      style={{
-        opacity: isLoaded ? 1 : 0,
-        transition: "opacity 0.5s",
-      }}
+      className={`${className} opacity-0 transition-opacity duration-500`}
     />
   );
 }

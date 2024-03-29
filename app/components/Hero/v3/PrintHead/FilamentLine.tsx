@@ -33,9 +33,9 @@ export const FilamentLine = ({ className, parentDOMRect }: TProps) => {
     >
       <defs>
         <linearGradient id="filamentLinesGradient">
-          <stop offset="0%" stopColor="#0D79F2" />
-          <stop offset="80%" stopColor="#0D79F2" />
-          <stop offset="100%" stopColor="#0D79F2" stopOpacity={0} />
+          <stop offset="0%" stopColor="var(--auto-text)" />
+          <stop offset="80%" stopColor="var(--auto-text)" />
+          <stop offset="100%" stopColor="var(--auto-text)" stopOpacity={0} />
         </linearGradient>
       </defs>
       {Array(2)

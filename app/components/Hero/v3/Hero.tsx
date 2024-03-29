@@ -5,7 +5,7 @@ import PrintHead from "./PrintHead/PrintHead";
 
 export default function Hero() {
   return (
-    <section className="hero-v3">
+    <section id="hero" className="hero-v3 main-gradient">
       <div className="hero-v3--wrapper">
         <div className="hero-v3--col1">
           <PrintHead />
@@ -21,9 +21,11 @@ export default function Hero() {
             </p>
             <div>
               <Action
-                as="button"
+                as="a"
+                href={"/gallery"}
                 variant="outlined"
                 active="icon"
+                color="secondary"
                 icon={
                   <svg
                     viewBox="0 0 24 24"
@@ -39,11 +41,11 @@ export default function Hero() {
                 }
                 label={
                   <span>
-                    Ex<span className="text-v3yellow">plore</span>
+                    Ex<span className="text-secondary">plore</span>
                   </span>
                 }
               />
-              <Action as="button" label="Get quote" />
+              <Action as="button" label="Get quote" color="secondary" />
             </div>
           </div>
         </div>

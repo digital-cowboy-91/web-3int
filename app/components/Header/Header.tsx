@@ -1,5 +1,5 @@
-import LogoChar from "../Logo/LogoChar";
 import Action from "../Actions/Action";
+import SVGLogoChar_Dynamic from "../Logo/SVGLogoChar_Dynamic";
 import "./HeaderV3.style.css";
 import MobileMenuButton from "./MobileMenuButton";
 
@@ -9,7 +9,7 @@ export default function Header() {
     <header id="navigation" data-menu="closed">
       <div id="nav-container" className="wrapper">
         <div className="logo-wrapper">
-          <LogoChar />
+          <SVGLogoChar_Dynamic />
         </div>
 
         <div className="buttons-wrapper">

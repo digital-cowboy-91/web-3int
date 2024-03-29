@@ -10,10 +10,10 @@
   }
 
   &--copyright {
-    @apply bg-v3dark-deep dark:bg-v3green text-white justify-center;
+    @apply bg-dark-deep dark:bg-primary-deep text-white justify-center;
 
     & > div > span {
-      @apply text-v3yellow;
+      @apply text-primary;
     }
   }
 }

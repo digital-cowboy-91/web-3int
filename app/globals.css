@@ -3,25 +3,25 @@
 @tailwind utilities;
 
 :root {
-  /* TW Breakpoints */
-  /* sm: 640px;
-  md: 768px;
-  lg: 1024px;
-  xl: 1280px; */
-
   /* Scheme */
   --light: #ffffff;
-  --coords-light: 255, 255, 255;
 
-  --coords-primary: 241, 255, 0;
+  --coords-white: 255, 255, 255;
 
-  --coords-secondary: 4, 165, 134;
-  --coords-secondary-light: 0, 216, 174;
+  --coords-light: 246, 245, 244;
+  --coords-dark: 41, 46, 46;
 
-  --coords-neutral: 235, 235, 235;
+  --coords-primary: 24, 173, 147;
+  --coords-secondary: 204, 85, 78;
+
+  --coords-link: 44, 34, 99;
+
+  --coords-primary-light: 63, 216, 174;
+  --coords-primary-deep: 0, 148, 119;
+
+  --coords-neutral: 246, 245, 244;
   --coords-neutral-deep: 190, 190, 190;
 
-  --coords-dark: 51, 51, 51;
   --coords-dark-deep: 20, 20, 20;
 
   /* --noise-pattern: url(https://l4fqnthlyi7x.connect.remote.it/noise-strong.png); */
@@ -34,9 +34,14 @@
 }
 
 :root:not(.dark) {
-  --rgb-background: rgb(var(--coords-dark-deep));
+  --auto-white: rgba(var(--coords-white));
+  --auto-link: rgb(var(--coords-link));
+  --auto-text: rgb(var(--coords-dark));
+
+  --rgb-background: rgb(var(--coords-light));
   --rgb-text: rgb(var(--coords-dark));
   --rgb-invert--text: rgb(var(--coords-light));
+  --rgb-link: rgb(var(--coords-link));
 
   --main-grad-from: var(--coords-light);
   --main-grad-to: var(--coords-neutral-deep);
@@ -53,9 +58,14 @@
 
 /* @media (prefers-color-scheme: dark), */
 :root.dark {
-  --rgb-background: rgb(var(--coords-neutral-deep));
+  --auto-white: rgba(var(--coords-light));
+  --auto-link: rgba(var(--coords-light));
+  --auto-text: rgb(var(--coords-light));
+
+  --rgb-background: rgb(var(--coords-dark));
   --rgb-text: rgb(var(--coords-light));
   --rgb-invert--text: rgb(var(--coords-dark));
+  --rgb-link: rgb(33, 193, 255);
 
   --main-grad-from: var(--coords-dark);
   --main-grad-to: var(--coords-dark-deep);
@@ -66,11 +76,11 @@
   --def-bg: var(--coords-dark-deep);
   --invert--def-bg: var(--coords-neutral-deep);
 
-  --def-text: var(--light);
+  --def-text: var(--coords-light);
   --invert--def-text: var(--coords-dark);
 }
 
-.main-gradient {
+._main-gradient {
   &::before,
   &::after,
   &--footer::before,
@@ -146,18 +156,29 @@
 @layer base {
   h1,
   h2,
-  h3,
-  a {
-    @apply font-semibold;
+  h3 {
+    @apply font-black uppercase text-[rgb(var(--coords-secondary))];
+
+    font-family: var(--font-poppins);
   }
   h1 {
-    @apply text-xl;
+    @apply text-3xl;
   }
   h2 {
-    @apply text-xl;
+    @apply text-lg;
   }
   h3 {
     @apply text-base;
+  }
+  b,
+  strong {
+    @apply font-semibold;
+  }
+}
+
+@layer components {
+  .content {
+    @apply mx-4 md:mx-8 xl:mx-48 lg:mx-24;
   }
 }
 
@@ -166,10 +187,18 @@ html {
 }
 
 body {
-  @apply bg-[--rgb-background] text-[--rgb-text] text-sm font-normal;
+  @apply relative bg-[--rgb-background] text-[--rgb-text] text-sm font-normal;
 
   & > main {
-    @apply relative rounded-b-[2rem] overflow-hidden pb-8 shadow min-h-screen;
+    @apply min-h-screen;
+
+    &:has(> :first-child:not(#hero)) {
+      @apply pt-32;
+    }
+
+    &:has(> :last-child:not(#hero)) {
+      @apply pb-32;
+    }
   }
 }
 

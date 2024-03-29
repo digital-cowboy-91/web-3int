@@ -5,7 +5,7 @@
   .wrapper {
     @apply grid grid-rows-[5rem_1fr] items-center container font-semibold uppercase px-4;
     @apply md:grid md:grid-cols-[5rem_1fr_5rem] md:grid-rows-[5rem];
-    @apply lg:px-8;
+    @apply lg:px-0;
 
     & > .logo-wrapper {
       @apply hidden;
@@ -30,7 +30,7 @@
       }
 
       @media (max-width: 767px) {
-        @apply text-white;
+        @apply text-auto-white;
 
         & > li {
           @apply opacity-0 translate-x-14 transition-all;
@@ -38,7 +38,7 @@
       }
     }
     & > .background {
-      @apply absolute -z-10 inset-0 bg-v3green;
+      @apply absolute -z-10 inset-0 bg-primary-deep;
       @apply md:hidden;
 
       clip-path: circle(0rem at 2.25rem 2.5rem);
@@ -55,7 +55,7 @@
       clip-path: circle(calc(100vh * sqrt(2)) at 2.25rem 2.5rem);
     }
     & > .buttons-wrapper svg {
-      @apply stroke-white;
+      @apply stroke-auto-white;
     }
     & > .menu-items {
       & > li {

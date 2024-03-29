@@ -10,7 +10,6 @@ export default function MobileMenuButton({
   return (
     <Action
       as="button"
-      color="secondary"
       className={className}
       active="icon"
       icon={
