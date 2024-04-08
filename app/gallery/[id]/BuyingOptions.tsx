@@ -1,3 +1,5 @@
+"use client";
+
 import { TProduct } from "@/app/api/_cms/collections/products";
 import {
   ArrowDownTrayIcon,

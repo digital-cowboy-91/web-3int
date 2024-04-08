@@ -46,7 +46,7 @@ export function ButtonDropdown_v2({
   return (
     <div id={id} className={"relative " + className}>
       <button
-        className={`px-4 gap-4 w-full font-semibold ${
+        className={`px-4 gap-4 w-full font-bold ${
           isOpen
             ? "border-primary border-b-2 pt-[8px] pb-[7px] "
             : "border-grey hover:border-primary border-b-[1px] hover:border-b-2 py-[8px] hover:pt-[8px] hover:pb-[7px]"

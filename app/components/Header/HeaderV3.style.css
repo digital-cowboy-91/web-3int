@@ -3,7 +3,7 @@
   @apply md:overflow-visible;
 
   .wrapper {
-    @apply grid grid-rows-[5rem_1fr] items-center container font-semibold uppercase px-4;
+    @apply grid grid-rows-[5rem_1fr] items-center container px-4;
     @apply md:grid md:grid-cols-[5rem_1fr_5rem] md:grid-rows-[5rem];
     @apply lg:px-0;
 

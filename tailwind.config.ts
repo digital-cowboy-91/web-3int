@@ -12,6 +12,7 @@ const config: Config = {
     extend: {
       fontSize: {
         "2xs": ["0.7rem", "1rem"],
+        md: ["1rem", "1.3rem"],
       },
       maxWidth: {
         "2/5": "40%",

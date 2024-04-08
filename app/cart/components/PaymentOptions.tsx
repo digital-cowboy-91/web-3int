@@ -57,7 +57,7 @@ export function PaymentOptions() {
 
       <Link
         href={path}
-        className="flex justify-center items-center h-[40px] p-2 bg-primary text-white rounded-[0.25rem] font-semibold"
+        className="flex justify-center items-center h-[40px] p-2 bg-primary text-white rounded-[0.25rem] font-bold"
       >
         PAY BY CARD
       </Link>

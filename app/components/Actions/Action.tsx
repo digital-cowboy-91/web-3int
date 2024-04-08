@@ -23,7 +23,7 @@ export default function Action({
   active = "button",
   as,
   className,
-  color = "primary",
+  color = "secondary",
   icon,
   label,
   variant = "filled",

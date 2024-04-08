@@ -6,7 +6,7 @@ export default function Footer() {
       <div className="footer__wrapper">
         <div className="footer__menu">Menu</div>
         <div className="footer__copyright">
-          © 3INT {new Date().getFullYear()} <span>|</span> developed by{" "}
+          © 3int UK {new Date().getFullYear()} <span>|</span> developed by{" "}
           <span>digitalcowboys</span>
         </div>
       </div>

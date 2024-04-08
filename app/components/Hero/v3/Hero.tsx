@@ -35,17 +35,13 @@ export default function Hero() {
                     strokeLinejoin="round"
                     stroke="currentColor"
                   >
-                    <path d="M1,12L23,12" />
-                    <path d="M4,4L23,12L4,20" />
+                    <path d="M4,12L20,12" />
+                    <path d="M8,4L20,12L8,20" />
                   </svg>
                 }
-                label={
-                  <span>
-                    Ex<span className="text-secondary">plore</span>
-                  </span>
-                }
+                label="Explore"
               />
-              <Action as="button" label="Get quote" color="secondary" />
+              <Action as="button" label="Get Quote" color="secondary" />
             </div>
           </div>
         </div>

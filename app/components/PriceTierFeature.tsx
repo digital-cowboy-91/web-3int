@@ -34,7 +34,7 @@ const PriceTierFeature = ({ feature, description }: Props) => {
             initial="init"
             animate="enter"
             exit="exit"
-            className="font-semibold text-primary"
+            className="font-bold text-primary"
           >
             {description}
           </motion.span>

@@ -1,5 +1,5 @@
 .hero-v3--heading {
-  @apply relative font-semibold text-7xl uppercase text-auto-text;
+  @apply relative font-black italic text-7xl uppercase text-auto-text;
   @apply sm:text-8xl;
 
   &,
@@ -14,10 +14,10 @@
       transition: transform 350ms cubic-bezier(0.25, 0.1, 0, 2);
 
       &:first-child {
-        @apply opacity-100 translate-y-0 text-secondary;
+        @apply opacity-100 translate-y-0 text-primary;
       }
       &:last-child {
-        @apply opacity-0 translate-y-4 text-primary;
+        @apply opacity-0 translate-y-4 text-secondary;
       }
     }
     &:hover {

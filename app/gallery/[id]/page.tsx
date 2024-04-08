@@ -1,12 +1,14 @@
 import { CMSGallery } from "@/app/api/_cms/collections/gallery";
 import ImageAsset from "@/app/components/ImageAsset";
+import IconAnimation from "@/app/components/icons/IconAnimation";
+import IconTimelapse from "@/app/components/icons/IconTimelapse";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Fragment } from "react";
-import VideoAsset from "./VideoAsset";
+import Media from "./Media";
 import "./page.style.css";
-import IconTimelapse from "@/app/components/icons/IconTimelapse";
-import IconAnimation from "@/app/components/icons/IconAnimation";
+import BuyingForm from "./ShopAndDownloadForm";
+import ShopAndDownloadForm from "./ShopAndDownloadForm";
 
 // export const dynamic = "force-static";
 
@@ -48,11 +50,13 @@ export default async function Page({ params }: { params: { id: string } }) {
     <section className="gallery-detail">
       <h1>{res.title}</h1>
       <div className="gallery-detail__media">
-        <ImageAsset asset={media[0]?.asset} />
-        {/* <div className="gallery-detail__media__bar"> */}
         <div className="gallery-detail__media__asset-list">
           {media?.map(({ asset: item }) => (
-            <button key={item.id}>
+            <Link
+              key={item.id}
+              href={{ query: { asset: item.id } }}
+              replace={true}
+            >
               {item.type.includes("video") && item.tags != null ? (
                 item.tags.includes("timelapse") ? (
                   <IconTimelapse fill="#000" stroke="#000" />
@@ -67,9 +71,10 @@ export default async function Page({ params }: { params: { id: string } }) {
                   aria-label={`Show image ${item.title}`}
                 />
               )}
-            </button>
+            </Link>
           ))}
         </div>
+        <Media assets={media.map((i) => i.asset)} />
         <div className="gallery-detail__media__license">
           <Link
             href={claim_ownership ? "/gallery/" + id : (work_url as string)}
@@ -88,7 +93,6 @@ export default async function Page({ params }: { params: { id: string } }) {
             </>
           )}
         </div>
-        {/* </div> */}
       </div>
       <div className="gallery-detail__content">
         <div className="gallery-detail__description">
@@ -106,10 +110,12 @@ export default async function Page({ params }: { params: { id: string } }) {
             ))}
           </div>
         </div>
-        <div className="gallery-detail__products">
-          <h2>Shop & Download</h2>
-          <p>TODO: Buying options</p>
-        </div>
+        {buying_options?.length > 0 && (
+          <div className="gallery-detail__products">
+            <h2>Shop & Download</h2>
+            <ShopAndDownloadForm products={buying_options} />
+          </div>
+        )}
       </div>
     </section>
   );

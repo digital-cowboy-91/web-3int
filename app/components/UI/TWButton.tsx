@@ -4,7 +4,7 @@ const darkColours = ["primary", "action"];
 
 function classComposer(colour: string, border: string) {
   const classes = [
-    "flex items-center gap-4 px-4 py-2 border-2 font-semibold uppercase disabled:text-grey transition-all",
+    "flex items-center gap-4 px-4 py-2 border-2 font-bold uppercase disabled:text-grey transition-all",
   ];
 
   if (border === "outline") {

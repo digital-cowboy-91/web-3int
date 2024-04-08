@@ -1,13 +1,14 @@
-import { Poppins, Noto_Sans } from "next/font/google";
+import { Poppins, Noto_Sans, Figtree } from "next/font/google";
 import { ReactNode } from "react";
 import { CMSHomepage } from "./api/_cms/collections/homepage";
 import Header from "./components/Header/Header";
 import "./globals.css";
 import Footer from "./components/Footer/Footer.v2";
 
-const poppins = Poppins({
+const figtree = Figtree({
   subsets: ["latin"],
   weight: ["400", "600", "700", "900"],
+  style: ["normal", "italic"],
 });
 // const noto = Noto_Sans({
 //   subsets: ["latin"],
@@ -43,7 +44,7 @@ export default function RootLayout({
           sizes="any"
         />
       </head>
-      <body className={`${poppins.className}`}>
+      <body className={`${figtree.className}`}>
         <Header />
         <main>{children}</main>
         <Footer />

@@ -1,57 +1,43 @@
 .gallery-detail {
-  @apply container;
-
-  h1 {
-    /* @apply content; */
-    /* @apply border-l-[4px] ps-2 border-primary; */
-
-    /* @apply relative inline;
-    &:before {
-      @apply content-[""] absolute h-1/2 top-1/2 left-[0.5rem] -right-[0.5rem] bg-primary -z-10;
-    } */
-  }
   h1,
-  h2 {
-    /* @apply inline text-light bg-dark px-1 box-decoration-clone; */
-    /* @apply border-b-[3px] border-primary; */
-    /* @apply underline underline-offset-8 decoration-[4px] decoration-primary; */
-    /* @apply text-primary; */
+  &__content {
+    @apply container;
   }
 
   &__media {
-    @apply relative w-full h-[500px] rounded-md mt-10 mb-6 p-8 xl:bg-white;
+    @apply relative mt-10 mb-6 p-8;
+    @apply grid grid-cols-[min-content_1fr] grid-rows-[500px_min-content] gap-4;
+    @apply xl:container;
 
     &::before {
-      @apply xl:hidden content-[""] absolute h-full w-screen left-1/2 -translate-x-1/2 bg-white top-0 -z-10;
+      @apply content-[""] absolute h-full w-screen left-1/2 -translate-x-1/2 top-0 -z-10 bg-white drop-shadow-md;
+      @apply xl:w-full xl:rounded-md;
+      @apply dark:bg-light;
     }
+
+    /* &:has([data-type="video"])::before {
+      @apply bg-dark;
+    } */
 
     & > img {
       @apply size-full object-contain;
     }
 
     &__asset-list {
-      @apply flex flex-col justify-center gap-2;
-      @apply absolute left-0 inset-y-0 p-4;
+      @apply flex flex-col justify-center gap-2 row-span-2;
 
-      button {
-        @apply flex-none relative size-16 border-[3px] border-transparent rounded-md p-1;
-        @apply hover:border-primary;
+      a {
+        @apply flex items-center size-16 border-[3px] border-transparent rounded p-1 transition-colors duration-300;
+        @apply hover:border-secondary;
       }
     }
 
     &__license {
-      @apply text-right text-2xs text-dark;
-      @apply absolute bottom-0 right-0 p-4;
+      @apply text-right text-2xs rounded transition-opacity;
 
       & > a {
-        @apply font-semibold;
+        @apply font-bold;
       }
-
-      background: linear-gradient(
-        90deg,
-        rgba(var(--coords-white), 0),
-        rgba(var(--coords-white)) 50%
-      );
     }
   }
 

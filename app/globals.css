@@ -11,8 +11,9 @@
   --coords-light: 246, 245, 244;
   --coords-dark: 41, 46, 46;
 
-  --coords-primary: 24, 173, 147;
-  --coords-secondary: 204, 85, 78;
+  --coords-primary: 58, 178, 231; /* 3AB2E7 */
+  /*--coords-primary: 24, 173, 147; /* 18AD93 */
+  --coords-secondary: 204, 85, 78; /* CC554E */
 
   --coords-link: 44, 34, 99;
 
@@ -157,7 +158,7 @@
   h1,
   h2,
   h3 {
-    @apply font-black uppercase text-[rgb(var(--coords-secondary))];
+    @apply font-black uppercase text-primary;
 
     font-family: var(--font-poppins);
   }
@@ -172,7 +173,7 @@
   }
   b,
   strong {
-    @apply font-semibold;
+    @apply font-bold;
   }
 }
 
@@ -190,7 +191,7 @@ body {
   @apply relative bg-[--rgb-background] text-[--rgb-text] text-sm font-normal;
 
   & > main {
-    @apply min-h-screen;
+    @apply min-h-screen overflow-x-hidden;
 
     &:has(> :first-child:not(#hero)) {
       @apply pt-32;
@@ -255,7 +256,7 @@ body {
 
 /* START: BTN & LINK */
 .btn {
-  @apply flex items-center gap-4 px-4 py-2 font-semibold uppercase transition-all;
+  @apply flex items-center gap-4 px-4 py-2 font-bold uppercase transition-all;
 
   &--outline {
     @apply rounded-full border-2;
@@ -355,7 +356,7 @@ body {
       .detail {
         @apply flex-col justify-center items-start;
         & > span:first-child {
-          @apply font-semibold;
+          @apply font-bold;
         }
         & > span:last-child {
           @apply text-xs;
@@ -365,7 +366,7 @@ body {
         @apply justify-between gap-2;
       }
       .total {
-        @apply justify-end sm:justify-center font-semibold;
+        @apply justify-end sm:justify-center font-bold;
       }
       .discount {
         @apply absolute -right-2 -top-2 px-2 py-1 bg-error text-white text-2xs rounded-full;
@@ -406,10 +407,10 @@ body {
       & > div {
         @apply flex justify-between;
         & > span:last-child {
-          @apply font-semibold;
+          @apply font-bold;
         }
         &:last-child {
-          @apply pt-6  font-semibold text-primary;
+          @apply pt-6  font-bold text-primary;
         }
       }
     }

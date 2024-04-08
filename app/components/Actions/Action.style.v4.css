@@ -1,5 +1,5 @@
 .action {
-  @apply h-10 uppercase font-semibold inline-flex gap-3 items-center;
+  @apply h-10 font-bold inline-flex gap-3 items-center;
 
   --_bezier: cubic-bezier(0.25, 0.1, 0, 2);
   --_background: ;
@@ -14,13 +14,13 @@
     &--primary {
       --_background: rgb(var(--coords-primary));
       --_foreground: var(--auto-link);
-      --_foreground-hover: rgb(var(--coords-light));
+      --_foreground-hover: rgb(var(--coords-white));
     }
 
     &--secondary {
       --_background: rgb(var(--coords-secondary));
       --_foreground: var(--auto-text);
-      --_foreground-hover: rgb(var(--coords-light));
+      --_foreground-hover: rgb(var(--coords-white));
     }
   }
 

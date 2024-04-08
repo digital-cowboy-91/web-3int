@@ -48,7 +48,7 @@ export default function ShippingItems({ methods }: { methods: TShipping[] }) {
         defaultChecked={index === 0 && !disabled}
         disabled={disabled || cartStatus !== "open"}
       />
-      <label className="font-semibold" htmlFor={id}>
+      <label className="font-bold" htmlFor={id}>
         {title} · {price ? asCurrency(price) : "Free"}
       </label>
       {description && (

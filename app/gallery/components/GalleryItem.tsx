@@ -2,7 +2,8 @@ import { TGallery } from "@/app/api/_cms/collections/gallery";
 import ImageAsset from "@/app/components/ImageAsset";
 import SVGLogoChar from "@/app/components/Logo/SVGLogoChar";
 import Link from "next/link";
-import "./GalleryItem.style.v3.css";
+// import "./GalleryItem.style.v3.css";
+import "./GalleryItem.style.v4.css";
 
 type TProps = {
   item: TGallery;
