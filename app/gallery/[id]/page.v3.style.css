@@ -1,10 +1,14 @@
 .gallery-detail {
-  @apply relative space-y-9;
+  @apply relative g__space-y;
 
   h1,
   &__tab-menu,
   &__tab-content {
     @apply container;
+  }
+
+  h1 {
+    @apply g__px;
   }
 
   .shadow-wrapper {
@@ -19,7 +23,7 @@
   }
 
   &__media {
-    @apply relative p-9;
+    @apply relative g__p;
     @apply grid grid-cols-[min-content_1fr] grid-rows-[500px_min-content] gap-4;
 
     /* &:has([data-type="video"])::before {
@@ -31,7 +35,7 @@
     }
 
     &__asset-list {
-      @apply flex flex-col justify-center gap-2 row-span-2;
+      @apply flex flex-col justify-center g__gap-sm row-span-2;
 
       a {
         @apply flex items-center size-16 border-[3px] border-transparent rounded p-1 transition-colors duration-300;
@@ -43,28 +47,36 @@
       @apply text-right text-2xs rounded transition-opacity;
 
       & > a {
-        @apply strong;
+        @apply g__strong;
       }
     }
   }
 
   &__tab-menu {
-    @apply relative text-auto-text_invert h-14 flex;
+    @apply relative text-light h-14 flex;
 
     &::before {
-      @apply content-[""] absolute h-full w-screen left-1/2 -translate-x-1/2 top-0 -z-10 bg-auto-contrast;
+      @apply content-[""] absolute h-full w-screen left-1/2 -translate-x-1/2 top-0 -z-10 bg-dark;
       @apply xl:w-full;
     }
   }
 
   &__tab-content {
-    @apply grid gap-9;
+    @apply grid g__gap g__px;
     @apply md:grid-cols-[1fr_40%];
     @apply xl:grid-cols-[1fr_35%];
+
+    & > * {
+      @apply g__py;
+    }
+  }
+
+  &__description {
+    @apply g__space-y;
   }
 
   &__attributes {
-    @apply grid grid-cols-2 gap-x-3 gap-y-3 justify-between;
+    @apply grid grid-cols-2 g__gap-xs justify-between;
 
     & > span {
       @apply text-right;
@@ -72,6 +84,7 @@
   }
 
   &__products {
-    @apply bg-white p-9 rounded-2xl shadow;
+    @apply h-min g__p g__space-y bg-white rounded-2xl shadow;
+    @apply dark:bg-light dark:text-auto-text_invert;
   }
 }

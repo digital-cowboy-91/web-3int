@@ -1,18 +1,18 @@
 .form {
   & > *:not(:first-child) {
-    @apply mt-3 pt-3 border-t-1;
+    @apply mt-9 pt-9 border-t-1;
   }
 
   fieldset {
-    @apply space-y-3;
+    @apply g__space-y-xs;
   }
 
   &__element {
-    @apply grid grid-cols-[30%_1fr] gap-3 items-center;
+    @apply grid grid-cols-[30%_1fr] g__gap-sm items-center;
 
     input,
     select {
-      @apply p-3;
+      @apply g__p-xs;
     }
   }
 
@@ -30,12 +30,12 @@
 
   &__element:not(:has(> [type="radio"], [type="checkbox"])) {
     label {
-      @apply strong;
+      @apply g__strong;
     }
 
     input,
     select {
-      @apply rounded-md drop-shadow-sm;
+      @apply rounded-md border-1 w-full truncate;
     }
   }
 }

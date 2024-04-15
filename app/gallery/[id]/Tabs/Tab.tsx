@@ -45,7 +45,7 @@ export default function Tab({
   return (
     <Link
       ref={ref}
-      className={`h-full flex items-center px-9 font-bold transition-colors tab__trigger ${
+      className={`h-full flex items-center font-bold transition-colors g__px tab__trigger ${
         tabActive ? "bg-secondary" : "hover:bg-white hover:bg-opacity-10"
       } ${className}`}
       href={{ query: updateQueryWith("tab", panelId) }}

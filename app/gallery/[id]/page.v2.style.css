@@ -36,7 +36,7 @@
       @apply text-right text-2xs rounded transition-opacity;
 
       & > a {
-        @apply strong;
+        @apply g__strong;
       }
     }
   }

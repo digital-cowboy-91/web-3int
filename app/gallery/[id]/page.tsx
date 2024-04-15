@@ -4,13 +4,12 @@ import IconAnimation from "@/app/components/icons/IconAnimation";
 import IconTimelapse from "@/app/components/icons/IconTimelapse";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Fragment } from "react";
 import Media from "./Media";
 import ShopAndDownloadForm from "./ShopAndDownloadForm";
-
-import "./page.v3.style.css";
-import { Fragment } from "react";
-import TabPanel from "./Tabs/TabPanel";
 import Tab from "./Tabs/Tab";
+import TabPanel from "./Tabs/TabPanel";
+import "./page.v3.style.css";
 
 // export const dynamic = "force-static";
 
@@ -117,6 +116,18 @@ export default async function Page({ params }: { params: { id: string } }) {
             repudiandae ipsum libero laborum. Facilis voluptatibus perferendis
             quasi, itaque excepturi quae harum explicabo impedit asperiores
             voluptate velit, ea ullam quod quisquam?
+          </p>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit at
+            possimus amet reprehenderit. Nam vero, tempora dolorem eum sit
+            voluptatem consectetur blanditiis? Nihil sunt fugiat quam vel itaque
+            tempore cupiditate.
+          </p>
+          <p>
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Modi quas
+            vitae temporibus a at exercitationem, repellat dolor, iure eligendi
+            itaque placeat laboriosam autem earum unde quam laborum voluptates
+            odit labore?
           </p>
         </TabPanel>
 
