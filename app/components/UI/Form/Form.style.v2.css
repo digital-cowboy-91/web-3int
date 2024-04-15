@@ -1,0 +1,41 @@
+.form {
+  & > *:not(:first-child) {
+    @apply mt-3 pt-3 border-t-1;
+  }
+
+  fieldset {
+    @apply space-y-3;
+  }
+
+  &__element {
+    @apply grid grid-cols-[30%_1fr] gap-3 items-center;
+
+    input,
+    select {
+      @apply p-3;
+    }
+  }
+
+  &__element:has(> [type="checkbox"], [type="radio"]) {
+    @apply grid-cols-[min-content_1fr];
+
+    label {
+      @apply order-2;
+    }
+
+    input {
+      @apply order-1 size-4;
+    }
+  }
+
+  &__element:not(:has(> [type="radio"], [type="checkbox"])) {
+    label {
+      @apply strong;
+    }
+
+    input,
+    select {
+      @apply rounded-md drop-shadow-sm;
+    }
+  }
+}

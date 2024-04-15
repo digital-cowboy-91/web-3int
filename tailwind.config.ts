@@ -17,6 +17,10 @@ const config: Config = {
       maxWidth: {
         "2/5": "40%",
       },
+      borderWidth: {
+        "1": "1px",
+        "3": "3px",
+      },
       colors: {
         transparent: "transparent",
         current: "currentColor",
@@ -64,6 +68,10 @@ const config: Config = {
           white: "var(--auto-white)",
           link: "var(--auto-link)",
           text: "var(--auto-text)",
+          text_invert: "var(--auto-text--invert)",
+          strong: "var(--auto-strong)",
+          contrast: "var(--auto-contrast)",
+          contrast_invert: "var(--auto-contrast--invert)",
         },
       },
       boxShadow: {
@@ -77,6 +85,7 @@ const config: Config = {
         //   "-2px -2px 3px rgba(255, 255, 255, 0.3)",
         // ],
         DEFAULT: ["3px 3px 5px rgba(0, 0, 0, 0.3)"],
+        sm: ["1px 1px 1px rgba(0, 0, 0, 0.1)"],
       },
     },
     colors,

@@ -1,87 +1,103 @@
-import { CSSFormElement, CSSFormElementLabel } from "@/app/styles";
-import { ReactNode } from "react";
+import { FormHTMLAttributes, InputHTMLAttributes, ReactNode } from "react";
 import { FieldErrors, useFormContext } from "react-hook-form";
 
-interface Form {
-  onSubmit: () => void;
+// import "./Form.style.css";
+import "./Form.style.v2.css";
+
+type TForm = {
   children: ReactNode;
   className?: string;
-  ariaHidden?: boolean;
-}
+  onSubmit: () => void;
+} & FormHTMLAttributes<HTMLFormElement>;
 
-const Form = ({ onSubmit, children, className, ariaHidden }: Form) => {
+const Form = ({ children, className, onSubmit, ...props }: TForm) => {
   return (
     <form
+      className={`form ${className}`}
       onSubmit={(e) => {
         e.preventDefault();
         onSubmit();
       }}
-      className={className}
-      aria-hidden={ariaHidden}
+      {...props}
     >
       {children}
     </form>
   );
 };
 
-interface Input {
-  type: "text" | "number";
+type TInput = {
+  label: string | ReactNode;
   name: string;
-  label: string;
-  autocomplete?: string;
-  disabled?: boolean;
-  className?: string;
-}
+} & InputHTMLAttributes<HTMLInputElement>;
 
-const Input = ({
-  type,
-  name,
-  label,
-  autocomplete = "off",
-  disabled,
-  className,
-}: Input) => {
+const Input = ({ label, name, ...props }: TInput) => {
   const {
     register,
     formState: { errors },
   } = useFormContext();
 
   return (
-    <FieldWrapper id={name} errors={errors} className={className}>
-      <input
-        {...register(name)}
-        id={name}
-        type={type}
-        placeholder=" "
-        autoComplete={autocomplete}
-        className={CSSFormElement}
-        disabled={disabled}
-      />
-      <label htmlFor={name} className={CSSFormElementLabel}>
-        {label}
-      </label>
-    </FieldWrapper>
+    <Wrapper elementName={name} errors={errors}>
+      <label htmlFor={props.id}>{label}</label>
+      <input {...register(name)} {...props} />
+    </Wrapper>
   );
 };
 Form.Input = Input;
 
-interface FieldWrapper {
-  id: string;
+type TSelect = {
+  children: ReactNode;
+  name: string;
+  label: string;
+} & InputHTMLAttributes<HTMLSelectElement>;
+
+const Select = ({ children, name, label, ...props }: TSelect) => {
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext();
+
+  return (
+    <Wrapper elementName={name} errors={errors}>
+      <label htmlFor={props.id}>{label}</label>
+      <select {...register(name)} {...props}>
+        {children}
+      </select>
+    </Wrapper>
+  );
+};
+
+Form.Select = Select;
+
+type TGroup = {
+  children: ReactNode;
+  noBorder?: boolean;
+};
+
+const Group = ({ children, noBorder = false }: TGroup) => {
+  return (
+    <fieldset className={`form__group ${noBorder ? "no-border" : ""}`}>
+      {children}
+    </fieldset>
+  );
+};
+
+Form.Group = Group;
+
+interface Wrapper {
+  elementName: string | undefined;
   errors: FieldErrors;
   children: ReactNode;
   className?: string;
 }
 
-const FieldWrapper = ({
-  id,
-  errors,
-  children,
-  className = "",
-}: FieldWrapper) => {
-  const errMessage = extractError({ stringPath: id, errors });
+const Wrapper = ({ elementName, errors, children }: Wrapper) => {
+  if (!elementName) return <>{children}</>;
+
+  const errMessage = extractError({ stringPath: elementName, errors });
 
   return (
-    <div className={`relative z-0 ${className}`}>
+    <div className="form__element">
       {children}
       {errMessage && <div className="my-2 text-error">{errMessage}</div>}
     </div>

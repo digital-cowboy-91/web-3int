@@ -8,12 +8,16 @@
 
   --coords-white: 255, 255, 255;
 
-  --coords-light: 246, 245, 244;
+  /* --coords-light: 246, 245, 244; */
+  --coords-light: 251, 250, 249;
   --coords-dark: 41, 46, 46;
+  /* --coords-dark: 35, 32, 84; */
 
-  --coords-primary: 58, 178, 231; /* 3AB2E7 */
+  /* --coords-primary: 58, 178, 231; 3AB2E7 */
+  --coords-primary: 58, 148, 255;
   /*--coords-primary: 24, 173, 147; /* 18AD93 */
-  --coords-secondary: 204, 85, 78; /* CC554E */
+  /* --coords-secondary: 204, 85, 78; CC554E */
+  --coords-secondary: 255, 26, 123;
 
   --coords-link: 44, 34, 99;
 
@@ -38,6 +42,10 @@
   --auto-white: rgba(var(--coords-white));
   --auto-link: rgb(var(--coords-link));
   --auto-text: rgb(var(--coords-dark));
+  --auto-text--invert: rgb(var(--coords-light));
+  --auto-strong: hsl(180, 6%, 45%);
+  --auto-contrast: rgb(var(--coords-dark));
+  --auto-contrast--invert: rgb(var(--coords-light));
 
   --rgb-background: rgb(var(--coords-light));
   --rgb-text: rgb(var(--coords-dark));
@@ -62,6 +70,10 @@
   --auto-white: rgba(var(--coords-light));
   --auto-link: rgba(var(--coords-light));
   --auto-text: rgb(var(--coords-light));
+  --auto-text--invert: rgb(var(--coords-dark));
+  --auto-strong: hsl(180, 6%, 45%);
+  --auto-contrast: rgb(var(--coords-light));
+  --auto-contrast--invert: rgb(var(--coords-dark));
 
   --rgb-background: rgb(var(--coords-dark));
   --rgb-text: rgb(var(--coords-light));
@@ -158,9 +170,9 @@
   h1,
   h2,
   h3 {
-    @apply font-black uppercase text-primary;
+    @apply font-black uppercase;
 
-    font-family: var(--font-poppins);
+    /* font-family: var(--font-poppins); */
   }
   h1 {
     @apply text-3xl;
@@ -171,15 +183,20 @@
   h3 {
     @apply text-base;
   }
+
   b,
   strong {
-    @apply font-bold;
+    @apply strong;
   }
 }
 
 @layer components {
   .content {
     @apply mx-4 md:mx-8 xl:mx-48 lg:mx-24;
+  }
+
+  .strong {
+    @apply font-bold text-auto-strong;
   }
 }
 
@@ -194,11 +211,11 @@ body {
     @apply min-h-screen overflow-x-hidden;
 
     &:has(> :first-child:not(#hero)) {
-      @apply pt-32;
+      @apply pt-20;
     }
 
     &:has(> :last-child:not(#hero)) {
-      @apply pb-32;
+      @apply pb-20;
     }
   }
 }
