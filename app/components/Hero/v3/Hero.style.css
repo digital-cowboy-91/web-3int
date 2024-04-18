@@ -24,8 +24,11 @@
       @apply xl:size-[600px];
     }
 
+    --color1-rawhsl: 163, 66%, 55%;
+    --color2-hsl: hsl(163, 66%, 30%);
+
     &::before {
-      background: rgb(var(--coords-primary-deep));
+      background: var(--color2-hsl);
       background-image: var(--noise-pattern);
       background-size: var(--noise-size);
     }
@@ -33,8 +36,8 @@
     &::after {
       background: radial-gradient(
         circle at 50% 50%,
-        rgb(var(--coords-primary-light)),
-        rgba(var(--coords-primary-deep), 0)
+        hsl(var(--color1-rawhsl)),
+        hsla(var(--color1-rawhsl), 0)
       );
     }
   }

@@ -13,8 +13,6 @@ export default function ShopAndDownloadForm({
 }: {
   products: TProduct[];
 }) {
-  console.log(products);
-
   const formMethods = useForm();
 
   const { unregister, watch, getValues } = formMethods;

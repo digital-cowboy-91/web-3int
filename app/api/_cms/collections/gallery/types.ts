@@ -15,6 +15,7 @@ export type TGallery = {
   title: string;
   cover_image: TAsset;
   attributes: TAttribute[];
+  article: string;
   media: {
     asset: TAsset;
   }[];

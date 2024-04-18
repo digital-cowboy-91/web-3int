@@ -76,10 +76,22 @@
   }
 
   &__attributes {
-    @apply grid grid-cols-2 g__gap-xs justify-between;
+    @apply grid grid-cols-2 justify-between;
+
+    & > * {
+      @apply g__py-xs g__px-sm;
+    }
 
     & > span {
       @apply text-right;
+    }
+
+    & > span:nth-child(4n) {
+      @apply bg-white;
+    }
+
+    & > strong:nth-child(4n - 1) {
+      @apply bg-white;
     }
   }
 

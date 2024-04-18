@@ -154,13 +154,28 @@
     }
 
     &__gap {
-      gap: var(--spacing);
+      &,
+      &-x {
+        column-gap: var(--spacing);
 
-      &-sm {
-        gap: var(--spacing-sm);
+        &-sm {
+          column-gap: var(--spacing-sm);
+        }
+        &-xs {
+          column-gap: var(--spacing-xs);
+        }
       }
-      &-xs {
-        gap: var(--spacing-xs);
+
+      &,
+      &-y {
+        row-gap: var(--spacing);
+
+        &-sm {
+          row-gap: var(--spacing-sm);
+        }
+        &-xs {
+          row-gap: var(--spacing-xs);
+        }
       }
     }
 

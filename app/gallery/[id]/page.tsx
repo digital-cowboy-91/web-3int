@@ -45,6 +45,7 @@ export default async function Page({ params }: { params: { id: string } }) {
     media,
     attributes,
     buying_options,
+    article,
   } = res;
 
   return (
@@ -110,26 +111,11 @@ export default async function Page({ params }: { params: { id: string } }) {
       </div>
 
       <div className="gallery-detail__tab-content">
-        <TabPanel id="description" className="gallery-detail__description">
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum
-            repudiandae ipsum libero laborum. Facilis voluptatibus perferendis
-            quasi, itaque excepturi quae harum explicabo impedit asperiores
-            voluptate velit, ea ullam quod quisquam?
-          </p>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit at
-            possimus amet reprehenderit. Nam vero, tempora dolorem eum sit
-            voluptatem consectetur blanditiis? Nihil sunt fugiat quam vel itaque
-            tempore cupiditate.
-          </p>
-          <p>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Modi quas
-            vitae temporibus a at exercitationem, repellat dolor, iure eligendi
-            itaque placeat laboriosam autem earum unde quam laborum voluptates
-            odit labore?
-          </p>
-        </TabPanel>
+        <TabPanel
+          id="description"
+          className="gallery-detail__description"
+          dangerouslySetInnerHTML={{ __html: article }}
+        />
 
         <TabPanel id="technical" className="gallery-detail__technical">
           <div className="gallery-detail__attributes">
