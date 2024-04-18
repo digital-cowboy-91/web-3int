@@ -1,6 +1,7 @@
 "use client";
 
 import { TProduct } from "@/app/api/_cms/collections/products";
+import { useCartStore } from "@/app/cart/components/Cart.store";
 import { composeFilamentTitle } from "@/app/cart/lib/composeFilamentTitle";
 import Action from "@/app/components/Actions/Action";
 import Form from "@/app/components/UI/Form/Form";
@@ -15,7 +16,7 @@ export default function ShopAndDownloadForm({
 }) {
   const formMethods = useForm();
 
-  const { unregister, watch, getValues } = formMethods;
+  const { unregister, watch, getValues, handleSubmit } = formMethods;
 
   const pidSelected = watch("pid");
   const productSelected = products.find((p) => p.id === pidSelected);
@@ -33,6 +34,16 @@ export default function ShopAndDownloadForm({
       unregister("subscribeToMarketing");
     }
   }, [pidSelected]);
+
+  const handleAddToCart = handleSubmit((data) => {
+    console.log(data);
+  });
+
+  const addCartItem = useCartStore((s) => s.addCartItem);
+  const handleDownload = handleSubmit((data) => {
+    if (!productSelected) return;
+    addCartItem(productSelected, data.quantity, data.filament);
+  });
 
   return (
     <FormProvider {...formMethods}>
@@ -115,7 +126,7 @@ export default function ShopAndDownloadForm({
                 as={"button"}
                 label="Get Download Link"
                 className="float-right"
-                onClick={() => console.log("TODO: Get Download Link")}
+                onClick={handleDownload}
               />
             </div>
           </>
@@ -125,7 +136,7 @@ export default function ShopAndDownloadForm({
               as={"button"}
               label="Add to Cart"
               className="float-right"
-              onClick={() => console.log("TODO: Add to Cart")}
+              onClick={handleAddToCart}
             />
           </div>
         )}
