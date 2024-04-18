@@ -21,7 +21,7 @@ export default function Hero() {
             </p>
             <div>
               <Action
-                as="a"
+                as="link"
                 href={"/gallery"}
                 variant="outlined"
                 active="icon"

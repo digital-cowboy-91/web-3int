@@ -35,12 +35,8 @@ export default function ShopAndDownloadForm({
     }
   }, [pidSelected]);
 
-  const handleAddToCart = handleSubmit((data) => {
-    console.log(data);
-  });
-
   const addCartItem = useCartStore((s) => s.addCartItem);
-  const handleDownload = handleSubmit((data) => {
+  const handleAddToCart = handleSubmit((data) => {
     if (!productSelected) return;
     addCartItem(productSelected, data.quantity, data.filament);
   });
@@ -123,10 +119,11 @@ export default function ShopAndDownloadForm({
             </Form.Group>
             <div>
               <Action
-                as={"button"}
+                as={"a"}
+                href={"/d/" + productSelected?.id}
                 label="Get Download Link"
                 className="float-right"
-                onClick={handleDownload}
+                download
               />
             </div>
           </>
