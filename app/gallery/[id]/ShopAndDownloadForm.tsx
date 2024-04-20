@@ -123,7 +123,6 @@ export default function ShopAndDownloadForm({
                 label="I want to subscribe to newsletters and occasional promotion and marketing emails"
               />
             </div>
-            <hr />
             <div>
               <Action
                 as={"a"}
@@ -135,15 +134,12 @@ export default function ShopAndDownloadForm({
             </div>
           </>
         ) : (
-          <>
-            <hr />
-            <Action
-              as={"button"}
-              label="Add to Cart"
-              className="float-right"
-              onClick={handleAddToCart}
-            />
-          </>
+          <Action
+            as={"button"}
+            label="Add to Cart"
+            className="float-right"
+            onClick={handleAddToCart}
+          />
         )}
       </Form>
     </FormProvider>

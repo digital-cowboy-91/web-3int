@@ -58,6 +58,7 @@ export default function ShippingItems({ methods }: { methods: TShipping[] }) {
       }
       defaultChecked={index === 0}
       disabled={disabled}
+      onClick={() => setShipping(id, price)}
     />
   ));
 }
