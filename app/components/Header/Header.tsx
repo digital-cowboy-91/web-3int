@@ -16,7 +16,7 @@ export default function Header() {
           <MobileMenuButton className="lg:hidden" />
           <Action
             as="a"
-            href="/"
+            href="/cart"
             variant="outlined"
             active="icon"
             icon={

@@ -118,14 +118,14 @@ export default async function Page({ params }: { params: { id: string } }) {
         />
 
         <TabPanel id="technical" className="gallery-detail__technical">
-          <div className="gallery-detail__attributes">
+          <ul className="gallery-detail__attributes">
             {attributes?.map((attr, index) => (
-              <Fragment key={index}>
+              <li key={index}>
                 <strong>{attr.name}</strong>
                 <span>{attr.value}</span>
-              </Fragment>
+              </li>
             ))}
-          </div>
+          </ul>
         </TabPanel>
         {buying_options?.length > 0 && (
           <TabPanel id="products" className="gallery-detail__products">

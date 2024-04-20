@@ -7,15 +7,13 @@ export default async function ShippingBlock() {
   if (!methods.length) return null;
 
   return (
-    <div>
+    <div className="content-wrapper__l2">
       <h2>Shipping methods</h2>
-      <div>
+      <p>
         Links to digital files will be delivered to email address provided at
         checkout
-      </div>
-      <div className="space-y-4">
-        <ShippingItems methods={methods} />
-      </div>
+      </p>
+      <ShippingItems methods={methods} />
     </div>
   );
 }

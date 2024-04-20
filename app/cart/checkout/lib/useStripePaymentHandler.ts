@@ -5,7 +5,7 @@ import { StripeExpressCheckoutElementConfirmEvent } from "@stripe/stripe-js";
 import { useRouter } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
 import { useCartStore } from "../../components/Cart.store";
-import { useShippingStore } from "../../components/ShippingItems";
+import { useShippingStore } from "../../components/Summary/ShippingItems";
 import { actionStripePaymentHandler } from "./actionStripePaymentHandler";
 
 const host = process.env.NEXT_PUBLIC__WEB_PUBLIC_URL;
