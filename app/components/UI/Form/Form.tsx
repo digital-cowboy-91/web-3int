@@ -31,15 +31,25 @@ type TInput = {
 } & InputHTMLAttributes<HTMLInputElement>;
 
 const Input = ({ label, name, ...props }: TInput) => {
-  const {
-    register,
-    formState: { errors },
-  } = useFormContext();
+  const ctx = useFormContext();
+
+  let errors = {};
+  let combinedProps = { ...props, name };
+
+  if (ctx) {
+    const { register, formState } = ctx;
+
+    errors = formState.errors;
+    combinedProps = {
+      ...props,
+      ...register(name),
+    };
+  }
 
   return (
     <Wrapper elementName={name} errors={errors}>
       <label htmlFor={props.id}>{label}</label>
-      <input {...register(name)} {...props} />
+      <input {...combinedProps} />
     </Wrapper>
   );
 };

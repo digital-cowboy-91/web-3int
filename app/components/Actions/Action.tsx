@@ -1,5 +1,10 @@
 import Link, { LinkProps } from "next/link";
-import { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from "react";
+import {
+  AnchorHTMLAttributes,
+  ButtonHTMLAttributes,
+  CSSProperties,
+  ReactNode,
+} from "react";
 // import "./Action.style.css";
 // import "./Action.style.v2.css";
 // import "./Action.style.v3.css";
@@ -20,6 +25,7 @@ type TProps = {
   className?: string;
   color?: "primary" | "secondary" | "black";
   variant?: "outlined" | "underscored" | "filled";
+  style?: CSSProperties;
 } & (
   | { icon: ReactNode; label?: string | ReactNode }
   | { icon?: ReactNode; label: string | ReactNode }
@@ -34,6 +40,7 @@ export default function Action({
   icon,
   label,
   variant = "filled",
+  style,
   ...props
 }: TProps) {
   const setClass = [
@@ -54,7 +61,7 @@ export default function Action({
 
   if (as === "button") {
     return (
-      <button {...(props as TButtonProps)} className={setClass}>
+      <button {...(props as TButtonProps)} className={setClass} style={style}>
         {children}
       </button>
     );
@@ -62,7 +69,7 @@ export default function Action({
 
   if (as === "a") {
     return (
-      <a {...(props as TAnchorProps)} className={setClass}>
+      <a {...(props as TAnchorProps)} className={setClass} style={style}>
         {children}
       </a>
     );
@@ -70,7 +77,7 @@ export default function Action({
 
   if (as === "link") {
     return (
-      <Link {...(props as TLinkProps)} className={setClass}>
+      <Link {...(props as TLinkProps)} className={setClass} style={style}>
         {children}
       </Link>
     );

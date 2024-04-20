@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { create } from "zustand";
 import asCurrency from "../../../lib/asCurrency";
 import { useCartStore } from "../Cart.store";
+import Form from "@/app/components/UI/Form/Form";
 
 type TStore = {
   id: string | undefined;
@@ -35,25 +36,28 @@ export default function ShippingItems({ methods }: { methods: TShipping[] }) {
     }
   }, [disabled]);
 
+  console.log(disabled);
+
   return methods.map(({ id, title, description, price }, index) => (
-    <div key={id} className="grid grid-cols-[1.5rem_minmax(0,_1fr)]">
-      <input
-        className="size-4 my-auto"
-        id={id}
-        type="radio"
-        name="shipping"
-        onChange={(e) => {
-          e.currentTarget.checked && setShipping(id, price);
-        }}
-        defaultChecked={index === 0 && !disabled}
-        disabled={disabled || cartStatus !== "open"}
-      />
-      <label className="font-bold" htmlFor={id}>
-        {title} · {price ? asCurrency(price) : "Free"}
-      </label>
-      {description && (
-        <span className="text-xs col-start-2">{description}</span>
-      )}
-    </div>
+    <Form.Input
+      key={id}
+      id={`shipping-${100 + index}`}
+      name="shipping"
+      type="radio"
+      value={id}
+      label={
+        <div className="grid grid-cols-[1fr_min-content]">
+          <strong>{title}</strong>
+          <span className="uppercase font-black text-right">
+            {!price ? "Free" : asCurrency(price)}
+          </span>
+          {description && (
+            <div className="col-span-2 text-xs">{description}</div>
+          )}
+        </div>
+      }
+      defaultChecked={index === 0}
+      disabled={disabled}
+    />
   ));
 }

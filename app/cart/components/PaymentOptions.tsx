@@ -1,11 +1,9 @@
 "use client";
 
+import Action from "@/app/components/Actions/Action";
 import { ExpressCheckoutElement } from "@stripe/react-stripe-js";
-import Link from "next/link";
 import useStripePaymentHandler from "../checkout/lib/useStripePaymentHandler";
 import { useCartStore } from "./Cart.store";
-
-const path = "/cart/checkout";
 
 export function PaymentOptions() {
   const cartStatus = useCartStore((s) => s.status);
@@ -48,13 +46,12 @@ export function PaymentOptions() {
           resolve(options);
         }}
       />
-      {/* TODO: Merge branches before change */}
-      <Link
-        href={path}
-        className="flex justify-center items-center h-[40px] p-2 bg-primary text-white rounded-[0.25rem] font-bold"
-      >
-        PAY BY CARD
-      </Link>
+      <Action
+        as="link"
+        href="/cart/checkout"
+        label="Pay By Card"
+        style={{ width: "100%" }}
+      />
     </div>
   );
 }
