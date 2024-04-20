@@ -1,0 +1,33 @@
+.form {
+  &__element {
+    @apply grid grid-cols-[30%_1fr] g__gap-sm items-center;
+
+    input,
+    select {
+      @apply g__p-xs;
+    }
+  }
+
+  &__element:has(> [type="checkbox"], [type="radio"]) {
+    @apply grid-cols-[min-content_1fr];
+
+    label {
+      @apply order-2;
+    }
+
+    input {
+      @apply order-1 size-4;
+    }
+  }
+
+  &__element:not(:has(> [type="radio"], [type="checkbox"])) {
+    label {
+      @apply g__strong;
+    }
+
+    input,
+    select {
+      @apply rounded-md border-1 w-full truncate;
+    }
+  }
+}

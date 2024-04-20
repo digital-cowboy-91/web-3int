@@ -174,7 +174,7 @@ export default function OrderSummaryEmail({
                   className="w-[100px] object-contain mx-auto"
                 />
               </Link>
-              <Text className={`${text} font-semibold text-center`}>
+              <Text className={`${text} font-bold text-center`}>
                 3INT UK, your 3D printing service
               </Text>
             </Section>
@@ -244,7 +244,7 @@ export default function OrderSummaryEmail({
                   key={index}
                   className={
                     summaryList.length - 1 === index
-                      ? "text-primary font-semibold"
+                      ? "text-primary font-bold"
                       : ""
                   }
                 >
@@ -252,7 +252,7 @@ export default function OrderSummaryEmail({
                     <Text className={text}>{name}</Text>
                   </Column>
                   <Column align="right">
-                    <Text className={`${text} font-semibold`}>
+                    <Text className={`${text} font-bold`}>
                       {asCurrency(value)}
                     </Text>
                   </Column>
@@ -289,5 +289,5 @@ export default function OrderSummaryEmail({
 const main = "text-dark bg-neutral-100";
 const section = "mb-4 md:mb-8";
 const text = "my-1";
-const h1 = "text-3xl font-semibold uppercase";
-const h2 = "text-xl font-semibold";
+const h1 = "text-3xl font-bold uppercase";
+const h2 = "text-xl font-bold";

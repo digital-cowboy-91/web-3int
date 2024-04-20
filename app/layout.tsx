@@ -1,13 +1,19 @@
-import { Poppins } from "next/font/google";
+import { Poppins, Noto_Sans, Figtree } from "next/font/google";
 import { ReactNode } from "react";
 import { CMSHomepage } from "./api/_cms/collections/homepage";
-import Footer from "./components/Footer";
-import SectionHero from "./components/Hero/SectionHero";
-import Navbar from "./components/Navbar";
-import ReCaptchaProvider from "./components/ReCaptchaProvider";
+import Header from "./components/Header/Header";
 import "./globals.css";
+import Footer from "./components/Footer/Footer.v2";
 
-const poppins = Poppins({ subsets: ["latin"], weight: ["400", "600", "700"] });
+const figtree = Figtree({
+  subsets: ["latin"],
+  weight: ["400", "600", "700", "900"],
+  style: ["normal", "italic"],
+});
+// const noto = Noto_Sans({
+//   subsets: ["latin"],
+//   weight: ["400", "600", "700"],
+// });
 
 export async function generateMetadata() {
   const res = await CMSHomepage.readSingleton();
@@ -31,19 +37,18 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <link
-        rel="icon"
-        href="/media/139473a8-56f1-4fd9-bd09-80bc40a26aba/favicon.svg"
-        sizes="any"
-      />
-      <body className={`text-sm font-normal relative ${poppins.className}`}>
-        <ReCaptchaProvider siteKey={process.env.RECAPTCHA_SITE_KEY!}>
-          <Navbar />
-          <SectionHero />
-          <main>{children}</main>
-          <Footer />
-          {modal}
-        </ReCaptchaProvider>
+      <head>
+        <link
+          rel="icon"
+          href="/media/139473a8-56f1-4fd9-bd09-80bc40a26aba/favicon.svg"
+          sizes="any"
+        />
+      </head>
+      <body className={`${figtree.className}`}>
+        <Header />
+        <main>{children}</main>
+        <Footer />
+        {/* {modal} */}
       </body>
     </html>
   );

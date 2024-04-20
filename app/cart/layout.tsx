@@ -1,8 +1,7 @@
-import { CSSContainer } from "@/app/styles";
 import { Metadata } from "next";
 import { ReactNode, Suspense } from "react";
 import StripeWrapper from "./checkout/components/StripeWrapper";
-import CartSummary from "./components/CartSummary";
+import CartSummary from "./components/Summary/CartSummary.v2";
 
 export const metadata: Metadata = {
   title: "Cart & Checkout",
@@ -13,14 +12,12 @@ export const metadata: Metadata = {
 export default function Layout({ children }: { children: ReactNode }) {
   return (
     <StripeWrapper>
-      <section id="gallery-detail">
-        <div className={`${CSSContainer} my-8`}>
-          <div className="cart--wrapper">
-            <Suspense fallback={<div>Loading...</div>}>
-              {children}
-              <CartSummary />
-            </Suspense>
-          </div>
+      <section id="cart-checkout">
+        <div className="container grid g__gap md:grid-cols-[1fr_40%] xl:grid-cols-[1fr_35%]">
+          <Suspense fallback={<div>Loading...</div>}>
+            {children}
+            <CartSummary />
+          </Suspense>
         </div>
       </section>
     </StripeWrapper>

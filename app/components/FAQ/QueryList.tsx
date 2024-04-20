@@ -76,7 +76,7 @@ const QueryList = ({ data }: { data: TFAQ[] }) => {
           Prev
         </button>
 
-        <div className="font-semibold text-grey border-b-2 border-transparent">
+        <div className="font-bold text-grey border-b-2 border-transparent">
           {page + 1}/{Math.ceil(data.length / offset)}
         </div>
         <button

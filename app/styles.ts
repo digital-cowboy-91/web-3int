@@ -1,12 +1,12 @@
 export const CSSContainer = "container relative";
 
 const LinkDefault =
-  "px-2 md:px-4 py-1 border-b-2 font-semibold border-transparent uppercase duration-300";
+  "px-2 md:px-4 py-1 border-b-2 font-bold border-transparent uppercase duration-300";
 export const CSSLink = `${LinkDefault} hover:border-current`;
 export const CSSButtonLink = `${LinkDefault} disabled:text-grey enabled:hover:border-current`;
 
 const OutlineDefault =
-  "px-2 md:px-4 py-1 border-2 font-semibold uppercase duration-300";
+  "px-2 md:px-4 py-1 border-2 font-bold uppercase duration-300";
 export const CSSLinkOutline = `${OutlineDefault} hover:rounded-[.5rem]`;
 export const CSSButtonOutline = `${OutlineDefault} disabled:text-grey disabled:border-grey enabled:hover:rounded-[.5rem]`;
 
@@ -18,7 +18,7 @@ export const CSSFormElementLabel =
 const darkColours = ["primary", "success"];
 
 export function TWButton(colour: "primary" | "success" | "action") {
-  return `flex items-center gap-4 px-4 py-2 rounded-full border-2 font-semibold uppercase ${TWButtonColour(
+  return `flex items-center gap-4 px-4 py-2 rounded-full border-2 font-bold uppercase ${TWButtonColour(
     colour
   )}`;
 }

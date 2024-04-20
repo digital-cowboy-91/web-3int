@@ -1,0 +1,17 @@
+.cart-item {
+  @apply grid grid-cols-[1fr_2fr_min-content_min-content] items-center g__gap-sm;
+
+  &__detail {
+    @apply flex flex-col;
+    & > span:first-child {
+      @apply g__strong;
+    }
+    & > span:last-child {
+      @apply text-2xs g__mt-2xs;
+    }
+  }
+
+  &__total {
+    @apply g__strong;
+  }
+}

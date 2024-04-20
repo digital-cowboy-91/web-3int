@@ -1,0 +1,80 @@
+#navigation {
+  @apply absolute w-full z-40 h-20 overflow-hidden;
+  @apply md:overflow-visible;
+
+  .wrapper {
+    @apply grid grid-rows-[5rem_1fr] items-center container px-4;
+    @apply md:grid md:grid-cols-[5rem_1fr_5rem] md:grid-rows-[5rem];
+    @apply lg:px-0;
+
+    & > .logo-wrapper {
+      @apply hidden;
+      @apply md:block;
+
+      & > svg {
+        @apply h-8 fill-none;
+      }
+    }
+
+    & > .buttons-wrapper {
+      @apply flex justify-between;
+      @apply md:order-3 md:justify-self-end;
+    }
+
+    & > .menu-items {
+      @apply flex flex-col items-start gap-4 ms-16 mt-4;
+      @apply md:order-2 md:flex-row md:gap-20 md:m-0 md:w-full;
+
+      & > li:first-child {
+        @apply md:hidden;
+      }
+
+      @media (max-width: 767px) {
+        @apply text-auto-white;
+
+        & > li {
+          @apply opacity-0 translate-x-14 transition-all;
+        }
+      }
+    }
+    & > .background {
+      @apply absolute -z-10 inset-0 bg-primary-deep;
+      @apply md:hidden;
+
+      clip-path: circle(0rem at 2.25rem 2.5rem);
+      transition: 0.5s;
+    }
+  }
+}
+
+#navigation[data-menu="open"] {
+  @apply h-screen;
+
+  & > .wrapper {
+    & > .background {
+      clip-path: circle(calc(100vh * sqrt(2)) at 2.25rem 2.5rem);
+    }
+    & > .buttons-wrapper svg {
+      @apply stroke-auto-white;
+    }
+    & > .menu-items {
+      & > li {
+        animation: animateIn forwards;
+        animation-duration: 250ms;
+        animation-delay: calc(var(--menu-items-item) * 100ms);
+
+        @keyframes animateIn {
+          100% {
+            opacity: 1;
+            transform: translateX(0);
+            overflow: ;
+          }
+        }
+      }
+    }
+  }
+}
+
+#navigation[data-menu="closed"] {
+  @apply delay-500;
+}

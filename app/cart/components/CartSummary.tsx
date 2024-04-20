@@ -1,5 +1,5 @@
-import ShippingBlock from "./ShippingBlock";
-import SummaryBlock from "./SummaryBlock";
+import ShippingBlock from "./Summary/ShippingBlock";
+import SummaryBlock from "./Summary/SummaryBlock";
 
 export default function CartSummary() {
   return (

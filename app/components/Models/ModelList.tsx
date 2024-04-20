@@ -99,7 +99,7 @@ const ModelList = ({ data }: { data: TGallery[] }) => {
                         className="object-contain w-full h-full"
                       />
                     </div>
-                    <div className="h-1/3 w-full font-semibold flex justify-center text-center p-4">
+                    <div className="h-1/3 w-full font-bold flex justify-center text-center p-4">
                       {item.title}
                     </div>
                   </Link>

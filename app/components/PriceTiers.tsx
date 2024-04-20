@@ -3,7 +3,7 @@ import PriceTierFeature from "./PriceTierFeature";
 
 const CSSDl = "text-dark flex flex-col gap-2";
 const CSSDt =
-  "border-b-2 border-grey my-4 text-end text-grey font-semibold uppercase";
+  "border-b-2 border-grey my-4 text-end text-grey font-bold uppercase";
 
 const PriceTiers = async () => {
   const res = await CMSPricing.readItems();
@@ -16,7 +16,7 @@ const PriceTiers = async () => {
             key={id}
             className="bg-white p-5 z-10 rounded-[1rem] flex-1 min-w-[250px] w-[300px]"
           >
-            <div className="flex flex-row justify-between items-center font-semibold uppercase mb-5">
+            <div className="flex flex-row justify-between items-center font-bold uppercase mb-5">
               <span className="text-primary text-2xl">{title}</span>
               <span className="text-dark">{price}</span>
             </div>

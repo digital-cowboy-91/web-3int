@@ -1,0 +1,56 @@
+.form {
+  @apply space-y-4;
+
+  &__group:not(.no-border),
+  &__element:not(&__group > &__element) {
+    @apply border-[1px] border-dark;
+  }
+
+  &__group {
+    &:not(.no-border) {
+      @apply divide-y-[1px] divide-dark;
+    }
+    &.no-border {
+      @apply space-y-3;
+    }
+  }
+
+  &__element:not(.no-border > &__element) > label {
+    @apply p-3;
+  }
+
+  &__element {
+    @apply grid grid-cols-[min-content_1fr] gap-3;
+
+    &:has(> input:not([type="checkbox"])),
+    &:has(> select) {
+      & > label {
+        @apply font-bold;
+      }
+
+      & > input,
+      & > select {
+        @apply order-2 p-3;
+      }
+      & > div {
+        @apply order-1;
+      }
+    }
+  }
+
+  input[type="radio"] {
+    @apply hidden;
+
+    & + label {
+      @apply col-span-2;
+    }
+
+    &:hover + label {
+      @apply bg-secondary bg-opacity-30;
+    }
+
+    &:checked + label {
+      @apply bg-secondary text-white;
+    }
+  }
+}

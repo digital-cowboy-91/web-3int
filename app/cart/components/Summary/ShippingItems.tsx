@@ -3,8 +3,8 @@
 import { TShipping } from "@/app/api/_cms/collections/shipping";
 import { useEffect } from "react";
 import { create } from "zustand";
-import asCurrency from "../../lib/asCurrency";
-import { useCartStore } from "./Cart.store";
+import asCurrency from "../../../lib/asCurrency";
+import { useCartStore } from "../Cart.store";
 
 type TStore = {
   id: string | undefined;
@@ -48,7 +48,7 @@ export default function ShippingItems({ methods }: { methods: TShipping[] }) {
         defaultChecked={index === 0 && !disabled}
         disabled={disabled || cartStatus !== "open"}
       />
-      <label className="font-semibold" htmlFor={id}>
+      <label className="font-bold" htmlFor={id}>
         {title} · {price ? asCurrency(price) : "Free"}
       </label>
       {description && (

@@ -1,0 +1,20 @@
+.footer {
+  @apply absolute w-full bottom-0;
+
+  &__wrapper {
+    @apply container flex justify-between items-center p-4 text-2xs;
+    @apply lg:px-0;
+  }
+
+  &__menu {
+    @apply md:order-2 font-bold;
+  }
+
+  &__copyright {
+    @apply md:order-1;
+
+    & > span {
+      @apply text-primary font-bold;
+    }
+  }
+}

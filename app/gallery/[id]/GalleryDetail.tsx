@@ -49,7 +49,7 @@ const GalleryDetail = ({
           {attributes?.map((attr, index) => {
             return (
               <Fragment key={index}>
-                <div className="font-semibold">{attr.name}</div>
+                <div className="font-bold">{attr.name}</div>
                 <div className="text-right">{attr.value}</div>
               </Fragment>
             );
