@@ -15,7 +15,7 @@ export default function Header() {
         <div className="buttons-wrapper">
           <MobileMenuButton className="lg:hidden" />
           <Action
-            as="a"
+            as="link"
             href="/cart"
             variant="outlined"
             active="icon"
@@ -39,11 +39,11 @@ export default function Header() {
 
         <ul className="menu-items">
           <li style={{ "--menu-items-item": 0 } as any}>
-            <Action as="a" href="/" label="Home" variant="underscored" />
+            <Action as="link" href="/" label="Home" variant="underscored" />
           </li>
           {menuItems.map((item, index) => (
             <li key={index} style={{ "--menu-items-item": index + 1 } as any}>
-              <Action as="a" href="/" label={item} variant="underscored" />
+              <Action as="link" href="/" label={item} variant="underscored" />
             </li>
           ))}
         </ul>

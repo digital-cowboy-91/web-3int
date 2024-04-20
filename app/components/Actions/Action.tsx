@@ -1,9 +1,19 @@
 import Link, { LinkProps } from "next/link";
-import { ButtonHTMLAttributes, ReactNode } from "react";
+import { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from "react";
 // import "./Action.style.css";
 // import "./Action.style.v2.css";
 // import "./Action.style.v3.css";
 import "./Action.style.v4.css";
+
+type TButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
+  as: "button";
+};
+type TAnchorProps = AnchorHTMLAttributes<HTMLAnchorElement> & {
+  as: "a";
+};
+type TLinkProps = LinkProps & {
+  as: "link";
+};
 
 type TProps = {
   active?: "button" | "icon";
@@ -14,10 +24,7 @@ type TProps = {
   | { icon: ReactNode; label?: string | ReactNode }
   | { icon?: ReactNode; label: string | ReactNode }
 ) &
-  (
-    | (ButtonHTMLAttributes<HTMLButtonElement> & { as: "button" })
-    | (LinkProps & { as: "a" })
-  );
+  (TButtonProps | TAnchorProps | TLinkProps);
 
 export default function Action({
   active = "button",
@@ -45,20 +52,29 @@ export default function Action({
     </>
   );
 
+  if (as === "button") {
+    return (
+      <button {...(props as TButtonProps)} className={setClass}>
+        {children}
+      </button>
+    );
+  }
+
   if (as === "a") {
     return (
-      <Link {...(props as LinkProps)} className={setClass}>
+      <a {...(props as TAnchorProps)} className={setClass}>
+        {children}
+      </a>
+    );
+  }
+
+  if (as === "link") {
+    return (
+      <Link {...(props as TLinkProps)} className={setClass}>
         {children}
       </Link>
     );
   }
 
-  return (
-    <button
-      {...(props as ButtonHTMLAttributes<HTMLButtonElement>)}
-      className={setClass}
-    >
-      {children}
-    </button>
-  );
+  return null;
 }
