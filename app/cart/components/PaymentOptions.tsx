@@ -18,7 +18,7 @@ export function PaymentOptions() {
   if (isLoading) return <div>Loading...</div>;
 
   return (
-    <>
+    <div className="content-wrapper__l2">
       <ExpressCheckoutElement
         options={{
           buttonHeight: 40,
@@ -48,19 +48,13 @@ export function PaymentOptions() {
           resolve(options);
         }}
       />
-
-      <div className="relative text-center border-t-[1px] border-dark border-opacity-20">
-        <div className="absolute inset-x-0 -top-2.5 ">
-          <span className="bg-success-light px-2">OR</span>
-        </div>
-      </div>
-
+      {/* TODO: Merge branches before change */}
       <Link
         href={path}
         className="flex justify-center items-center h-[40px] p-2 bg-primary text-white rounded-[0.25rem] font-bold"
       >
         PAY BY CARD
       </Link>
-    </>
+    </div>
   );
 }

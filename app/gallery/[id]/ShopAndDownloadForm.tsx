@@ -43,8 +43,11 @@ export default function ShopAndDownloadForm({
 
   return (
     <FormProvider {...formMethods}>
-      <Form onSubmit={() => null} className="shop-download-form">
-        <Form.Group>
+      <Form
+        onSubmit={() => null}
+        className="shop-download-form content-wrapper"
+      >
+        <div className="content-wrapper__l2">
           {products.map(({ id, title, price }, index) => (
             <Form.Input
               key={id}
@@ -62,42 +65,45 @@ export default function ShopAndDownloadForm({
               }
             />
           ))}
-        </Form.Group>
-
+        </div>
         {!productSelected?.is_digital &&
           productSelected?.filament_refs.length && (
-            <Form.Group>
-              <Form.Select
-                id="shop-download-200"
-                name="filament"
-                label="Filament"
-              >
-                {productSelected?.filament_refs.map(({ filament_ref }) => (
-                  <option key={filament_ref.id} value={filament_ref.id}>
-                    {composeFilamentTitle(filament_ref)}
-                  </option>
-                ))}
-              </Form.Select>
-              <Form.Input
-                id="shop-download-201"
-                type="number"
-                name="quantity"
-                label="Quantity"
-                defaultValue={1}
-                min={1}
-              />
-            </Form.Group>
+            <>
+              <hr />
+              <div className="content-wrapper__l2">
+                <Form.Select
+                  id="shop-download-200"
+                  name="filament"
+                  label="Filament"
+                >
+                  {productSelected?.filament_refs.map(({ filament_ref }) => (
+                    <option key={filament_ref.id} value={filament_ref.id}>
+                      {composeFilamentTitle(filament_ref)}
+                    </option>
+                  ))}
+                </Form.Select>
+                <Form.Input
+                  id="shop-download-201"
+                  type="number"
+                  name="quantity"
+                  label="Quantity"
+                  defaultValue={1}
+                  min={1}
+                />
+              </div>
+            </>
           )}
-
         {productSelected?.is_digital && !productSelected.price ? (
           <>
+            <hr />
             <Form.Input
               id="shop-download-300"
               type="email"
               name="email"
               label="Email"
             />
-            <Form.Group noBorder>
+            <hr />
+            <div className="content-wrapper__l2">
               <Form.Input
                 id="shop-download-401"
                 type="checkbox"
@@ -116,7 +122,8 @@ export default function ShopAndDownloadForm({
                 name="subscribeToMarketing"
                 label="I want to subscribe to newsletters and occasional promotion and marketing emails"
               />
-            </Form.Group>
+            </div>
+            <hr />
             <div>
               <Action
                 as={"a"}
@@ -128,14 +135,15 @@ export default function ShopAndDownloadForm({
             </div>
           </>
         ) : (
-          <div>
+          <>
+            <hr />
             <Action
               as={"button"}
               label="Add to Cart"
               className="float-right"
               onClick={handleAddToCart}
             />
-          </div>
+          </>
         )}
       </Form>
     </FormProvider>
