@@ -1,0 +1,35 @@
+.step-indicator {
+  @apply flex g__gap-sm;
+
+  & > .step {
+    @apply grow grid grid-cols-[24px_min-content_1fr] items-center font-bold;
+
+    & > div {
+      @apply size-[24px] rounded-full flex flex-wrap place-content-center;
+    }
+
+    & > span {
+      @apply g__ps-xs g__pe-sm;
+    }
+
+    &:not(&--active) {
+      @apply text-ghost;
+      & > div {
+        @apply border-3;
+      }
+    }
+
+    &--active {
+      & > div {
+        @apply bg-secondary text-white;
+      }
+      & > span {
+        @apply text-secondary;
+      }
+    }
+
+    &::after {
+      @apply content-[""] bg-ghost h-[1px] w-full;
+    }
+  }
+}

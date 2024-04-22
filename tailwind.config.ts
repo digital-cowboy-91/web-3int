@@ -57,6 +57,9 @@ const config: Config = {
           DEFAULT: "rgb(var(--coords-neutral))",
           deep: "rgb(var(--coords-neutral-deep))",
         },
+        ghost: {
+          DEFAULT: "rgb(var(--coords-ghost))",
+        },
         def: {
           bg: "var(--def-bg)",
           text: "var(--def-text)",
