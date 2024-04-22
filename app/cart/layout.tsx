@@ -14,7 +14,7 @@ export default function Layout({ children }: { children: ReactNode }) {
   return (
     <StripeWrapper>
       <section id="cart-checkout">
-        <div className="container grid g__gap md:grid-cols-[1fr_40%] xl:grid-cols-[1fr_35%]">
+        <div className="container md:grid md:grid-cols-[1fr_40%] xl:grid-cols-[1fr_35%] g__gap">
           <StepIndicator className="col-span-2" />
           <Suspense fallback={<div>Loading...</div>}>
             {children}

@@ -36,8 +36,6 @@ export default function ShippingItems({ methods }: { methods: TShipping[] }) {
     }
   }, [disabled]);
 
-  console.log(disabled);
-
   return methods.map(({ id, title, description, price }, index) => (
     <Form.Input
       key={id}
