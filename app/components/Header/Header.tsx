@@ -1,9 +1,27 @@
+import { title } from "process";
 import Action from "../Actions/Action";
 import SVGLogoChar_Dynamic from "../Logo/SVGLogoChar_Dynamic";
 import "./HeaderV3.style.css";
 import MobileMenuButton from "./MobileMenuButton";
 
-const menuItems = ["Gallery / Store", "Services", "FAQ"];
+const menuItems = [
+  {
+    title: "Gallery",
+    slug: "gallery",
+  },
+  {
+    title: "Pricing",
+    slug: "pricing",
+  },
+  {
+    title: "FAQ",
+    slug: "faq",
+  },
+  {
+    title: "Contact",
+    slug: "contact",
+  },
+];
 export default function Header() {
   return (
     <header id="navigation" data-menu="closed">
@@ -43,7 +61,12 @@ export default function Header() {
           </li>
           {menuItems.map((item, index) => (
             <li key={index} style={{ "--menu-items-item": index + 1 } as any}>
-              <Action as="link" href="/" label={item} variant="underscored" />
+              <Action
+                as="link"
+                href={`/${item.slug}`}
+                label={item.title}
+                variant="underscored"
+              />
             </li>
           ))}
         </ul>
