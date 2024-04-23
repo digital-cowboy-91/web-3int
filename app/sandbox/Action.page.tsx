@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import Action from "../components/Actions/Action";
 
 const asOptions = ["a", "button"];
@@ -26,16 +27,20 @@ export default function Page() {
   return (
     <section className="w-full min-h-screen flex items-center justify-center my-32">
       <div className="grid grid-cols-2 gap-4">
-        {asOptions.map((as) => (
-          <div className="flex flex-col gap-4">
+        {asOptions.map((as, indexAs) => (
+          <div key={indexAs} className="flex flex-col gap-4">
             <h1>Element: {as}</h1>
             <div className="grid grid-cols-2 gap-4">
-              {activeOptions.map((active) => (
-                <div>
-                  {colorOptions.map((color) =>
-                    variantOptions.map((variant) =>
-                      contentOptions.map((content) => (
-                        <>
+              {activeOptions.map((active, indexActive) => (
+                <div key={indexActive}>
+                  {colorOptions.map((color, indexColor) =>
+                    variantOptions.map((variant, indexVariant) =>
+                      contentOptions.map((content, indexContent) => (
+                        <Fragment
+                          key={
+                            indexColor + "" + indexVariant + "" + indexContent
+                          }
+                        >
                           <div className="grid grid-cols-2">
                             <span>active:</span>
                             <span>{active}</span>
@@ -72,7 +77,7 @@ export default function Page() {
                             />
                           )}
                           <hr className="my-4" />
-                        </>
+                        </Fragment>
                       ))
                     )
                   )}

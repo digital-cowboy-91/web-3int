@@ -6,8 +6,6 @@ import SVGLogoChar from "./SVGLogoChar";
 export default function SVGLogoChar_Dynamic() {
   const [scope, animate] = useAnimate();
 
-  if (!scope) return null;
-
   useEffect(() => {
     if (!scope.current) return;
 
@@ -43,6 +41,8 @@ export default function SVGLogoChar_Dynamic() {
       scope.current?.removeEventListener("mouseleave", reverse().pause());
     };
   }, []);
+
+  if (!scope) return null;
 
   return <SVGLogoChar scope={scope} />;
 }
