@@ -18,7 +18,7 @@ pipeline {
         DO_CR = credentials('DO_CR')
         DO_CR_IMAGE = "${DO_CR}/${PROJECT_NAME}"
 
-        DO_VPS1_SSH = credentials('DO_VPS1_SSH')
+        DO_VPS1_SSH_PK = credentials('DO_VPS1_SSH_PK')
         DO_VPS1_HOST = credentials('DO_VPS1_HOST')
         DO_VPS1_USER = credentials('DO_VPS1_USER')
 
@@ -94,7 +94,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                sshagent(credentials : ['DO_VPS1_SSH']) {
+                sshagent(credentials : ['DO_VPS1_SSH_PK']) {
                     sh ''' # Create master SSH connection
                         ssh \
                             -o ControlMaster=auto \

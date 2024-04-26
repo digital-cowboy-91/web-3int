@@ -15,7 +15,7 @@ export default function PrintHead({ className }: { className?: string }) {
       <div id="printHead" className="w-[250px] drop-shadow">
         <img src="/print_head.svg" alt="" />
         <img
-          id="fan"
+          id="printHeadFan"
           src="/fan.svg"
           alt=""
           className="absolute inset-0 size-[116px] left-1/2 top-[270px] -translate-x-1/2 -translate-y-1/2"

@@ -30,7 +30,7 @@ export default function useAnimation() {
 
   const spinFan = () =>
     animate(
-      "#fan",
+      "#printHeadFan",
       {
         left: ["50%"],
         top: ["270px"],
@@ -96,11 +96,6 @@ export default function useAnimation() {
 
   useEffect(() => {
     play();
-    return () => {
-      spinFan().stop();
-      headFloat().stop();
-      // filamentLines().stop();
-    };
   }, []);
 
   return {
