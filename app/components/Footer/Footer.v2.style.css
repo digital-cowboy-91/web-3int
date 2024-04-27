@@ -8,6 +8,10 @@
 
   &__menu {
     @apply md:order-2 font-bold;
+
+    & > ul {
+      @apply inline-flex g__gap;
+    }
   }
 
   &__copyright {
