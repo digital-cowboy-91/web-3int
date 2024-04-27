@@ -295,13 +295,15 @@
       @apply g__mt;
     }
 
-    &__l2 {
+    &__l2,
+    &--l2 {
       & > :not(:first-child) {
         @apply g__mt-sm;
       }
     }
 
-    &__l3 {
+    &__l3,
+    &--l3 {
       & > :not(:first-child) {
         @apply g__mt-xs;
       }

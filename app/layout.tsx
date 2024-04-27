@@ -48,7 +48,7 @@ export default function RootLayout({
         <Header />
         <main>{children}</main>
         <Footer />
-        {/* {modal} */}
+        {modal}
       </body>
     </html>
   );

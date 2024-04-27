@@ -10,14 +10,14 @@ const menuItems = [
     title: "Gallery",
     slug: "gallery",
   },
-  {
-    title: "Pricing",
-    slug: "pricing",
-  },
-  {
-    title: "FAQ",
-    slug: "faq",
-  },
+  // {
+  //   title: "Pricing",
+  //   slug: "pricing",
+  // },
+  // {
+  //   title: "FAQ",
+  //   slug: "faq",
+  // },
   {
     title: "Contact",
     slug: "contact",

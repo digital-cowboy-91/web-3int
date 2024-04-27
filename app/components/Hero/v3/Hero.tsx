@@ -41,7 +41,12 @@ export default function Hero() {
                 }
                 label="Explore"
               />
-              <Action as="button" label="Get Quote" color="secondary" />
+              <Action
+                as="link"
+                href="/contact"
+                label="Get Quote"
+                color="secondary"
+              />
             </div>
           </div>
         </div>

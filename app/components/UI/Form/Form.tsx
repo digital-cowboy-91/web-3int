@@ -55,6 +55,27 @@ const Input = ({ label, name, ...props }: TInput) => {
 };
 Form.Input = Input;
 
+type TTextarea = {
+  label: string | ReactNode;
+  name: string;
+} & InputHTMLAttributes<HTMLTextAreaElement>;
+
+const Textarea = ({ label, name, ...props }: TTextarea) => {
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext();
+
+  return (
+    <Wrapper elementName={name} errors={errors}>
+      <label htmlFor={props.id}>{label}</label>
+      <textarea {...register(name)} {...props} />
+    </Wrapper>
+  );
+};
+
+Form.Textarea = Textarea;
+
 type TSelect = {
   children: ReactNode;
   name: string;
