@@ -1,6 +1,6 @@
 .form {
   &__element {
-    @apply grid grid-cols-[30%_1fr] g__gap-sm items-center;
+    @apply grid grid-cols-[30%_1fr] g__gap-x-sm items-center;
 
     input,
     select {
@@ -29,5 +29,9 @@
     select {
       @apply rounded-md border-1 w-full truncate;
     }
+  }
+
+  &__error {
+    @apply col-span-2 g__mt-xs text-error text-right;
   }
 }

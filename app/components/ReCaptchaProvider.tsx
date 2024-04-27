@@ -9,13 +9,7 @@ type Props = {
 
 const ReCaptchaProvider = ({ siteKey, children }: Props) => {
   return (
-    <GoogleReCaptchaProvider
-      reCaptchaKey={siteKey}
-      container={{
-        element: "recaptcha-wrapper",
-        parameters: {},
-      }}
-    >
+    <GoogleReCaptchaProvider reCaptchaKey={siteKey}>
       {children}
     </GoogleReCaptchaProvider>
   );

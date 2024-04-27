@@ -4,6 +4,7 @@ import { CMSHomepage } from "./api/_cms/collections/homepage";
 import Header from "./components/Header/Header";
 import "./globals.css";
 import Footer from "./components/Footer/Footer.v2";
+import ReCaptchaProvider from "./components/ReCaptchaProvider";
 
 const figtree = Figtree({
   subsets: ["latin"],
@@ -45,10 +46,12 @@ export default function RootLayout({
         />
       </head>
       <body className={`${figtree.className}`}>
-        <Header />
-        <main>{children}</main>
-        <Footer />
-        {modal}
+        <ReCaptchaProvider siteKey={process.env.RECAPTCHA_SITE_KEY!}>
+          <Header />
+          <main>{children}</main>
+          <Footer />
+          {modal}
+        </ReCaptchaProvider>
       </body>
     </html>
   );

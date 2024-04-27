@@ -12,15 +12,30 @@
 
   &.color {
     &--primary {
-      --_background: rgb(var(--coords-primary));
-      --_foreground: var(--auto-link);
       --_foreground-hover: rgb(var(--coords-white));
+
+      &:not(:disabled) {
+        --_background: rgb(var(--coords-primary));
+        --_foreground: var(--auto-link);
+      }
+      &:disabled {
+        --_background: rgb(var(--coords-ghost));
+        --_foreground: var(--auto-link);
+      }
     }
 
     &--secondary {
-      --_background: rgb(var(--coords-secondary));
-      --_foreground: var(--auto-text);
       --_foreground-hover: rgb(var(--coords-white));
+
+      &:not(:disabled) {
+        --_background: rgb(var(--coords-secondary));
+        --_foreground: var(--auto-text);
+      }
+
+      &:disabled {
+        --_background: rgb(var(--coords-ghost));
+        --_foreground: var(--auto-text);
+      }
     }
   }
 
@@ -34,7 +49,7 @@
         filter 350ms var(--_bezier), box-shadow 350ms var(--_bezier);
     }
 
-    &--icon:hover > .action__icon {
+    &--icon:not(:disabled):hover > .action__icon {
       @apply scale-105 drop-shadow;
       @apply active:scale-100 active:drop-shadow-none;
     }
@@ -50,7 +65,7 @@
         @apply border-[--_background] text-[--_foreground];
       }
 
-      &:hover > .action__icon {
+      &:not(:disabled):hover > .action__icon {
         @apply bg-[--_background] text-[--_foreground-hover];
       }
     }
@@ -61,14 +76,14 @@
     &--outlined {
       @apply w-40 justify-center rounded-md border-[3px] text-[--_foreground];
 
-      &:hover {
+      &:not(:disabled):hover {
         @apply scale-105 shadow rounded-[2rem];
         @apply active:scale-100 active:shadow-none;
       }
     }
 
     &--filled,
-    &--outlined:hover {
+    &--outlined:not(:disabled):hover {
       @apply bg-[--_background] text-[--_foreground-hover];
     }
 
@@ -79,7 +94,7 @@
     &--underscored {
       @apply relative text-[--_foreground];
 
-      &:hover:before {
+      &:not(:disabled):hover:before {
         @apply border-[--_background] text-[--_foreground-hover] border-b-[3px] absolute left-0 bottom-0 w-0 content-[""];
         animation: animate-underscore 250ms ease-out forwards;
       }

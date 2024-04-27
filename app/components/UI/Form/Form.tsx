@@ -130,7 +130,7 @@ const Wrapper = ({ elementName, errors, children }: Wrapper) => {
   return (
     <div className="form__element">
       {children}
-      {errMessage && <div className="my-2 text-error">{errMessage}</div>}
+      {errMessage && <div className="form__error">{errMessage}</div>}
     </div>
   );
 };
