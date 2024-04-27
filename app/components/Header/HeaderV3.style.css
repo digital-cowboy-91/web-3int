@@ -8,11 +8,11 @@
     @apply lg:px-0;
 
     & > .logo-wrapper {
-      @apply hidden;
+      @apply hidden h-8;
       @apply md:block;
 
-      & > svg {
-        @apply h-8 fill-none;
+      svg {
+        @apply h-full fill-none;
       }
     }
 
