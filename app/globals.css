@@ -340,8 +340,11 @@
   }
 
   .modal-lockdown {
-    overflow: hidden;
-    @apply scroll-bar-compensation;
+    @apply overflow-hidden scroll-bar-compensation;
+  }
+
+  .glass-wrapper {
+    @apply g__p-sm bg-white/50 rounded-md backdrop-blur-sm;
   }
 }
 

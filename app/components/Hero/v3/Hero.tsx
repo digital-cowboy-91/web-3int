@@ -5,19 +5,19 @@ import PrintHead from "./PrintHead/PrintHead";
 
 export default function Hero() {
   return (
-    <section id="hero" className="hero-v3 main-gradient">
-      <div className="hero-v3--wrapper">
-        <div className="hero-v3--col1">
+    <section id="hero" className="hero">
+      <div className="hero__wrapper">
+        <div className="hero__col1">
           <PrintHead />
         </div>
-        <div className="hero-v3--col2">
+        <div className="hero__col2">
           <div />
           <Heading />
           <div>
             <p>
               through our 3D printing services. Browse our gallery for
-              inspiration and purchases, or contact us if you already have
-              something in mind. Together, let's make it real!
+              inspiration, downloads and purchases, or contact us if you have
+              something specific in mind. Together, let's make it real!
             </p>
             <div>
               <Action

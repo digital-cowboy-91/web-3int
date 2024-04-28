@@ -1,13 +1,13 @@
-.hero-v3 {
+.hero {
   @apply relative w-full flex justify-center items-center overflow-x-hidden;
   @apply lg:h-screen;
 
-  &--wrapper {
+  &__wrapper {
     @apply container grid grid-rows-2 px-4 py-20;
     @apply lg:grid-cols-2 lg:grid-rows-1 lg:p-8;
   }
 
-  &--col1 {
+  &__col1 {
     @apply relative justify-self-center flex justify-center items-center h-[500px];
     @apply lg:order-2 lg:h-[550px];
     @apply xl:h-[600px];
@@ -42,7 +42,7 @@
     }
   }
 
-  &--col2 {
+  &__col2 {
     @apply order-2 grid grid-rows-[5rem_min-content_1fr] mx-auto;
     @apply sm:w-3/4;
     @apply lg:order-1 lg:grid-rows-[1fr_min-content_1fr] lg:w-auto;
