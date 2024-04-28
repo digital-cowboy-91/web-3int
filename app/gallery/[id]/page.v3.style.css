@@ -80,7 +80,7 @@
   }
 
   &__products {
-    @apply h-min cart content-wrapper;
+    @apply h-min card content-wrapper;
     @apply dark:bg-light dark:text-auto-text_invert;
   }
 }

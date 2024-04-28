@@ -6,7 +6,7 @@
   /* Colors */
   --coords-white: 255, 255, 255;
   --coords-light: 251, 250, 249;
-  --coords-dark: 41, 46, 46;
+  --coords-dark: 41 46 46;
   --coords-primary: 58, 148, 255;
   --coords-secondary: 255, 26, 123;
   --coords-ghost: 229, 231, 235;
@@ -285,7 +285,7 @@
     }
   }
 
-  .cart {
+  .card {
     @apply h-min g__p bg-white rounded-2xl shadow;
     @apply dark:bg-light dark:text-auto-text_invert;
   }
@@ -332,20 +332,18 @@
       }
     }
   }
-}
 
-/* TODO: Move to modal stylesheet - START */
-.scroll-bar-compensation {
-  @media (min-width: 768px) {
-    padding-right: 17px;
+  .scroll-bar-compensation {
+    @media (min-width: 768px) {
+      padding-right: 17px;
+    }
+  }
+
+  .modal-lockdown {
+    overflow: hidden;
+    @apply scroll-bar-compensation;
   }
 }
-
-.modal-lockdown {
-  overflow: hidden;
-  @apply scroll-bar-compensation;
-}
-/* TODO: Move to modal stylesheet - END */
 
 /* TODO:
 1. Refactor

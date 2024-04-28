@@ -43,7 +43,7 @@ const config: Config = {
           DEFAULT: "rgb(var(--coords-light))",
         },
         dark: {
-          DEFAULT: "rgb(var(--coords-dark))",
+          DEFAULT: "rgba(var(--coords-dark) / <alpha-value>)",
           deep: "rgb(var(--coords-dark-deep))",
         },
         primary: {

@@ -1,0 +1,23 @@
+.modal {
+  @apply absolute inset-0 z-50 flex justify-center items-center bg-dark/50;
+  @apply transition-opacity;
+
+  &__dialog {
+    @apply z-10 card min-w-[500px] translate-x-0;
+    @apply transition-transform ease-in-out;
+
+    &-header {
+      @apply flex justify-end;
+    }
+  }
+}
+
+.modal[data-modal-hidden="true"] {
+  @apply opacity-0;
+
+  .modal {
+    &__dialog {
+      @apply translate-y-9;
+    }
+  }
+}
