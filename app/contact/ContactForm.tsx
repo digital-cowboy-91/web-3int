@@ -93,7 +93,6 @@ export default function ContactForm() {
           <Form.Textarea
             id="message"
             name="message"
-            type="text"
             label="Message"
             disabled={disabled}
             rows={5}
