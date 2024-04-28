@@ -1,4 +1,9 @@
-import { FormHTMLAttributes, InputHTMLAttributes, ReactNode } from "react";
+import {
+  FormHTMLAttributes,
+  InputHTMLAttributes,
+  ReactNode,
+  TextareaHTMLAttributes,
+} from "react";
 import { FieldErrors, useFormContext } from "react-hook-form";
 
 // import "./Form.style.css";
@@ -58,7 +63,7 @@ Form.Input = Input;
 type TTextarea = {
   label: string | ReactNode;
   name: string;
-} & InputHTMLAttributes<HTMLTextAreaElement>;
+} & TextareaHTMLAttributes<HTMLTextAreaElement>;
 
 const Textarea = ({ label, name, ...props }: TTextarea) => {
   const {

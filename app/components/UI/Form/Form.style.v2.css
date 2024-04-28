@@ -26,7 +26,8 @@
     }
 
     input,
-    select {
+    select,
+    textarea {
       @apply rounded-md border-1 w-full truncate;
     }
   }

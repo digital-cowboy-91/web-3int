@@ -96,6 +96,7 @@ export default function ContactForm() {
             type="text"
             label="Message"
             disabled={disabled}
+            rows={5}
           />
         </div>
         <div className="flex justify-end">
