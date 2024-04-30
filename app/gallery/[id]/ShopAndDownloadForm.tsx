@@ -4,9 +4,10 @@ import { TProduct } from "@/app/api/_cms/collections/products";
 import { useCartStore } from "@/app/cart/components/Cart.store";
 import { composeFilamentTitle } from "@/app/cart/lib/composeFilamentTitle";
 import Action from "@/app/components/Actions/Action";
+import Loader from "@/app/components/Loader";
 import Form from "@/app/components/UI/Form/Form";
 import asCurrency from "@/app/lib/asCurrency";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
 export default function ShopAndDownloadForm({
@@ -14,9 +15,11 @@ export default function ShopAndDownloadForm({
 }: {
   products: TProduct[];
 }) {
+  const [isProcessing, setIsProcessing] = useState(false);
+
   const formMethods = useForm();
 
-  const { unregister, watch, getValues, handleSubmit } = formMethods;
+  const { unregister, watch, getValues, handleSubmit, reset } = formMethods;
 
   const pidSelected = watch("pid");
   const productSelected = products.find((p) => p.id === pidSelected);
@@ -38,7 +41,12 @@ export default function ShopAndDownloadForm({
   const addCartItem = useCartStore((s) => s.addCartItem);
   const handleAddToCart = handleSubmit((data) => {
     if (!productSelected) return;
+    setIsProcessing(true);
     addCartItem(productSelected, data.quantity, data.filament);
+    setTimeout(() => {
+      setIsProcessing(false);
+      reset();
+    }, 500);
   });
 
   return (
@@ -63,6 +71,7 @@ export default function ShopAndDownloadForm({
                   </span>
                 </div>
               }
+              disabled={isProcessing}
             />
           ))}
         </div>
@@ -75,6 +84,7 @@ export default function ShopAndDownloadForm({
                   id="shop-download-200"
                   name="filament"
                   label="Filament"
+                  disabled={isProcessing}
                 >
                   {productSelected?.filament_refs.map(({ filament_ref }) => (
                     <option key={filament_ref.id} value={filament_ref.id}>
@@ -89,6 +99,7 @@ export default function ShopAndDownloadForm({
                   label="Quantity"
                   defaultValue={1}
                   min={1}
+                  disabled={isProcessing}
                 />
               </div>
             </>
@@ -101,6 +112,7 @@ export default function ShopAndDownloadForm({
               type="email"
               name="email"
               label="Email"
+              disabled={isProcessing}
             />
             <hr />
             <div className="content-wrapper__l2">
@@ -109,18 +121,21 @@ export default function ShopAndDownloadForm({
                 type="checkbox"
                 name="mandatoryAgreement"
                 label="I've read T&C and Privacy Policy and I agree to them"
+                disabled={isProcessing}
               />
               <Form.Input
                 id="shop-download-402"
                 type="checkbox"
                 name="subscribeToModel"
                 label="I want to recieve updates/changes about this model"
+                disabled={isProcessing}
               />
               <Form.Input
                 id="shop-download-403"
                 type="checkbox"
                 name="subscribeToMarketing"
                 label="I want to subscribe to newsletters and occasional promotion and marketing emails"
+                disabled={isProcessing}
               />
             </div>
             <div>
@@ -136,9 +151,10 @@ export default function ShopAndDownloadForm({
         ) : (
           <Action
             as={"button"}
-            label="Add to Cart"
+            label={isProcessing ? <Loader /> : "Add to Cart"}
             className="float-right"
             onClick={handleAddToCart}
+            disabled={isProcessing}
           />
         )}
       </Form>
