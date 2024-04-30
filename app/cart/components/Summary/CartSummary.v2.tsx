@@ -4,7 +4,7 @@ import { PaymentOptions } from "../PaymentOptions";
 
 export default function CartSummary() {
   return (
-    <div className="cart content-wrapper">
+    <div className="card content-wrapper">
       <ShippingBlock />
       <hr />
       <SummaryBlock />

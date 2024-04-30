@@ -17,6 +17,7 @@ export function composeCartItem(
     price,
     title,
   } = product;
+
   let amounts = calculateItemPrice(price, quantity, discounts);
 
   let filamentTitle = retrieveFilamentTitle(

@@ -26,7 +26,8 @@ export default function ShippingItems({ methods }: { methods: TShipping[] }) {
   const setShipping = useShippingStore((s) => s.setShipping);
 
   const disabled =
-    !cart.length || cart.findIndex(({ is_digital }) => !is_digital) === -1;
+    ["empty", "pending", undefined].includes(cartStatus) ||
+    cart.findIndex(({ is_digital }) => !is_digital) === -1;
 
   useEffect(() => {
     if (disabled) {
