@@ -1,5 +1,5 @@
 .cart-item {
-  @apply grid grid-cols-[1fr_2fr_min-content_min-content] items-center g__gap-sm;
+  @apply relative grid grid-cols-[1fr_2fr_min-content_min-content] items-center g__gap-sm;
 
   &__detail {
     @apply flex flex-col;
@@ -13,5 +13,10 @@
 
   &__total {
     @apply g__strong;
+  }
+
+  &__discount {
+    @apply text-2xs font-bold bg-red-500 text-white g__py-2xs g__px-xs rounded-bl-md;
+    @apply absolute right-0 top-0;
   }
 }
