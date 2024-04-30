@@ -30,6 +30,7 @@ export default function StripePaymentForm() {
 
   return (
     <form
+      id="payment-form"
       className="w-full max-w-[500px] mx-auto p-4 flex flex-col gap-8"
       onSubmit={handleSubmit}
     >
@@ -56,7 +57,7 @@ export default function StripePaymentForm() {
           },
         }}
       />
-      <div>
+      {/* <div>
         <Action
           as="button"
           label="Order & Pay"
@@ -64,7 +65,7 @@ export default function StripePaymentForm() {
           disabled={!isReady || isLoading}
           className="float-right"
         />
-      </div>
+      </div> */}
     </form>
   );
 }
