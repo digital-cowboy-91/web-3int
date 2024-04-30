@@ -1,3 +1,8 @@
+// TODO:
+// - task: Update link with digitalcowboys
+//   priority: medium
+
+import Action from "../Actions/Action";
 import "./Footer.style.css";
 
 export default function Footer() {
@@ -7,7 +12,12 @@ export default function Footer() {
       <div className="footer--copyright">
         <div>
           © 3INT {new Date().getFullYear()} <span>|</span> developed by{" "}
-          <span>digitalcowboys</span>
+          <Action
+            as={"link"}
+            href={"/"}
+            variant="underscored"
+            label="digitalcowboys"
+          />
         </div>
       </div>
     </footer>

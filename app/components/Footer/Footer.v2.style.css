@@ -17,7 +17,8 @@
   &__copyright {
     @apply md:order-1;
 
-    & > span {
+    & > a,
+    span {
       @apply text-primary font-bold;
     }
   }

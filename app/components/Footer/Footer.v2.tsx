@@ -1,7 +1,12 @@
+// TODO:
+// - task: Update link with digitalcowboys
+//   priority: medium
+
 import { notFound } from "next/navigation";
 import "./Footer.v2.style.css";
 import { CMSLegal } from "@/app/api/_cms/collections/legal";
 import Action from "../Actions/Action";
+import Link from "next/link";
 
 export default async function Footer() {
   const res = await CMSLegal.readItems();
@@ -27,7 +32,7 @@ export default async function Footer() {
         </div>
         <div className="footer__copyright">
           © 3int UK {new Date().getFullYear()} <span>|</span> developed by{" "}
-          <span>digitalcowboys</span>
+          <Link href="/">digitalcowboys</Link>
         </div>
       </div>
     </footer>
