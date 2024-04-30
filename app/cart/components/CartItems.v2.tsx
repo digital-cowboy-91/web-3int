@@ -46,6 +46,7 @@ export default function CartItems() {
                 value={qty}
                 disableIncrease={is_digital}
                 handleChange={(value) => {
+                  console.log(value);
                   if (value === 0) return removeCartItem(index);
                   updateCartItem(index, value);
                 }}

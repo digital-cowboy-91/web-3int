@@ -42,7 +42,7 @@ export default function ShopAndDownloadForm({
   const handleAddToCart = handleSubmit((data) => {
     if (!productSelected) return;
     setIsProcessing(true);
-    addCartItem(productSelected, data.quantity, data.filament);
+    addCartItem(productSelected, parseInt(data.quantity), data.filament);
     setTimeout(() => {
       setIsProcessing(false);
       reset();
