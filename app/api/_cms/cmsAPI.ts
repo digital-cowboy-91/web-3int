@@ -28,7 +28,13 @@ export default async function cmsAPI({
 }: TArgs): Promise<TResponse> {
   try {
     // Add token to params
-    if (addSecret || draftMode) params.push(`access_token=${draftToken}`);
+    if (addSecret || draftMode) {
+      fetchInit.headers = {
+        ...fetchInit.headers,
+        Authorization: `Bearer ${draftToken}`,
+      };
+    }
+
     // Compose API URL
     const url =
       base +
