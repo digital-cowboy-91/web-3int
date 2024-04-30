@@ -40,7 +40,6 @@ export default function ShopAndDownloadForm({
 
   const addCartItem = useCartStore((s) => s.addCartItem);
   const handleAddToCart = handleSubmit((data) => {
-    console.log(productSelected);
     if (!productSelected) return;
     setIsProcessing(true);
     addCartItem(productSelected, parseInt(data.quantity) || 1, data.filament);
