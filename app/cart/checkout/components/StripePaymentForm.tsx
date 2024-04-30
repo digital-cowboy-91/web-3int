@@ -5,12 +5,11 @@ import {
   LinkAuthenticationElement,
   PaymentElement,
 } from "@stripe/react-stripe-js";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useCartStore } from "../../components/Cart.store";
 import MessageBanner from "../../components/MessageBanner";
 import useStripePaymentHandler from "../lib/useStripePaymentHandler";
-import { useRouter } from "next/navigation";
-import Action from "@/app/components/Actions/Action";
 
 export default function StripePaymentForm() {
   const router = useRouter();
@@ -68,15 +67,6 @@ export default function StripePaymentForm() {
           },
         }}
       />
-      {/* <div>
-        <Action
-          as="button"
-          label="Order & Pay"
-          type="submit"
-          disabled={!isReady || isLoading}
-          className="float-right"
-        />
-      </div> */}
     </form>
   );
 }

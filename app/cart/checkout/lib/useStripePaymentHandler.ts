@@ -7,6 +7,8 @@ import { FormEvent, useEffect, useState } from "react";
 import { useCartStore } from "../../components/Cart.store";
 import { useShippingStore } from "../../components/Summary/ShippingItems";
 import { actionStripePaymentHandler } from "./actionStripePaymentHandler";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
+import { verifyCaptchaAction } from "@/app/lib/verifyCaptchaAction";
 
 const host = process.env.NEXT_PUBLIC__WEB_PUBLIC_URL;
 export default function useStripePaymentHandler() {
@@ -22,6 +24,8 @@ export default function useStripePaymentHandler() {
 
   const stripe = useStripe();
   const elements = useElements();
+
+  const { executeRecaptcha } = useGoogleReCaptcha();
 
   useEffect(() => {
     setAddressRequired(cart.findIndex(({ is_digital }) => !is_digital) !== -1);
@@ -44,6 +48,16 @@ export default function useStripePaymentHandler() {
     }
 
     setIsLoading(true);
+
+    if (!executeRecaptcha) {
+      throw new Error("Recaptcha not initialized");
+    }
+    const token = await executeRecaptcha("payment_form");
+    const verified = await verifyCaptchaAction(token);
+
+    if (!verified) {
+      throw new Error("Captcha verification failed");
+    }
 
     if (!stripe || !elements) {
       const errorMessage =
