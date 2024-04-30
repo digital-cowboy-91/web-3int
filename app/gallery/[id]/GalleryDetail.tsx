@@ -1,23 +1,30 @@
-"use client";
+// TODO:
+//   - message: "Create modal version"
+//     priority: "low"
 
-import { TGallery } from "@/app/api/_cms/collections/gallery";
-import { motion } from "framer-motion";
+import { CMSGallery } from "@/app/api/_cms/collections/gallery";
+import ImageAsset from "@/app/components/ImageAsset";
+import IconAnimation from "@/app/components/icons/IconAnimation";
+import IconTimelapse from "@/app/components/icons/IconTimelapse";
 import Link from "next/link";
-import { Fragment, useState } from "react";
-import ReactPlayer from "react-player";
-import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
-import ImageAsset from "../../components/ImageAsset";
-import IconAnimation from "../../components/icons/IconAnimation";
-import IconTimelapse from "../../components/icons/IconTimelapse";
-import BuyingOptions from "./BuyingOptions";
+import { notFound } from "next/navigation";
+import Media from "./Media";
+import ShopAndDownloadForm from "./ShopAndDownloadForm";
+import Tab from "./Tabs/Tab";
+import TabPanel from "./Tabs/TabPanel";
+import "./GalleryDetail.style.css";
 
-const GalleryDetail = ({
-  model,
-  modalMode = false,
+export default async function GalleryDetail({
+  modelId,
+  compactMode = false,
 }: {
-  model: TGallery;
-  modalMode?: boolean;
-}) => {
+  modelId: string;
+  compactMode?: boolean;
+}) {
+  const res = await CMSGallery.readItem(modelId);
+
+  if (!res) notFound();
+
   const {
     id,
     license: {
@@ -33,131 +40,95 @@ const GalleryDetail = ({
     media,
     attributes,
     buying_options,
-  } = model;
-
-  const [activeMedia, setActiveMedia] = useState(media[0]?.asset || undefined);
+    article,
+  } = res;
 
   return (
-    <div
-      className={`grid grid-cols-1 md:grid-cols-5 gap-8 ${
-        modalMode && "bg-grey-light md:rounded-md p-4 md:p-8"
-      }`}
-    >
-      <div className="md:order-2 md:col-span-2 flex flex-col gap-8">
-        <h1 className={` ${modalMode && "mt-5 md:mt-0 me-10"}`}>{title}</h1>
-        <div className="text-left grid grid-cols-2 gap-2 mb-auto">
-          {attributes?.map((attr, index) => {
-            return (
-              <Fragment key={index}>
-                <div className="font-bold">{attr.name}</div>
-                <div className="text-right">{attr.value}</div>
-              </Fragment>
-            );
-          })}
+    <div className="gallery-detail" data-compact-mode={compactMode}>
+      <h1>{res.title}</h1>
+      <div className="shadow-wrapper">
+        <div className="gallery-detail__media">
+          <div className="gallery-detail__media__asset-list">
+            {media?.map(({ asset: item }) => (
+              <Link
+                key={item.id}
+                href={{ query: { asset: item.id } }}
+                replace={true}
+              >
+                {item.type.includes("video") && item.tags != null ? (
+                  item.tags.includes("timelapse") ? (
+                    <IconTimelapse fill="#000" stroke="#000" />
+                  ) : (
+                    <IconAnimation fill="#000" stroke="#000" />
+                  )
+                ) : (
+                  <ImageAsset
+                    key={item.id}
+                    asset={item}
+                    preset="h720"
+                    aria-label={`Show image ${item.title}`}
+                  />
+                )}
+              </Link>
+            ))}
+          </div>
+          <Media assets={media.map((i) => i.asset)} />
+          <div className="gallery-detail__media__license">
+            <Link
+              href={claim_ownership ? "/gallery/" + id : (work_url as string)}
+            >
+              {claim_ownership ? title : work_title}
+            </Link>{" "}
+            by{" "}
+            <Link href={claim_ownership ? "/" : (author_url as string)}>
+              {claim_ownership ? "3INT UK" : author_name}
+            </Link>
+            {license_title && license_url && (
+              <>
+                <br />
+                is licensed under{" "}
+                <Link href={license_url as string}>{license_title}</Link>
+              </>
+            )}
+          </div>
         </div>
-        {buying_options?.length > 0 && (
-          <BuyingOptions products={buying_options} />
-        )}
-        <div className="md:order-4 text-xs md:col-span-5">
-          <Link
-            href={claim_ownership ? "/gallery/" + id : (work_url as string)}
-          >
-            {claim_ownership ? title : work_title}
-          </Link>{" "}
-          by{" "}
-          <Link href={claim_ownership ? "/" : (author_url as string)}>
-            {claim_ownership ? "3INT UK" : author_name}
-          </Link>
-          {license_title && license_url && (
-            <>
-              <br />
-              is licensed under{" "}
-              <Link href={license_url as string}>{license_title}</Link>
-            </>
+        <div className="gallery-detail__tab-menu">
+          <Tab panelId="description" defaultActive={true}>
+            Description
+          </Tab>
+          <Tab panelId="technical">Technical</Tab>
+          {buying_options?.length > 0 && (
+            <Tab panelId="products" className="md:hidden">
+              Shop & Download
+            </Tab>
           )}
         </div>
       </div>
-      <div className="md:order-4 md:col-span-3 flex flex-wrap justify-center gap-2">
-        {media?.map(({ asset: item }) => {
-          return (
-            <motion.button
-              key={item.id}
-              onClick={() => setActiveMedia(item)}
-              className={`flex-none relative size-16 bg-white rounded-md p-1`}
-              aria-label={`Show image ${item.title}`}
-            >
-              {activeMedia.id === item.id && (
-                <motion.div
-                  className="absolute z-10 inset-0 border-2 border-primary rounded-md"
-                  layoutId="underline"
-                />
-              )}
-              {item.type.includes("video") && item.tags != null ? (
-                item.tags.includes("timelapse") ? (
-                  <IconTimelapse fill="#000" stroke="#000" />
-                ) : (
-                  <IconAnimation fill="#000" stroke="#000" />
-                )
-              ) : (
-                <ImageAsset
-                  asset={item}
-                  preset="h100"
-                  className="object-contain size-full"
-                />
-              )}
-            </motion.button>
-          );
-        })}
-      </div>
-      <div
-        className={`md:order-1 h-[300px] md:h-[500px] md:col-span-3 md:p-8 flex flex-col gap-8 rounded-md ${
-          activeMedia?.type.includes("video") ? "bg-dark" : "bg-white"
-        }`}
-      >
-        {activeMedia?.type.includes("video") ? (
-          <ReactPlayer
-            playing
-            loop
-            url={`/media/${activeMedia?.id}/${activeMedia?.filename_download}`}
-            controls={true}
-            fallback={<div>Loading... </div>}
-            width="100%"
-            height="100%"
-            config={{
-              file: {
-                attributes: {
-                  controlsList: "nodownload",
-                  disablePictureInPicture: true,
-                },
-              },
-            }}
-            type={activeMedia?.type}
-          />
-        ) : (
-          <TransformWrapper initialScale={1} centerOnInit={true}>
-            <TransformComponent
-              wrapperStyle={{
-                height: "100%",
-                width: "100%",
-              }}
-              contentStyle={{
-                height: "100%",
-                width: "100%",
-                position: "relative",
-              }}
-            >
-              <ImageAsset
-                key={activeMedia.id}
-                asset={activeMedia}
-                preset="h1280"
-                className="object-contain size-full"
-              />
-            </TransformComponent>
-          </TransformWrapper>
+
+      <div className="gallery-detail__tab-content">
+        <TabPanel
+          id="description"
+          className="gallery-detail__description"
+          dangerouslySetInnerHTML={{ __html: article }}
+        />
+
+        <TabPanel id="technical" className="gallery-detail__technical">
+          <ul className="gallery-detail__attributes">
+            {attributes?.map((attr, index) => (
+              <li key={index}>
+                <strong>{attr.name}</strong>
+                <span>{attr.value}</span>
+              </li>
+            ))}
+          </ul>
+        </TabPanel>
+        {buying_options?.length > 0 && (
+          <TabPanel id="products" className="gallery-detail__products">
+            <h2>Shop & Download</h2>
+            <ShopAndDownloadForm products={buying_options} />
+          </TabPanel>
         )}
       </div>
     </div>
   );
-};
-
-export default GalleryDetail;
+}

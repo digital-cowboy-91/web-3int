@@ -3,7 +3,7 @@
   @apply transition-opacity;
 
   &__dialog {
-    @apply z-10 card min-w-[500px] translate-x-0;
+    @apply relative z-10 card min-w-[500px] translate-x-0 overflow-hidden;
     @apply transition-transform ease-in-out;
 
     &-header {

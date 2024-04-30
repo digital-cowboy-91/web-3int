@@ -1,5 +1,5 @@
 .gallery-detail {
-  @apply relative g__space-y;
+  @apply relative g__space-y w-full;
 
   h1,
   &__tab-menu,
@@ -82,5 +82,10 @@
   &__products {
     @apply h-min card content-wrapper;
     @apply dark:bg-light dark:text-auto-text_invert;
+  }
+}
+
+.gallery-detail[data-compact-mode="true"] {
+  .gallery_detail {
   }
 }
