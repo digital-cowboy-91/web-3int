@@ -25,21 +25,21 @@ export default function ShippingItems({ methods }: { methods: TShipping[] }) {
 
   const setShipping = useShippingStore((s) => s.setShipping);
 
-  const disabled =
-    ["empty", "pending", undefined].includes(cartStatus) ||
-    cart.findIndex(({ is_digital }) => !is_digital) === -1;
+  const digitalsOnly = cart.findIndex(({ is_digital }) => !is_digital) === -1;
 
   useEffect(() => {
-    if (disabled) {
+    if (digitalsOnly) {
       setShipping(undefined, 0);
     } else {
       setShipping(methods[0].id, methods[0].price);
     }
-  }, [disabled]);
+  }, [digitalsOnly]);
+
+  const disabled = cartStatus !== "open" || digitalsOnly;
 
   return methods.map(({ id, title, description, price }, index) => (
     <Form.Input
-      key={id}
+      key={id + digitalsOnly}
       id={`shipping-${100 + index}`}
       name="shipping"
       type="radio"
@@ -55,7 +55,7 @@ export default function ShippingItems({ methods }: { methods: TShipping[] }) {
           )}
         </div>
       }
-      defaultChecked={index === 0}
+      defaultChecked={!digitalsOnly && index === 0}
       disabled={disabled}
       onClick={() => setShipping(id, price)}
     />

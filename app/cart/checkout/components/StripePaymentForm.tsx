@@ -16,7 +16,9 @@ export default function StripePaymentForm() {
   const router = useRouter();
   const cartStatus = useCartStore((s) => s.status);
 
-  const shouldRedirect = !["open", "pending"].includes(cartStatus || "");
+  const shouldRedirect = !["open", "pending", "submitting"].includes(
+    cartStatus || ""
+  );
 
   const { isLoading, isReady, errorMsg, addressRequired, handleSubmit } =
     useStripePaymentHandler();
@@ -27,6 +29,15 @@ export default function StripePaymentForm() {
     }
     useCartStore.setState({ status: "pending" });
   }, []);
+
+  useEffect(() => {
+    if (isLoading) {
+      useCartStore.setState({ status: "submitting" });
+      return;
+    }
+
+    useCartStore.setState({ status: "pending" });
+  }, [isLoading]);
 
   return (
     <form

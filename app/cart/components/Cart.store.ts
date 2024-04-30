@@ -28,7 +28,7 @@ export type TCache = {
 
 type TStore = {
   cart: TCartItem[];
-  status: undefined | "empty" | "open" | "pending" | "closed";
+  status: undefined | "empty" | "open" | "pending" | "submitting" | "closed";
   isLoading: boolean | number;
   addCartItem: (
     product: TProduct,

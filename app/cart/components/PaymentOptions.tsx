@@ -54,13 +54,15 @@ export function PaymentOptions() {
           />
         </>
       )}
-      {cartStatus === "pending" && (
+      {["pending", "submitting"].includes(cartStatus || "") && (
         <Action
           as="button"
           label="Order & Pay"
           form="payment-form"
           type="submit"
           style={{ width: "100%" }}
+          disabled={cartStatus === "submitting"}
+          loading={cartStatus === "submitting"}
         />
       )}
     </div>

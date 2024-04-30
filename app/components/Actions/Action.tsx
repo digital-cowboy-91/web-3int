@@ -9,6 +9,7 @@ import {
 // import "./Action.style.v2.css";
 // import "./Action.style.v3.css";
 import "./Action.style.v4.css";
+import Loader from "../Loader";
 
 type TButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   as: "button";
@@ -26,6 +27,7 @@ type TProps = {
   color?: "primary" | "secondary" | "black";
   variant?: "outlined" | "underscored" | "filled";
   style?: CSSProperties;
+  loading?: boolean;
 } & (
   | { icon: ReactNode; label?: string | ReactNode }
   | { icon?: ReactNode; label: string | ReactNode }
@@ -41,6 +43,7 @@ export default function Action({
   label,
   variant = "filled",
   style,
+  loading = false,
   ...props
 }: TProps) {
   const setClass = [
@@ -62,7 +65,7 @@ export default function Action({
   if (as === "button") {
     return (
       <button {...(props as TButtonProps)} className={setClass} style={style}>
-        {children}
+        {loading ? <Loader /> : children}
       </button>
     );
   }
