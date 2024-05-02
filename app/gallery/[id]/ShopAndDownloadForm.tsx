@@ -9,6 +9,8 @@ import Form from "@/app/components/UI/Form/Form";
 import asCurrency from "@/app/lib/asCurrency";
 import { useEffect, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import DownloadButton from "./DownloadButton";
+import { UUID } from "crypto";
 
 export default function ShopAndDownloadForm({
   products,
@@ -139,13 +141,7 @@ export default function ShopAndDownloadForm({
               />
             </div>
             <div>
-              <Action
-                as={"a"}
-                href={"/d/" + productSelected?.id}
-                label="Get Download Link"
-                className="float-right"
-                download
-              />
+              <DownloadButton downloadId={productSelected?.id as UUID} />
             </div>
           </>
         ) : (
