@@ -28,6 +28,7 @@ type TProps = {
   variant?: "outlined" | "underscored" | "filled";
   style?: CSSProperties;
   loading?: boolean;
+  pillIndicator?: string | number;
 } & (
   | { icon: ReactNode; label?: string | ReactNode }
   | { icon?: ReactNode; label: string | ReactNode }
@@ -44,6 +45,7 @@ export default function Action({
   variant = "filled",
   style,
   loading = false,
+  pillIndicator,
   ...props
 }: TProps) {
   const setClass = [
@@ -59,6 +61,9 @@ export default function Action({
     <>
       {icon && <div className={`action__icon`}>{icon}</div>}
       {label}
+      {pillIndicator && (
+        <span className={`action__pill-indicator`}>{pillIndicator}</span>
+      )}
     </>
   );
 

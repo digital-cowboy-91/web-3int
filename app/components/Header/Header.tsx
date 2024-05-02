@@ -4,6 +4,7 @@ import SVGLogoChar_Dynamic from "../Logo/SVGLogoChar_Dynamic";
 import "./HeaderV3.style.css";
 import MobileMenuButton from "./MobileMenuButton";
 import Link from "next/link";
+import CartButton from "./CartButton";
 
 const menuItems = [
   {
@@ -35,7 +36,7 @@ export default function Header() {
 
         <div className="buttons-wrapper">
           <MobileMenuButton className="lg:hidden" />
-          <Action
+          {/* <Action
             as="link"
             href="/cart"
             variant="outlined"
@@ -55,7 +56,8 @@ export default function Header() {
                 <path d="M4.5 18L12 9m7.5 9l-7-8.5m-8 .5L12 21l7.5-11" />
               </svg>
             }
-          />
+          /> */}
+          <CartButton />
         </div>
 
         <ul className="menu-items">

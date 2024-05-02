@@ -1,5 +1,5 @@
 .action {
-  @apply h-10 font-bold inline-flex gap-3 items-center;
+  @apply relative h-10 font-bold inline-flex gap-3 items-center;
 
   --_bezier: cubic-bezier(0.25, 0.1, 0, 2);
   --_background: ;
@@ -108,5 +108,11 @@
         width: 100%;
       }
     }
+  }
+
+  &__pill-indicator {
+    @apply size-5 bg-primary text-white rounded-full text-2xs;
+    @apply absolute top-0 right-0 translate-x-1/4 -translate-y-1/4;
+    @apply flex justify-center items-center;
   }
 }
