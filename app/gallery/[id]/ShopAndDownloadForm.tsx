@@ -108,7 +108,7 @@ export default function ShopAndDownloadForm({
           )}
         {productSelected?.is_digital && !productSelected.price ? (
           <>
-            <hr />
+            {/* <hr />
             <Form.Input
               id="shop-download-300"
               type="email"
@@ -139,7 +139,7 @@ export default function ShopAndDownloadForm({
                 label="I want to subscribe to newsletters and occasional promotion and marketing emails"
                 disabled={isProcessing}
               />
-            </div>
+            </div> */}
             <div>
               <DownloadButton downloadId={productSelected?.id as UUID} />
             </div>
