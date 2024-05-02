@@ -150,7 +150,7 @@ export default function ShopAndDownloadForm({
             label={isProcessing ? <Loader /> : "Add to Cart"}
             className="float-right"
             onClick={handleAddToCart}
-            disabled={isProcessing}
+            disabled={isProcessing || !pidSelected}
           />
         )}
       </Form>
