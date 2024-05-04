@@ -348,10 +348,9 @@
   }
 }
 
-/* TODO:
-1. Refactor
-2. Redefine new name as class
-*/
+/* TODO [LOW]: Refactor */
+/* TODO [LOW]: Redefine new name as class */
+
 #page_content {
   h1,
   h2,

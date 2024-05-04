@@ -1,4 +1,4 @@
-.hero-v3--heading {
+.hero-heading {
   @apply relative font-black italic text-7xl uppercase text-auto-text;
   @apply sm:text-8xl;
 

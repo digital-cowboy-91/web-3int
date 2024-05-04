@@ -1,8 +1,6 @@
 "use client";
 
-// TODO:
-//   - task: Create new images complying to current design
-//     priority: low
+// TODO [LOW]: Create new images complying to current design
 
 import { useAnimate } from "framer-motion";
 import { useEffect } from "react";

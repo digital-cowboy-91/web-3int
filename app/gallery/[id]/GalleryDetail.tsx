@@ -1,6 +1,4 @@
-// TODO:
-//   - message: "Create modal version"
-//     priority: "low"
+// TODO [MEDIUM]: Create modal version
 
 import { CMSGallery } from "@/app/api/_cms/collections/gallery";
 import ImageAsset from "@/app/components/ImageAsset";

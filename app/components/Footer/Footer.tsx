@@ -1,6 +1,4 @@
-// TODO:
-// - task: Update link with digitalcowboys
-//   priority: medium
+// TODO [MEDIUM]: Update link with digitalcowboys
 
 import Action from "../Actions/Action";
 import "./Footer.style.css";

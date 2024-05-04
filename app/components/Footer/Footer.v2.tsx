@@ -1,6 +1,4 @@
-// TODO:
-// - task: Update link with digitalcowboys
-//   priority: medium
+// TODO [MEDIUM]: Update link with digitalcowboys
 
 import { notFound } from "next/navigation";
 import "./Footer.v2.style.css";

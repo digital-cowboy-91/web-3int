@@ -1,6 +1,6 @@
 "use client";
 
-// TODO: Validation
+// TODO [LOW]: Validation
 
 import {
   SContactForm,

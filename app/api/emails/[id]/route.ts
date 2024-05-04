@@ -68,7 +68,7 @@ async function orderBranch({
 
 export async function GET(request: Request, context: { params: { id: UUID } }) {
   try {
-    // TODO: Auth
+    // TODO [MEDIUM]: Auth
     const id = context.params.id;
     const res = await CMSEmailsSent.readItem(id);
 
@@ -106,7 +106,7 @@ export async function POST(
   context: { params: { id: UUID } }
 ) {
   try {
-    // TODO: Auth
+    // TODO [MEDIUM]: Auth
     const id = context.params.id;
     const res = await CMSEmailsSent.readItem(id);
 
