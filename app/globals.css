@@ -54,7 +54,30 @@
   }
 
   body {
-    @apply relative bg-auto-contrast_invert text-auto-text text-sm font-normal;
+    @apply relative text-auto-text text-sm font-normal;
+    @apply bg-auto-contrast_invert;
+
+    /* background: radial-gradient(
+        circle farthest-side at 20% 20%,
+        rgb(255 253 26 / 0.2),
+        rgb(255 253 26 / 0) 70%
+      ),
+      radial-gradient(
+        circle farthest-side at 20% 20%,
+        rgb(255 26 123 / 0.2),
+        rgb(255 26 123 / 0) 70%
+      ),
+      radial-gradient(
+        circle farthest-side at 50% 100%,
+        rgb(58 178 231 / 0.2),
+        rgb(58 178 231 / 0) 70%
+      ),
+      radial-gradient(
+        circle farthest-side at 50% 100%,
+        rgb(255 26 123 / 0.2),
+        rgb(255 26 123 / 0) 70%
+      ),
+      var(--auto-contrast--invert); */
 
     & > main {
       @apply min-h-screen overflow-x-hidden;

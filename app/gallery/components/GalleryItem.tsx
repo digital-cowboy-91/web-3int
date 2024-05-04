@@ -3,7 +3,8 @@ import ImageAsset from "@/app/components/ImageAsset";
 import SVGLogoChar from "@/app/components/Logo/SVGLogoChar";
 import Link from "next/link";
 // import "./GalleryItem.style.v3.css";
-import "./GalleryItem.style.v4.css";
+// import "./GalleryItem.style.v4.css";
+import "./GalleryItem.style.v5.css";
 
 type TProps = {
   item: TGallery;
@@ -14,7 +15,9 @@ export default function GalleryItem({
 }: TProps) {
   return (
     <Link href={`/gallery/${id}`} className="gallery-item">
-      <ImageAsset asset={cover_image} preset="h250" />
+      <div>
+        <ImageAsset asset={cover_image} preset="h250" />
+      </div>
       <div className="gallery-item__overlay">
         <div>
           <span>{title}</span>

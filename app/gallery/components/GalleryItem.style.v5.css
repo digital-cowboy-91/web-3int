@@ -1,0 +1,35 @@
+.gallery-item {
+  @apply relative;
+  @apply grid grid-rows-[170px_100px] w-[250px];
+  @apply rounded-xl border-1 bg-light overflow-hidden;
+
+  transition: transform 350ms cubic-bezier(0.25, 0.1, 0, 2),
+    filter 350ms cubic-bezier(0.25, 0.1, 0, 2);
+
+  & > div {
+    @apply g__p-sm;
+  }
+  & > div:first-child {
+    @apply bg-white flex justify-center items-center;
+  }
+
+  & > div:last-child {
+    @apply grid grid-cols-[1fr_30px] g__gap-xs items-center;
+
+    & > div {
+      @apply font-bold;
+    }
+
+    & > svg {
+      @apply stroke-primary;
+    }
+  }
+
+  &:hover {
+    @apply scale-105 drop-shadow;
+  }
+
+  &:focus {
+    @apply scale-100 drop-shadow-none;
+  }
+}

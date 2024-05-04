@@ -9,7 +9,7 @@ export default async function Page() {
 
   return (
     <section>
-      <div className="container grid grid-cols-4 gap-4">
+      <div className="container grid grid-cols-4 g__gap">
         {res.map((i) => (
           <GalleryItem key={i.id} item={i} />
         ))}

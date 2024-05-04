@@ -8,17 +8,17 @@ import CartButton from "./CartButton";
 
 const menuItems = [
   {
-    title: "Gallery",
+    title: "Gallery / Store",
     slug: "gallery",
   },
   // {
   //   title: "Pricing",
   //   slug: "pricing",
   // },
-  // {
-  //   title: "FAQ",
-  //   slug: "faq",
-  // },
+  {
+    title: "FAQ",
+    slug: "faq",
+  },
   {
     title: "Contact",
     slug: "contact",
