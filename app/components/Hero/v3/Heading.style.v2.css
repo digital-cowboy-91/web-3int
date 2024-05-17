@@ -13,6 +13,7 @@
 
       transition: transform 350ms cubic-bezier(0.25, 0.1, 0, 2),
         opacity 100ms linear;
+      /* transition-delay: 250ms; */
 
       &:first-child {
         @apply opacity-100 translate-y-0 text-primary;
@@ -21,17 +22,18 @@
         @apply opacity-0 translate-y-6 text-secondary;
       }
     }
-    &:hover {
-      & > span:first-child {
-        @apply opacity-0 -translate-y-6;
-      }
-      & > span:last-child {
-        @apply opacity-100 translate-y-0;
-      }
-    }
     &:after {
       content: "\a";
       white-space: pre;
+    }
+  }
+
+  &:hover > span {
+    & > span:first-child {
+      @apply opacity-0 -translate-y-6;
+    }
+    & > span:last-child {
+      @apply opacity-100 translate-y-0;
     }
   }
 }

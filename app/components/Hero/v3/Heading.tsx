@@ -1,6 +1,4 @@
-// TODO [LOW]: Fix transition lagging when hovering the border of element
-
-import "./Heading.style.css";
+import "./Heading.style.v2.css";
 
 export default function Heading() {
   return (
