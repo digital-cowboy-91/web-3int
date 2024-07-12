@@ -43,6 +43,7 @@ export default async function cmsAPI({
       (params.length ? `?${params.join("&")}` : "");
     // Call API
     const res = await fetch(url, fetchInit);
+
     // Check for errors
     if (!res.ok) {
       throw new Error(`[cms_API] Status ${res.status}: ${res.statusText}`);
