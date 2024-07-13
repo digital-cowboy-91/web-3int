@@ -5,6 +5,7 @@ export type TMetaItem = {
   group: string;
   slug: string;
   path: string;
+  is_category: boolean;
 };
 
 export type TLink = TMetaItem;

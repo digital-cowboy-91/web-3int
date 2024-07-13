@@ -16,7 +16,7 @@ export default async function Footer() {
       <div className="footer__wrapper">
         <div className="footer__menu">
           <ul>
-            {res.map(({ rel_item: {title}, path}) => (
+            {res.filter(({ is_category }) => !is_category).map(({ rel_item: { title }, path }) => (
               <li key={path}>
                 <Action
                   as="link"

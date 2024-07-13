@@ -5,26 +5,14 @@ import "./HeaderV3.style.css";
 import MobileMenuButton from "./MobileMenuButton";
 import Link from "next/link";
 import CartButton from "./CartButton";
+import { CMSMeta } from "@/app/api/_cms/collections/meta";
+import { notFound } from "next/navigation";
 
-const menuItems = [
-  {
-    title: "Gallery / Store",
-    slug: "gallery",
-  },
-  // {
-  //   title: "Pricing",
-  //   slug: "pricing",
-  // },
-  {
-    title: "FAQ",
-    slug: "faq",
-  },
-  {
-    title: "Contact",
-    slug: "contact",
-  },
-];
-export default function Header() {
+export default async function Header() {
+  const res = await CMSMeta.readLinks('navbar')
+
+  if (!res) notFound();
+
   return (
     <header id="navigation" data-menu="closed">
       <div id="nav-container" className="wrapper">
@@ -35,7 +23,7 @@ export default function Header() {
         </div>
 
         <div className="buttons-wrapper">
-          <MobileMenuButton className="lg:hidden" />
+          <MobileMenuButton className="md:hidden" />
           <CartButton />
         </div>
 
@@ -43,13 +31,13 @@ export default function Header() {
           <li style={{ "--menu-items-item": 0 } as any}>
             <Action as="link" href="/" label="Home" variant="underscored" />
           </li>
-          {menuItems.map((item, index) => (
-            <li key={index} style={{ "--menu-items-item": index + 1 } as any}>
+          {res.map(({ rel_item: { title }, path }, index) => (
+            <li key={path} style={{ "--menu-items-item": index + 1 } as any}>
               <Action
                 as="link"
-                href={`/${item.slug}`}
-                label={item.title}
+                href={path}
                 variant="underscored"
+                label={title}
               />
             </li>
           ))}

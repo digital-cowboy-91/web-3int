@@ -13,18 +13,18 @@ export default async function readLinks(group?: string) {
       "fields[]=slug",
       "fields[]=path",
       "fields[]=group",
+      "fields[]=is_category",
+      "sort[]=sort",
       group ? `filter[group][_eq]=${group}` : "",
     ],
     fetchInit: {
       method: "GET",
-      // cache: isDraft ? "no-store" : "default",
-      // next: {
-      //   tags: isDraft ? [] : ["pages_meta"],
-      // },
+      cache: isDraft ? "no-store" : "default",
+      next: {
+        tags: isDraft ? [] : ["pages_meta"],
+      },
     },
     draftMode: isDraft,
-  }).then((res) => {
-    console.log(res.data);
-    return res.data as TLink[];
-  });
+  }).then((res) => res.data as TLink[]
+  );
 }
