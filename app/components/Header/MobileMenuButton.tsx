@@ -9,6 +9,7 @@ export default function MobileMenuButton({
 }) {
   return (
     <Action
+      id="mobile-menu-button"
       as="button"
       className={className}
       active="icon"

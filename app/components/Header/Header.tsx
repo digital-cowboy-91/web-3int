@@ -23,7 +23,7 @@ export default async function Header() {
         </div>
 
         <div className="buttons-wrapper">
-          <MobileMenuButton className="md:hidden" />
+          <MobileMenuButton />
           <CartButton />
         </div>
 
