@@ -1,0 +1,28 @@
+.page-content {
+    @apply container;
+
+    &>div {
+        @apply max-w-[680px] m-auto;
+
+        &>* {
+            @apply mt-8;
+        }
+
+        &>*:first-child {
+            @apply mt-0;
+        }
+
+        &>h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            @apply mt-12;
+
+            &+* {
+                @apply mt-4;
+            }
+        }
+    }
+}
