@@ -34,16 +34,19 @@
       }
 
       @media (max-width: 767px) {
-        @apply text-auto-white;
-
-        &>li {
+        & li {
           @apply opacity-0 translate-x-14 transition-all;
         }
+
+        & a {
+          @apply text-auto-white;
+        }
+
       }
     }
 
-    &>.background {
-      @apply absolute -z-10 inset-0 bg-primary-deep;
+    & .background {
+      @apply absolute -z-10 inset-0 bg-dark;
       @apply md:hidden;
 
       clip-path: circle(0rem at 2.25rem 2.5rem);
