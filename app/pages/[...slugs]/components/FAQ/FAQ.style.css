@@ -1,0 +1,58 @@
+.c-faq {
+  & li {
+    @apply grid grid-rows-[min-content_0fr] border-b;
+    transition: grid-template-rows 250ms ease-in-out;
+  }
+
+  & .header {
+    @apply w-full flex justify-between items-center g__gap-sm;
+    @apply g__py-sm;
+    @apply font-semibold text-lg;
+
+    & > svg {
+      @apply rotate-0 transition-transform;
+    }
+  }
+
+  & .content-wrapper {
+    @apply overflow-hidden;
+
+    & .content {
+      @apply g__pb-sm;
+    }
+  }
+
+  & li[data-expanded="true"] {
+    @apply grid-rows-[min-content_1fr];
+
+    & .header > svg {
+      @apply -rotate-90;
+    }
+  }
+
+  & .pagination {
+    @apply grid grid-cols-[min-content_min-content] g__gap-xs g__pt-sm;
+
+    & button {
+      @apply flex justify-between items-center g__gap-xs g__p-xs;
+      @apply font-semibold rounded-md;
+      @apply transition-colors;
+
+      &:first-child {
+        @apply g__pe-sm;
+      }
+
+      &:last-child {
+        @apply g__ps-sm;
+      }
+
+      &:enabled:hover {
+        background-color: rgb(var(--coords-ghost));
+      }
+
+      &:disabled {
+        color: rgb(var(--coords-ghost));
+      }
+    }
+  }
+}

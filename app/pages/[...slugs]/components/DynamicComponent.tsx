@@ -1,6 +1,6 @@
 import React from "react";
 
-import PageContent from "./PageContent";
+import Content from "./Content/Content";
 
 type Props = {
     componentName: string;
@@ -10,7 +10,7 @@ type Props = {
 export default function DynamicComponent({ componentName, props }: Props) {
     switch (componentName) {
         case 'content': {
-            return React.createElement(PageContent, props);
+            return React.createElement(Content, props);
         }
         default: {
             return null;

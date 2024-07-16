@@ -1,4 +1,4 @@
-.page-content {
+.c-content {
     @apply container;
 
     &>div {
