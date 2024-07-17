@@ -3,7 +3,7 @@
   @apply lg:h-screen;
 
   &__wrapper {
-    @apply container grid grid-rows-2 px-4 py-20;
+    @apply container grid grid-rows-2 px-4 py-32;
     @apply lg:grid-cols-2 lg:grid-rows-1 lg:p-8;
   }
 
@@ -12,7 +12,7 @@
     @apply lg:order-2 lg:h-[550px];
     @apply xl:h-[600px];
 
-    &>svg {
+    & > svg {
       @apply absolute left-1/2 -translate-x-1/2 -z-10 h-full;
     }
 
@@ -24,9 +24,7 @@
       @apply xl:size-[600px];
     }
 
-    --color1-rawhsl: 163,
-    66%,
-    55%;
+    --color1-rawhsl: 163, 66%, 55%;
     --color2-hsl: hsl(163, 66%, 30%);
 
     &::before {
@@ -36,9 +34,11 @@
     }
 
     &::after {
-      background: radial-gradient(circle at 50% 50%,
-          hsl(var(--color1-rawhsl)),
-          hsla(var(--color1-rawhsl), 0));
+      background: radial-gradient(
+        circle at 50% 50%,
+        hsl(var(--color1-rawhsl)),
+        hsla(var(--color1-rawhsl), 0)
+      );
     }
   }
 
@@ -47,14 +47,14 @@
     @apply md:w-3/4;
     @apply lg:order-1 lg:grid-rows-[1fr_min-content_1fr] lg:w-auto;
 
-    &>div:last-child {
+    & > div:last-child {
       @apply flex flex-col;
 
-      &>p {
+      & > p {
         @apply grow flex items-center leading-loose;
       }
 
-      &>div {
+      & > div {
         @apply flex justify-between text-base;
       }
     }

@@ -26,6 +26,7 @@ type TProps = {
   className?: string;
   color?: "primary" | "secondary" | "black";
   variant?: "outlined" | "underscored" | "filled";
+  invertText?: boolean;
   style?: CSSProperties;
   loading?: boolean;
   pillIndicator?: string | number;
@@ -46,6 +47,7 @@ export default function Action({
   style,
   loading = false,
   pillIndicator,
+  invertText = false,
   ...props
 }: TProps) {
   const setClass = [
@@ -53,6 +55,7 @@ export default function Action({
     `active--${active}`,
     `color--${color}`,
     `variant--${variant}`,
+    invertText && "invert-text",
     className,
   ]
     .filter((i) => i)

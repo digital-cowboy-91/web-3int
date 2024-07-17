@@ -9,24 +9,22 @@ import { CMSMeta } from "@/app/api/_cms/collections/meta";
 import { notFound } from "next/navigation";
 
 export default async function Header() {
-  const res = await CMSMeta.readLinks('navbar')
+  const res = await CMSMeta.readLinks("navbar");
 
   if (!res) notFound();
 
   return (
-    <header id="navigation" data-menu="closed">
-      <div id="nav-container" className="wrapper">
+    <header className="navigation" data-menu="closed">
+      <div className="wrapper">
         <div className="logo-wrapper">
           <Link href="/">
             <SVGLogoChar_Dynamic />
           </Link>
         </div>
-
         <div className="buttons-wrapper">
           <MobileMenuButton />
           <CartButton />
         </div>
-
         <ul className="menu-items">
           <li style={{ "--menu-items-item": 0 } as any}>
             <Action as="link" href="/" label="Home" variant="underscored" />
@@ -38,11 +36,11 @@ export default async function Header() {
                 href={path}
                 variant="underscored"
                 label={title}
+                invertText
               />
             </li>
           ))}
         </ul>
-        <div className="background" />
       </div>
     </header>
   );

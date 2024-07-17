@@ -12,6 +12,7 @@ export default function CartButton() {
       href="/cart"
       variant="outlined"
       active="icon"
+      invertText
       icon={
         <svg
           viewBox="0 0 24 24"

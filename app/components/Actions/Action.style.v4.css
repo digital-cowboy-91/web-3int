@@ -26,15 +26,18 @@
 
     &--secondary {
       --_foreground-hover: rgb(var(--coords-white));
+      --_foreground: var(--auto-text);
 
       &:not(:disabled) {
         --_background: rgb(var(--coords-secondary));
-        --_foreground: var(--auto-text);
       }
 
       &:disabled {
         --_background: rgb(var(--coords-ghost));
-        --_foreground: var(--auto-text);
+      }
+
+      &.invert-text {
+        --_foreground: var(--auto-text--invert);
       }
     }
   }
