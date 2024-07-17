@@ -1,6 +1,5 @@
 import { CMSPage } from "@/app/api/_cms/collections/pages";
 import { notFound } from "next/navigation";
-import { Fragment } from "react";
 import DynamicComponent from "./components/DynamicComponent";
 
 // export const dynamic = "force-static";
@@ -21,21 +20,33 @@ import DynamicComponent from "./components/DynamicComponent";
 //   };
 // }
 
-export default async function page({ params }: { params: { slugs: string[] } }) {
-  const path = '/' + params.slugs.join('/')
-  const res = await CMSPage.readItem(path)
+export default async function page({
+  params,
+}: {
+  params: { slugs: string[] };
+}) {
+  const path = "/" + params.slugs.join("/");
+  const res = await CMSPage.readItem(path);
 
-  // console.log({ slugs: params.slugs, path, res })
+  // console.log({ slugs: params.slugs, path, res });
 
   if (!res) notFound();
 
-  return <Fragment>
-    {
-      res.components.map(({ collection: componentName, item: props }, index) => {
-        return <DynamicComponent key={`${path}_${componentName}_${index}`} componentName={componentName} props={props} />
-      })
-    }
-  </Fragment>
+  const { title, components } = res;
+
+  return (
+    <div className="container" style={{ maxWidth: "680px" }}>
+      {components.map(({ collection: componentName, item: props }, index) => {
+        return (
+          <DynamicComponent
+            key={`${path}_${componentName}_${index}`}
+            componentName={componentName}
+            props={{ title, ...props }}
+          />
+        );
+      })}
+    </div>
+  );
 
   return;
 }

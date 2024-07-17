@@ -1,0 +1,9 @@
+.c-header {
+  & h1 {
+    @apply g__pb;
+  }
+
+  & hr {
+    @apply g__pb;
+  }
+}

@@ -31,7 +31,7 @@
   }
 
   & .pagination {
-    @apply grid grid-cols-[min-content_min-content] g__gap-xs g__pt-sm;
+    @apply grid grid-cols-[min-content_min-content] place-content-end g__gap-xs g__pt-sm;
 
     & button {
       @apply flex justify-between items-center g__gap-xs g__p-xs;
