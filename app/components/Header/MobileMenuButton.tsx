@@ -29,7 +29,7 @@ export default function MobileMenuButton({
       }
       onClick={async () => {
         const body = document.querySelector("body") as HTMLBodyElement;
-        const nav = document.querySelector("#navigation") as HTMLDivElement;
+        const nav = document.querySelector(".navigation") as HTMLDivElement;
 
         body.classList.toggle("modal-lockdown");
         nav.dataset.menu = nav.dataset.menu === "open" ? "closed" : "open";
