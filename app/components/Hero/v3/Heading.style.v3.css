@@ -1,0 +1,61 @@
+.hero-heading {
+  @apply font-black italic text-7xl uppercase text-auto-text;
+  @apply sm:text-8xl;
+
+  & div:first-child {
+    @apply relative overflow-hidden;
+
+    & > ul {
+      @apply absolute inline-block text-primary;
+
+      & > li:nth-child(odd) {
+        @apply text-secondary;
+      }
+
+      -webkit-animation-name: change;
+      -webkit-animation-duration: 10s;
+      -webkit-animation-iteration-count: infinite;
+
+      animation-name: change;
+      animation-duration: 10s;
+      animation-iteration-count: infinite;
+      animation-timing-function: ease-in-out;
+    }
+  }
+}
+
+@keyframes change {
+  0%,
+  55%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  5%,
+  50% {
+    transform: translate3d(0, -50%, 0);
+  }
+}
+
+@-moz-keyframes change {
+  0%,
+  55%,
+  100% {
+    -moz-transform: translate3d(0, 0, 0);
+  }
+  5%,
+  50% {
+    -moz-transform: translate3d(0, -50%, 0);
+  }
+}
+
+@-webkit-keyframes change {
+  0%,
+  55%,
+  100% {
+    -webkit-transform: translate3d(0, 0, 0);
+  }
+  5%,
+  50% {
+    -webkit-transform: translate3d(0, -50%, 0);
+  }
+}
