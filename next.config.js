@@ -21,10 +21,6 @@ const nextConfig = {
         source: "/d/:id/:oiid",
         destination: "/api/download/:id/:oiid",
       },
-      {
-        source: "/:slug*",
-        destination: "/pages/:slug*",
-      },
     ];
   },
   typescript: {
