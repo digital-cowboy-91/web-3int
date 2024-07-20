@@ -1,8 +1,8 @@
 "use client";
 
 import { TProduct } from "@/app/api/_cms/collections/products";
-import { useCartStore } from "@/app/cart/components/Cart.store";
-import { composeFilamentTitle } from "@/app/cart/lib/composeFilamentTitle";
+import { useCartStore } from "@/app/store/cart/components/Cart.store";
+import { composeFilamentTitle } from "@/app/store/cart/lib/composeFilamentTitle";
 import Action from "@/app/components/Actions/Action";
 import Loader from "@/app/components/Loader";
 import Form from "@/app/components/UI/Form/Form";

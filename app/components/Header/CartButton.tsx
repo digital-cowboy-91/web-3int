@@ -1,6 +1,6 @@
 "use client";
 
-import { useCartStore } from "@/app/cart/components/Cart.store";
+import { useCartStore } from "@/app/store/cart/components/Cart.store";
 import Action from "../Actions/Action";
 
 export default function CartButton() {
@@ -9,7 +9,7 @@ export default function CartButton() {
   return (
     <Action
       as="link"
-      href="/cart"
+      href="/store/cart"
       variant="outlined"
       active="icon"
       invertText

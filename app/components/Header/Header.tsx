@@ -1,12 +1,11 @@
-import { title } from "process";
+import { CMSMeta } from "@/app/api/_cms/collections/meta";
+import Link from "next/link";
+import { notFound } from "next/navigation";
 import Action from "../Actions/Action";
 import SVGLogoChar_Dynamic from "../Logo/SVGLogoChar_Dynamic";
+import CartButton from "./CartButton";
 import "./HeaderV3.style.css";
 import MobileMenuButton from "./MobileMenuButton";
-import Link from "next/link";
-import CartButton from "./CartButton";
-import { CMSMeta } from "@/app/api/_cms/collections/meta";
-import { notFound } from "next/navigation";
 
 export default async function Header() {
   const res = await CMSMeta.readLinks("navbar");

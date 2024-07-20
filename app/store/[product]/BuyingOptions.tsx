@@ -6,9 +6,9 @@ import {
   ShoppingCartIcon,
 } from "@heroicons/react/24/outline";
 import { useState } from "react";
-import QuantitySelector from "../../cart/components/QuantitySelector";
-import { calculateItemPrice } from "../../cart/lib/calculateItemPrice";
-import { composeFilamentTitle } from "../../cart/lib/composeFilamentTitle";
+import QuantitySelector from "../cart/components/QuantitySelector";
+import { calculateItemPrice } from "../cart/lib/calculateItemPrice";
+import { composeFilamentTitle } from "../cart/lib/composeFilamentTitle";
 import { ButtonDropdown_v2 } from "../../components/ButtonDropdown";
 import asCurrency from "../../lib/asCurrency";
 import ButtonAddToCart from "./ButtonAddToCart";

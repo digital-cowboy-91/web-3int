@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build_mem": "next build --experimental-debug-memory-usage",
     "start": "next start",
     "lint": "next lint"
   },
