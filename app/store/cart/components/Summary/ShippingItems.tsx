@@ -3,7 +3,7 @@
 import { TShipping } from "@/app/api/_cms/collections/shipping";
 import { useEffect } from "react";
 import { create } from "zustand";
-import asCurrency from "../../../lib/asCurrency";
+import asCurrency from "../../../../lib/asCurrency";
 import { useCartStore } from "../Cart.store";
 import Form from "@/app/components/UI/Form/Form";
 

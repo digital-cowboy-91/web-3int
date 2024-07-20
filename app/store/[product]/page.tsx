@@ -4,8 +4,12 @@ import GalleryDetail from "./GalleryDetail";
 
 // export const dynamic = "force-static";
 
-export async function generateMetadata({ params }: { params: { id: string } }) {
-  const res = await CMSGallery.readItem(params.id);
+export async function generateMetadata({
+  params,
+}: {
+  params: { product: string };
+}) {
+  const res = await CMSGallery.readItem(params.product);
 
   if (!res) notFound();
 
@@ -16,10 +20,14 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
   };
 }
 
-export default async function Page({ params }: { params: { id: string } }) {
+export default async function Page({
+  params,
+}: {
+  params: { product: string };
+}) {
   return (
     <section>
-      <GalleryDetail modelId={params.id} />
+      <GalleryDetail modelId={params.product} />
     </section>
   );
 }

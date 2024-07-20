@@ -2,7 +2,7 @@
 
 import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
-import asCurrency from "../../lib/asCurrency";
+import asCurrency from "../../../lib/asCurrency";
 import { useCartStore } from "./Cart.store";
 import QuantitySelector from "./QuantitySelector";
 import "./CartItems.v2.style.css";

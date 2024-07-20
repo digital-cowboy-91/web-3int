@@ -2,8 +2,6 @@ import { TGallery } from "@/app/api/_cms/collections/gallery";
 import ImageAsset from "@/app/components/ImageAsset";
 import SVGLogoChar from "@/app/components/Logo/SVGLogoChar";
 import Link from "next/link";
-// import "./GalleryItem.style.v3.css";
-// import "./GalleryItem.style.v4.css";
 import "./GalleryItem.style.v5.css";
 
 type TProps = {
@@ -14,7 +12,7 @@ export default function GalleryItem({
   item: { id, title, cover_image, license },
 }: TProps) {
   return (
-    <Link href={`/gallery/${id}`} className="gallery-item">
+    <Link href={`/store/${id}`} className="gallery-item">
       <div>
         <ImageAsset asset={cover_image} preset="h250" />
       </div>

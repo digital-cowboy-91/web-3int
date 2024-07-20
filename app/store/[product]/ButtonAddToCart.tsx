@@ -3,7 +3,7 @@
 import { TProduct } from "@/app/api/_cms/collections/products";
 import { useRouter } from "next/navigation";
 import { ReactNode, useEffect, useState } from "react";
-import { useCartStore } from "../../cart/components/Cart.store";
+import { useCartStore } from "../cart/components/Cart.store";
 
 type Props = {
   product: TProduct;
