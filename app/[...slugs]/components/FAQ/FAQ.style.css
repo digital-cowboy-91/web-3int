@@ -2,6 +2,10 @@
   & li {
     @apply grid grid-rows-[min-content_0fr] border-b;
     transition: grid-template-rows 250ms ease-in-out;
+
+    & > button {
+      @apply text-left;
+    }
   }
 
   & .header {
