@@ -6,7 +6,7 @@
   @apply md:overflow-visible;
 
   .wrapper {
-    @apply container g__my-xs g__px-xs text-auto-contrast_invert overflow-hidden;
+    @apply container g__my-xs g__px-xs text-auto-contrast_invert shadow;
     @apply grid grid-rows-[var(--first-row-height)_0fr];
     @apply md:grid-cols-[5rem_1fr_5rem] md:grid-rows-[var(--first-row-height)] md:items-center;
     @apply rounded-t-[var(--first-row-height--half)] rounded-b-[var(--first-row-height--half)] bg-auto-contrast;

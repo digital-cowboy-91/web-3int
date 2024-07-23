@@ -35,7 +35,7 @@ export default async function page({
   const { title, components } = res;
 
   return (
-    <div className="container" style={{ maxWidth: "680px" }}>
+    <div className="container g__px-xs" style={{ maxWidth: "680px" }}>
       {components.map(({ collection: componentName, item: props }, index) => {
         return (
           <DynamicComponent
