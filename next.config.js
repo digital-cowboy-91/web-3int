@@ -4,10 +4,7 @@ const nextConfig = {
     return [
       {
         source: "/media/:id*",
-        destination:
-          process.env.NODE_ENV === "production"
-            ? "http://cms:8055/assets/:id*"
-            : "https://cms.3int.uk/assets/:id*",
+        destination: "https://cms.3int.colaia.dev/assets/:id*",
       },
       {
         source: "/e/:id",
