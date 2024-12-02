@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "build_mem": "next build --experimental-debug-memory-usage",
-    "start": "next start",
+    "start": "next start -p 3200",
     "lint": "next lint"
   },
   "dependencies": {
