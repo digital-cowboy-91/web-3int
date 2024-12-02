@@ -48,3 +48,5 @@ amplifyconfiguration*
 # private
 .notebook
 *.drawio
+
+/db
