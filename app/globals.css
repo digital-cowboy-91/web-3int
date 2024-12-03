@@ -13,7 +13,7 @@
 
   /* Gradient */
   /* --noise-pattern: url(https://l4fqnthlyi7x.connect.remote.it/noise-strong.png); */
-  --noise-pattern: url(http://localhost:3000/noise-strong.png);
+  /* --noise-pattern: url(http://localhost:3000/noise-strong.png); */
   --noise-size: 150px;
 
   @media screen(lg) {
@@ -79,7 +79,7 @@
       ),
       var(--auto-contrast--invert); */
 
-    &>main {
+    & > main {
       @apply min-h-screen overflow-x-hidden;
 
       &:has(> :first-child:not(#hero)) {
@@ -117,7 +117,6 @@
 }
 
 @layer components {
-
   /* global */
   .g {
     &__strong {
@@ -125,7 +124,6 @@
     }
 
     &__p {
-
       /* t */
       &,
       &y,
@@ -204,7 +202,6 @@
     }
 
     &__m {
-
       /* t */
       &,
       &y,
@@ -283,7 +280,6 @@
     }
 
     &__gap {
-
       &,
       &-x {
         column-gap: var(--spacing);
@@ -342,44 +338,43 @@
   }
 
   .content-wrapper {
-    &> :not(:first-child) {
+    & > :not(:first-child) {
       @apply g__mt;
     }
 
     &__l2,
     &--l2 {
-      &> :not(:first-child) {
+      & > :not(:first-child) {
         @apply g__mt-sm;
       }
     }
 
     &__l3,
     &--l3 {
-      &> :not(:first-child) {
+      & > :not(:first-child) {
         @apply g__mt-xs;
       }
     }
   }
 
   .list {
-    &--spread>li {
+    &--spread > li {
       @apply flex justify-between;
     }
 
     &--highlight {
-
       &-even,
       &-odd {
-        &>li {
+        & > li {
           @apply g__px-sm g__py-xs;
         }
       }
 
-      &-even>li:nth-child(even) {
+      &-even > li:nth-child(even) {
         @apply bg-white;
       }
 
-      &-odd>li:nth-child(odd) {
+      &-odd > li:nth-child(odd) {
         @apply bg-white;
       }
     }

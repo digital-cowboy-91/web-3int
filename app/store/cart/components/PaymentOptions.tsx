@@ -48,7 +48,7 @@ export function PaymentOptions() {
           />
           <Action
             as="link"
-            href="/cart/checkout"
+            href="/store/cart/checkout"
             label="Pay By Card"
             style={{ width: "100%" }}
           />
