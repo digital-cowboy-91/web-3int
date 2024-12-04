@@ -42,7 +42,7 @@ export default function ButtonAddToCart({
       className={`btn-outline-success ${className}`}
       onClick={() => {
         if (inProgress) {
-          router.push("/cart");
+          router.push("/store/cart");
         } else {
           addCartItem(product, quantity, filamentId);
           setInProgress(true);

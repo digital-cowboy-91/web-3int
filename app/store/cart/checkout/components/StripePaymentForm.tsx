@@ -24,7 +24,7 @@ export default function StripePaymentForm() {
 
   useEffect(() => {
     if (shouldRedirect) {
-      return router.replace("/cart");
+      return router.replace("/store/cart");
     }
     useCartStore.setState({ status: "pending" });
   }, []);

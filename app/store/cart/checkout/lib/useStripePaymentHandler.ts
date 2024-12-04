@@ -92,7 +92,7 @@ export default function useStripePaymentHandler() {
       elements,
       clientSecret: res.clientSecret,
       confirmParams: {
-        return_url: host + "/cart?status=success",
+        return_url: host + "/store/cart?status=success",
       },
       redirect: "if_required",
     });
@@ -103,7 +103,7 @@ export default function useStripePaymentHandler() {
     }
 
     setIsLoading(false);
-    router.replace("/cart?status=success");
+    router.replace("/store/cart?status=success");
   }
 
   return {

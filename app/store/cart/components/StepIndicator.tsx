@@ -6,11 +6,11 @@ import "./StepIndicator.style.css";
 const steps = [
   {
     name: "Review",
-    path: "/cart",
+    path: "/store/cart",
   },
   {
     name: "Checkout",
-    path: "/cart/checkout",
+    path: "/store/cart/checkout",
   },
 ];
 
