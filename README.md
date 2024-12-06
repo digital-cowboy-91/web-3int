@@ -1,9 +1,11 @@
 This is a test project aimed at learning about and integrating various libraries and tools into a meaningful application. The application itself represents a simple webstore offering 3D models for sale as digital files or printed physical items.
 
-## Live
+## Live Service (WIP)
 https://3int.colaia.dev/
 
-**! Warning !** If you do plan to test the application/workflow, you will need a valid email address and postcode. Please avoid using your own email address, instead use some external service with generated temporary emails.
+**! Warning !** - If you do plan to test the application/workflow, you will need a valid email address and postcode. Please avoid using your own email address, instead use some external service with generated temporary emails.
+
+**Disclaimer** - This is a testing project, application may fail at any point or some services might be unavailable (e.g. mail delivery).
 
 ## Stack
 1. Backend - Directus (CMS) with SQLite, Stripe, Zeptomail (Transactional emails), React Email
