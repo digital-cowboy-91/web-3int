@@ -1,0 +1,36 @@
+name: web3int-dev
+services:
+  directus:
+    container_name: directus
+    image: directus/directus:10.12.0
+    ports:
+      - 8055:8055
+    volumes:
+      - ./cms/db:/directus/database
+      - ./cms/extensions:/directus/extensions
+    environment:
+      PROJECT_KEY: web3int
+
+      KEY: 255d861b-5ea1-5996-9aa3-922530ec40b1
+      SECRET: 6116487b-cda1-52c2-b5b5-c8022c45e263
+
+      # PUBLIC_URL: https://cms.3int.uk
+
+      WEB_DOCKER_URL: https://3int.colaia.dev
+      WEB_PUBLIC_URL: https://3int.colaia.dev
+
+      STORAGE_LOCATIONS: digitalocean
+      STORAGE_DIGITALOCEAN_DRIVER: s3
+      STORAGE_DIGITALOCEAN_KEY: DO00EW8UJBREWWAMMJHK
+      STORAGE_DIGITALOCEAN_SECRET: ENUodS5KaZ3IqSU5CMvv4ckGTyJLGvfd5NuVSeNnJXQ
+      STORAGE_DIGITALOCEAN_ENDPOINT: ams3.digitaloceanspaces.com/web3int
+      STORAGE_DIGITALOCEAN_BUCKET: uniss
+      STORAGE_DIGITALOCEAN_REGION: ams3
+
+      ADMIN_EMAIL: admin@dev.com
+      ADMIN_PASSWORD: Init123*
+
+      ZEPTOMAIL_URL: api.zeptomail.eu/
+      ZEPTOMAIL_TOKEN: Zoho-enczapikey yA6KbHtZ4wSmym0ER0VvgceJooo1q/w+iSvjtiG0eM0jLdG1iqE71hVoKtXvIjHT3YGC464DYt9CL9jv7d5dfsU1Pd8CKJTGTuv4P2uV48xh8ciEYNYijJmqALEREq9AcR8iAyg0Q/ggWA==
+
+      FLOWS_ENV_ALLOW_LIST: "PROJECT_KEY,WEB_DOCKER_URL,WEB_PUBLIC_URL"

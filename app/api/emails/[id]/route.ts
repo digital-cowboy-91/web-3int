@@ -27,7 +27,7 @@ async function orderBranch({
       subject: "Order confirmation",
       from: {
         name: "3INT UK",
-        address: "noreply@notification.3int.uk",
+        address: "noreply@colaia.dev",
       },
       to: [
         {
