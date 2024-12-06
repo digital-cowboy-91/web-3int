@@ -45,4 +45,5 @@ https://3int.colaia.dev/
 ![image](https://github.com/user-attachments/assets/85872fea-0a7a-47af-8e1e-75cd7973d632)
 
 ### CMS Order Preview
-![image](https://github.com/user-attachments/assets/686d33c4-b6ef-488d-929b-a1e414925228)
+![cms](https://github.com/user-attachments/assets/90d7c52b-2c90-4ab9-81a6-b183e5d30cc8)
+
